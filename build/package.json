@@ -1,0 +1,14 @@
+{
+    "name": "template-phaser3-ts-esbuild",
+    "version": "1.0.2",
+    "main": "index.html",
+    "window": {
+        "title": "template-phaser3-ts-esbuild",
+        "toolbar": false,
+        "frame": true,
+        "width": 512,
+        "height": 288,
+        "position": "center",
+        "icon": "./favicon.png"
+    }
+}

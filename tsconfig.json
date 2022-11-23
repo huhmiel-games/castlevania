@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        // "target": "ES2017",
+        "emitDeclarationOnly": false,
+        "declaration": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "noImplicitAny": false,
+        "resolveJsonModule": true,
+        "lib": [
+            "es2017",
+            "DOM",
+            "scripthost"
+        ]
+    },
+    "watchOptions": {
+        "excludeDirectories": [
+            "**/node_modules",
+            "_build",
+            "**/cache",
+            "**/build",
+            "**/dist-mobile",
+            "**/esbuild",
+            "**/dist",
+            "**/public",
+            "temp/*"
+        ]
+    }
+}

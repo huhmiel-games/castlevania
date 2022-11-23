@@ -1,0 +1,51 @@
+{
+    "config": {
+        "texture": "",
+        "defaultFrame": "",
+        "anims": {
+            "idle": "",
+            "up": "",
+            "down": "",
+            "left": "",
+            "right": "",
+            "hit": "",
+            "fall": ""
+        }
+    },
+    "status": {
+        "health": 100,
+        "speed": 100,
+        "acceleration": 1000,
+        "drag_coef": 10,
+        "isDead": false,
+        "hitDelay": 600,
+        "position": {
+            "x": 0,
+            "y": 0
+        }
+    },
+    "physics": {
+        "body": {
+            "width": 16,
+            "height": 16
+        },
+        "hitbox": {
+            "type": "",
+            "width": 16,
+            "height": 16
+        }
+    },
+    "ai": [
+        {
+            "state": "left",
+            "duration": 2000,
+            "condition": {
+                "distance": 100
+            }
+        },
+        {
+            "state": "right",
+            "duration": 2000
+        }
+    ]
+}
