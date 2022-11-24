@@ -55,11 +55,11 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
         if (this.isBack && this.scene.physics.overlap(this, this.scene.characters[0].damageBody))
         {
-            const character = this.scene.characters[0].damageBody;
+            const { damageBody } = this.scene.characters[0];
 
-            const distance = Phaser.Math.Distance.BetweenPoints(this.body.center, character.body.center);
+            const distance = Phaser.Math.Distance.BetweenPoints(this.body.center, damageBody.body.center);
 
-            if (distance < 20)
+            if (distance < 13)
             {
                 this.setDisable();
             }
