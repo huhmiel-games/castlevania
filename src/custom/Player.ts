@@ -136,7 +136,7 @@ export default class Player extends Entity
 
             if (currentAnim === this.animList.CROUCH || currentAnim === this.animList.CROUCH_ATTACK)
             {
-                this.damageBody.changeBodySize(8, 20, -4, -4);
+                this.damageBody.changeBodySize(8, 20);
             }
             else if (this.damageBody.body.height === 20)
             {

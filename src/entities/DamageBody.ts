@@ -18,34 +18,29 @@ export default class DamageBody extends Phaser.GameObjects.Image
 
         this.scene.physics.world.enable(this);
 
-        this.setActive(true).setVisible(true).setDepth(DEPTH.WEAPON).setAlpha(0);
+        this.setActive(true).setVisible(true).setDepth(DEPTH.WEAPON).setAlpha(0).setOrigin(0.5, 1);
 
         this.body.setAllowGravity(false).setEnable(true).setSize(config.width, config.height);
+
+        this.onPostUpdateEvent();
     }
 
-    public preUpdate(time: number, delta: number)
+    private onPostUpdateEvent()
     {
-        this.changePosition()
+        this.scene.events.on(Phaser.Scenes.Events.POST_UPDATE, this.followParent, this);
     }
 
-    private changePosition()
+    private followParent()
     {
         const { body } = this.parent;
 
         if (!body) return;
 
-        const { center } = body;
-
-        this.body.reset(center.x, center.y - 8)
+        this.setPosition(body.center.x, body.bottom - this.body.height / 2);
     }
 
-    public changeBodySize(width: number, height: number, offsetX?: number, offsetY?: number)
+    public changeBodySize(width: number, height: number)
     {
         this.body.setSize(width, height);
-
-        if(offsetX && offsetY)
-        {
-            this.body.setOffset(offsetX, offsetY);
-        }
     }
 }
