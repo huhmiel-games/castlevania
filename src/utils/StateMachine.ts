@@ -1,24 +1,24 @@
+import { EPossibleState } from "../constant/character";
 import { Entity } from "../entities/Entity";
 import GameScene from "../scenes/GameScene";
 import State from "./State";
 
+type TStateArgs = [GameScene, Entity];
 export default class StateMachine
 {
-    public initialState: string;
-    public possibleStates: State;
-    public stateArgs: (GameScene | Entity)[];
-    public state: any;
-    public prevState: string;
+    public initialState: EPossibleState;
+    public possibleStates: {[key: string]: State};
+    public stateArgs: TStateArgs;
+    public state: EPossibleState;
+    public prevState: EPossibleState;
 
-    constructor (initialState: string, possibleStates: any, stateArgs: any[] = [])
+    constructor (initialState: EPossibleState, possibleStates: {[key: string]: State}, stateArgs: TStateArgs)
     {
         this.initialState = initialState;
 
         this.possibleStates = possibleStates;
 
         this.stateArgs = stateArgs;
-
-        this.state = null;
 
         // State instances get access to the state machine via this.stateMachine.
         for (const state of Object.values(this.possibleStates))
@@ -29,8 +29,8 @@ export default class StateMachine
 
     public step ()
     {
-        // On the first step, the state is null and we need to initialize the first state.
-        if (this.state === null)
+        // On the first step, the state is undefined and we need to initialize the first state.
+        if (this.state === undefined)
         {
             this.state = this.initialState;
 
@@ -41,7 +41,7 @@ export default class StateMachine
         this.possibleStates[this.state].execute(...this.stateArgs);
     }
 
-    public transition (newState: string, prevState: string, ...enterArgs: any[])
+    public transition (newState: EPossibleState, prevState: EPossibleState, ...enterArgs: unknown[])
     {
         this.state = newState;
 

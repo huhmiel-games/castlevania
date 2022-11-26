@@ -15,7 +15,7 @@ import { Entity } from "../../Entity";
  */
 export default class GoUpstairRightState extends State
 {
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
     private isMidStair: boolean = false;
     private stairTime: number = 0;
     private stairTile: Phaser.Tilemaps.Tile

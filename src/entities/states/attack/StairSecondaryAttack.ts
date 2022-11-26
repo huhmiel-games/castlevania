@@ -14,7 +14,7 @@ import { RangedWeapon } from '../../../types/types';
  */
 export default class StairSecondaryAttackState extends State
 {
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
     public enter(scene: GameScene, character: Entity, direction?: string)
     {
         const { now } = scene.time;

@@ -172,7 +172,7 @@ export default class Player extends Entity
 
         this.damageBody.changeBodySize(8, 28)
 
-        this.stateMachine = new StateMachine('idle', {
+        this.stateMachine = new StateMachine(EPossibleState.IDLE, {
             idle: new IdleState() as IdleState,
             attack: new AttackState() as AttackState,
             secondaryAttack: new SecondaryAttackState() as SecondaryAttackState,

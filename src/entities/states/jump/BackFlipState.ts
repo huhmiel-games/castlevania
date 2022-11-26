@@ -13,7 +13,7 @@ import { Entity } from "../../Entity";
  */
 export default class BackFlipState extends State
 {
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
     private groundYPosition: number;
     /**
      * 0: start backflip

@@ -13,7 +13,7 @@ import { Entity } from "../../Entity";
  */
 export default class MoveDownRightState extends State
 {
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
     public enter (scene: GameScene, character: Entity)
     {
         const { now } = scene.time;

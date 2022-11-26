@@ -13,7 +13,7 @@ import { Entity } from "../../Entity";
  */
 export default class FallAttackState extends State
 {
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
     private jumpTime: number = 0;
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {

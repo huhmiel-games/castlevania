@@ -13,7 +13,7 @@ import { Entity } from "../../Entity";
  */
 export default class JumpState extends State
 {
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
     private groundYPosition: number;
 
     public enter (scene: GameScene, character: Entity)

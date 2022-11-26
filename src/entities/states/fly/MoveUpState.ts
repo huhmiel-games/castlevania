@@ -13,7 +13,7 @@ import { EPossibleState } from '../../../constant/character';
  */
 export default class MoveUpState extends State
 {
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
     public enter (scene: GameScene, character: Entity)
     {
         const { now } = scene.time;

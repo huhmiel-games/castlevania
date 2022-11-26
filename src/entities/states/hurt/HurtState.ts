@@ -14,7 +14,7 @@ import { Entity } from "../../Entity";
 export default class HurtState extends State
 {
     private hitTime: number;
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
 
     public enter (scene: GameScene, character: Entity)
     {

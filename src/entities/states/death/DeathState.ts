@@ -13,7 +13,7 @@ import { Entity } from "../../Entity";
 export default class DeathState extends State
 {
     private deathTime: number;
-    private stateMachine: StateMachine;
+    public stateMachine: StateMachine;
 
     public enter (scene: GameScene, character: Entity)
     {
