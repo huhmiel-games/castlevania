@@ -532,86 +532,12 @@ export default class Player extends Entity
         // GAME OVER
         if (this.status.life! < 0)
         {
-            const position = {
-                x: 0,
-                y: 0
-            }
-
-            switch (Number(this.status.stage.toString()[0]))
-            {
-                case 1:
-                    {
-                        position.x = 2 * TILE_SIZE;
-                        position.y = 69 * TILE_SIZE;
-                        break;
-                    }
-                case 2:
-                    {
-                        position.x = 226 * TILE_SIZE;
-                        position.y = 65 * TILE_SIZE;
-
-                        break;
-                    }
-                case 3:
-                    {
-                        position.x = 110 * TILE_SIZE;
-                        position.y = 30 * TILE_SIZE;
-
-                        break;
-                    }
-                case 4:
-                    {
-                        position.x = 276 * TILE_SIZE;
-                        position.y = 74 * TILE_SIZE;
-
-                        break;
-                    }
-                case 5:
-                    {
-                        position.x = 527 * TILE_SIZE;
-                        position.y = 67 * TILE_SIZE;
-
-                        break;
-                    }
-                case 6:
-                    {
-                        position.x = 478 * TILE_SIZE;
-                        position.y = 34 * TILE_SIZE;
-
-                        break;
-                    }
-                case 7:
-                    {
-                        position.x = 334 * TILE_SIZE;
-                        position.y = 19 * TILE_SIZE;
-
-                        break;
-                    }
-                default:
-                    break;
-            }
-
-            this.setStatus({
-                health: 16,
-                life: 3,
-                score: 0,
-                stage: this.status.stage,
-                ammo: 0,
-                canTakeStairs: false,
-                position: position
-            });
-
-            SaveLoadService.saveGameData(this.status);
-
-            this.scene.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
-            {
-                this.scene.scene.start(SCENES_NAMES.GAMEOVER, { retry: false })
-            });
+            this.gameOver();
 
             return;
         }
 
-        this.setStatusHealth(16);
+        this.setStatusHealth(16).setStatusHeart(5);
 
         SaveLoadService.saveGameData(this.status);
 
@@ -625,6 +551,85 @@ export default class Player extends Entity
             {
                 this.scene.scene.restart()
             }
+        });
+    }
+
+    private gameOver()
+    {
+        const position = {
+            x: 0,
+            y: 0
+        }
+
+        switch (Number(this.status.stage.toString()[0]))
+        {
+            case 1:
+                {
+                    position.x = 2 * TILE_SIZE;
+                    position.y = 69 * TILE_SIZE;
+                    break;
+                }
+            case 2:
+                {
+                    position.x = 226 * TILE_SIZE;
+                    position.y = 65 * TILE_SIZE;
+
+                    break;
+                }
+            case 3:
+                {
+                    position.x = 110 * TILE_SIZE;
+                    position.y = 30 * TILE_SIZE;
+
+                    break;
+                }
+            case 4:
+                {
+                    position.x = 276 * TILE_SIZE;
+                    position.y = 74 * TILE_SIZE;
+
+                    break;
+                }
+            case 5:
+                {
+                    position.x = 527 * TILE_SIZE;
+                    position.y = 67 * TILE_SIZE;
+
+                    break;
+                }
+            case 6:
+                {
+                    position.x = 478 * TILE_SIZE;
+                    position.y = 34 * TILE_SIZE;
+
+                    break;
+                }
+            case 7:
+                {
+                    position.x = 334 * TILE_SIZE;
+                    position.y = 19 * TILE_SIZE;
+
+                    break;
+                }
+            default:
+                break;
+        }
+
+        this.setStatus({
+            health: 16,
+            life: 3,
+            score: 0,
+            stage: this.status.stage,
+            ammo: 5,
+            canTakeStairs: false,
+            position: position
+        });
+
+        SaveLoadService.saveGameData(this.status);
+
+        this.scene.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
+        {
+            this.scene.scene.start(SCENES_NAMES.GAMEOVER, { retry: false })
         });
     }
 
