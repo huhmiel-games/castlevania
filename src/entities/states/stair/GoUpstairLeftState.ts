@@ -2,6 +2,7 @@ import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
+import LayerService from "../../../services/LayerService";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -20,7 +21,7 @@ export default class GoUpstairLeftState extends State
     private stairTime: number = 0;
     private stairTile: Phaser.Tilemaps.Tile
     private animFrameNumber: number = 0;
-    public enter(scene: GameScene, character: Entity, isMidStair?: boolean)
+    public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
 
@@ -37,28 +38,6 @@ export default class GoUpstairLeftState extends State
         {
             character.setFrame(this.updateFrameName(character));
         }
-
-        // if (isMidStair !== undefined)
-        // {
-        //     this.isMidStair = !isMidStair;
-
-        //     if (isMidStair)
-        //     {
-        //         character.body.reset(character.body.x + 12, character.body.y);
-
-        //         character.setFrame(this.updateFrameName(character));
-        //     }
-        //     else
-        //     {
-        //         character.body.reset(character.body.x + 4, character.body.y);
-
-        //         character.setFrame('richter-walk_1');
-        //     }
-
-        //     const { x, y } = character.body.center;
-
-        //     this.stairTile = scene.colliderLayer.getTileAtWorldXY(x - 12, y - 4);
-        // }
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
@@ -116,9 +95,9 @@ export default class GoUpstairLeftState extends State
 
         const { x, y } = body.center;
 
-        if (this.stairTile === undefined || this.stairTile === null || this.isMidStair === true)
+        if (this.stairTile === undefined || this.stairTile === null || this.isMidStair === false)
         {
-            this.stairTile = scene.colliderLayer.getTileAtWorldXY(x - 13, y - 4);
+            this.stairTile = scene.colliderLayer.getTileAtWorldXY(x - TILE_SIZE / 4 * 3, y - TILE_SIZE / 4);
         }
 
         // middle stairs
@@ -158,7 +137,7 @@ export default class GoUpstairLeftState extends State
                 return;
             }
 
-            body.reset(character.body.x - 4, character.body.y);
+            body.reset(body.x - 4, body.y);
 
             character.setFrame(character.frameList?.stairMiddle!);
 

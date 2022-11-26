@@ -21,7 +21,7 @@ export default class GoUpstairRightState extends State
     private stairTile: Phaser.Tilemaps.Tile
     private animFrameNumber: number = 0;
 
-    public enter(scene: GameScene, character: Entity, isMidStair?: boolean)
+    public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
 
@@ -93,11 +93,11 @@ export default class GoUpstairRightState extends State
 
         const { body } = character;
 
-        const { x, y } = character.body.center;
+        const { x, y } = body.center;
 
         if (this.stairTile === undefined || this.stairTile === null || this.isMidStair === true)
         {
-            this.stairTile = scene.colliderLayer.getTileAtWorldXY(x + 12, y - 4);
+            this.stairTile = scene.colliderLayer.getTileAtWorldXY(x + TILE_SIZE / 4 * 3, y - TILE_SIZE / 4);
         }
 
         // middle stairs
@@ -137,9 +137,9 @@ export default class GoUpstairRightState extends State
                 return;
             }
 
-            body.reset(character.body.x + 12, body.y - 8);
+            body.reset(body.x + TILE_SIZE / 4 * 3, body.y - TILE_SIZE / 2);
 
-            character.setFrame('richter-walk_1');
+            character.setFrame(character.frameList?.stairMiddle!);
 
             this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
 
