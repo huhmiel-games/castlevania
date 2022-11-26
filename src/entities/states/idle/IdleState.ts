@@ -113,13 +113,13 @@ export default class IdleState extends State
 
         if (character.canUse(EPossibleState.DOWNSTAIR_RIGHT) && down.isDown)
         {
-            const { center, bottom } = character.body;
+            const { right, bottom } = character.body;
 
-            const tile = scene.colliderLayer.getTileAtWorldXY(center.x, bottom + TILE_SIZE / 4);
+            const tile = scene.colliderLayer.getTileAtWorldXY(right, bottom + TILE_SIZE / 4);
 
             if (tile?.properties?.hasOwnProperty(TILES.STAIR_LEFT))
             {
-                character.body.reset(tile.pixelX + TILE_SIZE, tile.pixelY - TILE_SIZE / 2);
+                character.body.reset(tile.pixelX + TILE_SIZE / 2, tile.pixelY - TILE_SIZE / 2);
 
                 character.anims.pause();
 
@@ -149,9 +149,9 @@ export default class IdleState extends State
 
         if (character.canUse(EPossibleState.DOWNSTAIR_LEFT) && down.isDown)
         {
-            const { center, bottom } = character.body;
+            const { left, bottom } = character.body;
 
-            const tile = scene.colliderLayer.getTileAtWorldXY(center.x, bottom + TILE_SIZE / 4);
+            const tile = scene.colliderLayer.getTileAtWorldXY(left, bottom + TILE_SIZE / 4);
 
             if (tile?.properties?.hasOwnProperty(TILES.STAIR_RIGHT))
             {

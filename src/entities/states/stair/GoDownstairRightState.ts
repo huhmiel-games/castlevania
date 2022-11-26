@@ -20,15 +20,13 @@ export default class GoDownstairRightState extends State
     private stairTime: number = 0;
     private stairTile: Phaser.Tilemaps.Tile;
     private animFrameNumber: number = 0;
-    public enter(scene: GameScene, character: Entity, isMidStair?: boolean)
+    public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
 
-        const { x, y } = character.body.center;
-
         this.stairTime = now;
 
-        if (this.stateMachine.prevState === EPossibleState.RIGHT || this.stateMachine.prevState === EPossibleState.FALL)
+        if (this.stateMachine.prevState === EPossibleState.RIGHT || this.stateMachine.prevState === EPossibleState.IDLE || this.stateMachine.prevState === EPossibleState.FALL)
         {
             this.isMidStair = true;
 
@@ -39,26 +37,6 @@ export default class GoDownstairRightState extends State
         {
             character.setFrame(this.updateFrameName(character));
         }
-
-        // if (isMidStair !== undefined)
-        // {
-        //     this.isMidStair = isMidStair;
-
-        //     this.stairTile = scene.colliderLayer.getTileAtWorldXY(x - 4, y + 12);
-
-        //     if (isMidStair)
-        //     {
-        //         character.body.reset(character.body.x + 4, character.body.y);
-
-        //         character.setFrame(this.updateFrameName());
-        //     }
-        //     else
-        //     {
-        //         character.body.reset(character.body.x + 4, character.body.y - 8);
-
-        //         character.setFrame('richter-walk_1');
-        //     }
-        // }
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
@@ -116,7 +94,7 @@ export default class GoDownstairRightState extends State
 
         if (this.stairTile === undefined || this.stairTile === null || this.isMidStair === true)
         {
-            this.stairTile = scene.colliderLayer.getTileAtWorldXY(x + 4, y + 12);
+            this.stairTile = scene.colliderLayer.getTileAtWorldXY(x + TILE_SIZE / 4, y + TILE_SIZE / 4 * 3);
         }
 
         // middle stairs

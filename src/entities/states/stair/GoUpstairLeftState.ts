@@ -27,7 +27,7 @@ export default class GoUpstairLeftState extends State
 
         this.stairTime = now;
 
-        if (this.stateMachine.prevState === EPossibleState.LEFT || this.stateMachine.prevState === EPossibleState.FALL)
+        if (this.stateMachine.prevState === EPossibleState.LEFT || this.stateMachine.prevState === EPossibleState.IDLE || this.stateMachine.prevState === EPossibleState.FALL)
         {
             this.isMidStair = true;
 
