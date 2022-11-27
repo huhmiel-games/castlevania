@@ -11,6 +11,7 @@ export class MeleeWeapon extends Phaser.GameObjects.Image implements Weapon
     public scene: GameScene;
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
+    public damage: 1.5;
     constructor(config: { scene: GameScene; parent: Entity, x: number; y: number; texture: string; frame: string; })
     {
         super(config.scene, config.x, config.y, config.texture, config.frame);

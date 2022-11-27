@@ -13,6 +13,7 @@ export default class ThrowingAxe extends Phaser.GameObjects.Sprite implements We
     public scene: GameScene;
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
+    public damage: number = 0;
     public speed: number = 100;
     private weaponAnim?: string;
     private timestamp: number = 0;
@@ -22,6 +23,8 @@ export default class ThrowingAxe extends Phaser.GameObjects.Sprite implements We
         super(config.scene, config.x, config.y, config.texture, config.frame);
 
         this.parent = config.parent;
+
+        this.damage = config.damage;
 
         this.sfx = config.sound;
 

@@ -13,6 +13,7 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
     public scene: GameScene;
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
+    public damage: number = 0;
     public speed: number = 300;
     private weaponAnim?: string;
     private sfx: number;
@@ -21,6 +22,8 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
         super(config.scene, config.x, config.y, config.texture, config.frame);
 
         this.parent = config.parent;
+
+        this.damage = config.damage;
 
         this.sfx = config.sound;
 

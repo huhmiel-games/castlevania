@@ -13,6 +13,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
     public scene: GameScene;
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
+    public damage: number = 0;
     public speed: number = 100;
     public isBack: boolean = false;
     private weaponAnim: string;
@@ -23,6 +24,8 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
         super(config.scene, config.x, config.y, config.texture, config.frame);
 
         this.parent = config.parent;
+
+        this.damage = config.damage;
 
         this.sfx = config.sound;
 
