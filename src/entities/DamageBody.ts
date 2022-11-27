@@ -7,7 +7,7 @@ export default class DamageBody extends Phaser.GameObjects.Image
     public scene: GameScene;
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
-    public damage: number = 0; // for enemies making damage with their body
+    public damage: number = 0; // for enemies making damage with their body, not used for this game
     constructor(config: { scene: GameScene; parent: Entity, x: number; y: number, width: number, height: number })
     {
         super(config.scene, config.x, config.y, 'whitePixel', 0);
