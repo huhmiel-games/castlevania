@@ -100,9 +100,9 @@ export default class Player extends Entity
         {
             const currentAnim = this.anims.getName();
 
-            const { JUMP_ATTACK, CROUCH_ATTACK } = this.animList;
+            const { JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK } = this.animList;
 
-            if (currentAnim === JUMP_ATTACK)
+            if ([JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK].includes(currentAnim))
             {
                 this.meleeWeapon?.body.setEnable(false);
 
@@ -170,7 +170,7 @@ export default class Player extends Entity
             .setSize(16, 16)
             .setOffset(56, 32);
 
-        this.damageBody.changeBodySize(8, 28)
+        this.damageBody.changeBodySize(8, 28);
 
         this.stateMachine = new StateMachine(EPossibleState.IDLE, {
             idle: new IdleState() as IdleState,
@@ -216,7 +216,7 @@ export default class Player extends Entity
     {
         super.preUpdate(time, delta);
 
-        if (!this.physicsProperties.isDead && this.body.top > this.scene.cameras.main.getBounds().bottom + 16)
+        if (!this.physicsProperties.isDead && this.body.top > this.scene.cameras.main.getBounds().bottom + TILE_SIZE)
         {
             this.die();
         }
@@ -235,7 +235,7 @@ export default class Player extends Entity
 
                     this.scene.playSound(23);
 
-                    this.setStatusHeart(value);
+                    this.setStatusAmmo(value);
 
                     bigHeart.setActive(false).setVisible(false);
 
@@ -251,7 +251,7 @@ export default class Player extends Entity
 
                     const value = this.status.ammo + littleHeart.quantity;
 
-                    this.setStatusHeart(value);
+                    this.setStatusAmmo(value);
 
                     littleHeart.setActive(false).setVisible(false);
 
@@ -347,6 +347,24 @@ export default class Player extends Entity
 
                 break;
 
+            case 'rosary':
+                const cam = this.scene.cameras.main;
+                const visibleEnemies = this.scene.enemies.filter(enemy => enemy.active && cam.worldView.contains(enemy.body.center.x, enemy.body.center.y));
+
+                visibleEnemies.forEach(enemy=> enemy.die());
+
+                this.scene.playSound(37);
+
+                this.scene.time.addEvent({
+                    delay: 100,
+                    repeat: 4,
+                    callback: () => {
+                        cam.flash(50);
+                    }
+                });
+
+                break;
+
             default:
                 break;
         }
@@ -422,6 +440,7 @@ export default class Player extends Entity
             const weapon = new Boomerang({
                 scene: this.scene,
                 parent: this,
+                damage: 1.5,
                 x: this.body.x,
                 y: this.body.y,
                 texture: 'items',
@@ -447,6 +466,7 @@ export default class Player extends Entity
             const weapon = new ThrowingBomb({
                 scene: this.scene,
                 parent: this,
+                damage: 1,
                 x: this.body.x,
                 y: this.body.y,
                 texture: 'items',
@@ -472,6 +492,7 @@ export default class Player extends Entity
             const weapon = new ThrowingAxe({
                 scene: this.scene,
                 parent: this,
+                damage: 1.5,
                 x: this.body.x,
                 y: this.body.y,
                 texture: 'items',
@@ -497,6 +518,7 @@ export default class Player extends Entity
             const weapon = new ThrowingKnife({
                 scene: this.scene,
                 parent: this,
+                damage: 1,
                 x: this.body.x,
                 y: this.body.y,
                 texture: 'items',
@@ -537,7 +559,7 @@ export default class Player extends Entity
             return;
         }
 
-        this.setStatusHealth(16).setStatusHeart(5);
+        this.setStatusHealth(16).setStatusAmmo(5);
 
         SaveLoadService.saveGameData(this.status);
 
@@ -632,24 +654,4 @@ export default class Player extends Entity
             this.scene.scene.start(SCENES_NAMES.GAMEOVER, { retry: false })
         });
     }
-
-    // public setStatusHealth(damage: number)
-    // {
-    //     const health = this.status.health - damage;
-
-    //     if (health > 0)
-    //     {
-    //         this.setStatusHealth(health);
-    //     }
-    //     else
-    //     {
-    //         this.setStatusIsDead(true).setStatusHealth(0);
-
-    //         this.die();
-    //     }
-
-    //     this.scene.events.emit('hud-player-health', health);
-
-    //     return this;
-    // }
 }
