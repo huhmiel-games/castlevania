@@ -23,7 +23,7 @@ export default class JumpAttackState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
-        this.groundYPosition = groundYPosition || now;
+        this.groundYPosition = groundYPosition || character.body.bottom;
 
         character.body.setDrag(0).setMaxVelocityY(character.physicsProperties.speed * 4).setVelocityY(-300);
 

@@ -38,7 +38,7 @@ export default class StairSecondaryAttackState extends State
 
             const value = ammo - 1;
 
-            character.setStatusHeart(value);
+            character.setStatusAmmo(value);
 
             character.physicsProperties.isAttacking = false;
 

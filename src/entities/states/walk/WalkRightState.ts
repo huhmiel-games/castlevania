@@ -33,13 +33,22 @@ export default class WalkRightState extends State
     {
         const { left, right, up, down, a, b,  start, select } = character.buttons;
 
+        const { isAttacking } = character.physicsProperties;
+
         const { blocked, touching } = character.body;
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.ATTACK) && a.isDown && a.getDuration(now) < 128)
+        if (character.canUse(EPossibleState.ATTACK) && a.isDown && up.isUp && a.getDuration(now) < 128)
         {
             this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.state);
+
+            return;
+        }
+
+        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !isAttacking)
+        {
+            this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }

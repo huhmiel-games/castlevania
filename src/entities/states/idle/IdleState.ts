@@ -26,61 +26,48 @@ export default class IdleState extends State
 
         character.body.setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0)
             .setAcceleration(0, 0);
+            
 
         console.log('IDLE STATE');
     }
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, start, select } = character.buttons;
+        const { left, right, up, down, a, b, x, y, start, select } = character.buttons;
 
         const { blocked, touching } = character.body;
 
+        const { isAttacking } = character.physicsProperties;
+
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.ATTACK) && a.isDown && up.isUp && a.getDuration(now) < 128 && !character.physicsProperties.isAttacking)
+        if (character.canUse(EPossibleState.ATTACK) && a.isDown && up.isUp && a.getDuration(now) < 128 && !isAttacking)
         {
             this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !character.physicsProperties.isAttacking)
+        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
             this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.LEFT) && left.isDown && right.isUp && !character.physicsProperties.isAttacking)
+        if (character.canUse(EPossibleState.LEFT) && left.isDown && right.isUp && !isAttacking)
         {
             this.stateMachine.transition(EPossibleState.LEFT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.RIGHT) && right.isDown && left.isUp && !character.physicsProperties.isAttacking)
+        if (character.canUse(EPossibleState.RIGHT) && right.isDown && left.isUp && !isAttacking)
         {
             this.stateMachine.transition(EPossibleState.RIGHT, this.stateMachine.state);
 
             return;
         }
-
-        // old backflip jump, keeped as comment just in case
-        // if (character.canUse(EPossibleState.BACK_FLIP)
-        //     && this.stateMachine.prevState !== EPossibleState.FALL
-        //     && this.stateMachine.prevState !== EPossibleState.FALL_ATTACK
-        //     && this.stateMachine.prevState !== EPossibleState.FALL_SECONDARY_ATTACK
-        //     && b.isDown
-        //     && b.timeDown !== 0
-        //     && now - b.timeUp < 250
-        //     && b.getDuration(now) < 50
-        // )
-        // {
-        //     this.stateMachine.transition(EPossibleState.BACK_FLIP, this.stateMachine.state);
-
-        //     return;
-        // }
 
         if (character.canUse(EPossibleState.JUMP)
             && b.isDown
@@ -165,7 +152,7 @@ export default class IdleState extends State
             }
         }
 
-        if (character.canUse(EPossibleState.CROUCH) && down.isDown && !character.physicsProperties.isAttacking)
+        if (character.canUse(EPossibleState.CROUCH) && down.isDown && !isAttacking)
         {
             this.stateMachine.transition(EPossibleState.CROUCH, this.stateMachine.state);
 
@@ -175,6 +162,27 @@ export default class IdleState extends State
         if (character.canUse(EPossibleState.FALL) && !blocked.down)
         {
             this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+
+            return;
+        }
+
+        if (character.canUse(EPossibleState.PROXIMITY) && y.isDown)
+        {
+            this.stateMachine.transition(EPossibleState.PROXIMITY, this.stateMachine.state);
+
+            return;
+        }
+
+        if (character.canUse(EPossibleState.FLY_LEFT) && left.isDown)
+        {
+            this.stateMachine.transition(EPossibleState.FLY_LEFT, this.stateMachine.state);
+
+            return;
+        }
+
+        if (character.canUse(EPossibleState.FLY_RIGHT) && right.isDown)
+        {
+            this.stateMachine.transition(EPossibleState.FLY_RIGHT, this.stateMachine.state);
 
             return;
         }
