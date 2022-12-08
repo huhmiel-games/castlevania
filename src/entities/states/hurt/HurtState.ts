@@ -15,34 +15,49 @@ export default class HurtState extends State
 {
     private hitTime: number;
     public stateMachine: StateMachine;
+    private groundYPosition: number;
 
     public enter (scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
 
+        // Initialize the jump
+        this.groundYPosition = character.body.bottom;
+
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
         // Stop player
-        character.body.setDrag(0);
+        character.body.setDrag(0).setAcceleration(0, 0);
+
+        if(character.physicsProperties.isAttacking)
+        {
+            character.meleeWeapon?.body.setEnable(false);
+
+            character.physicsProperties.isAttacking = false;
+        }
 
         this.hitTime = now;
 
-        const { x, y } = character.body.acceleration;
+        const { x, y } = character.body.velocity;
 
-        character.body.setAcceleration(x * -1, y * -1);
+        character.body.setDrag(0, 0).setMaxVelocityY(character.physicsProperties.speed * 4);
+
+        const speedX = character.flipX ? character.physicsProperties.speed  * 2 : character.physicsProperties.speed * -2;
+
+        character.body.setVelocity(speedX, -character.physicsProperties.speed * 6);
 
         character.anims.play(character.animList.HURT!, true);
     }
 
     public execute (scene: GameScene, character: Entity)
     {
-        const { blocked } = character.body;
+        const { blocked, bottom } = character.body;
 
         const { now } = scene.time;
 
         if (this.hitTime + 600 < now && !character.physicsProperties.isDead)
         {
-            character.body.setAcceleration(0, 0);
+            character.body.setVelocity(0, 0);
 
             // return to idle state
             this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
