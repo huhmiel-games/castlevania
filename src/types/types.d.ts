@@ -113,17 +113,29 @@ export type BaseItemConfig = {
 }
 
 export type TWeaponConfig = {
-    scene: GameScene;
+    scene: GameScene,
     parent: Entity,
-    x: number;
-    y: number;
-    texture: string;
-    frame: string;
-    anims: string;
-    sound: number;
+    damage: number,
+    x: number,
+    y: number,
+    texture: string,
+    frame: string,
+    anims: string,
+    sound: number,
 }
 
 export type TNfsPlayer = {
     play: (fileName: string, trackNo: number) => {},
     stop: () => {}
+}
+
+export type TAi = {
+    button: string; 
+    delay: number;
+    distance?: number,
+    condition: {
+        
+        x?: string,
+        button: string
+    }
 }

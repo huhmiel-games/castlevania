@@ -1,3 +1,5 @@
+import { Enemy } from "../entities/enemies/Enemy";
+import GameScene from "../scenes/GameScene";
 import { TCoord } from "../types/types";
 
 /**
@@ -37,7 +39,8 @@ export interface IPhysicsProperties
     isHurt: boolean,
     isDead: boolean,
     isAttacking: boolean,
-    isPaused: boolean
+    isPaused: boolean,
+    sinHeight?: number
 }
 
 export interface IAnimationList
@@ -63,6 +66,7 @@ export interface IAnimationList
     DOWNSTAIR_ATTACK?: string | Phaser.Animations.Animation,
     UPSTAIR_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
     DOWNSTAIR_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
+    FLY?: string | Phaser.Animations.Animation
 }
 
 export interface IFrameList
@@ -70,4 +74,11 @@ export interface IFrameList
     stairDown: string,
     stairUp: string,
     stairMiddle: string
+}
+
+export interface IEnemyIA
+{
+    parent: Enemy;
+    scene: GameScene;
+    decides: ()=> void
 }
