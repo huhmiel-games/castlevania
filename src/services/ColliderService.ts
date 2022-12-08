@@ -1,4 +1,5 @@
 
+import { EPossibleState } from '../constant/character';
 import { spawnRetrievableItem } from '../custom/destroyCandle';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
@@ -153,7 +154,7 @@ export default class ColliderService
             }
 
             return false;
-        }, scene)
+        }, scene);
 
         const candlesLayer = LayerService.getGroundLayers(scene).find(e => e.name === 'ground/candles');
 
@@ -169,5 +170,19 @@ export default class ColliderService
                 (whip, candle) => (candle as Phaser.Tilemaps.Tile).index > 0, this
             )
         }
+
+        scene.physics.add.collider(scene.enemies, scene.colliderLayer, undefined, (_enemy, _tile) =>
+        {
+            const enemy = _enemy as Entity;
+
+            const excludedStates = [EPossibleState.FLY_LEFT, EPossibleState.FLY_RIGHT];
+
+            if (excludedStates.includes(enemy.stateMachine.state))
+            {
+                return false;
+            }
+
+            return true;
+        }, scene);
     }
 }
