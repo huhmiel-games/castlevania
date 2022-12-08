@@ -1,9 +1,9 @@
-import { possibleDirection } from "../constant/character";
-import { HUD_EVENTS_NAMES } from "../constant/config";
+import { EPossibleState, possibleDirection } from "../constant/character";
+import { HUD_EVENTS_NAMES, PLAYER_A_NAME } from "../constant/config";
 import { IAnimationList, IFrameList, IPhysicsProperties, IStatus } from "../interfaces/interface";
 import GameScene from "../scenes/GameScene";
 import SaveLoadService from "../services/SaveLoadService";
-import { RangedWeapon, TButtons, TCharacterConfig, TCoord } from "../types/types";
+import { RangedWeapon, TButtons, TCharacterConfig, TCoord, TAi } from "../types/types";
 import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
@@ -57,12 +57,7 @@ export class Entity extends Phaser.GameObjects.Sprite
     {
         super.preUpdate(time, delta);
 
-        if (this.physicsProperties.isDead || this.physicsProperties.isPaused) return;
-
-        if (this.buttons.y.isDown)
-        {
-            SaveLoadService.saveGameData(this.status);
-        }
+        if (this.physicsProperties.isDead || this.physicsProperties.isPaused || !this.active) return;
 
         if (this.body.touching.down)
         {
@@ -77,7 +72,7 @@ export class Entity extends Phaser.GameObjects.Sprite
      * @param stateName 
      * @returns 
      */
-    public canUse(stateName: string): boolean
+    public canUse(stateName: EPossibleState): boolean
     {
         return this.canUseState.has(stateName);
     }
@@ -109,12 +104,15 @@ export class Entity extends Phaser.GameObjects.Sprite
     {
         this.status.health = health;
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
+        if (this.name === PLAYER_A_NAME)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
+        }
 
         return this;
     }
 
-    public setStatusHeart(value: number): Entity
+    public setStatusAmmo(value: number): Entity
     {
         this.status.ammo = value;
 
@@ -131,14 +129,20 @@ export class Entity extends Phaser.GameObjects.Sprite
         {
             this.setStatusHealth(health);
 
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
+            if (this.name === PLAYER_A_NAME)
+            {
+                this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
+            }
 
             return this;
         }
 
         this.setStatusHealth(0);
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, 0);
+        if (this.name === PLAYER_A_NAME)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, 0);
+        }
 
         this.setStatusIsDead(true);
 
@@ -187,6 +191,10 @@ export class Entity extends Phaser.GameObjects.Sprite
     public die(): void
     {
         this.setActive(false).setVisible(false);
+        this.body.setEnable(false);
+
+        this.damageBody.setActive(false);
+        this.damageBody.body.setEnable(false);
     }
 
     public getItem(item: Phaser.Types.Physics.Arcade.GameObjectWithBody)
