@@ -2,15 +2,16 @@
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
 import { HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, TILED_WORLD_OFFSET_Y, TILE_SIZE } from '../constant/config';
 import { InputController } from '../inputs/InputController';
-import { ISoundList, IStatus } from '../interfaces/interface.js';
+import { ISoundList } from '../interfaces/interface.js';
 import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
 import ColliderService from '../services/ColliderService.js';
 import WorldRooms from '../utils/WorldRooms.js';
-import { TDoor, TNfsPlayer } from '../types/types.js';
+import { TCoord, TDoor } from '../types/types.js';
 import SaveLoadService from '../services/SaveLoadService.js';
 import { PALETTE_DB32 } from '../constant/colors.js';
 import init from '../custom/init.js';
+import addEnemies from '../custom/addEnemies.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -26,6 +27,10 @@ export default class GameScene extends Phaser.Scene
     private soundList: ISoundList = {};
     public colliderLayer: Phaser.Tilemaps.TilemapLayer;
     public characters: Entity[] = [];
+    public enemies: Entity[] = [];
+    public enemyDeathGroup: Phaser.GameObjects.Group;
+    public enemiesVsWeaponsCollider: Phaser.Physics.Arcade.Collider;
+    public enemiesVsPlayerCollider: Phaser.Physics.Arcade.Collider;
     public isTouchingDoor: boolean = false;
     public lightCandlesGroup: Phaser.GameObjects.Group;
     public movingPlatformGroup: Phaser.GameObjects.Group;
@@ -171,9 +176,29 @@ export default class GameScene extends Phaser.Scene
 
     }
 
-    public playSound(sfxIndex: number, volume: number = 0.5)
+    public playSound(sfxIndex: number, volume: number = 0.5, ignoreIfPlaying: boolean = false)
     {
-        this.sound.play(`SFX${sfxIndex}`, { volume: volume });
+        const snd = this.sound.get(`SFX${sfxIndex}`);
+
+        if (snd && !ignoreIfPlaying)
+        {
+            snd.play({ volume: volume });
+
+            return;
+        }
+        
+        if (snd && ignoreIfPlaying && !snd.isPlaying)
+        {
+            snd.play({ volume: volume });
+
+            return;
+        }
+        else if (!snd)
+        {
+            this.sound.add(`SFX${sfxIndex}`);
+
+            this.sound.play(`SFX${sfxIndex}`, { volume: volume });
+        }
     }
 
     public playSong(musicIndex: number, loop: boolean = true)
@@ -207,6 +232,11 @@ export default class GameScene extends Phaser.Scene
             classType: Phaser.GameObjects.PointLight,
             maxSize: 2000,
         });
+
+        this.enemyDeathGroup = this.add.group({
+            classType: Phaser.GameObjects.Sprite,
+            maxSize: 10,
+        });
     }
 
     public setCurrentStage()
@@ -238,6 +268,8 @@ export default class GameScene extends Phaser.Scene
                     this.changeMajorStage(zoneData?.stage);
 
                     this.playSong(zoneData?.musicIndex);
+
+                    addEnemies(this);
                 }
             }
         })
@@ -263,7 +295,7 @@ export default class GameScene extends Phaser.Scene
         });
     }
 
-    public isInPlayerStage(gameObject: Entity | Phaser.Types.Tilemaps.TiledObject): boolean
+    public isInPlayerStage(gameObject: Entity | Phaser.Types.Tilemaps.TiledObject | TCoord): boolean
     {
         const currentZone = this.getPlayerCurrentStage();
 
@@ -271,9 +303,9 @@ export default class GameScene extends Phaser.Scene
 
         const { x, y } = gameObject;
 
-        const isX = x! > currentZone.x! && x! < currentZone.x! + currentZone.width!;
+        const isX = x! >= currentZone.x! && x! <= currentZone.x! + currentZone.width!;
 
-        const isY = y! > currentZone.y! && y! < currentZone.y! + currentZone.height!;
+        const isY = y! >= currentZone.y! && y! <= currentZone.y! + currentZone.height!;
 
         return (isX && isY);
     }
@@ -318,8 +350,6 @@ export default class GameScene extends Phaser.Scene
     {
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
-        // const stage = Number(String(zone)[0]);
-
         player.status.stage = zone;
 
         this.events.emit(HUD_EVENTS_NAMES.STAGE, zone);
@@ -327,7 +357,6 @@ export default class GameScene extends Phaser.Scene
 
     public changeStage(nextDoor: TDoor)
     {
-
         if (this.canEnterStage(nextDoor) === false)
         {
             console.warn('zone already visited'.toUpperCase());
@@ -370,76 +399,6 @@ export default class GameScene extends Phaser.Scene
     {
         const backParallax = this.children.getByName('parallax-mountain') as Phaser.GameObjects.TileSprite;
     }
-
-    private destroyRoom(): void
-    {
-        this.physics.world.colliders.destroy();
-
-        //this.map.destroy();
-
-        // this.hearts.children.each(e =>
-        // {
-        //     const body = e.body as Phaser.Physics.Arcade.Body;
-        //     body.setEnable(false);
-
-        //     const heart = e as Phaser.GameObjects.Sprite;
-        //     heart.setActive(false).setVisible(false);
-        // });
-
-        // this.powerUpGroup.forEach(e => e.destroy());
-        // this.powerUpGroup = [];
-
-        // this.enemyGroup.forEach(enemy =>
-        // {
-        //     try
-        //     {
-        //         // @ts-ignore
-        //         enemy.destroyHitbox();
-        //     }
-        //     catch (error)
-        //     {
-        //         // // console.log(error);
-        //     }
-
-        //     try
-        //     {
-        //         // @ts-ignore
-        //         enemy.walkSfx?.stop().destroy();
-        //     }
-        //     catch (error)
-        //     {
-        //         // // console.log(error);
-        //     }
-
-        //     enemy.destroy();
-        // });
-        // this.enemyGroup = [];
-
-        // this.projectiles.children.each(projectile =>
-        // {
-        //     const body = projectile.body as Phaser.Physics.Arcade.Body;
-        //     body.setEnable(false);
-        //     const proj = projectile as Projectile;
-        //     proj.setActive(false).setVisible(false);
-        // });
-
-        // this.dragonHeadBalls.children.each(projectile =>
-        // {
-        //     const body = projectile.body as Phaser.Physics.Arcade.Body;
-        //     body.setEnable(false);
-        //     const proj = projectile as Projectile;
-        //     proj.setActive(false).setVisible(false);
-        // });
-
-        // const element = this.children.list.find(e => e.name === 'waterElement');
-        // element?.destroy();
-
-        // this.npcGroup.forEach(e => e.destroy());
-        // this.npcGroup = [];
-
-        // if (this.demon) this.demon.destroy();
-    }
-
     public cameraFollowPlayer(): Phaser.Cameras.Scene2D.Camera
     {
         this.cameras.main.startFollow(this.getPlayerByName(PLAYER_A_NAME), true, 0.2, 0.1, 0, 0)
@@ -455,7 +414,6 @@ export default class GameScene extends Phaser.Scene
         const player = this.children.getByName(playerName);
 
         if (player === null) throw new Error(`no player named ${playerName} found`);
-
 
         return player as Entity;
     }
