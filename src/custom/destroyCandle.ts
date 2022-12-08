@@ -13,6 +13,10 @@ export default function destroyCandle(scene: GameScene, _whip: unknown, _candle:
 {
     let candle = _candle as Phaser.Tilemaps.Tile;
 
+    if(!scene.isInPlayerStage({x: candle.pixelX, y: candle.pixelY})){
+        return;
+    }
+
     if (!candle.properties.light) return;
 
     // give an heart
