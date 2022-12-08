@@ -29,9 +29,14 @@ export enum EPossibleState
     ATTACK = 'attack',
     SECONDARY_ATTACK = 'secondaryAttack',
     CROUCH_ATTACK = 'crouchAttack',
-    HURT = 'hit',
+    HURT = 'hurt',
     DEATH = 'death',
-    SMASHDOOR = 'smash_door'
+    SMASHDOOR = 'smash_door',
+    // ENEMY BEHAVIOUR
+    PROXIMITY = 'proximity',
+    FLY_LEFT = 'flyLeft',
+    FLY_RIGHT = 'flyRight',
+    SIDE = 'side'
 }
 
 export const possibleDirection = [
