@@ -116,7 +116,7 @@ export class Enemy extends Entity
 
             this.scene.time.addEvent({
                 delay: 100,
-                repeat: 3,
+                repeat: 4,
                 callback: () => {
                     if(!this.isTinted)
                     {
