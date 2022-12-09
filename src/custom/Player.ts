@@ -37,6 +37,7 @@ import { TCharacterConfig } from "../types/types";
 import StateMachine from "../utils/StateMachine";
 import StairAttackState from "../entities/states/attack/StairAttack";
 import StairSecondaryAttackState from "../entities/states/attack/StairSecondaryAttack";
+import { PALETTE_DB32 } from "../constant/colors";
 
 export default class Player extends Entity
 {
@@ -533,6 +534,65 @@ export default class Player extends Entity
         }
 
         this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'dagger');
+    }
+
+    public setStatusHealthDamage(damage: number): Entity
+    {
+        if (this.physicsProperties.isHurt) return this;
+
+        this.physicsProperties.isHurt = true;
+
+        const health = this.status.health - damage;
+
+        if (health > 0)
+        {
+            this.setStatusHealth(health);
+
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
+
+            this.setTint(PALETTE_DB32.AFFAIR);
+
+            this.scene.time.addEvent({
+                delay: 200,
+                repeat: 8,
+                callback: () => {
+                    if(!this.isTinted)
+                    {
+                        this.setTint(PALETTE_DB32.AFFAIR);
+                    }
+                    else
+                    {
+                        this.clearTint()
+                    }
+                    
+                }
+            })
+
+            this.scene.time.addEvent({
+                delay: 2000,
+                callback: () =>
+                {
+                    if (!this.active) return;
+
+                    this.physicsProperties.isHurt = false;
+                }
+            })
+
+            return this;
+        }
+
+        this.setStatusHealth(0);
+
+        if (this.name === PLAYER_A_NAME)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, 0);
+        }
+
+        this.setStatusIsDead(true);
+
+        this.die();
+
+        return this;
     }
 
     public die(): void

@@ -139,11 +139,6 @@ export class Entity extends Phaser.GameObjects.Sprite
 
         this.setStatusHealth(0);
 
-        if (this.name === PLAYER_A_NAME)
-        {
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, 0);
-        }
-
         this.setStatusIsDead(true);
 
         this.die();

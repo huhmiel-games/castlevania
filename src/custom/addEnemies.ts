@@ -108,7 +108,7 @@ export default function addEnemies(scene: GameScene)
 
         const enemy = _enemy as DamageBody;
 
-        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT || !enemy.parent.active)
+        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT || playerDamageBody.parent.physicsProperties.isHurt || !enemy.parent.active)
         {
             return false;
         }
