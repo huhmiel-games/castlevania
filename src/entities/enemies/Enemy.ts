@@ -136,8 +136,6 @@ export class Enemy extends Entity
                 {
                     if (!this.active) return;
 
-                    //this.clearTint()
-
                     this.physicsProperties.isHurt = false;
                 }
             })
