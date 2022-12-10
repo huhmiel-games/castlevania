@@ -366,6 +366,15 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
+        key: 'cat-jump',
+        frames: [
+            { key: 'enemies', frame: 'cat-run_1' }
+        ],
+        frameRate: 8,
+        repeat: -1,
+    });
+
+    scene.anims.create({
         key: 'crow-idle',
         frames: [
             { key: 'enemies', frame: 'crow-idle_0' },
