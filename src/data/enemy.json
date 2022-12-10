@@ -215,5 +215,66 @@
             "death"
         ],
         "resurrect": false
+    },
+    "cat": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "cat-idle_0",
+            "animList": {
+                "IDLE": "cat-idle",
+                "JUMP": "cat-jump",
+                "JUMP_MOMENTUM": "cat-jump",
+                "FALL": "cat-jump",
+                "LEFT": "cat-run",
+                "RIGHT": "cat-run"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 200,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 200,
+            "speed": 100,
+            "acceleration": 300,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "jumpHeight": 0.30
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 16,
+                "offsetY": 11
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 22,
+                "height": 18
+            }
+        },
+        "state": [
+            "idle",
+            "left",
+            "right",
+            "jump",
+            "jumpMomentum",
+            "fall",
+            "death"
+        ],
+        "resurrect": false
     }
 }

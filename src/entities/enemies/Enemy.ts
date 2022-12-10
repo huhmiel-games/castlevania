@@ -152,6 +152,18 @@ export class Enemy extends Entity
         return this;
     }
 
+    public isOutsideScreenByPixels(pixels: number = 128): boolean
+    {
+        const cam = this.scene.cameras.main;
+
+        if(this.body.right > cam.worldView.right + pixels || this.body.left < cam.worldView.left - pixels)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public die(): void
     {
         if (!this.active) return;
@@ -207,6 +219,16 @@ export class Enemy extends Entity
         this.body.stop().setEnable(false);
 
         this.resurrects();
+    }
+
+    public kill(): void
+    {
+        this.damageBody.body.setEnable(false);
+        this.damageBody.setActive(false);
+
+        this.setActive(false).setVisible(false);
+
+        this.body.stop().setEnable(false);
     }
 
     private resurrects()

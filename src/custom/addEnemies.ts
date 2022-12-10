@@ -13,6 +13,7 @@ import { BatIA } from "./enemies_ia/BatIA";
 import { MeleeWeapon } from "../entities/weapons/MeleeWeapon";
 import { MedusaIA } from "./enemies_ia/MedusaIA";
 import { SpearKnightIA } from "./enemies_ia/SpearKnightIA";
+import { CatIA } from "./enemies_ia/CatIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -132,6 +133,9 @@ function setAIEnemy(enemy: Enemy)
             break;
         case 'spear-knight':
             enemy.setAi(new SpearKnightIA(enemy));
+            break;
+        case 'cat':
+            enemy.setAi(new CatIA(enemy));
             break;
 
         default:
