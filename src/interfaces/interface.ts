@@ -40,7 +40,8 @@ export interface IPhysicsProperties
     isDead: boolean,
     isAttacking: boolean,
     isPaused: boolean,
-    sinHeight?: number
+    sinHeight?: number,
+    jumpHeight?: number
 }
 
 export interface IAnimationList

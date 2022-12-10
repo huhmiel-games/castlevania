@@ -1,4 +1,5 @@
 import { EPossibleState } from "../../../constant/character";
+import { TILE_SIZE } from "../../../constant/config";
 import GameScene from "../../../scenes/GameScene";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
@@ -41,7 +42,7 @@ export default class JumpState extends State
 
         const { blocked, bottom } = character.body;
 
-        const { isAttacking, isHurt } = character.physicsProperties;
+        const { isAttacking, isHurt, jumpHeight } = character.physicsProperties;
 
         const { now } = scene.time;
 
@@ -53,7 +54,7 @@ export default class JumpState extends State
         }
 
         // End of jump
-        if (this.groundYPosition - 32 > bottom || b.isUp)
+        if (this.groundYPosition - ( jumpHeight ?  TILE_SIZE * jumpHeight : 32) > bottom || b.isUp)
         {
             this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM, this.stateMachine.state);
 
