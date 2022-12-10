@@ -237,6 +237,7 @@ export class Enemy extends Entity
 
                     this.setActive(true).setVisible(true);
 
+                    this.physicsProperties.isHurt = false;
                     this.physicsProperties.isDead = false;
                 }
                 else
