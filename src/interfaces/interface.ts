@@ -33,6 +33,7 @@ export interface IPhysicsProperties
 {
     gravity: number,
     speed: number,
+    maxSpeedY?: number,
     acceleration: number,
     dragCoeff: number,
     stairSpeed?: number,
@@ -82,4 +83,5 @@ export interface IEnemyIA
     parent: Enemy;
     scene: GameScene;
     decides: ()=> void
+    reset: () => void
 }
