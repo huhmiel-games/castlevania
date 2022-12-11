@@ -156,6 +156,13 @@ export default class ColliderService
             return false;
         }, scene);
 
+        scene.physics.add.overlap(scene.weaponGroup, scene.enemyWeaponGroup, (_weapon, _enemyWeapon) =>
+        {
+            const enemyWeapon = _enemyWeapon as unknown as Weapon;
+            enemyWeapon.setDisable();
+            
+        }, undefined, scene);
+
         const candlesLayer = LayerService.getGroundLayers(scene).find(e => e.name === 'ground/candles');
 
         if (candlesLayer)
