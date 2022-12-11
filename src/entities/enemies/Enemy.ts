@@ -147,8 +147,6 @@ export class Enemy extends Entity
 
         this.setStatusIsDead(true);
 
-        
-
         this.die();
 
         return this;
@@ -256,17 +254,16 @@ export class Enemy extends Entity
 
                     if(!this.config.alignToPlayer)
                     {
-                        this.setPosition(this.config.status.position.x, this.config.status.position.y);
+                        this.body.reset(this.config.status.position.x, this.config.status.position.y);
                     }
                     else
                     {
                         const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-                        this.setPosition(this.config.status.position.x, player.body.bottom - TILE_SIZE);
+                        this.body.reset(this.config.status.position.x, player.body.bottom - TILE_SIZE);
                     }
-                    
 
-                    this.ai.reset()
+                    this.ai.reset();
 
                     this.body.setEnable(true);
 
