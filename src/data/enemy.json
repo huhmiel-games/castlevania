@@ -54,7 +54,7 @@
             "right",
             "death"
         ],
-        "resurrect": true
+        "resurrect": 10000
     },
     "bat": {
         "config": {
@@ -107,7 +107,8 @@
             "flyLeft",
             "flyRight"
         ],
-        "resurrect": true
+        "collideWithWorld": false,
+        "resurrect": 10000
     },
     "medusa": {
         "config": {
@@ -160,7 +161,9 @@
             "flyLeft",
             "flyRight"
         ],
-        "resurrect": true
+        "collideWithWorld": false,
+        "resurrect": 5000,
+        "alignToPlayer": true
     },
     "spear-knight": {
         "config": {
@@ -214,7 +217,7 @@
             "right",
             "death"
         ],
-        "resurrect": false
+        "resurrect": 0
     },
     "cat": {
         "config": {
@@ -275,6 +278,122 @@
             "fall",
             "death"
         ],
-        "resurrect": false
+        "resurrect": 0
+    },
+    "fishman": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "fishman-walk_1",
+            "animList": {
+                "IDLE": "fishman-idle",
+                "LEFT": "fishman-walk",
+                "RIGHT": "fishman-walk",
+                "JUMP": "fishman-jump",
+                "JUMP_MOMENTUM": "fishman-jump",
+                "FALL": "fishman-jump",
+                "SECONDARY_ATTACK": "fishman-attack"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 300,
+            "life": 0,
+            "ammo": 1000,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 800,
+            "speed": 25,
+            "maxSpeedY": 500,
+            "acceleration": 1000,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "jumpHeight": 8
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 16
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 10,
+                "height": 32
+            }
+        },
+        "state": [
+            "idle",
+            "left",
+            "right",
+            "jump",
+            "jumpMomentum",
+            "fall",
+            "secondaryAttack",
+            "death"
+        ],
+        "resurrect": 20000
+    },
+    "ghost": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "skull_0",
+            "animList": {
+                "IDLE": "skull"
+            }
+        },
+        "status": {
+            "health": 2,
+            "score": 300,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 20,
+            "acceleration": 600,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 4
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 8
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 14,
+                "height": 14
+            }
+        },
+        "state": [
+            "idle"
+        ],
+        "collideWithWorld": false,
+        "resurrect": 0,
+        "alignToPlayer": false
     }
 }

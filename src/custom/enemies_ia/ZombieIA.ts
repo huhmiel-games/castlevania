@@ -69,4 +69,9 @@ export class ZombieIA implements IEnemyIA
             }
         }
     }
+
+    reset()
+    {
+
+    }
 }

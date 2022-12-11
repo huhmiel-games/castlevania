@@ -127,4 +127,9 @@ export class SpearKnightIA implements IEnemyIA
             }
         }
     }
+
+    reset()
+    {
+
+    }
 }

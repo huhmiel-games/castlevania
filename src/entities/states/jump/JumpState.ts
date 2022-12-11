@@ -28,7 +28,7 @@ export default class JumpState extends State
         // Initialize the jump
         this.groundYPosition = character.body.bottom;
 
-        character.body.setDrag(0).setMaxVelocityY(character.physicsProperties.speed * 4)//.setVelocityY(-300);
+        character.body.setDrag(0).setMaxVelocityY(character.physicsProperties.maxSpeedY || character.physicsProperties.speed * 4);
 
         // Handle animations
         character.anims.play(character.animList.JUMP!, true);

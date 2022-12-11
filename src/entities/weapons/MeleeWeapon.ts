@@ -100,4 +100,11 @@ export class MeleeWeapon extends Phaser.GameObjects.Image implements Weapon
     }
 
     public attack: () => void;
+
+    public setDisable()
+    {
+        this.body.setEnable(false);
+
+        this.setActive(false).setVisible(false);
+    }
 }

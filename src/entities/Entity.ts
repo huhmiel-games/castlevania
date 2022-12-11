@@ -8,6 +8,8 @@ import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
 import DamageBody from "./DamageBody";
+import ThrowingAxe from "./weapons/ThrowingAxe";
+import FireBall from "./weapons/FireBall";
 
 /**
  * @description A base class for player and enemies
@@ -31,6 +33,7 @@ export class Entity extends Phaser.GameObjects.Sprite
     public animList: IAnimationList;
     public frameList?: IFrameList;
     public stateMachine: StateMachine;
+    public config: any;
 
     constructor(config: TCharacterConfig)
     {
@@ -197,8 +200,50 @@ export class Entity extends Phaser.GameObjects.Sprite
 
     }
 
-    public addSecondaryWeapon(name: string)
+    public addSecondaryWeapon(weaponType: string)
     {
+        switch (weaponType)
+        {
+            case 'fireball':
+                const fireball = new FireBall({
+                    scene: this.scene,
+                    parent: this,
+                    damage: 1.5,
+                    x: this.body.x,
+                    y: this.body.y,
+                    texture: 'items',
+                    frame: 'fireBall_0',
+                    anims: 'fireBall',
+                    sound: 10
+                });
 
+                fireball.setName('fireball');
+
+                this.scene.enemyWeaponGroup.add(fireball);
+
+                break;
+
+            case 'axe':
+                const weapon = new ThrowingAxe({
+                    scene: this.scene,
+                    parent: this,
+                    damage: 1.5,
+                    x: this.body.x,
+                    y: this.body.y,
+                    texture: 'items',
+                    frame: 'weapon-axe',
+                    anims: 'axe',
+                    sound: 10
+                });
+    
+                weapon.setName('axe');
+
+                this.scene.enemyWeaponGroup.add(weapon);
+
+                break;
+
+            default:
+                break;
+        }
     }
 }

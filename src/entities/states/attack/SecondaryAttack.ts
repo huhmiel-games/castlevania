@@ -4,12 +4,13 @@ import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
 import { RangedWeapon } from '../../../types/types';
+import { Enemy } from '../../enemies/Enemy';
 
 /**
  * @description
  * @author © Philippe Pereira 2022
  * @export
- * @class AttackState
+ * @class SecondaryAttackState
  * @extends {State}
  */
 export default class SecondaryAttackState extends State
@@ -21,19 +22,32 @@ export default class SecondaryAttackState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
-        const weapon = scene.secondaryWeaponGroup.getFirstDead(false, character.body.x, character.body.y, undefined, undefined, true) as RangedWeapon;
+        const group = character instanceof Enemy ? 'enemyWeaponGroup' : 'secondaryWeaponGroup';
+
+        const weapon = scene[group].getFirstDead(false, character.body.x, character.body.y, undefined, undefined, true) as RangedWeapon;
 
         const ammo = character.status.ammo;
 
         if (!weapon || ammo === 0)
         {
-            this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.prevState);
+            if (character.canUse(EPossibleState.ATTACK))
+            {
+                this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.prevState);
+            }
+            else
+            {
+                this.stateMachine.transition(this.stateMachine.prevState, this.stateMachine.state);
+            }
 
             return;
         }
 
         character.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
         {
+            weapon.parent = character;
+
+            weapon.setDepth(character.depth - 1);
+
             weapon.attack();
 
             const value = ammo - 1;
@@ -42,7 +56,24 @@ export default class SecondaryAttackState extends State
 
             character.physicsProperties.isAttacking = false;
 
-            this.stateMachine.transition(this.stateMachine.prevState, this.stateMachine.state);
+            if (character instanceof Enemy)
+            {
+                scene.time.addEvent({
+                    delay: 250,
+                    callback: () =>
+                    {
+                        this.stateMachine.transition(this.stateMachine.initialState, this.stateMachine.state);
+
+                        return;
+                    }
+                })
+            }
+            else
+            {
+                this.stateMachine.transition(this.stateMachine.prevState, this.stateMachine.state);
+            }
+
+
         });
 
         character.anims.play(character.animList.SECONDARY_ATTACK!, true);

@@ -14,6 +14,8 @@ import { MeleeWeapon } from "../entities/weapons/MeleeWeapon";
 import { MedusaIA } from "./enemies_ia/MedusaIA";
 import { SpearKnightIA } from "./enemies_ia/SpearKnightIA";
 import { CatIA } from "./enemies_ia/CatIA";
+import { FishmanIA } from "./enemies_ia/FishmanIA";
+import { GhostIA } from "./enemies_ia/GhostIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -52,7 +54,12 @@ export default function addEnemies(scene: GameScene)
             enemy.setName(enemyName);
             setAIEnemy(enemy);
 
-            if (enemyJSONConfig.resurrect === true)
+            if (enemyName === 'fishman')
+            {
+                enemy.addSecondaryWeapon('fireball');
+            }
+
+            if (enemyJSONConfig.resurrect > 0 && enemyName !== 'fishman')
             {
                 const player = scene.getPlayerByName(PLAYER_A_NAME);
 
@@ -70,6 +77,7 @@ export default function addEnemies(scene: GameScene)
 
     const player = scene.getPlayerByName(PLAYER_A_NAME);
 
+    // player weapons make damage to enemy
     scene.enemiesVsWeaponsCollider = scene.physics.add.overlap(scene.weaponGroup, enemiesDamageBody, (_weapon, _enemy) =>
     {
         const enemy = _enemy as DamageBody;
@@ -87,6 +95,7 @@ export default function addEnemies(scene: GameScene)
 
     }, undefined, scene);
 
+    // enemies make damage to player
     scene.enemiesVsPlayerCollider = scene.physics.add.overlap(player.damageBody, enemiesDamageBody, (_player, _enemy) =>
     {
         const playerDamageBody = _player as DamageBody;
@@ -109,7 +118,38 @@ export default function addEnemies(scene: GameScene)
 
         const enemy = _enemy as DamageBody;
 
+        if(enemy.parent.visible === false)
+        {
+            return false;
+        }
+
         if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT || playerDamageBody.parent.physicsProperties.isHurt || !enemy.parent.active)
+        {
+            return false;
+        }
+
+        return true;
+    }, scene);
+
+    // enemies weapons make damage to player
+    scene.enemiesWeaponsVsPlayerCollider = scene.physics.add.overlap(player.damageBody, scene.enemyWeaponGroup, (_player, _weapon) =>
+    {
+        const playerDamageBody = _player as DamageBody;
+
+        const weapon = _weapon as unknown as Weapon;
+
+        weapon.setDisable();
+
+        const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
+
+        playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
+
+        playerDamageBody.parent.setStatusHealthDamage(damage);
+    }, (_player, _weapon) =>
+    {
+        const playerDamageBody = _player as DamageBody;
+
+        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT || playerDamageBody.parent.physicsProperties.isHurt)
         {
             return false;
         }
@@ -137,6 +177,13 @@ function setAIEnemy(enemy: Enemy)
         case 'cat':
             enemy.setAi(new CatIA(enemy));
             break;
+        case 'fishman':
+            enemy.setAi(new FishmanIA(enemy));
+            break;
+        case 'ghost':
+            enemy.setAi(new GhostIA(enemy));
+            break;
+
 
         default:
             break;

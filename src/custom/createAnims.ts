@@ -502,15 +502,45 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'fishman-attack_0' },
         ],
         frameRate: 2,
+        repeat: 0,
+    });
+
+    scene.anims.create({
+        key: 'fishman-idle',
+        frames: [
+            { key: 'enemies', frame: 'fishman-walk_0' },
+        ],
+        frameRate: 2,
         repeat: -1,
     });
 
     scene.anims.create({
         key: 'fishman-walk',
         frames: [
+            { key: 'enemies', frame: 'fishman-walk_0' },
             { key: 'enemies', frame: 'fishman-walk_1' },
+            { key: 'enemies', frame: 'fishman-walk_2' },
+            { key: 'enemies', frame: 'fishman-walk_1' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'fishman-jump',
+        frames: [
             { key: 'enemies', frame: 'fishman-walk_0' },
             { key: 'enemies', frame: 'fishman-walk_2' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'fireBall',
+        frames: [
+            { key: 'enemies', frame: 'fireBall_0' },
+            { key: 'enemies', frame: 'fireBall_1' },
         ],
         frameRate: 6,
         repeat: -1,

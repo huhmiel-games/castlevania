@@ -41,6 +41,8 @@ export default class GameScene extends Phaser.Scene
     public currentPlayingSong: Phaser.Sound.BaseSound | null;
     public musicIndex: number = 0;
     debugGraphics: Phaser.GameObjects.Graphics;
+    public enemyWeaponGroup: Phaser.GameObjects.Group;
+    public enemiesWeaponsVsPlayerCollider: Phaser.Physics.Arcade.Collider;
 
     constructor()
     {
@@ -227,6 +229,9 @@ export default class GameScene extends Phaser.Scene
 
         this.secondaryWeaponGroup = this.add.group();
         this.secondaryWeaponGroup.maxSize = 3;
+
+        this.enemyWeaponGroup = this.add.group();
+        this.enemyWeaponGroup.maxSize = 10;
 
         this.lightCandlesGroup = this.add.group({
             classType: Phaser.GameObjects.PointLight,

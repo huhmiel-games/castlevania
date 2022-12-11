@@ -52,4 +52,9 @@ export class MedusaIA implements IEnemyIA
             this.parent.killAndRespawn();
         }
     }
+
+    reset()
+    {
+
+    }
 }

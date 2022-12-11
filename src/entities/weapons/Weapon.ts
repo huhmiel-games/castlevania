@@ -10,4 +10,5 @@ export default abstract class Weapon
     public attack: (...args: any) => void;
     public destroyObject: (_object: unknown) => void;
     public destroyTile: (_tile: Phaser.Tilemaps.Tile) => void;
+    public setDisable: () => void;
 }

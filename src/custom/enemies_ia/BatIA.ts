@@ -32,14 +32,14 @@ export class BatIA implements IEnemyIA
 
             const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-            if(player.damageBody.x < this.parent.body.x)
+            if (player.damageBody.x < this.parent.body.x)
             {
                 left.setDown(now);
 
                 return;
             }
 
-            if(player.damageBody.x > this.parent.body.x)
+            if (player.damageBody.x > this.parent.body.x)
             {
                 right.setDown(now);
 
@@ -47,7 +47,7 @@ export class BatIA implements IEnemyIA
             }
         }
 
-        if(this.parent.active && (this.parent.body.right < cam.worldView.left - 128 || this.parent.body.left > cam.worldView.right + 128))
+        if (this.parent.active && (this.parent.body.right < cam.worldView.left - 128 || this.parent.body.left > cam.worldView.right + 128))
         {
             this.parent.killAndRespawn();
         }
@@ -65,5 +65,10 @@ export class BatIA implements IEnemyIA
 
         //     this.parent.killAndRespawn();
         // }
+    }
+
+    reset()
+    {
+
     }
 }

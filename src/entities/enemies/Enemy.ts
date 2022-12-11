@@ -32,6 +32,7 @@ import SideState from "../states/enemy/SideState";
 import { IEnemyIA as IEnemyAI } from "../../interfaces/interface";
 import FlyLeftState from "../states/enemy/FlyLeftState";
 import FlyRightState from "../states/enemy/FlyRightState";
+import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 
 export class Enemy extends Entity
 {
@@ -194,7 +195,7 @@ export class Enemy extends Entity
 
                 this.setVisible(false).clearTint();
 
-                if (this.config.resurrect)
+                if (this.config.resurrect > 0)
                 {
                     this.resurrects();
                 }
@@ -231,10 +232,10 @@ export class Enemy extends Entity
         this.body.stop().setEnable(false);
     }
 
-    private resurrects()
+    private resurrects(forceNow: boolean = false)
     {
         this.scene?.time.addEvent({
-            delay: Phaser.Math.RND.between(1000, 10000),
+            delay: forceNow === false ? Phaser.Math.RND.between(1000, this.config.resurrect) : 0,
             callback: () =>
             {
                 if (!this.scene)
@@ -244,13 +245,25 @@ export class Enemy extends Entity
                     return;
                 }
 
-                if (!this.scene.cameras.main.worldView.contains(this.config.status.position.x, this.config.status.position.y))
+                if (!this.scene.cameras.main.worldView.contains(this.config.status.position.x, this.config.status.position.y) || forceNow === true)
                 {
                     this.resetAllButtons();
 
                     this.stateMachine.transition(this.stateMachine.initialState, this.stateMachine.state);
 
-                    this.setPosition(this.config.status.position.x, this.config.status.position.y);
+                    if(!this.config.alignToPlayer)
+                    {
+                        this.setPosition(this.config.status.position.x, this.config.status.position.y);
+                    }
+                    else
+                    {
+                        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+
+                        this.setPosition(this.config.status.position.x, player.body.bottom - TILE_SIZE);
+                    }
+                    
+
+                    this.ai.reset()
 
                     this.body.setEnable(true);
 

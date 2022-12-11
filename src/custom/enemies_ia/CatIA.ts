@@ -106,4 +106,9 @@ export class CatIA implements IEnemyIA
             this.parent.kill();
         }
     }
+
+    reset()
+    {
+
+    }
 }

@@ -175,12 +175,17 @@ export default class ColliderService
         {
             const enemy = _enemy as Entity;
 
-            const excludedStates = [EPossibleState.FLY_LEFT, EPossibleState.FLY_RIGHT];
-
-            if (excludedStates.includes(enemy.stateMachine.state))
+            if(enemy.config.collideWithWorld === false)
             {
                 return false;
             }
+
+            // const excludedStates = [EPossibleState.FLY_LEFT, EPossibleState.FLY_RIGHT];
+
+            // if (excludedStates.includes(enemy.stateMachine.state))
+            // {
+            //     return false;
+            // }
 
             return true;
         }, scene);
