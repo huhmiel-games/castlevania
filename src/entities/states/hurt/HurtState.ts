@@ -38,8 +38,6 @@ export default class HurtState extends State
 
         this.hitTime = now;
 
-        const { x, y } = character.body.velocity;
-
         character.body.setDrag(0, 0).setMaxVelocityY(character.physicsProperties.speed * 4);
 
         const speedX = character.flipX ? character.physicsProperties.speed * 2 : character.physicsProperties.speed * -2;
@@ -53,7 +51,7 @@ export default class HurtState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { blocked, bottom } = character.body;
+        const { blocked } = character.body;
 
         const { now } = scene.time;
 

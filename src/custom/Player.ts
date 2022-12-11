@@ -103,9 +103,9 @@ export default class Player extends Entity
         {
             const currentAnim = this.anims.getName();
 
-            const { JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK } = this.animList;
+            const { JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK, HURT } = this.animList;
 
-            if ([JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK].includes(currentAnim))
+            if ([JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK, HURT].includes(currentAnim))
             {
                 this.meleeWeapon?.body.setEnable(false);
 

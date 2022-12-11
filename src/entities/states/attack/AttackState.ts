@@ -26,6 +26,13 @@ export default class AttackState extends State
 
             character.physicsProperties.isAttacking = false;
 
+            if(character.physicsProperties.isHurt)
+            {
+                this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+
+                return;
+            }
+
             this.stateMachine.transition(this.stateMachine.prevState, this.stateMachine.state);
         });
 
