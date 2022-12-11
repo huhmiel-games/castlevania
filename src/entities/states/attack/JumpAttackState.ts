@@ -58,14 +58,6 @@ export default class JumpAttackState extends State
             return;
         }
 
-        // Player is hit by enemy
-        if (character.physicsProperties.isHurt)
-        {
-            this.stateMachine.transition(EPossibleState.HURT, this.stateMachine.state);
-
-            return;
-        }
-
         if (left.isDown && right.isUp)
         {
             character.body.setAcceleration(-character.physicsProperties.acceleration * 5, -character.physicsProperties.acceleration * 15);

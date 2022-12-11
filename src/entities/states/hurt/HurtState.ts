@@ -17,7 +17,7 @@ export default class HurtState extends State
     public stateMachine: StateMachine;
     private groundYPosition: number;
 
-    public enter (scene: GameScene, character: Entity)
+    public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
 
@@ -29,7 +29,7 @@ export default class HurtState extends State
         // Stop player
         character.body.setDrag(0).setAcceleration(0, 0);
 
-        if(character.physicsProperties.isAttacking)
+        if (character.physicsProperties.isAttacking)
         {
             character.meleeWeapon?.body.setEnable(false);
 
@@ -42,14 +42,14 @@ export default class HurtState extends State
 
         character.body.setDrag(0, 0).setMaxVelocityY(character.physicsProperties.speed * 4);
 
-        const speedX = character.flipX ? character.physicsProperties.speed  * 2 : character.physicsProperties.speed * -2;
+        const speedX = character.flipX ? character.physicsProperties.speed * 2 : character.physicsProperties.speed * -2;
 
         character.body.setVelocity(speedX, -character.physicsProperties.speed * 6);
 
         character.anims.play(character.animList.HURT!, true);
     }
 
-    public execute (scene: GameScene, character: Entity)
+    public execute(scene: GameScene, character: Entity)
     {
         const { blocked, bottom } = character.body;
 
@@ -59,10 +59,14 @@ export default class HurtState extends State
         {
             character.body.setVelocity(0, 0);
 
-            // return to idle state
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
-
-            return;
+            if (blocked.down)
+            {
+                this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            }
+            else
+            {
+                this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            }
         }
     }
 }

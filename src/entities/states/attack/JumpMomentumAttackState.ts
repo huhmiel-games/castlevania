@@ -39,30 +39,22 @@ export default class JumpMomentumAttackState extends State
 
         const { blocked } = character.body;
 
-        const { isAttacking, isHurt } = character.physicsProperties;
+        const { isAttacking } = character.physicsProperties;
 
         const { now } = scene.time;
-
-        // Player is hit by enemy
-        if (character.physicsProperties.isHurt)
-        {
-            this.stateMachine.transition(EPossibleState.HURT, this.stateMachine.state);
-
-            return;
-        }
 
         if (this.momentTime + 150 < now)
         {
             character.body.setGravityY(character.physicsProperties.gravity);
 
-            if (!isHurt && !isAttacking)
+            if (!isAttacking)
             {
                 this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
 
                 return;
             }
 
-            if (!isHurt && isAttacking)
+            if (isAttacking)
             {
                 this.stateMachine.transition(EPossibleState.FALL_ATTACK, this.stateMachine.state);
 

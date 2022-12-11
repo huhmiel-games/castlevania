@@ -51,7 +51,7 @@ export default class BackFlipState extends State
 
         const { blocked, bottom, top } = character.body;
 
-        const { isAttacking, isHurt } = character.physicsProperties;
+        const { isAttacking } = character.physicsProperties;
 
         const { now } = scene.time;
 
@@ -91,14 +91,6 @@ export default class BackFlipState extends State
         if (blocked.up)
         {
             this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
-
-            return;
-        }
-
-        // Player is hit by enemy
-        if (character.canUse(EPossibleState.HURT) && isHurt)
-        {
-            this.stateMachine.transition(EPossibleState.HURT, this.stateMachine.state);
 
             return;
         }

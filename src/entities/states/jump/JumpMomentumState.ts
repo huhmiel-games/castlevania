@@ -16,7 +16,7 @@ export default class JumpMomentumState extends State
     public stateMachine: StateMachine;
     private momentTime: number = 0;
 
-    public enter (scene: GameScene, character: Entity)
+    public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
 
@@ -31,23 +31,15 @@ export default class JumpMomentumState extends State
         console.log('MOMENTUM STATE');
     }
 
-    public execute (scene: GameScene, character: Entity)
+    public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
+        const { left, right, up, down, a, b, start, select } = character.buttons;
 
         const { blocked } = character.body;
 
-        const { isAttacking, isHurt } = character.physicsProperties;
+        const { isAttacking } = character.physicsProperties;
 
         const { now } = scene.time;
-
-        // Player is hit by enemy
-        if (character.canUse(EPossibleState.HURT) && character.physicsProperties.isHurt)
-        {
-            this.stateMachine.transition(EPossibleState.HURT, this.stateMachine.state);
-
-            return;
-        }
 
         if (character.canUse(EPossibleState.JUMP_MOMENTUM_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
@@ -60,12 +52,9 @@ export default class JumpMomentumState extends State
         {
             character.body.setGravityY(character.physicsProperties.gravity);
 
-            if (!isHurt)
-            {
-                this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
 
-                return;
-            }
+            return;
         }
 
         // If touching the ceiling
@@ -91,6 +80,5 @@ export default class JumpMomentumState extends State
         }
 
         character.body.setAccelerationY(0);
-
     }
 }
