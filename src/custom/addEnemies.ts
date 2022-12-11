@@ -16,6 +16,7 @@ import { SpearKnightIA } from "./enemies_ia/SpearKnightIA";
 import { CatIA } from "./enemies_ia/CatIA";
 import { FishmanIA } from "./enemies_ia/FishmanIA";
 import { GhostIA } from "./enemies_ia/GhostIA";
+import { DragonHeadIA } from "./enemies_ia/DragonHeadIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -32,7 +33,7 @@ export default function addEnemies(scene: GameScene)
 
     const inputController = InputController.getInstance();
 
-    enemyLayer?.objects.forEach(enemyObj =>
+    enemyLayer?.objects.forEach((enemyObj, i) =>
     {
         if (scene.isInPlayerStage(enemyObj))
         {
@@ -54,9 +55,17 @@ export default function addEnemies(scene: GameScene)
             enemy.setName(enemyName);
             setAIEnemy(enemy);
 
-            if (enemyName === 'fishman')
+            if (enemyName === 'fishman' || enemyName === 'dragonhead')
             {
                 enemy.addSecondaryWeapon('fireball');
+            }
+
+            if(enemyName === 'dragonhead')
+            {
+                if(i % 2 === 0)
+                {
+                    enemy.setFlipX(true);
+                }
             }
 
             if (enemyJSONConfig.resurrect > 0 && enemyName !== 'fishman')
@@ -118,7 +127,7 @@ export default function addEnemies(scene: GameScene)
 
         const enemy = _enemy as DamageBody;
 
-        if(enemy.parent.visible === false)
+        if (enemy.parent.visible === false)
         {
             return false;
         }
@@ -182,6 +191,9 @@ function setAIEnemy(enemy: Enemy)
             break;
         case 'ghost':
             enemy.setAi(new GhostIA(enemy));
+            break;
+        case 'dragonhead':
+            enemy.setAi(new DragonHeadIA(enemy));
             break;
 
 

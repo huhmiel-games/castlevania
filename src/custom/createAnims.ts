@@ -328,11 +328,25 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'dragon-cannon',
         frames: [
-            { key: 'enemies', frame: 'dragon-cannon_0' },
+            { key: 'enemies', frame: 'dragon-cannon_1' },
+            { key: 'enemies', frame: 'dragon-cannon_1' },
+            { key: 'enemies', frame: 'dragon-cannon_1' },
             { key: 'enemies', frame: 'dragon-cannon_1' },
         ],
         frameRate: 4,
         repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'dragon-cannon-attack',
+        frames: [
+            { key: 'enemies', frame: 'dragon-cannon_0' },
+            { key: 'enemies', frame: 'dragon-cannon_0' },
+            { key: 'enemies', frame: 'dragon-cannon_0' },
+            { key: 'enemies', frame: 'dragon-cannon_0' },
+        ],
+        frameRate: 4,
+        repeat: 0,
     });
 
     scene.anims.create({

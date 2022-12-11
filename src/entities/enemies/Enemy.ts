@@ -127,7 +127,6 @@ export class Enemy extends Entity
                     {
                         this.clearTint()
                     }
-                    
                 }
             })
 
@@ -147,6 +146,8 @@ export class Enemy extends Entity
         this.setStatusHealth(0);
 
         this.setStatusIsDead(true);
+
+        
 
         this.die();
 
@@ -194,6 +195,8 @@ export class Enemy extends Entity
                 deathFlame.setActive(false).setVisible(false);
 
                 this.setVisible(false).clearTint();
+
+                this.scene.events.emit('enemy-score', this.status.score);
 
                 if (this.config.resurrect > 0)
                 {

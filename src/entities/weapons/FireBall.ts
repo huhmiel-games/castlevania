@@ -33,7 +33,7 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
 
         this.setActive(false).setDepth(DEPTH.WEAPON);
 
-        this.body.setAllowGravity(false).setEnable(false).setCircle(8);
+        this.body.setAllowGravity(false).setEnable(false).setCircle(4);
 
         this.weaponAnim = config.anims;
 
@@ -59,7 +59,8 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
 
     public attack()
     {
-        this.body.reset(this.parent.body.x, this.parent.body.y - 8);
+        const offsetY = this.parent.config.secondaryAttackOffsetY;
+        this.body.reset(this.parent.body.x, this.parent.body.y + (offsetY || -8));
         this.body.setEnable(true);
 
         this.scene.enemyWeaponGroup.add(this);

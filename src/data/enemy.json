@@ -395,5 +395,60 @@
         "collideWithWorld": false,
         "resurrect": 0,
         "alignToPlayer": false
+    },
+    "dragonhead": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "dragon-cannon_1",
+            "animList": {
+                "IDLE": "dragon-cannon",
+                "SECONDARY_ATTACK": "dragon-cannon-attack",
+                "FALL": "dragon-cannon"
+            }
+        },
+        "status": {
+            "health": 6,
+            "score": 400,
+            "life": 0,
+            "ammo": 1000,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 100,
+            "speed": 100,
+            "acceleration": 300,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "jumpHeight": 0.30
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 0
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 16,
+                "height": 16
+            }
+        },
+        "state": [
+            "idle",
+            "secondaryAttack",
+            "death"
+        ],
+        "resurrect": 0,
+        "secondaryAttackOffsetY": 8
     }
 }
