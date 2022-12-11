@@ -53,7 +53,12 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
         if (!this.scene.cameras.main.worldView.contains(this.body.center.x, this.body.center.y))
         {
-            this.setDisable();
+            const isOutsideCamera = this.isOutsideScreenByPixels();
+
+            if(isOutsideCamera)
+            {
+                this.setDisable();
+            }
         }
 
         if (this.isBack && this.scene.physics.overlap(this, this.scene.characters[0].damageBody))
@@ -67,6 +72,18 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
                 this.setDisable();
             }
         }
+    }
+
+    private isOutsideScreenByPixels(pixels: number = 128): boolean
+    {
+        const cam = this.scene.cameras.main;
+
+        if(this.body.right > cam.worldView.right + pixels || this.body.left < cam.worldView.left - pixels)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public setDisable()
