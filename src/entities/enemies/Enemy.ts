@@ -185,6 +185,8 @@ export class Enemy extends Entity
         {
             this.setTintFill(PALETTE_DB32.BLACK);
 
+            this.scene.events.emit('enemy-score', this.status.score);
+
             deathFlame.setOrigin(0.5, 1);
             deathFlame.y = this.damageBody.body.bottom + 8;
             deathFlame.setActive(true).setVisible(true);
@@ -195,8 +197,6 @@ export class Enemy extends Entity
                 deathFlame.setActive(false).setVisible(false);
 
                 this.setVisible(false).clearTint();
-
-                this.scene.events.emit('enemy-score', this.status.score);
 
                 if (this.config.resurrect > 0)
                 {

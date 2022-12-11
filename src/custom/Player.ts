@@ -46,6 +46,8 @@ export default class Player extends Entity
     {
         super(config);
 
+        this.scene = config.scene;
+
         this.setName(PLAYER_A_NAME)
             .setDepth(DEPTH.PLAYER)
             .setPhysicsProperties({
@@ -145,7 +147,14 @@ export default class Player extends Entity
             }
         });
 
-        this.scene.events.on('enemy-score', (score: number) => this.setStatusScore( this.status.score + score));
+        if(!this.scene){
+            throw new Error("NO SCENE ON PLAYER");
+            
+        }
+
+        this.scene?.events.on('enemy-score', (score: number) => this.setStatusScore(this.status.score + score));
+
+        
 
         this.animList = {
             IDLE: 'richter-idle',
@@ -219,7 +228,11 @@ export default class Player extends Entity
     {
         super.preUpdate(time, delta);
 
-        if (!this.physicsProperties.isDead && this.body.top > this.scene.cameras.main.getBounds().bottom + TILE_SIZE)
+        if (!this.physicsProperties.isDead && (
+            this.body.top > this.scene.cameras.main.getBounds().bottom + TILE_SIZE
+            || this.body.bottom === this.scene.colliderLayer.height
+            )
+        )
         {
             this.die();
         }
@@ -354,14 +367,15 @@ export default class Player extends Entity
                 const cam = this.scene.cameras.main;
                 const visibleEnemies = this.scene.enemies.filter(enemy => enemy.active && cam.worldView.contains(enemy.body.center.x, enemy.body.center.y));
 
-                visibleEnemies.forEach(enemy=> enemy.die());
+                visibleEnemies.forEach(enemy => enemy.die());
 
                 this.scene.playSound(37);
 
                 this.scene.time.addEvent({
                     delay: 100,
                     repeat: 4,
-                    callback: () => {
+                    callback: () =>
+                    {
                         cam.flash(50);
                     }
                 });
@@ -557,8 +571,9 @@ export default class Player extends Entity
             this.scene.time.addEvent({
                 delay: 200,
                 repeat: 8,
-                callback: () => {
-                    if(!this.isTinted)
+                callback: () =>
+                {
+                    if (!this.isTinted)
                     {
                         this.setTint(PALETTE_DB32.AFFAIR);
                     }
@@ -566,7 +581,7 @@ export default class Player extends Entity
                     {
                         this.clearTint()
                     }
-                    
+
                 }
             })
 
@@ -593,6 +608,15 @@ export default class Player extends Entity
         this.setStatusIsDead(true);
 
         this.die();
+
+        return this;
+    }
+
+    public setStatusScore(score: number): Entity
+    {
+        this.status.score = score;
+
+        this.scene?.events.emit(HUD_EVENTS_NAMES.SCORE, this.status.score);
 
         return this;
     }
@@ -633,7 +657,7 @@ export default class Player extends Entity
             delay: 2000,
             callback: () =>
             {
-                this.scene.scene.restart()
+                this.scene.scene.restart();
             }
         });
     }
