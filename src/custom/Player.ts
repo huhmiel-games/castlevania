@@ -143,7 +143,9 @@ export default class Player extends Entity
             {
                 this.damageBody.changeBodySize(8, 28);
             }
-        })
+        });
+
+        this.scene.events.on('enemy-score', (score: number) => this.setStatusScore( this.status.score + score));
 
         this.animList = {
             IDLE: 'richter-idle',
