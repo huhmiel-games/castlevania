@@ -32,6 +32,8 @@ export default class DeathState extends State
 
         character.anims.stop();
         character.setFrame('richter-dead')
+
+        console.log(character.name + ' DEATH STATE')
     }
 
     public execute (scene: GameScene, character: Entity)

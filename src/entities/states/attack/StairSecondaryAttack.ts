@@ -58,7 +58,7 @@ export default class StairSecondaryAttackState extends State
             character.anims.play(character.animList.DOWNSTAIR_SECONDARY_ATTACK!, true);
         }
 
-        console.log('STAIR SECONDARY ATTACK STATE');
+        console.log(character.name + ' STAIR SECONDARY ATTACK STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

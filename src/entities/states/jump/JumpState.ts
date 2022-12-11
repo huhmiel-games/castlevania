@@ -33,7 +33,7 @@ export default class JumpState extends State
         // Handle animations
         character.anims.play(character.animList.JUMP!, true);
 
-        console.log('JUMP STATE');
+        console.log(character.name + ' JUMP STATE');
     }
 
     public execute (scene: GameScene, character: Entity)

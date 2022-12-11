@@ -45,7 +45,7 @@ export default class SideState extends State
             return;
         }
 
-        console.log('SIDE STATE');
+        console.log(character.name + ' SIDE STATE');
     }
 
     public execute(scene: GameScene, character: Enemy)

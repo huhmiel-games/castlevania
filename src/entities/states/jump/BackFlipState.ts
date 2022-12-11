@@ -40,7 +40,7 @@ export default class BackFlipState extends State
         // Handle animations
         character.anims.play(character.animList.BACK_FLIP!, true);
 
-        console.log('BACK FLIP STATE');
+        console.log(character.name + ' BACK FLIP STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

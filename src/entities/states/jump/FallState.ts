@@ -29,7 +29,7 @@ export default class FallState extends State
 
         character.body.setGravityY(character.physicsProperties.gravity).setDrag(0).setMaxVelocityY(character.physicsProperties.speed * 4);
 
-        console.log('FALL STATE');
+        console.log(character.name + ' FALL STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

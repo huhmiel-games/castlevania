@@ -29,7 +29,7 @@ export default class FallAttackState extends State
 
         character.physicsProperties.isAttacking = true;
 
-        console.log('FALL ATTACK STATE');
+        console.log(character.name + ' FALL ATTACK STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

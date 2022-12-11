@@ -45,7 +45,7 @@ export default class ProximityState extends State
         // }
 
 
-        console.log('PROXIMITY STATE');
+        console.log(character.name + ' PROXIMITY STATE');
     }
 
     public execute(scene: GameScene, character: Enemy)

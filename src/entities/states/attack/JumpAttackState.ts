@@ -31,7 +31,7 @@ export default class JumpAttackState extends State
 
         character.physicsProperties.isAttacking = true;
 
-        console.log('JUMP ATTACK STATE');
+        console.log(character.name + ' JUMP ATTACK STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

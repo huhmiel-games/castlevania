@@ -80,7 +80,7 @@ export default class SecondaryAttackState extends State
 
         character.body.setAcceleration(0).setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0);
 
-        console.log('SECONDARY ATTACK STATE');
+        console.log(character.name + ' SECONDARY ATTACK STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

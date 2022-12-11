@@ -45,7 +45,7 @@ export default class GoUpstairRightState extends State
 
         character.body.setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff).setAcceleration(0);
 
-        console.log('GO UP STAIR RIGHT STATE');
+        console.log(character.name + ' GO UP STAIR RIGHT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

@@ -33,7 +33,7 @@ export default class CrouchAttackState extends State
 
         character.body.setAcceleration(0).setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0);
 
-        console.log('ATTACK STATE');
+        console.log(character.name + ' ATTACK STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

@@ -26,7 +26,7 @@ export default class WalkRightState extends State
 
         character.body.setDrag(0, 0).setAcceleration(character.physicsProperties.acceleration, 0);
 
-        console.log('RIGHT STATE');
+        console.log(character.name + ' RIGHT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

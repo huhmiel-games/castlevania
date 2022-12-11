@@ -47,6 +47,8 @@ export default class HurtState extends State
         character.body.setVelocity(speedX, -character.physicsProperties.speed * 6);
 
         character.anims.play(character.animList.HURT!, true);
+
+        console.log(character.name + ' HURT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

@@ -28,7 +28,7 @@ export default class IdleState extends State
             .setAcceleration(0, 0);
             
 
-        console.log('IDLE STATE');
+        console.log(character.name + ' IDLE STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

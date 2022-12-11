@@ -47,7 +47,7 @@ export default class GoDownstairLeftState extends State
 
         character.setFlipX(true);
 
-        console.log('GO DOWN STAIR LEFT STATE');
+        console.log(character.name + ' GO DOWN STAIR LEFT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

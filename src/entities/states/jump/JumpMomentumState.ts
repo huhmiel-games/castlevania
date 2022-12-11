@@ -28,7 +28,7 @@ export default class JumpMomentumState extends State
 
         character.body.setGravityY(character.physicsProperties.gravity / 2).setDragY(character.physicsProperties.acceleration * 16).setAccelerationY(100);
 
-        console.log('MOMENTUM STATE');
+        console.log(character.name + ' MOMENTUM STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

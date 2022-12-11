@@ -28,7 +28,7 @@ export default class FlyRightState extends State
 
         character.body.setDrag(0, 0);
 
-        console.log('FLY RIGHT STATE');
+        console.log(character.name + ' FLY RIGHT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

@@ -42,7 +42,7 @@ export default class StairAttackState extends State
             character.anims.play(character.animList.DOWNSTAIR_ATTACK!, true);
         }
 
-        console.log('STAIR ATTACK STATE');
+        console.log(character.name + ' STAIR ATTACK STATE');
     }
 
     public execute(scene: GameScene, character: Entity)
