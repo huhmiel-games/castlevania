@@ -1,4 +1,5 @@
 import { EPossibleState } from "../../../constant/character";
+import { TILE_SIZE } from "../../../constant/config";
 import GameScene from "../../../scenes/GameScene";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
@@ -63,7 +64,7 @@ export default class BackFlipState extends State
         }
 
         // End of jump
-        if (this.groundYPosition - 32 > bottom && this.startBackFlip === 0)
+        if (this.groundYPosition - (TILE_SIZE + TILE_SIZE / 4) > bottom && this.startBackFlip === 0)
         {
             character.body.setAccelerationY(0);
 

@@ -45,6 +45,8 @@ export default class FallAttackState extends State
         // Transition to Idle if touching ground
         if (character.canUse(EPossibleState.IDLE) && body.blocked.down && !isAttacking)
         {
+            character.y = Math.round(character.y); // fix a bug where the character is 1 pixel off from ground
+
             character.body.setMaxVelocityY(speed * 2);
 
             this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);

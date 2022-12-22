@@ -26,12 +26,9 @@ export default class DeathState extends State
 
         this.deathTime = now;
 
-        const { x, y } = character.body.acceleration;
-
         character.body.setAcceleration(0).setVelocity(0);
 
-        character.anims.stop();
-        character.setFrame('richter-dead')
+        character.anims.play(character.animList.DEAD!);
 
         console.log(character.name + ' DEATH STATE')
     }

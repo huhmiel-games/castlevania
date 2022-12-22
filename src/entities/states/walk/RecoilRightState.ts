@@ -10,10 +10,10 @@ import { Entity } from "../../Entity";
  * @description
  * @author © Philippe Pereira 2022
  * @export
- * @class WalkLeftState
+ * @class RecoilRightState
  * @extends {State}
  */
-export default class WalkLeftState extends State
+export default class RecoilRightState extends State
 {
     public stateMachine: StateMachine;
     public enter(scene: GameScene, character: Entity)
@@ -22,16 +22,16 @@ export default class WalkLeftState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
-        character.setFlipX(true).anims.play(character.animList.LEFT!, true);
+        character.setFlipX(true).anims.playReverse(character.animList.RIGHT!, true);
 
-        character.body.setDrag(0, 0).setAcceleration(-character.physicsProperties.acceleration, 0);
+        character.body.setDrag(0, 0).setAcceleration(character.physicsProperties.acceleration, 0);
 
-        console.log(character.name + ' LEFT STATE');
+        console.log(character.name + ' RECOIL RIGHT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, x, y,  start, select } = character.buttons;
+        const { left, right, up, down, a, b,  start, select } = character.buttons;
 
         const { isAttacking } = character.physicsProperties;
 
@@ -53,7 +53,7 @@ export default class WalkLeftState extends State
             return;
         }
 
-        if (character.canUse(EPossibleState.IDLE) && left.isUp)
+        if (character.canUse(EPossibleState.IDLE) && right.isUp)
         {
             this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
 
@@ -72,49 +72,6 @@ export default class WalkLeftState extends State
             this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
 
             return;
-        }
-
-        if (character.canUse(EPossibleState.RECOIL_LEFT) && left.isDown && y.isDown && right.isUp && !isAttacking)
-        {
-            this.stateMachine.transition(EPossibleState.RECOIL_LEFT, this.stateMachine.state);
-
-            return;
-        }
-
-        if (character.canUse(EPossibleState.UPSTAIR_LEFT) && up.isDown)
-        {
-            const { left, bottom } = character.body;
-
-            const tile = scene.colliderLayer.getTileAtWorldXY(left, bottom - 1);
-
-            if (tile?.properties?.hasOwnProperty(TILES.STAIR_LEFT))
-            {
-                character.body.reset(tile.pixelX + TILE_SIZE, tile.pixelY);
-
-                character.anims.pause();
-
-                this.stateMachine.transition(EPossibleState.UPSTAIR_LEFT, this.stateMachine.state);
-
-                return;
-            }
-        }
-
-        if (character.canUse(EPossibleState.DOWNSTAIR_LEFT) && down.isDown)
-        {
-            const { center, bottom } = character.body;
-
-            const tile = scene.colliderLayer.getTileAtWorldXY(center.x, bottom + TILE_SIZE / 4);
-
-            if (tile?.properties?.hasOwnProperty(TILES.STAIR_RIGHT))
-            {
-                character.body.reset(tile.pixelX + TILE_SIZE / 2, tile.pixelY - TILE_SIZE / 2);
-
-                character.anims.pause();
-
-                this.stateMachine.transition(EPossibleState.DOWNSTAIR_LEFT, this.stateMachine.state)
-
-                return;
-            }
         }
     }
 }

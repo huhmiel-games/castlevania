@@ -128,13 +128,6 @@ export default class FallState extends State
             }
         }
 
-        // if(body.top + 32 > scene.cameras.main.getBounds().bottom + 32)
-        // {
-        //     character.die();
-
-        //     return;
-        // }
-
         if (left.isDown && right.isUp)
         {
             body.setAcceleration(-acceleration * 5, acceleration * 5);

@@ -31,7 +31,7 @@ export default class WalkRightState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
+        const { left, right, up, down, a, b, x, y, start, select } = character.buttons;
 
         const { isAttacking } = character.physicsProperties;
 
@@ -70,6 +70,13 @@ export default class WalkRightState extends State
         if (character.canUse(EPossibleState.FALL) && !blocked.down)
         {
             this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+
+            return;
+        }
+
+        if (character.canUse(EPossibleState.RECOIL_RIGHT) && right.isDown && y.isDown && left.isUp && !isAttacking)
+        {
+            this.stateMachine.transition(EPossibleState.RECOIL_RIGHT, this.stateMachine.state);
 
             return;
         }

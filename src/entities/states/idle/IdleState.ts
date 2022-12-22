@@ -69,6 +69,20 @@ export default class IdleState extends State
             return;
         }
 
+        if (character.canUse(EPossibleState.RECOIL_LEFT) && left.isDown && y.isDown && right.isUp && !isAttacking)
+        {
+            this.stateMachine.transition(EPossibleState.RECOIL_LEFT, this.stateMachine.state);
+
+            return;
+        }
+
+        if (character.canUse(EPossibleState.RECOIL_RIGHT) && right.isDown && y.isDown && left.isUp && !isAttacking)
+        {
+            this.stateMachine.transition(EPossibleState.RECOIL_RIGHT, this.stateMachine.state);
+
+            return;
+        }
+
         if (character.canUse(EPossibleState.JUMP)
             && b.isDown
             && now - b.timeUp > 250

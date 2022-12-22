@@ -22,9 +22,7 @@ export default class SecondaryAttackState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
-        const group = character instanceof Enemy ? 'enemyWeaponGroup' : 'secondaryWeaponGroup';
-
-        const weapon = scene[group].getFirstDead(false, character.body.x, character.body.y, undefined, undefined, true) as RangedWeapon;
+        const weapon = character.secondaryWeaponGroup.getFirstDead(false, character.body.x, character.body.y, undefined, undefined, true) as RangedWeapon;
 
         const ammo = character.status.ammo;
 
@@ -42,13 +40,15 @@ export default class SecondaryAttackState extends State
             return;
         }
 
+        weapon.parent = character;
+
         character.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
         {
-            weapon.parent = character;
+            if (character.physicsProperties.isDead) return;
 
             weapon.setDepth(character.depth - 1);
 
-            weapon.attack();
+            weapon.attack(character.config?.weaponOffset || 8);
 
             const value = ammo - 1;
 
