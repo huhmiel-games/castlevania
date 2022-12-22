@@ -2,14 +2,11 @@ import { EPossibleState, possibleDirection } from "../constant/character";
 import { HUD_EVENTS_NAMES, PLAYER_A_NAME } from "../constant/config";
 import { IAnimationList, IFrameList, IPhysicsProperties, IStatus } from "../interfaces/interface";
 import GameScene from "../scenes/GameScene";
-import SaveLoadService from "../services/SaveLoadService";
 import { RangedWeapon, TButtons, TCharacterConfig, TCoord, TAi } from "../types/types";
 import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
 import DamageBody from "./DamageBody";
-import ThrowingAxe from "./weapons/ThrowingAxe";
-import FireBall from "./weapons/FireBall";
 
 /**
  * @description A base class for player and enemies
@@ -33,6 +30,7 @@ export class Entity extends Phaser.GameObjects.Sprite
     public animList: IAnimationList;
     public frameList?: IFrameList;
     public stateMachine: StateMachine;
+    public secondaryWeaponGroup: Phaser.GameObjects.Group;
     public config: any;
 
     constructor(config: TCharacterConfig)
@@ -61,11 +59,6 @@ export class Entity extends Phaser.GameObjects.Sprite
         super.preUpdate(time, delta);
 
         if (this.physicsProperties.isDead || this.physicsProperties.isPaused || !this.active) return;
-
-        if (this.body.touching.down)
-        {
-            this.body.setDrag(0);
-        }
 
         this.stateMachine.step();
     }
@@ -98,7 +91,10 @@ export class Entity extends Phaser.GameObjects.Sprite
     {
         this.status.score = score;
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.SCORE, this.status.score);
+        if (this.name === PLAYER_A_NAME)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.SCORE, this.status.score);
+        }
 
         return this;
     }
@@ -119,7 +115,10 @@ export class Entity extends Phaser.GameObjects.Sprite
     {
         this.status.ammo = value;
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.HEART, this.status.ammo);
+        if (this.name === PLAYER_A_NAME)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEART, this.status.ammo);
+        }
 
         return this;
     }
@@ -198,52 +197,5 @@ export class Entity extends Phaser.GameObjects.Sprite
     public getItem(item: Phaser.Types.Physics.Arcade.GameObjectWithBody)
     {
 
-    }
-
-    public addSecondaryWeapon(weaponType: string)
-    {
-        switch (weaponType)
-        {
-            case 'fireball':
-                const fireball = new FireBall({
-                    scene: this.scene,
-                    parent: this,
-                    damage: 1.5,
-                    x: this.body.x,
-                    y: this.body.y,
-                    texture: 'items',
-                    frame: 'fireBall_0',
-                    anims: 'fireBall',
-                    sound: 10
-                });
-
-                fireball.setName('fireball');
-
-                this.scene.enemyWeaponGroup.add(fireball);
-
-                break;
-
-            case 'axe':
-                const weapon = new ThrowingAxe({
-                    scene: this.scene,
-                    parent: this,
-                    damage: 1.5,
-                    x: this.body.x,
-                    y: this.body.y,
-                    texture: 'items',
-                    frame: 'weapon-axe',
-                    anims: 'axe',
-                    sound: 10
-                });
-    
-                weapon.setName('axe');
-
-                this.scene.enemyWeaponGroup.add(weapon);
-
-                break;
-
-            default:
-                break;
-        }
     }
 }

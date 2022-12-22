@@ -263,12 +263,20 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'bat-fly',
+        key: 'red-skeleton-idle',
         frames: [
-            { key: 'enemies', frame: 'bat-fly_0' },
-            { key: 'enemies', frame: 'bat-fly_1' },
-            { key: 'enemies', frame: 'bat-fly_2' },
-            
+            { key: 'enemies', frame: 'red-skeleton-walk_1' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'red-skeleton-walk',
+        frames: [
+            { key: 'enemies', frame: 'red-skeleton-walk_0' },
+            { key: 'enemies', frame: 'red-skeleton-walk_1' },
+            { key: 'enemies', frame: 'red-skeleton-walk_2' },
         ],
         frameRate: 6,
         repeat: -1,
@@ -277,12 +285,12 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'red-skeleton-dead',
         frames: [
-            { key: 'enemies', frame: 'red-skeleton-dead_2' },
-            { key: 'enemies', frame: 'red-skeleton-dead_1' },
             { key: 'enemies', frame: 'red-skeleton-dead_0' },
+            { key: 'enemies', frame: 'red-skeleton-dead_1' },
+            { key: 'enemies', frame: 'red-skeleton-dead_2' },
         ],
-        frameRate: 6,
-        repeat: -1,
+        frameRate: 8,
+        repeat: 0,
     });
 
     scene.anims.create({
@@ -311,6 +319,37 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'bat-idle_0' },
         ],
         frameRate: 2,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'bat-fly',
+        frames: [
+            { key: 'enemies', frame: 'bat-fly_0' },
+            { key: 'enemies', frame: 'bat-fly_1' },
+            { key: 'enemies', frame: 'bat-fly_2' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'bat-blue-idle',
+        frames: [
+            { key: 'enemies', frame: 'bat-blue-idle_0' },
+        ],
+        frameRate: 2,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'bat-blue-fly',
+        frames: [
+            { key: 'enemies', frame: 'bat-blue-fly_0' },
+            { key: 'enemies', frame: 'bat-blue-fly_1' },
+            { key: 'enemies', frame: 'bat-blue-fly_2' },
+        ],
+        frameRate: 10,
         repeat: -1,
     });
 
@@ -345,7 +384,7 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'dragon-cannon_0' },
             { key: 'enemies', frame: 'dragon-cannon_0' },
         ],
-        frameRate: 4,
+        frameRate: 8,
         repeat: 0,
     });
 
@@ -353,6 +392,15 @@ export default function createAnims(scene: Phaser.Scene)
         key: 'fleaman-fall',
         frames: [
             { key: 'enemies', frame: 'fleaman-fall' },
+        ],
+        frameRate: 2,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'fleaman-walk',
+        frames: [
+            { key: 'enemies', frame: 'fleaman-idle_0' },
         ],
         frameRate: 2,
         repeat: -1,
@@ -430,7 +478,7 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'fleaman-jump-forward',
+        key: 'fleaman-jump',
         frames: [
             { key: 'enemies', frame: 'fleaman-jump-forward' },
         ],
@@ -497,7 +545,7 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'spear-knight-walk_2' },
             { key: 'enemies', frame: 'spear-knight-walk_1' },
         ],
-        frameRate: 6,
+        frameRate: 5,
         repeat: -1,
     });
 
@@ -560,14 +608,14 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: -1,
     });
 
+    
+
     scene.anims.create({
-        key: 'red-skeleton-walk',
+        key: 'skeleton-idle',
         frames: [
-            { key: 'enemies', frame: 'red-skeleton-walk_0' },
-            { key: 'enemies', frame: 'red-skeleton-walk_1' },
-            { key: 'enemies', frame: 'red-skeleton-walk_2' },
+            { key: 'enemies', frame: 'skeleton-walk_1' },
         ],
-        frameRate: 6,
+        frameRate: 1,
         repeat: -1,
     });
 
@@ -579,6 +627,26 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'skeleton-walk_2' },
         ],
         frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'skeleton-attack',
+        frames: [
+            { key: 'enemies', frame: 'skeleton-walk_1' },
+            { key: 'enemies', frame: 'skeleton-walk_1' },
+            { key: 'enemies', frame: 'skeleton-walk_1' },
+        ],
+        frameRate: 6,
+        repeat: 0,
+    });
+
+    scene.anims.create({
+        key: 'skeleton-jump',
+        frames: [
+            { key: 'enemies', frame: 'skeleton-walk_2' },
+        ],
+        frameRate: 1,
         repeat: -1,
     });
 
@@ -615,13 +683,31 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'axe-armor',
+        key: 'axe-armor-idle',
+        frames: [
+            { key: 'enemies', frame: 'axe-armor_0' },
+        ],
+        frameRate: 4,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'axe-armor-walk',
         frames: [
             { key: 'enemies', frame: 'axe-armor_0' },
             { key: 'enemies', frame: 'axe-armor_1' },
         ],
         frameRate: 4,
         repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'axe-armor-attack',
+        frames: [
+            { key: 'enemies', frame: 'axe-armor_0' },
+        ],
+        frameRate: 4,
+        repeat: 0,
     });
 
     scene.anims.create({

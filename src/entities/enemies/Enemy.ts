@@ -33,6 +33,11 @@ import { IEnemyIA as IEnemyAI } from "../../interfaces/interface";
 import FlyLeftState from "../states/enemy/FlyLeftState";
 import FlyRightState from "../states/enemy/FlyRightState";
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import FireBall from "../weapons/FireBall";
+import ThrowingAxe from "../weapons/ThrowingAxe";
+import Boomerang from "../weapons/Boomerang";
+import RecoilLeftState from "../states/walk/RecoilLeftState";
+import RecoilRightState from "../states/walk/RecoilRightState";
 
 export class Enemy extends Entity
 {
@@ -49,6 +54,8 @@ export class Enemy extends Entity
         this.scene.add.existing(this);
 
         this.config = enemyJSON;
+
+        this.secondaryWeaponGroup = this.scene.add.group();
 
         this.animList = enemyJSON.config.animList;
 
@@ -91,7 +98,9 @@ export class Enemy extends Entity
 
         if (!this.active) return;
 
-        this.ai.decides();
+        //if (this.scene.cameras.main.getBounds())
+
+            this.ai.decides();
     }
 
     public setAi(ai: IEnemyAI)
@@ -103,6 +112,8 @@ export class Enemy extends Entity
 
     public setStatusHealthDamage(damage: number): Entity
     {
+        if (!this.scene) this.destroy();
+
         if (this.physicsProperties.isHurt) return this;
 
         this.physicsProperties.isHurt = true;
@@ -115,11 +126,12 @@ export class Enemy extends Entity
 
             this.setTint(PALETTE_DB32.ROMAN)
 
-            this.scene.time.addEvent({
+            this.scene?.time.addEvent({
                 delay: 100,
                 repeat: 4,
-                callback: () => {
-                    if(!this.isTinted)
+                callback: () =>
+                {
+                    if (!this.isTinted)
                     {
                         this.setTint(PALETTE_DB32.WELL_READ)
                     }
@@ -130,7 +142,7 @@ export class Enemy extends Entity
                 }
             })
 
-            this.scene.time.addEvent({
+            this.scene?.time.addEvent({
                 delay: 500,
                 callback: () =>
                 {
@@ -152,16 +164,23 @@ export class Enemy extends Entity
         return this;
     }
 
-    public isOutsideScreenByPixels(pixels: number = 128): boolean
+    public isOutsideCameraByPixels(offset: number = 128): boolean
     {
         const cam = this.scene.cameras.main;
 
-        if(this.body.right > cam.worldView.right + pixels || this.body.left < cam.worldView.left - pixels)
+        if (this.body.right > cam.worldView.right + offset || this.body.left < cam.worldView.left - offset)
         {
             return true;
         }
 
         return false;
+    }
+
+    public isInsideCameraByPixels(offset: number = 128): boolean
+    {
+        const cam = this.scene.cameras.main;
+
+        return this.body.right < cam.worldView.right + offset && this.body.left > cam.worldView.left - offset
     }
 
     public die(): void
@@ -200,6 +219,10 @@ export class Enemy extends Entity
                 {
                     this.resurrects();
                 }
+                else
+                {
+                    this.kill();
+                }
             });
 
             deathFlame.anims.play('enemy-death', true);
@@ -225,12 +248,9 @@ export class Enemy extends Entity
 
     public kill(): void
     {
-        this.damageBody.body.setEnable(false);
-        this.damageBody.setActive(false);
+        this.scene.children.remove(this.damageBody);
 
-        this.setActive(false).setVisible(false);
-
-        this.body.stop().setEnable(false);
+        this.scene.children.remove(this);
     }
 
     private resurrects(forceNow: boolean = false)
@@ -252,7 +272,7 @@ export class Enemy extends Entity
 
                     this.stateMachine.transition(this.stateMachine.initialState, this.stateMachine.state);
 
-                    if(!this.config.alignToPlayer)
+                    if (!this.config.alignToPlayer)
                     {
                         this.body.reset(this.config.status.position.x, this.config.status.position.y);
                     }
@@ -260,15 +280,20 @@ export class Enemy extends Entity
                     {
                         const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-                        this.body.reset(this.config.status.position.x, player.body.bottom - TILE_SIZE);
+                        this.body.reset(this.config.status.position.x, player.body.bottom - TILE_SIZE );
                     }
 
                     this.ai.reset();
 
                     this.body.setEnable(true);
 
-                    this.damageBody.setActive(true);
-                    this.damageBody.body.setEnable(true);
+                    this.scene?.time.addEvent({
+                        delay: 32,
+                        callback: () => {
+                            this.damageBody.setActive(true);
+                            this.damageBody.body.setEnable(true);
+                        }
+                    })
 
                     this.setActive(true).setVisible(true);
 
@@ -306,6 +331,12 @@ export class Enemy extends Entity
                     break;
                 case EPossibleState.RIGHT:
                     possibleStates[EPossibleState.RIGHT] = new WalkRightState() as WalkRightState;
+                    break;
+                    case EPossibleState.RECOIL_LEFT:
+                    possibleStates[EPossibleState.RECOIL_LEFT] = new RecoilLeftState() as RecoilLeftState;
+                    break;
+                case EPossibleState.RECOIL_RIGHT:
+                    possibleStates[EPossibleState.RECOIL_RIGHT] = new RecoilRightState() as RecoilRightState;
                     break;
                 case EPossibleState.JUMP:
                     possibleStates[EPossibleState.JUMP] = new JumpState() as JumpState;
@@ -385,6 +416,78 @@ export class Enemy extends Entity
         for (let key in this.buttons)
         {
             this.buttons[key].setUp(now);
+        }
+    }
+
+    public addSecondaryWeapon(weaponType: string)
+    {
+        switch (weaponType)
+        {
+            case 'fireball':
+                const fireball = new FireBall({
+                    scene: this.scene,
+                    parent: this,
+                    damage: 1.5,
+                    x: this.body.x,
+                    y: this.body.y,
+                    texture: 'enemies',
+                    frame: 'fireBall_0',
+                    anims: 'fireBall',
+                    sound: 10,
+                    group: 'enemyWeaponGroup'
+                });
+
+                fireball.setName('fireball');
+
+                this.scene.enemyWeaponGroup.add(fireball);
+                this.secondaryWeaponGroup.add(fireball);
+
+                break;
+
+            case 'bone':
+                const bone = new ThrowingAxe({
+                    scene: this.scene,
+                    parent: this,
+                    damage: 1,
+                    x: this.body.x,
+                    y: this.body.y,
+                    texture: 'enemies',
+                    frame: 'skeleton-bone_0',
+                    anims: 'skeleton-bone',
+                    sound: 10,
+                    group: 'enemyWeaponGroup'
+                });
+
+                bone.setName('bone');
+
+                this.scene.enemyWeaponGroup.add(bone);
+                this.secondaryWeaponGroup.add(bone);
+
+                break;
+
+            case 'axe':
+                const axe = new Boomerang({
+                    scene: this.scene,
+                    parent: this,
+                    damage: 1.5,
+                    x: this.body.x,
+                    y: this.body.y,
+                    texture: 'items',
+                    frame: 'weapon-axe',
+                    anims: 'axe',
+                    sound: 10,
+                    group: 'enemyWeaponGroup'
+                }, 15, 1500);
+
+                axe.setName('axe');
+
+                this.scene.enemyWeaponGroup.add(axe);
+                this.secondaryWeaponGroup.add(axe);
+
+                break;
+
+            default:
+                break;
         }
     }
 }

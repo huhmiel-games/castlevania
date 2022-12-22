@@ -48,6 +48,8 @@ export default class Player extends Entity
 
         this.scene = config.scene;
 
+        this.secondaryWeaponGroup = this.scene.secondaryWeaponGroup;// this.scene.weaponGroup;
+
         this.setName(PLAYER_A_NAME)
             .setDepth(DEPTH.PLAYER)
             .setPhysicsProperties({
@@ -147,14 +149,15 @@ export default class Player extends Entity
             }
         });
 
-        if(!this.scene){
+        if (!this.scene)
+        {
             throw new Error("NO SCENE ON PLAYER");
-            
+
         }
 
         this.scene?.events.on('enemy-score', (score: number) => this.setStatusScore(this.status.score + score));
 
-        
+
 
         this.animList = {
             IDLE: 'richter-idle',
@@ -228,10 +231,16 @@ export default class Player extends Entity
     {
         super.preUpdate(time, delta);
 
-        if (!this.physicsProperties.isDead && (
-            this.body.top > this.scene.cameras.main.getBounds().bottom + TILE_SIZE
-            || this.body.bottom === this.scene.colliderLayer.height
-            )
+        if (this.physicsProperties.isDead && this.anims.getName() !== this.animList.DEAD)
+        {
+            this.anims.stop();
+            this.setFrame('richter-dead');
+            console.log('anims after death anims', this.anims.getName());
+        }
+
+        if (!this.physicsProperties.isDead
+            && (this.body.top >= this.scene.cameras.main.getBounds().bottom + TILE_SIZE
+                || this.body.bottom === this.scene.colliderLayer.height)
         )
         {
             this.die();
@@ -253,7 +262,7 @@ export default class Player extends Entity
 
                     this.setStatusAmmo(value);
 
-                    bigHeart.setActive(false).setVisible(false);
+                    this.scene.itemsGroup.remove(bigHeart, true, true);
 
                     break;
                 }
@@ -269,7 +278,7 @@ export default class Player extends Entity
 
                     this.setStatusAmmo(value);
 
-                    littleHeart.setActive(false).setVisible(false);
+                    this.scene.itemsGroup.remove(littleHeart, true, true);
 
                     break;
                 }
@@ -285,7 +294,7 @@ export default class Player extends Entity
 
                     this.setStatusScore(value);
 
-                    moneyBag.setActive(false).setVisible(false);
+                    this.scene.itemsGroup.remove(moneyBag, true, true);
 
                     break;
                 }
@@ -299,7 +308,7 @@ export default class Player extends Entity
 
                     this.scene.playSound(23);
 
-                    weapon.setActive(false).setVisible(false);
+                    this.scene.itemsGroup.remove(weapon, true, true);
 
                     break;
                 }
@@ -315,7 +324,7 @@ export default class Player extends Entity
 
                     this.scene.playSound(23);
 
-                    item.setActive(false).setVisible(false);
+                    this.scene.itemsGroup.remove(item, true, true);
 
                     break;
                 }
@@ -438,14 +447,6 @@ export default class Player extends Entity
     private clearSecondaryWeapons()
     {
         this.scene.secondaryWeaponGroup.clear(true, true);
-
-        if (this.scene.secondaryWeaponGroup.getLength() > 0)
-        {
-            console.log(this.scene.secondaryWeaponGroup.getChildren());
-
-            throw new Error("secondary weapon group not empty");
-
-        }
     }
 
     private addCross()
@@ -463,12 +464,13 @@ export default class Player extends Entity
                 texture: 'items',
                 frame: 'weapon-cross_1',
                 anims: 'cross',
-                sound: 8
+                sound: 8,
+                group: 'weaponGroup'
             });
 
             weapon.setName('cross');
 
-            this.scene.secondaryWeaponGroup.add(weapon);
+            this.secondaryWeaponGroup.add(weapon);
         }
 
         this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'cross');
@@ -489,12 +491,13 @@ export default class Player extends Entity
                 texture: 'items',
                 frame: 'weapon-holywater',
                 anims: 'holy-water',
-                sound: 31
+                sound: 31,
+                group: 'weaponGroup'
             });
 
             weapon.setName('holyWater');
 
-            this.scene.secondaryWeaponGroup.add(weapon);
+            this.secondaryWeaponGroup.add(weapon);
         }
 
         this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'holy-water');
@@ -515,12 +518,13 @@ export default class Player extends Entity
                 texture: 'items',
                 frame: 'weapon-axe',
                 anims: 'axe',
-                sound: 10
+                sound: 10,
+                group: 'weaponGroup'
             });
 
             weapon.setName('axe');
 
-            this.scene.secondaryWeaponGroup.add(weapon);
+            this.secondaryWeaponGroup.add(weapon);
         }
 
         this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'axe');
@@ -541,12 +545,13 @@ export default class Player extends Entity
                 texture: 'items',
                 frame: 'dagger',
                 anims: 'dagger',
-                sound: 9
+                sound: 9,
+                group: 'weaponGroup'
             });
 
             weapon.setName('dagger');
 
-            this.scene.secondaryWeaponGroup.add(weapon);
+            this.secondaryWeaponGroup.add(weapon);
         }
 
         this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'dagger');
@@ -581,7 +586,6 @@ export default class Player extends Entity
                     {
                         this.clearTint()
                     }
-
                 }
             })
 

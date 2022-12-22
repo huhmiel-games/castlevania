@@ -34,7 +34,7 @@ export default class DamageBody extends Phaser.GameObjects.Image
     {
         const { body } = this.parent;
 
-        if (!body) return;
+        if (!body || !this.body) return;
 
         this.setPosition(body.center.x, body.bottom - this.body.height / 2);
     }

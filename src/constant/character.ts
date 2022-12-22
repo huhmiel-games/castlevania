@@ -9,6 +9,8 @@ export enum EPossibleState
     IDLE = 'idle',
     LEFT = 'left',
     RIGHT = 'right',
+    RECOIL_LEFT = 'recoil-left',
+    RECOIL_RIGHT = 'recoil-right',
     UPSTAIR_LEFT = 'upstairLeft',
     UPSTAIR_RIGHT = 'upstairRight',
     DOWNSTAIR_LEFT = 'downstairLeft',
@@ -30,6 +32,7 @@ export enum EPossibleState
     SECONDARY_ATTACK = 'secondaryAttack',
     CROUCH_ATTACK = 'crouchAttack',
     HURT = 'hurt',
+    STUN = 'stun',
     DEATH = 'death',
     SMASHDOOR = 'smash_door',
     // ENEMY BEHAVIOUR
