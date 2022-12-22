@@ -1,7 +1,9 @@
 import { DEPTH } from "../../constant/depth";
 import destroyCandle from "../../custom/destroyCandle";
+import Player from "../../custom/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
+import { Enemy } from "../enemies/Enemy";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
 
@@ -13,6 +15,7 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
     public scene: GameScene;
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
+    public weaponGroup: Phaser.GameObjects.Group;
     public damage: number = 0;
     public speed: number = 300;
     private weaponAnim?: string;
@@ -22,6 +25,8 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
         super(config.scene, config.x, config.y, config.texture, config.frame);
 
         this.parent = config.parent;
+
+        this.weaponGroup = config.scene[config.group];
 
         this.damage = config.damage;
 
@@ -62,7 +67,14 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
         this.body.reset(this.parent.body.x, this.parent.body.y - 8);
         this.body.setEnable(true);
 
-        this.scene.weaponGroup.add(this);
+        if (this.parent instanceof Player)
+        {
+            this.scene.weaponGroup.add(this);
+        }
+        else if (this.parent instanceof Enemy)
+        {
+            this.parent.secondaryWeaponGroup.add(this);
+        }
 
         if (this.parent.flipX)
         {

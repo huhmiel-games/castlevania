@@ -1,7 +1,9 @@
 import { DEPTH } from "../../constant/depth";
 import destroyCandle from "../../custom/destroyCandle";
+import Player from "../../custom/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
+import { Enemy } from "../enemies/Enemy";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
 
@@ -19,13 +21,18 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
     private weaponAnim: string;
     private sfx: number;
     public returnTimeDelay: number = 1000;
-    constructor(config: TWeaponConfig)
+    private isBackDistance: number;
+    constructor(config: TWeaponConfig, isBackDistance: number = 13, returnTimeDelay: number = 1000)
     {
         super(config.scene, config.x, config.y, config.texture, config.frame);
 
         this.parent = config.parent;
 
         this.damage = config.damage;
+
+        this.isBackDistance = isBackDistance;
+
+        this.returnTimeDelay = returnTimeDelay;
 
         this.sfx = config.sound;
 
@@ -55,19 +62,19 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
         {
             const isOutsideCamera = this.isOutsideScreenByPixels();
 
-            if(isOutsideCamera)
+            if (isOutsideCamera)
             {
                 this.setDisable();
             }
         }
 
-        if (this.isBack && this.scene.physics.overlap(this, this.scene.characters[0].damageBody))
+        if (this.isBack && this.scene.physics.overlap(this, this.parent.damageBody))
         {
-            const { damageBody } = this.scene.characters[0];
+            const { damageBody } = this.parent;
 
             const distance = Phaser.Math.Distance.BetweenPoints(this.body.center, damageBody.body.center);
 
-            if (distance < 13)
+            if (distance < this.isBackDistance)
             {
                 this.setDisable();
             }
@@ -78,7 +85,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
     {
         const cam = this.scene.cameras.main;
 
-        if(this.body.right > cam.worldView.right + pixels || this.body.left < cam.worldView.left - pixels)
+        if (this.body.right > cam.worldView.right + pixels || this.body.left < cam.worldView.left - pixels)
         {
             return true;
         }
@@ -93,14 +100,21 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
         this.setActive(false).setVisible(false);
     }
 
-    public attack()
+    public attack(offset: number = 8)
     {
         this.isBack = false;
 
-        this.body.reset(this.parent.body.x, this.parent.body.y - 8);
+        this.body.reset(this.parent.body.x, this.parent.body.y - offset);
         this.body.setEnable(true);
 
-        this.scene.weaponGroup.add(this);
+        if (this.parent instanceof Player)
+        {
+            this.scene.weaponGroup.add(this);
+        }
+        else if (this.parent instanceof Enemy)
+        {
+            this.parent.secondaryWeaponGroup.add(this);
+        }
 
         this.speed = this.parent.flipX ? Math.abs(this.speed) * -1 : Math.abs(this.speed);
 
@@ -114,6 +128,8 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
             delay: this.returnTimeDelay,
             callback: () =>
             {
+                if (!this.active) return;
+
                 this.isBack = true;
 
                 this.anims.playReverse(this.weaponAnim);

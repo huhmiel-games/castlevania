@@ -1,7 +1,9 @@
 import { DEPTH } from "../../constant/depth";
 import destroyCandle from "../../custom/destroyCandle";
+import Player from "../../custom/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
+import { Enemy } from "../enemies/Enemy";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
 
@@ -77,7 +79,14 @@ export default class ThrowingAxe extends Phaser.GameObjects.Sprite implements We
         this.body.reset(this.parent.body.x, this.parent.body.y - 8);
         this.body.setEnable(true);
 
-        this.scene.weaponGroup.add(this);
+        if (this.parent instanceof Player)
+        {
+            this.scene.weaponGroup.add(this);
+        }
+        else if (this.parent instanceof Enemy)
+        {
+            this.parent.secondaryWeaponGroup.add(this);
+        }
 
         if (this.parent.flipX)
         {

@@ -7,6 +7,7 @@ export default abstract class Weapon
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
     public damage: number;
+    public name: string;
     public attack: (...args: any) => void;
     public destroyObject: (_object: unknown) => void;
     public destroyTile: (_tile: Phaser.Tilemaps.Tile) => void;

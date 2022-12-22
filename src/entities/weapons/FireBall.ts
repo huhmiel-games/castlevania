@@ -1,7 +1,9 @@
 import { DEPTH } from "../../constant/depth";
 import destroyCandle from "../../custom/destroyCandle";
+import Player from "../../custom/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
+import { Enemy } from "../enemies/Enemy";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
 
@@ -63,7 +65,14 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
         this.body.reset(this.parent.body.x, this.parent.body.y + (offsetY || -8));
         this.body.setEnable(true);
 
-        this.scene.enemyWeaponGroup.add(this);
+        if (this.parent instanceof Player)
+        {
+            this.scene.weaponGroup.add(this);
+        }
+        else if (this.parent instanceof Enemy)
+        {
+            this.parent.secondaryWeaponGroup.add(this);
+        }
 
         if (this.parent.flipX)
         {
