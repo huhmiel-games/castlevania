@@ -37,4 +37,10 @@ export default class BaseRetrievableItem extends Phaser.GameObjects.Image
 
         return this;
     }
+
+    setDisable()
+    {
+        this.setActive(false).setVisible(false);
+        this.body.setEnable(false);
+    }
 }
