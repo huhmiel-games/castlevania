@@ -8,8 +8,8 @@ export class GhostIA implements IEnemyIA
 {
     parent: Enemy;
     scene: GameScene;
-    isChasing: boolean = false;
-    isActive: boolean = false;
+    private isChasing: boolean = false;
+    private isActive: boolean = false;
     constructor(parent: Enemy)
     {
         this.parent = parent;

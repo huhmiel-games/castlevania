@@ -44,8 +44,6 @@ export class ZombieIA implements IEnemyIA
             return;
         }
 
-
-
         if (left.isUp && right.isUp)
         {
             const player = this.scene.getPlayerByName(PLAYER_A_NAME);

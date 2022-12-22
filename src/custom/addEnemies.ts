@@ -10,24 +10,37 @@ import { EPossibleState } from "../constant/character";
 import ThrowingKnife from "../entities/weapons/ThrowingKnife";
 import { ZombieIA } from "./enemies_ia/ZombieIA";
 import { BatIA } from "./enemies_ia/BatIA";
-import { MeleeWeapon } from "../entities/weapons/MeleeWeapon";
 import { MedusaIA } from "./enemies_ia/MedusaIA";
 import { SpearKnightIA } from "./enemies_ia/SpearKnightIA";
 import { CatIA } from "./enemies_ia/CatIA";
 import { FishmanIA } from "./enemies_ia/FishmanIA";
 import { GhostIA } from "./enemies_ia/GhostIA";
 import { DragonHeadIA } from "./enemies_ia/DragonHeadIA";
+import { SkeletonIA } from "./enemies_ia/SkeletonIA";
+import { SkeletonRedIA } from "./enemies_ia/SkeletonRedIA";
+import { FleamanIA } from "./enemies_ia/FleamanIA";
+import { AxeKnightIA } from "./enemies_ia/AxeKnightIA";
+import { BatBlueIA } from "./enemies_ia/BatBlueIA";
 
 
 export default function addEnemies(scene: GameScene)
 {
-    // destroy old zone enemies
+    // destroy enemies related colliders
     scene.enemiesVsWeaponsCollider?.destroy();
 
     scene.enemiesVsPlayerCollider?.destroy();
 
-    scene.enemies.forEach(enemy => enemy.destroy());
+    scene.enemiesWeaponsVsPlayerCollider?.destroy();
 
+    scene.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
+
+    // destroy old zone enemies
+    scene.enemies.forEach(enemy => {
+        scene.children.remove(enemy.damageBody);
+        scene.children.remove(enemy);
+    });
+    scene.enemies.length = 0;
+    
     // create zone enemies
     const enemyLayer = LayerService.getObjectLayerByName(scene, 'enemies');
 
@@ -53,22 +66,45 @@ export default function addEnemies(scene: GameScene)
             }, enemyJSONConfig);
 
             enemy.setName(enemyName);
+
             setAIEnemy(enemy);
 
-            if (enemyName === 'fishman' || enemyName === 'dragonhead')
+            if (enemyName === 'fishman')
             {
                 enemy.addSecondaryWeapon('fireball');
             }
 
-            if(enemyName === 'dragonhead')
+            if (enemyName === 'dragonhead')
             {
-                if(i % 2 === 0)
+                enemy.addSecondaryWeapon('fireball');
+                enemy.addSecondaryWeapon('fireball');
+
+                if (i % 2 === 0)
                 {
                     enemy.setFlipX(true);
                 }
             }
 
-            if (enemyJSONConfig.resurrect > 0 && enemyName !== 'fishman')
+            if (enemyName === 'skeleton')
+            {
+                enemy.addSecondaryWeapon('bone');
+                enemy.addSecondaryWeapon('bone');
+                enemy.addSecondaryWeapon('bone');
+            }
+
+            if (enemyName === 'skeleton-red')
+            {
+                enemy.body.setBoundsRectangle(scene.cameras.main.getBounds());
+            }
+
+            if (enemyName === 'axe-knight')
+            {
+                enemy.addSecondaryWeapon('axe');
+            }
+
+            const resurectEnemiesException = ['fishman', 'skeleton-red']
+
+            if (enemyJSONConfig.resurrect > 0 && !resurectEnemiesException.includes(enemyName))
             {
                 const player = scene.getPlayerByName(PLAYER_A_NAME);
 
@@ -86,23 +122,7 @@ export default function addEnemies(scene: GameScene)
 
     const player = scene.getPlayerByName(PLAYER_A_NAME);
 
-    // player weapons make damage to enemy
-    scene.enemiesVsWeaponsCollider = scene.physics.add.overlap(scene.weaponGroup, enemiesDamageBody, (_weapon, _enemy) =>
-    {
-        const enemy = _enemy as DamageBody;
 
-        const weapon = _weapon as unknown as Weapon;
-
-        enemy.parent.setStatusHealthDamage(weapon.damage);
-
-        scene.playSound(15, undefined, true);
-
-        if (weapon instanceof ThrowingKnife)
-        {
-            weapon.setDisable();
-        }
-
-    }, undefined, scene);
 
     // enemies make damage to player
     scene.enemiesVsPlayerCollider = scene.physics.add.overlap(player.damageBody, enemiesDamageBody, (_player, _enemy) =>
@@ -132,16 +152,20 @@ export default function addEnemies(scene: GameScene)
             return false;
         }
 
-        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT || playerDamageBody.parent.physicsProperties.isHurt || !enemy.parent.active)
+        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
+            || playerDamageBody.parent.physicsProperties.isHurt
+            || !enemy.parent.active
+        )
         {
             return false;
         }
 
         return true;
-    }, scene);
+    }, scene).setName('enemiesVsPlayerCollider');
 
+    const enemiesSecondaryWeapons = scene.enemies.filter(enemy => enemy.active).map(enemy => enemy.secondaryWeaponGroup?.getChildren()).flat();
     // enemies weapons make damage to player
-    scene.enemiesWeaponsVsPlayerCollider = scene.physics.add.overlap(player.damageBody, scene.enemyWeaponGroup, (_player, _weapon) =>
+    scene.enemiesWeaponsVsPlayerCollider = scene.physics.add.overlap(player.damageBody, enemiesSecondaryWeapons, (_player, _weapon) =>
     {
         const playerDamageBody = _player as DamageBody;
 
@@ -158,13 +182,46 @@ export default function addEnemies(scene: GameScene)
     {
         const playerDamageBody = _player as DamageBody;
 
-        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT || playerDamageBody.parent.physicsProperties.isHurt)
+        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
+            || playerDamageBody.parent.physicsProperties.isHurt
+        )
         {
             return false;
         }
 
         return true;
-    }, scene);
+    }, scene).setName('enemiesWeaponsVsPlayerCollider');
+
+    // player weapons make damage to enemy
+    scene.enemiesVsWeaponsCollider = scene.physics.add.overlap(scene.weaponGroup, enemiesDamageBody, (_weapon, _enemy) =>
+    {
+        const enemy = _enemy as DamageBody;
+
+        const weapon = _weapon as unknown as Weapon;
+
+        enemy.parent.setStatusHealthDamage(weapon.damage);
+
+        scene.playSound(15, undefined, true);
+
+        if (weapon.name === 'holyWater' && enemy.parent.status.health > 0 && enemy.parent.canUse(EPossibleState.STUN))
+        {
+            enemy.parent.stateMachine.transition(EPossibleState.STUN, enemy.parent.stateMachine.state);
+        }
+
+        if (weapon instanceof ThrowingKnife)
+        {
+            weapon.setDisable();
+        }
+
+    }, undefined, scene).setName('enemiesVsWeaponsCollider');
+
+    // player weapons make destroy enemies weapons
+    scene.weaponGroupVsEnemiesSecondaryWeapons = scene.physics.add.overlap(scene.weaponGroup, enemiesSecondaryWeapons, (_weapon, _enemyWeapon) =>
+    {
+        const enemyWeapon = _enemyWeapon as unknown as Weapon;
+        enemyWeapon.setDisable();
+
+    }, undefined, scene).setName('weaponGroupVSenemiesSecondaryWeapons');
 }
 
 function setAIEnemy(enemy: Enemy)
@@ -176,6 +233,9 @@ function setAIEnemy(enemy: Enemy)
             break;
         case 'bat':
             enemy.setAi(new BatIA(enemy));
+            break;
+        case 'bat-blue':
+            enemy.setAi(new BatBlueIA(enemy));
             break;
         case 'medusa':
             enemy.setAi(new MedusaIA(enemy));
@@ -195,7 +255,18 @@ function setAIEnemy(enemy: Enemy)
         case 'dragonhead':
             enemy.setAi(new DragonHeadIA(enemy));
             break;
-
+        case 'skeleton':
+            enemy.setAi(new SkeletonIA(enemy));
+            break;
+        case 'skeleton-red':
+            enemy.setAi(new SkeletonRedIA(enemy));
+            break;
+        case 'fleaman':
+            enemy.setAi(new FleamanIA(enemy));
+            break;
+        case 'axe-knight':
+            enemy.setAi(new AxeKnightIA(enemy));
+            break;
 
         default:
             break;

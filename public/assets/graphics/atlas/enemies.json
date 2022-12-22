@@ -73,7 +73,7 @@
 					}
 				},
 				{
-					"filename": "bat-fly_1",
+					"filename": "bat-blue-fly_1",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -94,6 +94,27 @@
 					}
 				},
 				{
+					"filename": "bat-fly_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 11,
+						"w": 15,
+						"h": 9
+					},
+					"frame": {
+						"x": 84,
+						"y": 2,
+						"w": 15,
+						"h": 9
+					}
+				},
+				{
 					"filename": "red-skeleton-dead_2",
 					"rotated": false,
 					"trimmed": true,
@@ -108,7 +129,7 @@
 						"h": 10
 					},
 					"frame": {
-						"x": 84,
+						"x": 103,
 						"y": 2,
 						"w": 24,
 						"h": 10
@@ -129,7 +150,7 @@
 						"h": 10
 					},
 					"frame": {
-						"x": 112,
+						"x": 131,
 						"y": 2,
 						"w": 24,
 						"h": 10
@@ -150,10 +171,31 @@
 						"h": 12
 					},
 					"frame": {
-						"x": 140,
+						"x": 159,
 						"y": 2,
 						"w": 38,
 						"h": 12
+					}
+				},
+				{
+					"filename": "bat-blue-idle_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 7,
+						"w": 10,
+						"h": 13
+					},
+					"frame": {
+						"x": 201,
+						"y": 2,
+						"w": 10,
+						"h": 13
 					}
 				},
 				{
@@ -171,10 +213,31 @@
 						"h": 13
 					},
 					"frame": {
-						"x": 182,
+						"x": 215,
 						"y": 2,
 						"w": 10,
 						"h": 13
+					}
+				},
+				{
+					"filename": "bat-blue-fly_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 12,
+						"w": 16,
+						"h": 14
+					},
+					"frame": {
+						"x": 229,
+						"y": 2,
+						"w": 16,
+						"h": 14
 					}
 				},
 				{
@@ -192,7 +255,7 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 196,
+						"x": 249,
 						"y": 2,
 						"w": 16,
 						"h": 14
@@ -213,7 +276,7 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 216,
+						"x": 269,
 						"y": 2,
 						"w": 16,
 						"h": 14
@@ -234,7 +297,7 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 236,
+						"x": 289,
 						"y": 2,
 						"w": 16,
 						"h": 14
@@ -255,7 +318,7 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 256,
+						"x": 309,
 						"y": 2,
 						"w": 23,
 						"h": 15
@@ -276,7 +339,7 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 283,
+						"x": 336,
 						"y": 2,
 						"w": 22,
 						"h": 15
@@ -297,30 +360,30 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 309,
+						"x": 362,
 						"y": 2,
 						"w": 17,
 						"h": 15
 					}
 				},
 				{
-					"filename": "axe",
+					"filename": "bat-blue-fly_0",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 64,
-						"h": 16
+						"w": 16,
+						"h": 32
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 63,
+						"y": 4,
+						"w": 16,
 						"h": 16
 					},
 					"frame": {
-						"x": 330,
+						"x": 383,
 						"y": 2,
-						"w": 63,
+						"w": 16,
 						"h": 16
 					}
 				},
@@ -339,7 +402,7 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 397,
+						"x": 403,
 						"y": 2,
 						"w": 16,
 						"h": 16
@@ -360,7 +423,7 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 417,
+						"x": 423,
 						"y": 2,
 						"w": 32,
 						"h": 16
@@ -381,30 +444,9 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 453,
+						"x": 459,
 						"y": 2,
 						"w": 26,
-						"h": 16
-					}
-				},
-				{
-					"filename": "red-skeleton-dead_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 2,
-						"y": 16,
-						"w": 24,
-						"h": 16
-					},
-					"frame": {
-						"x": 483,
-						"y": 2,
-						"w": 24,
 						"h": 16
 					}
 				},
@@ -423,30 +465,9 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 2,
-						"y": 12,
+						"x": 489,
+						"y": 2,
 						"w": 8,
-						"h": 16
-					}
-				},
-				{
-					"filename": "skeleton-dead_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 2,
-						"y": 16,
-						"w": 24,
-						"h": 16
-					},
-					"frame": {
-						"x": 14,
-						"y": 13,
-						"w": 24,
 						"h": 16
 					}
 				},
@@ -465,9 +486,72 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 42,
-						"y": 13,
+						"x": 2,
+						"y": 12,
 						"w": 18,
+						"h": 17
+					}
+				},
+				{
+					"filename": "red-skeleton-dead_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 16,
+						"w": 24,
+						"h": 16
+					},
+					"frame": {
+						"x": 24,
+						"y": 13,
+						"w": 24,
+						"h": 16
+					}
+				},
+				{
+					"filename": "skeleton-dead_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 16,
+						"w": 24,
+						"h": 16
+					},
+					"frame": {
+						"x": 52,
+						"y": 15,
+						"w": 24,
+						"h": 16
+					}
+				},
+				{
+					"filename": "fleaman-idle_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 19,
+						"h": 20
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 3,
+						"w": 17,
+						"h": 17
+					},
+					"frame": {
+						"x": 80,
+						"y": 15,
+						"w": 17,
 						"h": 17
 					}
 				},
@@ -486,30 +570,9 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 64,
+						"x": 101,
 						"y": 16,
 						"w": 43,
-						"h": 17
-					}
-				},
-				{
-					"filename": "fleaman-idle_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 19,
-						"h": 20
-					},
-					"spriteSourceSize": {
-						"x": 2,
-						"y": 3,
-						"w": 17,
-						"h": 17
-					},
-					"frame": {
-						"x": 111,
-						"y": 16,
-						"w": 17,
 						"h": 17
 					}
 				},
@@ -528,31 +591,10 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 132,
+						"x": 148,
 						"y": 18,
 						"w": 30,
 						"h": 17
-					}
-				},
-				{
-					"filename": "cat-run_3",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 48,
-						"h": 27
-					},
-					"spriteSourceSize": {
-						"x": 13,
-						"y": 9,
-						"w": 25,
-						"h": 18
-					},
-					"frame": {
-						"x": 166,
-						"y": 19,
-						"w": 25,
-						"h": 18
 					}
 				},
 				{
@@ -570,31 +612,31 @@
 						"h": 18
 					},
 					"frame": {
-						"x": 195,
-						"y": 20,
+						"x": 182,
+						"y": 19,
 						"w": 30,
 						"h": 18
 					}
 				},
 				{
-					"filename": "fleaman-jump-forward",
+					"filename": "cat-run_3",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 19,
-						"h": 20
+						"w": 48,
+						"h": 27
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 1,
-						"w": 19,
-						"h": 19
+						"x": 13,
+						"y": 9,
+						"w": 25,
+						"h": 18
 					},
 					"frame": {
-						"x": 229,
+						"x": 216,
 						"y": 20,
-						"w": 19,
-						"h": 19
+						"w": 25,
+						"h": 18
 					}
 				},
 				{
@@ -612,9 +654,30 @@
 						"h": 19
 					},
 					"frame": {
-						"x": 252,
-						"y": 21,
+						"x": 245,
+						"y": 20,
 						"w": 32,
+						"h": 19
+					}
+				},
+				{
+					"filename": "fleaman-jump-forward",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 19,
+						"h": 20
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 19,
+						"h": 19
+					},
+					"frame": {
+						"x": 281,
+						"y": 20,
+						"w": 19,
 						"h": 19
 					}
 				},
@@ -633,7 +696,7 @@
 						"h": 19
 					},
 					"frame": {
-						"x": 288,
+						"x": 304,
 						"y": 21,
 						"w": 16,
 						"h": 19
@@ -654,7 +717,7 @@
 						"h": 20
 					},
 					"frame": {
-						"x": 308,
+						"x": 324,
 						"y": 21,
 						"w": 14,
 						"h": 20
@@ -675,8 +738,8 @@
 						"h": 20
 					},
 					"frame": {
-						"x": 326,
-						"y": 22,
+						"x": 342,
+						"y": 21,
 						"w": 18,
 						"h": 20
 					}
@@ -696,7 +759,7 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 348,
+						"x": 364,
 						"y": 22,
 						"w": 32,
 						"h": 22
@@ -717,7 +780,7 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 384,
+						"x": 400,
 						"y": 22,
 						"w": 28,
 						"h": 22
@@ -738,7 +801,7 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 416,
+						"x": 432,
 						"y": 22,
 						"w": 28,
 						"h": 22
@@ -759,31 +822,31 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 448,
+						"x": 464,
 						"y": 22,
 						"w": 27,
 						"h": 22
 					}
 				},
 				{
-					"filename": "skull_1",
+					"filename": "enemy-death-5",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 32,
-						"h": 32
+						"w": 44,
+						"h": 52
 					},
 					"spriteSourceSize": {
-						"x": 7,
-						"y": 7,
-						"w": 20,
-						"h": 23
+						"x": 15,
+						"y": 1,
+						"w": 12,
+						"h": 28
 					},
 					"frame": {
-						"x": 479,
+						"x": 495,
 						"y": 22,
-						"w": 20,
-						"h": 23
+						"w": 12,
+						"h": 28
 					}
 				},
 				{
@@ -808,7 +871,7 @@
 					}
 				},
 				{
-					"filename": "skull_0",
+					"filename": "skull_1",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -817,15 +880,15 @@
 					},
 					"spriteSourceSize": {
 						"x": 7,
-						"y": 5,
-						"w": 21,
-						"h": 24
+						"y": 7,
+						"w": 20,
+						"h": 23
 					},
 					"frame": {
 						"x": 38,
-						"y": 34,
-						"w": 21,
-						"h": 24
+						"y": 35,
+						"w": 20,
+						"h": 23
 					}
 				},
 				{
@@ -843,10 +906,52 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 63,
-						"y": 37,
+						"x": 62,
+						"y": 36,
 						"w": 32,
 						"h": 24
+					}
+				},
+				{
+					"filename": "skull_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 5,
+						"w": 21,
+						"h": 24
+					},
+					"frame": {
+						"x": 98,
+						"y": 37,
+						"w": 21,
+						"h": 24
+					}
+				},
+				{
+					"filename": "zombie-dead_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 35
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 10,
+						"w": 16,
+						"h": 25
+					},
+					"frame": {
+						"x": 123,
+						"y": 37,
+						"w": 16,
+						"h": 25
 					}
 				},
 				{
@@ -864,8 +969,8 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 99,
-						"y": 37,
+						"x": 143,
+						"y": 39,
 						"w": 23,
 						"h": 24
 					}
@@ -885,30 +990,9 @@
 						"h": 25
 					},
 					"frame": {
-						"x": 126,
-						"y": 39,
-						"w": 32,
-						"h": 25
-					}
-				},
-				{
-					"filename": "zombie-dead_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 48,
-						"h": 35
-					},
-					"spriteSourceSize": {
-						"x": 17,
-						"y": 10,
-						"w": 16,
-						"h": 25
-					},
-					"frame": {
-						"x": 162,
+						"x": 170,
 						"y": 41,
-						"w": 16,
+						"w": 32,
 						"h": 25
 					}
 				},
@@ -927,31 +1011,10 @@
 						"h": 27
 					},
 					"frame": {
-						"x": 182,
+						"x": 206,
 						"y": 42,
 						"w": 21,
 						"h": 27
-					}
-				},
-				{
-					"filename": "enemy-death-5",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 44,
-						"h": 52
-					},
-					"spriteSourceSize": {
-						"x": 15,
-						"y": 1,
-						"w": 12,
-						"h": 28
-					},
-					"frame": {
-						"x": 207,
-						"y": 42,
-						"w": 12,
-						"h": 28
 					}
 				},
 				{
@@ -969,7 +1032,7 @@
 						"h": 27
 					},
 					"frame": {
-						"x": 223,
+						"x": 231,
 						"y": 43,
 						"w": 21,
 						"h": 27
@@ -990,8 +1053,8 @@
 						"h": 27
 					},
 					"frame": {
-						"x": 248,
-						"y": 44,
+						"x": 256,
+						"y": 43,
 						"w": 23,
 						"h": 27
 					}
@@ -1011,7 +1074,7 @@
 						"h": 28
 					},
 					"frame": {
-						"x": 275,
+						"x": 283,
 						"y": 44,
 						"w": 28,
 						"h": 28
@@ -1032,30 +1095,9 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 307,
-						"y": 46,
+						"x": 315,
+						"y": 45,
 						"w": 17,
-						"h": 31
-					}
-				},
-				{
-					"filename": "spear-knight-walk_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 32,
-						"h": 32
-					},
-					"spriteSourceSize": {
-						"x": 8,
-						"y": 1,
-						"w": 16,
-						"h": 31
-					},
-					"frame": {
-						"x": 328,
-						"y": 46,
-						"w": 16,
 						"h": 31
 					}
 				},
@@ -1074,8 +1116,8 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 348,
-						"y": 48,
+						"x": 336,
+						"y": 45,
 						"w": 17,
 						"h": 31
 					}
@@ -1095,7 +1137,7 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 369,
+						"x": 357,
 						"y": 48,
 						"w": 17,
 						"h": 31
@@ -1116,7 +1158,7 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 390,
+						"x": 378,
 						"y": 48,
 						"w": 17,
 						"h": 31
@@ -1137,7 +1179,7 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 411,
+						"x": 399,
 						"y": 48,
 						"w": 17,
 						"h": 31
@@ -1158,9 +1200,30 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 432,
+						"x": 420,
 						"y": 48,
 						"w": 17,
+						"h": 31
+					}
+				},
+				{
+					"filename": "spear-knight-walk_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 1,
+						"w": 16,
+						"h": 31
+					},
+					"frame": {
+						"x": 441,
+						"y": 48,
+						"w": 16,
 						"h": 31
 					}
 				},
@@ -1179,7 +1242,7 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 453,
+						"x": 461,
 						"y": 48,
 						"w": 16,
 						"h": 31
@@ -1200,31 +1263,10 @@
 						"h": 32
 					},
 					"frame": {
-						"x": 473,
-						"y": 49,
+						"x": 481,
+						"y": 54,
 						"w": 18,
 						"h": 32
-					}
-				},
-				{
-					"filename": "zombie-attack_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 48,
-						"h": 35
-					},
-					"spriteSourceSize": {
-						"x": 18,
-						"y": 0,
-						"w": 13,
-						"h": 35
-					},
-					"frame": {
-						"x": 495,
-						"y": 49,
-						"w": 13,
-						"h": 35
 					}
 				},
 				{
@@ -1285,7 +1327,7 @@
 					},
 					"frame": {
 						"x": 45,
-						"y": 65,
+						"y": 64,
 						"w": 17,
 						"h": 32
 					}
@@ -1306,7 +1348,7 @@
 					},
 					"frame": {
 						"x": 66,
-						"y": 65,
+						"y": 64,
 						"w": 16,
 						"h": 32
 					}
@@ -1348,8 +1390,29 @@
 					},
 					"frame": {
 						"x": 116,
-						"y": 68,
+						"y": 66,
 						"w": 21,
+						"h": 34
+					}
+				},
+				{
+					"filename": "zombie-attack_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 35
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 1,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 141,
+						"y": 67,
+						"w": 20,
 						"h": 34
 					}
 				},
@@ -1368,14 +1431,14 @@
 						"h": 34
 					},
 					"frame": {
-						"x": 141,
-						"y": 68,
+						"x": 165,
+						"y": 70,
 						"w": 16,
 						"h": 34
 					}
 				},
 				{
-					"filename": "zombie-walk_1",
+					"filename": "zombie-attack_0",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -1383,37 +1446,16 @@
 						"h": 35
 					},
 					"spriteSourceSize": {
-						"x": 17,
+						"x": 18,
 						"y": 0,
-						"w": 14,
+						"w": 13,
 						"h": 35
 					},
 					"frame": {
-						"x": 161,
+						"x": 185,
 						"y": 70,
-						"w": 14,
+						"w": 13,
 						"h": 35
-					}
-				},
-				{
-					"filename": "zombie-attack_3",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 48,
-						"h": 35
-					},
-					"spriteSourceSize": {
-						"x": 16,
-						"y": 1,
-						"w": 20,
-						"h": 34
-					},
-					"frame": {
-						"x": 179,
-						"y": 73,
-						"w": 20,
-						"h": 34
 					}
 				},
 				{
@@ -1431,9 +1473,30 @@
 						"h": 35
 					},
 					"frame": {
-						"x": 203,
-						"y": 74,
+						"x": 202,
+						"y": 73,
 						"w": 21,
+						"h": 35
+					}
+				},
+				{
+					"filename": "zombie-walk_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 35
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 0,
+						"w": 14,
+						"h": 35
+					},
+					"frame": {
+						"x": 227,
+						"y": 74,
+						"w": 14,
 						"h": 35
 					}
 				},
@@ -1452,8 +1515,8 @@
 						"h": 40
 					},
 					"frame": {
-						"x": 228,
-						"y": 75,
+						"x": 245,
+						"y": 74,
 						"w": 18,
 						"h": 40
 					}
@@ -1473,7 +1536,7 @@
 						"h": 41
 					},
 					"frame": {
-						"x": 250,
+						"x": 267,
 						"y": 76,
 						"w": 29,
 						"h": 41
@@ -1494,8 +1557,8 @@
 						"h": 41
 					},
 					"frame": {
-						"x": 283,
-						"y": 81,
+						"x": 300,
+						"y": 80,
 						"w": 26,
 						"h": 41
 					}
@@ -1515,8 +1578,8 @@
 						"h": 44
 					},
 					"frame": {
-						"x": 313,
-						"y": 81,
+						"x": 330,
+						"y": 83,
 						"w": 25,
 						"h": 44
 					}
@@ -1536,7 +1599,7 @@
 						"h": 45
 					},
 					"frame": {
-						"x": 342,
+						"x": 359,
 						"y": 83,
 						"w": 24,
 						"h": 45
@@ -1557,7 +1620,7 @@
 						"h": 46
 					},
 					"frame": {
-						"x": 370,
+						"x": 387,
 						"y": 83,
 						"w": 36,
 						"h": 46
@@ -1578,10 +1641,31 @@
 						"h": 47
 					},
 					"frame": {
-						"x": 410,
+						"x": 427,
 						"y": 83,
 						"w": 38,
 						"h": 47
+					}
+				},
+				{
+					"filename": "dracula-appears_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 0,
+						"w": 3,
+						"h": 80
+					},
+					"frame": {
+						"x": 503,
+						"y": 54,
+						"w": 3,
+						"h": 80
 					}
 				},
 				{
@@ -1599,8 +1683,8 @@
 						"h": 48
 					},
 					"frame": {
-						"x": 452,
-						"y": 85,
+						"x": 2,
+						"y": 98,
 						"w": 34,
 						"h": 48
 					}
@@ -1620,31 +1704,10 @@
 						"h": 66
 					},
 					"frame": {
-						"x": 2,
-						"y": 101,
+						"x": 40,
+						"y": 104,
 						"w": 80,
 						"h": 66
-					}
-				},
-				{
-					"filename": "dracula-appears_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 64,
-						"h": 80
-					},
-					"spriteSourceSize": {
-						"x": 30,
-						"y": 0,
-						"w": 3,
-						"h": 80
-					},
-					"frame": {
-						"x": 490,
-						"y": 88,
-						"w": 3,
-						"h": 80
 					}
 				},
 				{
@@ -1662,8 +1725,8 @@
 						"h": 80
 					},
 					"frame": {
-						"x": 86,
-						"y": 102,
+						"x": 469,
+						"y": 90,
 						"w": 15,
 						"h": 80
 					}
@@ -1683,73 +1746,10 @@
 						"h": 76
 					},
 					"frame": {
-						"x": 105,
-						"y": 109,
+						"x": 124,
+						"y": 108,
 						"w": 53,
 						"h": 76
-					}
-				},
-				{
-					"filename": "dracula-appears_2",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 64,
-						"h": 80
-					},
-					"spriteSourceSize": {
-						"x": 17,
-						"y": 0,
-						"w": 29,
-						"h": 80
-					},
-					"frame": {
-						"x": 162,
-						"y": 111,
-						"w": 29,
-						"h": 80
-					}
-				},
-				{
-					"filename": "attack_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 160,
-						"h": 160
-					},
-					"spriteSourceSize": {
-						"x": 38,
-						"y": 50,
-						"w": 80,
-						"h": 74
-					},
-					"frame": {
-						"x": 195,
-						"y": 121,
-						"w": 80,
-						"h": 74
-					}
-				},
-				{
-					"filename": "idle",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 160,
-						"h": 160
-					},
-					"spriteSourceSize": {
-						"x": 38,
-						"y": 50,
-						"w": 80,
-						"h": 74
-					},
-					"frame": {
-						"x": 279,
-						"y": 132,
-						"w": 80,
-						"h": 74
 					}
 				},
 				{
@@ -1767,8 +1767,8 @@
 						"h": 78
 					},
 					"frame": {
-						"x": 363,
-						"y": 134,
+						"x": 181,
+						"y": 113,
 						"w": 53,
 						"h": 78
 					}
@@ -1788,10 +1788,52 @@
 						"h": 78
 					},
 					"frame": {
-						"x": 420,
-						"y": 137,
+						"x": 238,
+						"y": 121,
 						"w": 53,
 						"h": 78
+					}
+				},
+				{
+					"filename": "dracula-appears_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 0,
+						"w": 29,
+						"h": 80
+					},
+					"frame": {
+						"x": 295,
+						"y": 125,
+						"w": 29,
+						"h": 80
+					}
+				},
+				{
+					"filename": "attack_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 160,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 38,
+						"y": 50,
+						"w": 80,
+						"h": 74
+					},
+					"frame": {
+						"x": 328,
+						"y": 133,
+						"w": 80,
+						"h": 74
 					}
 				},
 				{
@@ -1809,10 +1851,31 @@
 						"h": 78
 					},
 					"frame": {
-						"x": 2,
-						"y": 171,
+						"x": 412,
+						"y": 134,
 						"w": 53,
 						"h": 78
+					}
+				},
+				{
+					"filename": "idle",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 160,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 38,
+						"y": 50,
+						"w": 80,
+						"h": 74
+					},
+					"frame": {
+						"x": 2,
+						"y": 174,
+						"w": 80,
+						"h": 74
 					}
 				},
 				{
@@ -1830,8 +1893,8 @@
 						"h": 78
 					},
 					"frame": {
-						"x": 59,
-						"y": 189,
+						"x": 86,
+						"y": 188,
 						"w": 57,
 						"h": 78
 					}
@@ -1851,7 +1914,7 @@
 						"h": 78
 					},
 					"frame": {
-						"x": 120,
+						"x": 147,
 						"y": 195,
 						"w": 57,
 						"h": 78
@@ -1872,10 +1935,31 @@
 						"h": 79
 					},
 					"frame": {
-						"x": 181,
-						"y": 199,
+						"x": 208,
+						"y": 203,
 						"w": 53,
 						"h": 79
+					}
+				},
+				{
+					"filename": "dracula-appears_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 64,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 0,
+						"w": 57,
+						"h": 80
+					},
+					"frame": {
+						"x": 265,
+						"y": 209,
+						"w": 57,
+						"h": 80
 					}
 				},
 				{
@@ -1893,8 +1977,8 @@
 						"h": 79
 					},
 					"frame": {
-						"x": 238,
-						"y": 210,
+						"x": 326,
+						"y": 211,
 						"w": 61,
 						"h": 79
 					}
@@ -1914,7 +1998,7 @@
 						"h": 79
 					},
 					"frame": {
-						"x": 303,
+						"x": 391,
 						"y": 216,
 						"w": 61,
 						"h": 79
@@ -1935,31 +2019,10 @@
 						"h": 79
 					},
 					"frame": {
-						"x": 368,
-						"y": 219,
+						"x": 2,
+						"y": 252,
 						"w": 61,
 						"h": 79
-					}
-				},
-				{
-					"filename": "dracula-appears_3",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 64,
-						"h": 80
-					},
-					"spriteSourceSize": {
-						"x": 3,
-						"y": 0,
-						"w": 57,
-						"h": 80
-					},
-					"frame": {
-						"x": 433,
-						"y": 219,
-						"w": 57,
-						"h": 80
 					}
 				},
 				{
@@ -1977,8 +2040,8 @@
 						"h": 82
 					},
 					"frame": {
-						"x": 2,
-						"y": 271,
+						"x": 67,
+						"y": 277,
 						"w": 90,
 						"h": 82
 					}
@@ -1998,8 +2061,8 @@
 						"h": 92
 					},
 					"frame": {
-						"x": 96,
-						"y": 277,
+						"x": 161,
+						"y": 286,
 						"w": 80,
 						"h": 92
 					}
@@ -2019,31 +2082,10 @@
 						"h": 86
 					},
 					"frame": {
-						"x": 180,
+						"x": 245,
 						"y": 299,
 						"w": 154,
 						"h": 86
-					}
-				},
-				{
-					"filename": "fly_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 160,
-						"h": 160
-					},
-					"spriteSourceSize": {
-						"x": 20,
-						"y": 32,
-						"w": 132,
-						"h": 110
-					},
-					"frame": {
-						"x": 338,
-						"y": 303,
-						"w": 132,
-						"h": 110
 					}
 				},
 				{
@@ -2061,10 +2103,31 @@
 						"h": 138
 					},
 					"frame": {
-						"x": 2,
-						"y": 357,
+						"x": 403,
+						"y": 299,
 						"w": 88,
 						"h": 138
+					}
+				},
+				{
+					"filename": "fly_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 160,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 20,
+						"y": 32,
+						"w": 132,
+						"h": 110
+					},
+					"frame": {
+						"x": 2,
+						"y": 363,
+						"w": 132,
+						"h": 110
 					}
 				}
 			]

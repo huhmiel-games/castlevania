@@ -8,7 +8,7 @@ export class SpearKnightIA implements IEnemyIA
 {
     parent: Enemy;
     scene: GameScene;
-    randomTurnBackTime: number = 0;
+    private randomTurnBackTime: number = 0;
     constructor(parent: Enemy)
     {
         this.parent = parent;
@@ -27,7 +27,12 @@ export class SpearKnightIA implements IEnemyIA
 
         const { now } = this.scene.time;
 
-        if (blocked.left && cam.worldView.contains(center.x, center.y))
+        if(this.parent.isOutsideCameraByPixels(128))
+        {
+            return;
+        }
+
+        if (blocked.left)
         {
             this.parent.resetAllButtons();
 
@@ -36,7 +41,7 @@ export class SpearKnightIA implements IEnemyIA
             return;
         }
 
-        if (blocked.right && cam.worldView.contains(center.x, center.y))
+        if (blocked.right)
         {
             this.parent.resetAllButtons();
 
@@ -45,7 +50,7 @@ export class SpearKnightIA implements IEnemyIA
             return;
         }
 
-        if (right.isDown && !this.scene.colliderLayer.getTileAtWorldXY(this.parent.body.right, this.parent.body.bottom + TILE_SIZE / 8)?.canCollide)
+        if (right.isDown && !this.scene.colliderLayer.getTileAtWorldXY(body.right, body.bottom + TILE_SIZE / 8)?.canCollide)
         {
             this.parent.resetAllButtons();
 
@@ -54,7 +59,7 @@ export class SpearKnightIA implements IEnemyIA
             return;
         }
 
-        if (left.isDown && !this.scene.colliderLayer.getTileAtWorldXY(this.parent.body.left, this.parent.body.bottom + TILE_SIZE / 8)?.canCollide)
+        if (left.isDown && !this.scene.colliderLayer.getTileAtWorldXY(body.left, body.bottom + TILE_SIZE / 8)?.canCollide)
         {
             this.parent.resetAllButtons();
 
@@ -89,7 +94,7 @@ export class SpearKnightIA implements IEnemyIA
 
             if(body.bottom === player.body.bottom)
             {
-                const side = body.center.x > player.body.center.x;
+                const side = center.x > player.body.center.x;
 
                 this.parent.resetAllButtons();
 
@@ -108,7 +113,7 @@ export class SpearKnightIA implements IEnemyIA
         {
             const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-            if (this.parent.canUse(EPossibleState.LEFT) && player.damageBody.x < this.parent.body.x)
+            if (this.parent.canUse(EPossibleState.LEFT) && player.damageBody.x < body.x)
             {
                 this.parent.resetAllButtons();
 
@@ -117,7 +122,7 @@ export class SpearKnightIA implements IEnemyIA
                 return;
             }
 
-            if (this.parent.canUse(EPossibleState.RIGHT) && player.damageBody.x > this.parent.body.x)
+            if (this.parent.canUse(EPossibleState.RIGHT) && player.damageBody.x > body.x)
             {
                 this.parent.resetAllButtons();
 

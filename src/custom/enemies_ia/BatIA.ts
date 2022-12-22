@@ -51,20 +51,6 @@ export class BatIA implements IEnemyIA
         {
             this.parent.killAndRespawn();
         }
-
-        // if (up.isUp && cam.worldView.contains(center.x, center.y))
-        // {
-        //     this.parent.resetAllButtons();
-
-        //     this.parent.killAndRespawn();
-        // }
-
-        // if (up.isDown && cam.worldView.contains(center.x, center.y))
-        // {
-        //     this.parent.resetAllButtons();
-
-        //     this.parent.killAndRespawn();
-        // }
     }
 
     reset()

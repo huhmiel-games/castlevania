@@ -8,13 +8,15 @@ export class CatIA implements IEnemyIA
 {
     parent: Enemy;
     scene: GameScene;
-    randomTurnBackTime: number = 0;
-    isAttacking: boolean = false;
-    isReady: boolean = false;
+    private isAttacking: boolean = false;
+    private isReady: boolean = false;
     constructor(parent: Enemy)
     {
         this.parent = parent;
         this.scene = parent.scene;
+
+        this.parent.body.checkCollision.left = false;
+        this.parent.body.checkCollision.right = false;
     }
 
     decides()
@@ -101,7 +103,7 @@ export class CatIA implements IEnemyIA
             return;
         }
 
-        if(this.isAttacking && this.parent.isOutsideScreenByPixels(64))
+        if(this.isAttacking && this.parent.isOutsideCameraByPixels(64))
         {
             this.parent.kill();
         }

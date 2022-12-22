@@ -4,18 +4,21 @@ import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
 import { IEnemyIA } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { TCoord } from "../../types/types";
 
 export class FishmanIA implements IEnemyIA
 {
     parent: Enemy;
     scene: GameScene;
-    randomJumpTime: number = 0;
-    randomAttackTime: number = 0;
-    hasJumped: boolean = false;
+    private randomJumpTime: number = 0;
+    private randomAttackTime: number = 0;
+    private hasJumped: boolean = false;
+    private originPosition: number;
     constructor(parent: Enemy)
     {
         this.parent = parent;
         this.scene = parent.scene;
+        this.originPosition = { ...parent.body.center }.y + TILE_SIZE / 2;
     }
 
     decides()
@@ -35,8 +38,10 @@ export class FishmanIA implements IEnemyIA
             this.randomJumpTime = now + Phaser.Math.RND.between(50, 5000);
         }
 
+        
+
         // first jump
-        if (!this.hasJumped && blocked.down && cam.worldView.contains(center.x, center.y) && this.randomJumpTime < now)
+        if (!this.hasJumped && blocked.down && this.parent.isInsideCameraByPixels(128) && this.randomJumpTime < now)
         {
             this.hasJumped = true;
 
@@ -142,6 +147,11 @@ export class FishmanIA implements IEnemyIA
             a.setDown(now);
             return;
         }
+
+        // if(b.isUp && this.hasJumped && body.bottom === this.originPosition)
+        // {
+        //     this.hasJumped = false;
+        // }
     }
 
     reset()
