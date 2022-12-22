@@ -14,7 +14,7 @@ export default class Conveyor extends Phaser.GameObjects.TileSprite
 
         this.scene.add.existing(this);
 
-        this.setOrigin(0);
+        this.setOrigin(0).setName('conveyor');
 
         this.scene.physics.add.existing(this, true);
 
