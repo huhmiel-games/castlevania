@@ -21,6 +21,7 @@ import { SkeletonRedIA } from "./enemies_ia/SkeletonRedIA";
 import { FleamanIA } from "./enemies_ia/FleamanIA";
 import { AxeKnightIA } from "./enemies_ia/AxeKnightIA";
 import { BatBlueIA } from "./enemies_ia/BatBlueIA";
+import { RavenIA } from "./enemies_ia/RavenIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -35,12 +36,13 @@ export default function addEnemies(scene: GameScene)
     scene.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
 
     // destroy old zone enemies
-    scene.enemies.forEach(enemy => {
+    scene.enemies.forEach(enemy =>
+    {
         scene.children.remove(enemy.damageBody);
         scene.children.remove(enemy);
     });
     scene.enemies.length = 0;
-    
+
     // create zone enemies
     const enemyLayer = LayerService.getObjectLayerByName(scene, 'enemies');
 
@@ -257,6 +259,9 @@ function setAIEnemy(enemy: Enemy)
             break;
         case 'skeleton':
             enemy.setAi(new SkeletonIA(enemy));
+            break;
+        case 'raven':
+            enemy.setAi(new RavenIA(enemy));
             break;
         case 'skeleton-red':
             enemy.setAi(new SkeletonRedIA(enemy));

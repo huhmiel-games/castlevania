@@ -43,6 +43,13 @@ export default class FlyLeftState extends State
 
         character.body.setVelocity(-speed, speedY);
 
+        if (character.canUse(EPossibleState.FLY_IDLE) && left.isUp)
+        {
+            this.stateMachine.transition(EPossibleState.FLY_IDLE, this.stateMachine.state);
+
+            return;
+        }
+
         if (character.canUse(EPossibleState.IDLE) && left.isUp)
         {
             this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);

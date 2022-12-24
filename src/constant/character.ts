@@ -39,6 +39,7 @@ export enum EPossibleState
     PROXIMITY = 'proximity',
     FLY_LEFT = 'flyLeft',
     FLY_RIGHT = 'flyRight',
+    FLY_IDLE = 'flyIdle',
     SIDE = 'side'
 }
 

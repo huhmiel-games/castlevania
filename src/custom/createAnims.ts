@@ -446,6 +446,17 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
+        key: 'crow-fly',
+        frames: [
+            { key: 'enemies', frame: 'crow-fly_0' },
+            { key: 'enemies', frame: 'crow-fly_1' },
+            { key: 'enemies', frame: 'crow-fly_2' }
+        ],
+        frameRate: 10,
+        repeat: -1,
+    });
+
+    scene.anims.create({
         key: 'fleaman-idle',
         frames: [
             { key: 'enemies', frame: 'fleaman-idle_0' },
@@ -501,17 +512,6 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'fleaman-jump-up' },
         ],
         frameRate: 2,
-        repeat: -1,
-    });
-
-    scene.anims.create({
-        key: 'crow-fly',
-        frames: [
-            { key: 'enemies', frame: 'crow-fly_1' },
-            { key: 'enemies', frame: 'crow-fly_2' },
-            { key: 'enemies', frame: 'crow-fly_0' },
-        ],
-        frameRate: 6,
         repeat: -1,
     });
 

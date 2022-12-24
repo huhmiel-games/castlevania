@@ -41,7 +41,14 @@ export default class FlyRightState extends State
 
         const speedY = Math.sin(now / 400) * sinHeight! * TILE_SIZE;
 
-        character.body.setVelocity(speed, speedY)
+        character.body.setVelocity(speed, speedY);
+
+        if (character.canUse(EPossibleState.FLY_IDLE) && right.isUp)
+        {
+            this.stateMachine.transition(EPossibleState.FLY_IDLE, this.stateMachine.state);
+
+            return;
+        }
 
         if (character.canUse(EPossibleState.IDLE) && right.isUp)
         {

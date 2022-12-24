@@ -38,6 +38,7 @@ import ThrowingAxe from "../weapons/ThrowingAxe";
 import Boomerang from "../weapons/Boomerang";
 import RecoilLeftState from "../states/walk/RecoilLeftState";
 import RecoilRightState from "../states/walk/RecoilRightState";
+import FlyIdleState from "../states/enemy/FlyIdleState";
 
 export class Enemy extends Entity
 {
@@ -100,7 +101,7 @@ export class Enemy extends Entity
 
         //if (this.scene.cameras.main.getBounds())
 
-            this.ai.decides();
+        this.ai.decides();
     }
 
     public setAi(ai: IEnemyAI)
@@ -280,7 +281,7 @@ export class Enemy extends Entity
                     {
                         const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-                        this.body.reset(this.config.status.position.x, player.body.bottom - TILE_SIZE );
+                        this.body.reset(this.config.status.position.x, player.body.bottom - TILE_SIZE);
                     }
 
                     this.ai.reset();
@@ -289,7 +290,8 @@ export class Enemy extends Entity
 
                     this.scene?.time.addEvent({
                         delay: 32,
-                        callback: () => {
+                        callback: () =>
+                        {
                             this.damageBody.setActive(true);
                             this.damageBody.body.setEnable(true);
                         }
@@ -332,7 +334,7 @@ export class Enemy extends Entity
                 case EPossibleState.RIGHT:
                     possibleStates[EPossibleState.RIGHT] = new WalkRightState() as WalkRightState;
                     break;
-                    case EPossibleState.RECOIL_LEFT:
+                case EPossibleState.RECOIL_LEFT:
                     possibleStates[EPossibleState.RECOIL_LEFT] = new RecoilLeftState() as RecoilLeftState;
                     break;
                 case EPossibleState.RECOIL_RIGHT:
@@ -397,6 +399,9 @@ export class Enemy extends Entity
                     break;
                 case EPossibleState.FLY_RIGHT:
                     possibleStates[EPossibleState.FLY_RIGHT] = new FlyRightState() as FlyRightState;
+                    break;
+                case EPossibleState.FLY_IDLE:
+                    possibleStates[EPossibleState.FLY_IDLE] = new FlyIdleState() as FlyIdleState;
                     break;
                 case EPossibleState.SIDE:
                     possibleStates[EPossibleState.SIDE] = new SideState() as SideState;
