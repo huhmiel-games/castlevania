@@ -18,6 +18,15 @@ export class RavenIA implements IEnemyAI
 
         this.parent.body.setAllowGravity(false);
 
+        if (this.parent.body.center.x < this.scene.getPlayerByName(PLAYER_A_NAME).body.center.x)
+        {
+            this.parent.setFlipX(false);
+        }
+        else
+        {
+            this.parent.setFlipX(true);
+        }
+
         this.parent.anims.play(this.parent.animList.IDLE!);
     }
 
