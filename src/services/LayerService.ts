@@ -61,45 +61,57 @@ export default class LayerService
 
     public static addConveyors(scene: GameScene)
     {
+        scene.children.list.filter(e => e.name === 'conveyor').forEach(conveyor => {
+            scene.children.remove(conveyor);
+        });
+
         const conveyorLayer = this.getObjectLayerByName(scene, 'conveyor');
 
         if (!conveyorLayer) return;
 
         conveyorLayer.objects.forEach(conveyorObject =>
         {
-            const properties = this.convertTiledObjectProperties(conveyorObject.properties);
-
-            const width = properties?.width || 1;
-
-            const reverse = properties?.reverse || false;
-
-            const conveyor = new Conveyor(scene, conveyorObject.x!, conveyorObject.y! - 16, TILE_SIZE * width, 16);
-
-            conveyor.setSpeed(0.5);
-
-            if (reverse === true)
+            if (scene.isInPlayerStage(conveyorObject))
             {
-                conveyor.reverse();
+                const properties = this.convertTiledObjectProperties(conveyorObject.properties);
+
+                const width = properties?.width || 1;
+    
+                const reverse = properties?.reverse || false;
+    
+                const conveyor = new Conveyor(scene, conveyorObject.x!, conveyorObject.y! - 16, TILE_SIZE * width, 16);
+    
+                conveyor.setSpeed(0.5);
+    
+                if (reverse === true)
+                {
+                    conveyor.reverse();
+                }
+    
+                scene.conveyorGroup.add(conveyor);
             }
-
-            scene.conveyorGroup.add(conveyor);
-        })
-
-
+        });
     }
 
     public static addMovingPlatforms(scene: GameScene)
     {
+        scene.children.list.filter(e => e.name === 'movingPlatform').forEach(movingPlatform => {
+            scene.children.remove(movingPlatform);
+        });
+
         const platformLayer = this.getObjectLayerByName(scene, 'movingPlatform');
 
         if (!platformLayer) return;
 
         platformLayer.objects.forEach(platform =>
         {
-            const newPlatform = new MovingPlatform({ scene: scene, x: platform.x! + TILE_SIZE, y: platform.y! - TILE_SIZE, texture: 'items', frame: 'movingPlatform' });
+            if (scene.isInPlayerStage(platform))
+            {
+                const newPlatform = new MovingPlatform({ scene: scene, x: platform.x! + TILE_SIZE, y: platform.y! - TILE_SIZE, texture: 'items', frame: 'movingPlatform' });
 
-            scene.movingPlatformGroup.add(newPlatform);
-        })
+                scene.movingPlatformGroup.add(newPlatform);
+            }
+        });
     }
 
     public static addBackgroundLayers(scene: GameScene)
@@ -132,10 +144,10 @@ export default class LayerService
             const layerElement = scene.map.createLayer(layer.name, tilesetsNames, 0, 0)?.setDepth(DEPTH.GROUND_LAYER);
             layerElement?.setName(layer.name);
 
-            if (this.getLayerName(layer) === 'candles')
-            {
-                this.addCandlesPointLight(scene, layer)
-            }
+            // if (this.getLayerName(layer) === 'candles')
+            // {
+            //     this.addCandlesPointLight(scene, layer)
+            // }
         });
     }
 
@@ -149,11 +161,19 @@ export default class LayerService
         });
     }
 
-    public static addCandlesPointLight(scene: GameScene, layer: Phaser.Tilemaps.LayerData)
+    public static addCandlesPointLight(scene: GameScene)
     {
-        layer.tilemapLayer.getTilesWithin().forEach(tile =>
+        scene.children.list.filter(e => e.name === 'candle').forEach(candle => {
+            (candle as Phaser.GameObjects.PointLight).setActive(false).setVisible(false);
+        });
+
+        const layerCandle = this.getGroundLayers(scene).find(layer => this.getLayerName(layer.layer) === 'candles');
+
+        if (!layerCandle) return;
+
+        layerCandle.getTilesWithin().forEach(tile =>
         {
-            if (tile.properties.light)
+            if (tile.properties.light && scene.isInPlayerStage({ x: tile.pixelX, y: tile.pixelY }))
             {
                 const candle = scene.lightCandlesGroup.get(tile.pixelX + TILE_SIZE / 2, tile.pixelY + TILE_SIZE / 4) as Phaser.GameObjects.PointLight;
                 candle.attenuation = LIGHT_ATTENUATION;

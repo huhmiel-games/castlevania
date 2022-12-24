@@ -1,5 +1,9 @@
 import { TCharacterConfig } from "../../types/types";
+import { IEnemyAI } from "../../interfaces/interface";
+import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import StateTimestamp from "../../utils/StateTimestamp";
+import { PALETTE_DB32 } from "../../constant/colors";
+import { DEPTH } from "../../constant/depth";
 import { Entity } from "../Entity";
 import { EPossibleState } from "../../constant/character";
 import StateMachine from "../../utils/StateMachine";
@@ -9,7 +13,6 @@ import FallState from "../states/jump/FallState";
 import WalkLeftState from "../states/walk/WalkLeftState";
 import WalkRightState from "../states/walk/WalkRightState";
 import IdleState from "../states/idle/IdleState";
-import { DEPTH } from "../../constant/depth";
 import CrouchAttackState from "../states/attack/CrouchAttackState";
 import FallAttackState from "../states/attack/FallAttackState";
 import JumpAttackState from "../states/attack/JumpAttackState";
@@ -26,19 +29,14 @@ import GoDownstairLeftState from "../states/stair/GoDownstairLeftState";
 import GoDownstairRightState from "../states/stair/GoDownstairRightState";
 import GoUpstairLeftState from "../states/stair/GoUpstairLeftState";
 import GoUpstairRightState from "../states/stair/GoUpstairRightState";
-import { PALETTE_DB32 } from "../../constant/colors";
-import ProximityState from "../states/enemy/ProximityState";
-import SideState from "../states/enemy/SideState";
-import { IEnemyIA as IEnemyAI } from "../../interfaces/interface";
-import FlyLeftState from "../states/enemy/FlyLeftState";
-import FlyRightState from "../states/enemy/FlyRightState";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import FlyLeftState from "../states/fly/FlyLeftState";
+import FlyRightState from "../states/fly/FlyRightState";
 import FireBall from "../weapons/FireBall";
 import ThrowingAxe from "../weapons/ThrowingAxe";
 import Boomerang from "../weapons/Boomerang";
 import RecoilLeftState from "../states/walk/RecoilLeftState";
 import RecoilRightState from "../states/walk/RecoilRightState";
-import FlyIdleState from "../states/enemy/FlyIdleState";
+import FlyIdleState from "../states/fly/FlyIdleState";
 
 export class Enemy extends Entity
 {
@@ -98,8 +96,6 @@ export class Enemy extends Entity
         super.preUpdate(time, delta);
 
         if (!this.active) return;
-
-        //if (this.scene.cameras.main.getBounds())
 
         this.ai.decides();
     }
@@ -391,9 +387,6 @@ export class Enemy extends Entity
                 case EPossibleState.DEATH:
                     possibleStates[EPossibleState.DEATH] = new DeathState() as DeathState;
                     break;
-                case EPossibleState.PROXIMITY:
-                    possibleStates[EPossibleState.PROXIMITY] = new ProximityState() as ProximityState;
-                    break;
                 case EPossibleState.FLY_LEFT:
                     possibleStates[EPossibleState.FLY_LEFT] = new FlyLeftState() as FlyLeftState;
                     break;
@@ -402,9 +395,6 @@ export class Enemy extends Entity
                     break;
                 case EPossibleState.FLY_IDLE:
                     possibleStates[EPossibleState.FLY_IDLE] = new FlyIdleState() as FlyIdleState;
-                    break;
-                case EPossibleState.SIDE:
-                    possibleStates[EPossibleState.SIDE] = new SideState() as SideState;
                     break;
                 default:
                     break;

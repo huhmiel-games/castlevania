@@ -745,5 +745,60 @@
         ],
         "resurrect": 0,
         "weaponOffset": 8
+    },
+    "raven": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "crow-idle_0",
+            "animList": {
+                "IDLE": "crow-idle",
+                "FLY": "crow-fly"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 100,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 50,
+            "acceleration": 300,
+            "stairSpeed": 160,
+            "dragCoeff": 100,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": -6
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 16,
+                "offsetY": 23
+            },
+            "damageBody": {
+                "type": "circle",
+                "width": 8,
+                "height": 8
+            }
+        },
+        "state": [
+            "idle",
+            "flyIdle",
+            "flyLeft",
+            "flyRight"
+        ],
+        "collideWithWorld": false,
+        "resurrect": 0
     }
 }

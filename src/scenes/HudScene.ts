@@ -238,8 +238,6 @@ export default class HudScene extends Phaser.Scene
         if (timerEvent.repeatCount === 0)
         {
             const player = this.gameScene.children.getByName(PLAYER_A_NAME) as Entity;
-
-            player?.die();
         }
     }
 }

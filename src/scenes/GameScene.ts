@@ -1,6 +1,6 @@
 // @ts-ignore
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
-import { HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, TILED_WORLD_OFFSET_Y, TILE_SIZE } from '../constant/config';
+import { FONTS, FONTS_SIZES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
 import { InputController } from '../inputs/InputController';
 import { ISoundList } from '../interfaces/interface.js';
 import LayerService from '../services/LayerService.js';
@@ -43,6 +43,8 @@ export default class GameScene extends Phaser.Scene
     debugGraphics: Phaser.GameObjects.Graphics;
     public enemyWeaponGroup: Phaser.GameObjects.Group;
     public enemiesWeaponsVsPlayerCollider: Phaser.Physics.Arcade.Collider;
+    weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
+    childrenText: Phaser.GameObjects.BitmapText
 
     constructor()
     {
@@ -136,10 +138,14 @@ export default class GameScene extends Phaser.Scene
         }
 
         this.cameraFollowPlayer();
+
+        this.childrenText = this.add.bitmapText(64, 128, FONTS.GALAXY, '', FONTS_SIZES.GALAXY, 1).setDepth(2000).setScrollFactor(0, 0)
     }
 
     public update(time: number, delta: number): void
     {
+        this.childrenText.setText(this.children.list.length.toString());
+
         if (this.inputController.playerAButtons.x.isDown)
         {
             if (this.debugGraphics && this.debugGraphics.commandBuffer.length)
@@ -235,7 +241,7 @@ export default class GameScene extends Phaser.Scene
 
         this.lightCandlesGroup = this.add.group({
             classType: Phaser.GameObjects.PointLight,
-            maxSize: 2000,
+            maxSize: 30,
         });
 
         this.enemyDeathGroup = this.add.group({
@@ -273,6 +279,10 @@ export default class GameScene extends Phaser.Scene
                     this.changeMajorStage(zoneData?.stage);
 
                     this.playSong(zoneData?.musicIndex);
+
+                    LayerService.addCandlesPointLight(this);
+                    LayerService.addMovingPlatforms(this);
+                    LayerService.addConveyors(this);
 
                     addEnemies(this);
                 }

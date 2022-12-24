@@ -1,10 +1,10 @@
 import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyIA } from "../../interfaces/interface";
+import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
 
-export class AxeKnightIA implements IEnemyIA
+export class AxeKnightIA implements IEnemyAI
 {
     parent: Enemy;
     scene: GameScene;

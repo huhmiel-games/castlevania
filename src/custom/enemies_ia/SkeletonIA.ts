@@ -1,10 +1,10 @@
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyIA } from "../../interfaces/interface";
+import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
 import { TCoord } from "../../types/types";
 
-export class SkeletonIA implements IEnemyIA
+export class SkeletonIA implements IEnemyAI
 {
     parent: Enemy;
     scene: GameScene;

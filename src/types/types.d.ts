@@ -1,5 +1,9 @@
 import { Entity } from "../entities/Entity";
 import Boomerang from "../entities/weapons/Boomerang";
+import FireBall from "../entities/weapons/FireBall";
+import ThrowingAxe from "../entities/weapons/ThrowingAxe";
+import ThrowingBomb from "../entities/weapons/ThrowingBomb";
+import ThrowingKnife from "../entities/weapons/ThrowingKnife";
 import { Key } from "../inputs/Key";
 import GameScene from "../scenes/GameScene";
 
@@ -100,7 +104,7 @@ export type TDoor = {
 };
 
 
-export type RangedWeapon = Boomerang | undefined;
+export type RangedWeapon = Boomerang | ThrowingAxe | ThrowingBomb | ThrowingKnife | FireBall | undefined;
 
 export type BaseItemConfig = {
     scene: GameScene;
@@ -122,6 +126,7 @@ export type TWeaponConfig = {
     frame: string,
     anims: string,
     sound: number,
+    group: string
 }
 
 export type TNfsPlayer = {

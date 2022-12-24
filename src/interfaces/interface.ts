@@ -78,7 +78,7 @@ export interface IFrameList
     stairMiddle: string
 }
 
-export interface IEnemyIA
+export interface IEnemyAI
 {
     parent: Enemy;
     scene: GameScene;

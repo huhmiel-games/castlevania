@@ -1,9 +1,9 @@
 import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyIA } from "../../interfaces/interface";
+import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
 
-export class MedusaIA implements IEnemyIA
+export class MedusaIA implements IEnemyAI
 {
     parent: Enemy;
     scene: GameScene;

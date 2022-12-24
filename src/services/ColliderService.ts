@@ -1,5 +1,3 @@
-
-import { EPossibleState } from '../constant/character';
 import { spawnRetrievableItem } from '../custom/destroyCandle';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
@@ -31,6 +29,11 @@ export default class ColliderService
         // one way collision tiles
         scene.colliderLayer.forEachTile((tile) =>
         {
+            if(tile.properties.collides)
+            {
+                tile.setCollision(true, true, true, false);
+            }
+
             if (tile.properties.leftBlock)
             {
                 tile.setCollision(true, false, false, false);
@@ -47,8 +50,8 @@ export default class ColliderService
             }
         });
 
-        scene.physics.add.collider(scene.movingPlatformGroup, scene.colliderLayer);
-        scene.physics.add.collider(scene.itemsGroup, scene.colliderLayer);
+        scene.physics.add.collider(scene.movingPlatformGroup, scene.colliderLayer).setName('movingPlatformGroupVScolliderLayer');
+        scene.physics.add.collider(scene.itemsGroup, scene.colliderLayer).setName('itemsGroupVScolliderLayer');
 
         // playable characters collisions
         const damageBodies = scene.characters.map(e => e.damageBody)
@@ -59,9 +62,9 @@ export default class ColliderService
             const entity = damageBody.parent;
 
             entity.getItem(_item as Phaser.Types.Physics.Arcade.GameObjectWithBody);
-        });
+        }).setName('playersVSitemsGroup');
 
-        scene.physics.add.collider(scene.characters, scene.movingPlatformGroup);
+        scene.physics.add.collider(scene.characters, scene.movingPlatformGroup).setName('playersVSmovingPlatformGroup');
 
         scene.physics.add.collider(scene.characters, scene.conveyorGroup, (_player, _belt) =>
         {
@@ -73,7 +76,7 @@ export default class ColliderService
             {
                 player.body.position.add(belt.surfaceSpeed);
             }
-        }, undefined, scene);
+        }, undefined, scene).setName('playersVSconveyorGroup');
 
         scene.physics.add.overlap(scene.characters, scene.colliderLayer,
             (_player, _tile) =>
@@ -99,12 +102,9 @@ export default class ColliderService
                     return;
                 }
             }
-        );
+        ).setName('playersVScolliderLayer');
 
-        scene.physics.add.collider(
-            scene.characters,
-            scene.colliderLayer,
-            undefined,
+        scene.physics.add.collider(scene.characters, scene.colliderLayer, undefined,
             (_player, _tile) =>
             {
                 const tile = _tile as unknown as Phaser.Tilemaps.Tile;
@@ -115,12 +115,10 @@ export default class ColliderService
                     return false;
                 }
 
-                // if(player.body.blocked.up) return false;
-
                 return true;
             },
             scene
-        );
+        ).setName('playersVScolliderLayer');
 
         // weapons collisions
         scene.physics.add.overlap(scene.weaponGroup, scene.colliderLayer, (_weapon, _tile) =>
@@ -144,7 +142,7 @@ export default class ColliderService
 
                 tile.setCollision(false, false, false, false, true).destroy();
             }
-        }, undefined, scene);
+        }, undefined, scene).setName('weaponGroupVScolliderLayer');
 
         scene.physics.add.collider(scene.weaponGroup, scene.colliderLayer, undefined, (_weapon, _tile) =>
         {
@@ -154,14 +152,7 @@ export default class ColliderService
             }
 
             return false;
-        }, scene);
-
-        scene.physics.add.overlap(scene.weaponGroup, scene.enemyWeaponGroup, (_weapon, _enemyWeapon) =>
-        {
-            const enemyWeapon = _enemyWeapon as unknown as Weapon;
-            enemyWeapon.setDisable();
-            
-        }, undefined, scene);
+        }, scene).setName('weaponGroupVScolliderLayer');
 
         const candlesLayer = LayerService.getGroundLayers(scene).find(e => e.name === 'ground/candles');
 
@@ -175,7 +166,7 @@ export default class ColliderService
                     weapon.destroyObject(_candle);
                 },
                 (whip, candle) => (candle as Phaser.Tilemaps.Tile).index > 0, this
-            )
+            ).setName('weaponGroupVScandleLayer')
         }
 
         scene.physics.add.collider(scene.enemies, scene.colliderLayer, undefined, (_enemy, _tile) =>
@@ -187,14 +178,7 @@ export default class ColliderService
                 return false;
             }
 
-            // const excludedStates = [EPossibleState.FLY_LEFT, EPossibleState.FLY_RIGHT];
-
-            // if (excludedStates.includes(enemy.stateMachine.state))
-            // {
-            //     return false;
-            // }
-
             return true;
-        }, scene);
+        }, scene).setName('enemiesVScolliderLayer');
     }
 }
