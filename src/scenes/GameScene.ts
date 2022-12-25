@@ -12,6 +12,10 @@ import SaveLoadService from '../services/SaveLoadService.js';
 import { PALETTE_DB32 } from '../constant/colors.js';
 import init from '../custom/init.js';
 import addEnemies from '../custom/addEnemies.js';
+import { EPossibleState } from '../constant/character.js';
+import DamageBody from '../entities/DamageBody.js';
+import ThrowingKnife from '../entities/weapons/ThrowingKnife.js';
+import Weapon from '../entities/weapons/Weapon.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -45,6 +49,8 @@ export default class GameScene extends Phaser.Scene
     public enemiesWeaponsVsPlayerCollider: Phaser.Physics.Arcade.Collider;
     weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
     childrenText: Phaser.GameObjects.BitmapText
+    enemiesDamageBody: DamageBody[];
+    enemiesSecondaryWeapons: Phaser.GameObjects.GameObject[];
 
     constructor()
     {
@@ -139,7 +145,7 @@ export default class GameScene extends Phaser.Scene
 
         this.cameraFollowPlayer();
 
-        this.childrenText = this.add.bitmapText(64, 128, FONTS.GALAXY, '', FONTS_SIZES.GALAXY, 1).setDepth(2000).setScrollFactor(0, 0)
+        this.childrenText = this.add.bitmapText(WIDTH / 8 * 7, 16, FONTS.GALAXY, '', FONTS_SIZES.GALAXY, 1).setDepth(2000).setScrollFactor(0, 0)
     }
 
     public update(time: number, delta: number): void
@@ -194,7 +200,7 @@ export default class GameScene extends Phaser.Scene
 
             return;
         }
-        
+
         if (snd && ignoreIfPlaying && !snd.isPlaying)
         {
             snd.play({ volume: volume });
@@ -431,5 +437,123 @@ export default class GameScene extends Phaser.Scene
         if (player === null) throw new Error(`no player named ${playerName} found`);
 
         return player as Entity;
+    }
+
+    public createEnemyColliders()
+    {
+        this.enemiesDamageBody = this.enemies.map(enemy => enemy.damageBody);
+
+        const player = this.getPlayerByName(PLAYER_A_NAME);
+
+        // enemies make damage to player
+        this.enemiesVsPlayerCollider = this.physics.add.overlap(player.damageBody, this.enemiesDamageBody, (_player, _enemy) =>
+        {
+            const playerDamageBody = _player as DamageBody;
+
+            const enemyDamageBody = _enemy as DamageBody;
+
+            if (enemyDamageBody.parent.name === 'bat')
+            {
+                enemyDamageBody.parent.die();
+            }
+
+            const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
+
+            playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
+
+            playerDamageBody.parent.setStatusHealthDamage(damage);
+        }, (_player, _enemy) =>
+        {
+            const playerDamageBody = _player as DamageBody;
+
+            const enemy = _enemy as DamageBody;
+
+            if (enemy.parent.visible === false)
+            {
+                return false;
+            }
+
+            if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
+                || playerDamageBody.parent.physicsProperties.isHurt
+                || !enemy.parent.active
+            )
+            {
+                return false;
+            }
+
+            return true;
+        }, this).setName('enemiesVsPlayerCollider');
+
+        this.enemiesSecondaryWeapons = this.enemies.filter(enemy => enemy.active).map(enemy => enemy.secondaryWeaponGroup?.getChildren()).flat();
+        // enemies weapons make damage to player
+        this.enemiesWeaponsVsPlayerCollider = this.physics.add.overlap(player.damageBody, this.enemiesSecondaryWeapons, (_player, _weapon) =>
+        {
+            const playerDamageBody = _player as DamageBody;
+
+            const weapon = _weapon as unknown as Weapon;
+
+            weapon.setDisable();
+
+            const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
+
+            playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
+
+            playerDamageBody.parent.setStatusHealthDamage(damage);
+        }, (_player, _weapon) =>
+        {
+            const playerDamageBody = _player as DamageBody;
+
+            if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
+                || playerDamageBody.parent.physicsProperties.isHurt
+            )
+            {
+                return false;
+            }
+
+            return true;
+        }, this).setName('enemiesWeaponsVsPlayerCollider');
+
+        // player weapons make damage to enemy
+        this.enemiesVsWeaponsCollider = this.physics.add.overlap(this.weaponGroup, this.enemiesDamageBody, (_weapon, _enemy) =>
+        {
+            const enemy = _enemy as DamageBody;
+
+            const weapon = _weapon as unknown as Weapon;
+
+            enemy.parent.setStatusHealthDamage(weapon.damage);
+
+            this.playSound(15, undefined, true);
+
+            if (weapon.name === 'holyWater' && enemy.parent.status.health > 0 && enemy.parent.canUse(EPossibleState.STUN))
+            {
+                enemy.parent.stateMachine.transition(EPossibleState.STUN, enemy.parent.stateMachine.state);
+            }
+
+            if (weapon instanceof ThrowingKnife)
+            {
+                weapon.setDisable();
+            }
+
+        }, undefined, this).setName('enemiesVsWeaponsCollider');
+
+        // player weapons make destroy enemies weapons
+        this.weaponGroupVsEnemiesSecondaryWeapons = this.physics.add.overlap(this.weaponGroup, this.enemiesSecondaryWeapons, (_weapon, _enemyWeapon) =>
+        {
+            const enemyWeapon = _enemyWeapon as unknown as Weapon;
+            enemyWeapon.setDisable();
+
+        }, undefined, this).setName('weaponGroupVSenemiesSecondaryWeapons');
+    }
+
+    public destroyEnemyColliders()
+    {
+        // destroy enemies related colliders
+        this.enemiesVsWeaponsCollider?.destroy();
+
+        this.enemiesVsPlayerCollider?.destroy();
+
+        this.enemiesWeaponsVsPlayerCollider?.destroy();
+
+        this.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
     }
 }
