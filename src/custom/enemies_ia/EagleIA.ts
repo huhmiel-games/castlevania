@@ -2,9 +2,9 @@ import { InputController } from "../../inputs/InputController";
 import enemyJSON from '../../data/enemy.json';
 import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
 import { FleamanIA } from "./FleamanIA";
+import { IEnemyAI } from "../../types/types";
 
 export class EagleIA implements IEnemyAI
 {

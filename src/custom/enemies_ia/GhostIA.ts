@@ -1,8 +1,7 @@
-import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class GhostIA implements IEnemyAI
 {
@@ -20,15 +19,7 @@ export class GhostIA implements IEnemyAI
 
     execute()
     {
-        const { body, buttons, stateMachine } = this.parent;
-
-        const { left, right } = buttons;
-
-        const { center, blocked } = body;
-
-        const cam = this.scene.cameras.main;
-
-        const { now } = this.scene.time;
+        const { body } = this.parent;
 
         const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 

@@ -1,8 +1,8 @@
 import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class ZombieIA implements IEnemyAI
 {
@@ -16,7 +16,7 @@ export class ZombieIA implements IEnemyAI
 
     execute()
     {
-        const { body, buttons, stateMachine } = this.parent;
+        const { body, buttons } = this.parent;
 
         const { left, right } = buttons;
 

@@ -1,8 +1,8 @@
 import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class SpearKnightIA implements IEnemyAI
 {
@@ -22,8 +22,6 @@ export class SpearKnightIA implements IEnemyAI
         const { left, right } = buttons;
 
         const { center, blocked } = body;
-
-        const cam = this.scene.cameras.main;
 
         const { now } = this.scene.time;
 

@@ -1,8 +1,7 @@
-import { EPossibleState } from "../../constant/character";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class DragonHeadIA implements IEnemyAI
 {
@@ -26,7 +25,7 @@ export class DragonHeadIA implements IEnemyAI
 
         const { up, a } = buttons;
 
-        const { center, blocked } = body;
+        const { center } = body;
 
         const cam = this.scene.cameras.main;
 

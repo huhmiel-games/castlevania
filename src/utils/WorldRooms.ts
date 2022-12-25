@@ -1,4 +1,3 @@
-import fs from 'fs';
 import GameScene from '../scenes/GameScene';
 import SaveLoadService from '../services/SaveLoadService';
 import { TMap, TWorld } from '../types/types';

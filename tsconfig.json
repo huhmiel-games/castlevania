@@ -5,6 +5,7 @@
         "declaration": true,
         "esModuleInterop": true,
         "isolatedModules": true,
+        "noUnusedLocals": false,
         "strict": true,
         "strictPropertyInitialization": false,
         "noImplicitAny": false,

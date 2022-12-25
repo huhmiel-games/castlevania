@@ -1,7 +1,6 @@
 import { GAMENAME, HEIGHT, WIDTH } from "../constant/config";
-import { TJoystickPosition, TKeyMapping, TVirtualKeyMapping, TWorld } from "../types/types";
+import { TJoystickPosition, TKeyMapping, TStatus, TVirtualKeyMapping, TWorld } from "../types/types";
 import GameScene from '../scenes/GameScene';
-import { IStatus } from "../interfaces/interface";
 
 /**
  * @description Save or Load from localStorage
@@ -15,7 +14,7 @@ export default class SaveLoadService
     /**
      * Set a new game data on localstorage
      */
-    public static saveNewGameData(data: IStatus): void
+    public static saveNewGameData(data: TStatus): void
     {
         try
         {
@@ -57,7 +56,7 @@ export default class SaveLoadService
     /**
      * Save the game data on localstorage
      */
-    public static saveGameData(status: IStatus): void
+    public static saveGameData(status: TStatus): void
     {
         const dataJson = JSON.stringify(status);
 

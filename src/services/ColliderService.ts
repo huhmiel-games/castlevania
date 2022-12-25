@@ -81,7 +81,6 @@ export default class ColliderService
         scene.physics.add.overlap(scene.characters, scene.colliderLayer,
             (_player, _tile) =>
             {
-                const player = _player as unknown as Entity;
                 const tile = _tile as unknown as Phaser.Tilemaps.Tile;
 
                 if (!tile.properties) return;
@@ -108,7 +107,6 @@ export default class ColliderService
             (_player, _tile) =>
             {
                 const tile = _tile as unknown as Phaser.Tilemaps.Tile;
-                const player = _player as Entity;
 
                 if (!tile || !tile.tilemapLayer)
                 {

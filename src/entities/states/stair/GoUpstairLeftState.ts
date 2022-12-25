@@ -2,7 +2,6 @@ import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
-import LayerService from "../../../services/LayerService";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -50,7 +49,7 @@ export default class GoUpstairLeftState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, start, select } = character.buttons;
+        const { left, right, up, down, a, b } = character.buttons;
 
         const { now } = scene.time;
 

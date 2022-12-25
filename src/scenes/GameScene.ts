@@ -1,8 +1,7 @@
 // @ts-ignore
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
-import { FONTS, FONTS_SIZES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
+import { FONTS, FONTS_SIZES, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
 import { InputController } from '../inputs/InputController';
-import { ISoundList } from '../interfaces/interface.js';
 import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
 import ColliderService from '../services/ColliderService.js';
@@ -28,7 +27,6 @@ export default class GameScene extends Phaser.Scene
     public inputController: InputController;
     public map: Phaser.Tilemaps.Tilemap;
     public firstTimestamp: number = 0;
-    private soundList: ISoundList = {};
     public colliderLayer: Phaser.Tilemaps.TilemapLayer;
     public characters: Entity[] = [];
     public enemies: Entity[] = [];
@@ -418,7 +416,7 @@ export default class GameScene extends Phaser.Scene
 
     private setParallaxImagePosition(width: number)
     {
-        const backParallax = this.children.getByName('parallax-mountain') as Phaser.GameObjects.TileSprite;
+        // const backParallax = this.children.getByName('parallax-mountain') as Phaser.GameObjects.TileSprite;
     }
     public cameraFollowPlayer(): Phaser.Cameras.Scene2D.Camera
     {

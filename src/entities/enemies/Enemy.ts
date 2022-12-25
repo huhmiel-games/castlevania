@@ -1,5 +1,4 @@
-import { TCharacterConfig } from "../../types/types";
-import { IEnemyAI } from "../../interfaces/interface";
+import { IEnemyAI, TCharacterConfig, TEntityConfig } from "../../types/types";
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import StateTimestamp from "../../utils/StateTimestamp";
 import { PALETTE_DB32 } from "../../constant/colors";
@@ -44,9 +43,8 @@ export class Enemy extends Entity
 {
     public stateTimestamp: StateTimestamp;
     public ai: IEnemyAI;
-    public config: any;
 
-    constructor(config: TCharacterConfig, enemyJSON)
+    constructor(config: TCharacterConfig, enemyJSON: TEntityConfig)
     {
         super(config)
 

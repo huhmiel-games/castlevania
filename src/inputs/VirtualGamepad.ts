@@ -1,6 +1,5 @@
 import VirtualJoyStick from "phaser3-rex-plugins/plugins/input/virtualjoystick/VirtualJoyStick";
 import VirtualJoyStickPlugin from "phaser3-rex-plugins/plugins/virtualjoystick-plugin";
-import { PALETTE_DB16, PALETTE_DB32 } from "../constant/colors";
 import { HEIGHT, JOYSTICK_DIRECTION, NOTIF_BASE_ALPHA, NOTIF_BASE_ALPHA_ACTIVE, NOTIF_BASE_SCALE, WIDTH } from "../constant/config";
 import BootScene from "../scenes/BootScene";
 import SaveLoadService from "../services/SaveLoadService";
@@ -44,11 +43,6 @@ export class VirtualGamepad
             radius: 32,
             base: this.scene.add.image(0, 0, 'abxy', 4).setDisplaySize(64, 64),
             thumb: this.scene.add.image(0, 0, 'abxy', 5).setDisplaySize(64, 64),
-            // base: this.scene.add.circle(0, 0, 48, PALETTE_DB16.DARK_BLUE, 0.5),
-            // thumb: this.scene.add.circle(0, 0, 24, PALETTE_DB16.RED),
-            // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-            // forceMin: 16,
-            // enable: true
             //@ts-ignore
         }).on('update', this.handleJoyStick, this);
 

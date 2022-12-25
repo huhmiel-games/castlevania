@@ -2,7 +2,6 @@ import { EPossibleState } from "../../constant/character";
 import { DEPTH } from "../../constant/depth";
 import destroyCandle from "../../custom/destroyCandle";
 import GameScene from "../../scenes/GameScene";
-import LayerService from "../../services/LayerService";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
 

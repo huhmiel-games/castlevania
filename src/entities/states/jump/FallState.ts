@@ -34,7 +34,7 @@ export default class FallState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
+        const { left, right, up, a, b } = character.buttons;
 
         const { body, flipX } = character;
 

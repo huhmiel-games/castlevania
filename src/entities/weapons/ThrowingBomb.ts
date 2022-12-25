@@ -63,7 +63,7 @@ export default class ThrowingBomb extends Phaser.GameObjects.Sprite implements W
     {
         super.preUpdate(time, delta);
 
-        const { blocked, center, velocity, top } = this.body;
+        const { blocked, velocity, top } = this.body;
 
         if (top > this.scene.cameras.main.getBounds().bottom + 16)
         {

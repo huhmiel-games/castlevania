@@ -25,8 +25,6 @@ export default class GoDownstairLeftState extends State
     {
         const { now } = scene.time;
 
-        const { x, y } = character.body.center;
-
         this.stairTime = now;
 
         if (this.stateMachine.prevState === EPossibleState.LEFT || this.stateMachine.prevState === EPossibleState.IDLE || this.stateMachine.prevState === EPossibleState.FALL)
@@ -52,7 +50,7 @@ export default class GoDownstairLeftState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, start, select } = character.buttons;
+        const { left, right, up, down, a, b } = character.buttons;
 
         const { now } = scene.time;
 

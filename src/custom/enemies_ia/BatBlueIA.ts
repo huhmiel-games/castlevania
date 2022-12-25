@@ -1,8 +1,7 @@
-import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class BatBlueIA implements IEnemyAI
 {

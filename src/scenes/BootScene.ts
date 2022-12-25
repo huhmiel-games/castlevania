@@ -1,5 +1,5 @@
 import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
-import { WIDTH, HEIGHT, FONTS, SCENES_NAMES, MOBILE_OS, FONTS_SIZES } from '../constant/config';
+import { WIDTH, HEIGHT, FONTS, SCENES_NAMES, MOBILE_OS } from '../constant/config';
 import { InputController } from '../inputs/InputController';
 
 /**

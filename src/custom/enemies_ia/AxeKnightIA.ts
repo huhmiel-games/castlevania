@@ -1,8 +1,8 @@
 import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class AxeKnightIA implements IEnemyAI
 {
@@ -174,13 +174,13 @@ export class AxeKnightIA implements IEnemyAI
 
                 if (this.isHighAttack)
                 {
-                    this.parent.config.weaponOffset = 12;
+                    this.parent.config.secondaryAttackOffsetY = 12;
 
                     this.isHighAttack = false;
                 }
                 else
                 {
-                    this.parent.config.weaponOffset = -8;
+                    this.parent.config.secondaryAttackOffsetY = -8;
 
                     this.isHighAttack = true;
                 }

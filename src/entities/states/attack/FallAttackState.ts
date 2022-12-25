@@ -34,7 +34,7 @@ export default class FallAttackState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
+        const { left, right,  b } = character.buttons;
 
         const { body } = character;
 

@@ -15,14 +15,10 @@ export default class HurtState extends State
 {
     private hitTime: number;
     public stateMachine: StateMachine;
-    private groundYPosition: number;
 
     public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
-
-        // Initialize the jump
-        this.groundYPosition = character.body.bottom;
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 

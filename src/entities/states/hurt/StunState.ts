@@ -1,4 +1,3 @@
-import { EPossibleState } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";

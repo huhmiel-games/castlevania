@@ -1,8 +1,8 @@
 import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class FleamanIA implements IEnemyAI
 {
@@ -29,7 +29,7 @@ export class FleamanIA implements IEnemyAI
     {
         const { body, buttons, config } = this.parent;
 
-        const { left, right, b } = buttons;
+        const { b } = buttons;
 
         const { center, blocked } = body;
 
@@ -113,7 +113,6 @@ export class FleamanIA implements IEnemyAI
         if (blocked.down && b.isUp)
         {
             body.stop();
-
         }
     }
 

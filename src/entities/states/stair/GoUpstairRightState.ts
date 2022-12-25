@@ -50,7 +50,7 @@ export default class GoUpstairRightState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, start, select } = character.buttons;
+        const { left, right, up, down, a, b } = character.buttons;
 
         const { now } = scene.time;
 

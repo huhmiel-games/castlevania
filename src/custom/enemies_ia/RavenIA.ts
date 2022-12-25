@@ -1,8 +1,7 @@
-import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class RavenIA implements IEnemyAI
 {
@@ -32,7 +31,7 @@ export class RavenIA implements IEnemyAI
 
     execute()
     {
-        const { body, buttons, anims } = this.parent;
+        const { body, buttons } = this.parent;
 
         const { left, right } = buttons;
 

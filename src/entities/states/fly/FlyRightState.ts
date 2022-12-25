@@ -15,7 +15,6 @@ import { TILE_SIZE } from '../../../constant/config';
 export default class FlyRightState extends State
 {
     public stateMachine: StateMachine;
-    private side: string = 'right';
     public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;

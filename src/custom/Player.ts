@@ -33,7 +33,7 @@ import AmmoRetrievableItem from "../gameobjects/AmmoRetrievableItem";
 import ScoreRetrievableItem from "../gameobjects/ScoreRetrievableItem";
 import WeaponRetrievableItem from "../gameobjects/WeaponRetrievableItem";
 import SaveLoadService from "../services/SaveLoadService";
-import { TCharacterConfig } from "../types/types";
+import { TCharacterConfig, TStatus } from "../types/types";
 import StateMachine from "../utils/StateMachine";
 import StairAttackState from "../entities/states/attack/StairAttack";
 import StairSecondaryAttackState from "../entities/states/attack/StairSecondaryAttack";
@@ -70,7 +70,7 @@ export default class Player extends Entity
 
         if (statusJson)
         {
-            const status = JSON.parse(statusJson);
+            const status: TStatus = JSON.parse(statusJson);
 
             this.setStatus(status);
 

@@ -30,9 +30,7 @@ export default class CrouchState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, start, select } = character.buttons;
-
-        const { blocked, touching } = character.body;
+        const { left, right, down, a, b } = character.buttons;
 
         const { now } = scene.time;
 

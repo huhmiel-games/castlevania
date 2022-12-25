@@ -31,11 +31,11 @@ export default class WalkRightState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, x, y, start, select } = character.buttons;
+        const { left, right, up, down, a, b, y } = character.buttons;
 
         const { isAttacking } = character.physicsProperties;
 
-        const { blocked, touching } = character.body;
+        const { blocked } = character.body;
 
         const { now } = scene.time;
 

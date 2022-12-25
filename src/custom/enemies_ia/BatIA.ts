@@ -1,8 +1,7 @@
-import { EPossibleState } from "../../constant/character";
 import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class BatIA implements IEnemyAI
 {
@@ -16,11 +15,11 @@ export class BatIA implements IEnemyAI
 
     execute()
     {
-        const { body, buttons, stateMachine } = this.parent;
+        const { body, buttons } = this.parent;
 
         const { left, right } = buttons;
 
-        const { center, blocked } = body;
+        const { center } = body;
 
         const cam = this.scene.cameras.main;
 

@@ -1,10 +1,6 @@
-import { Entity } from '../entities/Entity';
-import { PALETTE_DB32 } from '../constant/colors';
-import { WIDTH, HEIGHT, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYER_A_NAME } from '../constant/config';
-import Health from '../hud/Health';
-import Heart from '../hud/Heart';
-import { IStatus } from '../interfaces/interface';
+import { WIDTH, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYER_A_NAME } from '../constant/config';
 import GameScene from './GameScene';
+import { TStatus } from '../types/types';
 
 /**
  * @author © Philippe Pereira 2022
@@ -14,14 +10,8 @@ import GameScene from './GameScene';
  */
 export default class HudScene extends Phaser.Scene
 {
-    private health: Health = new Health();
-    private score: number = 0;
-    private timeInSeconds: number = 300;
-    private stage: string = 'stage 1';
-    private heart: Heart = new Heart()
-    private life: number = 3;
     private gameScene: GameScene;
-    private playerStatus: IStatus;
+    private playerStatus: TStatus;
 
     constructor()
     {
@@ -55,39 +45,39 @@ export default class HudScene extends Phaser.Scene
 
         this.getPlayerStatus();
 
-        const score: Phaser.GameObjects.BitmapText = this.add.bitmapText(2, 2, FONTS.GALAXY, '', 8, 1)
+        this.add.bitmapText(2, 2, FONTS.GALAXY, '', 8, 1)
             .setOrigin(0, 0)
             .setName('scoreText')
             .setText(`score-${this.playerStatus.score?.toString().padStart(6, '0')}`);
 
-        const player: Phaser.GameObjects.BitmapText = this.add.bitmapText(2, 12, FONTS.GALAXY, 'player', 8, 1)
+        this.add.bitmapText(2, 12, FONTS.GALAXY, 'player', 8, 1)
             .setOrigin(0, 0)
             .setName('helperText');
 
-        const enemy: Phaser.GameObjects.BitmapText = this.add.bitmapText(2, 22, FONTS.GALAXY, 'enemy', 8, 1)
+        this.add.bitmapText(2, 22, FONTS.GALAXY, 'enemy', 8, 1)
             .setOrigin(0, 0)
             .setName('helperText');
 
-        const countDown: Phaser.GameObjects.BitmapText = this.add.bitmapText(112, 2, FONTS.GALAXY, 'time 0000', 8, 1)
+        this.add.bitmapText(112, 2, FONTS.GALAXY, 'time 0000', 8, 1)
             .setOrigin(0, 0)
             .setName('countDown');
 
-        const stage: Phaser.GameObjects.BitmapText = this.add.bitmapText(192, 2, FONTS.GALAXY, 'stage 01', 8, 1)
+        this.add.bitmapText(192, 2, FONTS.GALAXY, 'stage 01', 8, 1)
             .setOrigin(0, 0)
             .setName('stage')
             .setText(`stage ${this.playerStatus.stage?.toString().padStart(2, '0')}`)
 
-        const weaponFrame = this.add.image(128, 20, 'items', 'weapon-frame').setOrigin(0, 0.5);
-        const weaponImage = this.add.image(144, 20, 'items', '').setOrigin(0.5, 0.5).setName('weaponImage').setAlpha(0);
-        const heartImage = this.add.image(168, 12, 'items', 'heart').setOrigin(0, 0);
-        const shotImage = this.add.image(208, 12, 'items', 'double-shot').setOrigin(0, 0).setName('shotImage').setAlpha(0);
+        this.add.image(128, 20, 'items', 'weapon-frame').setOrigin(0, 0.5);
+        this.add.image(144, 20, 'items', '').setOrigin(0.5, 0.5).setName('weaponImage').setAlpha(0);
+        this.add.image(168, 12, 'items', 'heart').setOrigin(0, 0);
+        this.add.image(208, 12, 'items', 'double-shot').setOrigin(0, 0).setName('shotImage').setAlpha(0);
 
-        const heartText: Phaser.GameObjects.BitmapText = this.add.bitmapText(177, 13, FONTS.GALAXY, '-00', 8, 1)
+        this.add.bitmapText(177, 13, FONTS.GALAXY, '-00', 8, 1)
             .setOrigin(0, 0)
             .setName('heartText')
 
 
-        const lifeText: Phaser.GameObjects.BitmapText = this.add.bitmapText(169, 22, FONTS.GALAXY, 'p-03', 8, 1)
+        this.add.bitmapText(169, 22, FONTS.GALAXY, 'p-03', 8, 1)
             .setOrigin(0, 0)
             .setName('life')
 
@@ -107,7 +97,7 @@ export default class HudScene extends Phaser.Scene
         this.resetData();
     }
 
-    private getPlayerStatus(): IStatus
+    private getPlayerStatus(): TStatus
     {
         const { status } = this.gameScene.getPlayerByName(PLAYER_A_NAME);
 
@@ -237,7 +227,7 @@ export default class HudScene extends Phaser.Scene
 
         if (timerEvent.repeatCount === 0)
         {
-            const player = this.gameScene.children.getByName(PLAYER_A_NAME) as Entity;
+            // const player = this.gameScene.children.getByName(PLAYER_A_NAME) as Entity;
         }
     }
 }

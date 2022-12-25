@@ -21,8 +21,6 @@ export default class JumpState extends State
     {
         const { now } = scene.time;
 
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
-
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
         // Initialize the jump
@@ -38,7 +36,7 @@ export default class JumpState extends State
 
     public execute (scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
+        const { left, right, a, b } = character.buttons;
 
         const { blocked, bottom } = character.body;
 

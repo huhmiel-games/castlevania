@@ -1,7 +1,7 @@
 import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
+import { IEnemyAI } from "../../types/types";
 
 export class MedusaIA implements IEnemyAI
 {
@@ -20,8 +20,6 @@ export class MedusaIA implements IEnemyAI
         const { left, right } = buttons;
 
         const { center } = body;
-
-        const cam = this.scene.cameras.main;
 
         const { now } = this.scene.time;
 

@@ -3,7 +3,6 @@ import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
-import { TILE_SIZE } from '../../../constant/config';
 
 /**
  * @description

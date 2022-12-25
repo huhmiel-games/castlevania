@@ -1,5 +1,5 @@
 import { PALETTE_DB32 } from '../constant/colors';
-import { WIDTH, HEIGHT, FONTS, SCENES_NAMES, MOBILE_OS } from '../constant/config';
+import { WIDTH, HEIGHT, FONTS, SCENES_NAMES } from '../constant/config';
 import { InputController } from '../inputs/InputController';
 
 /**
@@ -11,7 +11,6 @@ import { InputController } from '../inputs/InputController';
 export default class GameOverScene extends Phaser.Scene
 {
     private inputController: InputController;
-    private canContinue: boolean = false;
     constructor(retry: boolean)
     {
         super(SCENES_NAMES.GAMEOVER);
@@ -22,8 +21,6 @@ export default class GameOverScene extends Phaser.Scene
         this.inputController = InputController.getInstance();
         this.inputController.isActive = false;
         this.input.enabled = false;
-
-        this.canContinue = data.retry;
 
         const gameOverText: Phaser.GameObjects.BitmapText = this.add.bitmapText(WIDTH / 2, HEIGHT / 2, FONTS.GALAXY, 'game over', 16, 1)
             .setOrigin(0.5, 0.5)
@@ -45,7 +42,7 @@ export default class GameOverScene extends Phaser.Scene
 
     public update(time: number, delta: number): void
     {
-        const { a, b, x, y,  start, select } = this.inputController.playerAButtons;
+        const { a, b, y,  start, select } = this.inputController.playerAButtons;
 
         if (a.isDown || b.isDown || a.isDown || y.isDown || start.isDown || select.isDown)
         {
@@ -70,8 +67,8 @@ export default class GameOverScene extends Phaser.Scene
 
     private retry()
     {
-        // this.scene.start(SCENES_NAMES.GAME, { retry: true})
         this.scene.start(SCENES_NAMES.MENU);
+
         this.scene.stop(SCENES_NAMES.HUD);
     }
 }

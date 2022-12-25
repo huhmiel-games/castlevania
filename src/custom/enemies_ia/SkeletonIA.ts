@@ -1,8 +1,7 @@
 import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
-import { IEnemyAI } from "../../interfaces/interface";
 import GameScene from "../../scenes/GameScene";
-import { TCoord } from "../../types/types";
+import { IEnemyAI, TCoord } from "../../types/types";
 
 export class SkeletonIA implements IEnemyAI
 {

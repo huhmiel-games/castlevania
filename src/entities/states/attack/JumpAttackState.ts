@@ -36,11 +36,9 @@ export default class JumpAttackState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
+        const { left, right, b } = character.buttons;
 
         const { blocked, bottom } = character.body;
-
-        const { now } = scene.time;
 
         // End of jump
         if (this.groundYPosition - 32 > bottom || b.isUp)

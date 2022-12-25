@@ -12,7 +12,6 @@ import { Entity } from "../../Entity";
  */
 export default class DeathState extends State
 {
-    private deathTime: number;
     public stateMachine: StateMachine;
 
     public enter (scene: GameScene, character: Entity)
@@ -24,8 +23,6 @@ export default class DeathState extends State
         // Stop player
         character.body.setDrag(0);
 
-        this.deathTime = now;
-
         character.body.setAcceleration(0).setVelocity(0);
 
         character.anims.play(character.animList.DEAD!);
@@ -35,8 +32,6 @@ export default class DeathState extends State
 
     public execute (scene: GameScene, character: Entity)
     {
-        const { blocked } = character.body;
 
-        const { now } = scene.time;
     }
 }

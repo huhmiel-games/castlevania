@@ -1,15 +1,15 @@
 import { TILE_SIZE } from "../constant/config";
 import { DEPTH } from "../constant/depth";
-import { IStatus } from "../interfaces/interface";
 import GameScene from "../scenes/GameScene";
 import SaveLoadService from "../services/SaveLoadService";
+import { TStatus } from "../types/types";
 import Player from "./Player";
 
 export default function init(scene: GameScene)
 {
     const dataJson = SaveLoadService.loadGameData();
 
-    let data: IStatus | undefined;
+    let data: TStatus | undefined;
 
     if (dataJson)
     {
@@ -18,7 +18,7 @@ export default function init(scene: GameScene)
 
     if (!data)
     {
-        const newData: IStatus = {
+        const newData: TStatus = {
             health: 16,
             life: 3,
             score: 0,
@@ -64,9 +64,10 @@ export default function init(scene: GameScene)
         .setName('parallax-mountain')
         .setScrollFactor(0.2, 0);
 
-    const castle = scene.add.image(112, 16, 'back-castle')
+    scene.add.image(112, 16, 'back-castle')
         .setOrigin(0, 0)
-        .setScrollFactor(0.05, 0.3);
+        .setScrollFactor(0.05, 0.3)
+        .setName('back-castle');
 
     scene.add.image(896 - 256, 912, 'back-castle-entrance').setOrigin(0, 0).setDepth(DEPTH.GROUND_LAYER);
     scene.add.image(896 + 80 - 256, 912 + 112, 'back-castle-entrance-front').setOrigin(0, 0).setDepth(DEPTH.FRONT_LAYER);

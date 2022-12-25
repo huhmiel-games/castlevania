@@ -33,7 +33,7 @@ export default class JumpMomentumState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, start, select } = character.buttons;
+        const { left, right, a } = character.buttons;
 
         const { blocked } = character.body;
 

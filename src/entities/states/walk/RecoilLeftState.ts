@@ -1,6 +1,4 @@
 import { EPossibleState } from "../../../constant/character";
-import { TILE_SIZE } from "../../../constant/config";
-import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
@@ -31,11 +29,11 @@ export default class RecoilLeftState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
+        const { left, up, a, b } = character.buttons;
 
         const { isAttacking } = character.physicsProperties;
 
-        const { blocked, touching } = character.body;
+        const { blocked } = character.body;
 
         const { now } = scene.time;
 

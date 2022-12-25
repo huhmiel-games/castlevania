@@ -1,8 +1,18 @@
 import { EPossibleState, possibleDirection } from "../constant/character";
 import { HUD_EVENTS_NAMES, PLAYER_A_NAME } from "../constant/config";
-import { IAnimationList, IFrameList, IPhysicsProperties, IStatus } from "../interfaces/interface";
 import GameScene from "../scenes/GameScene";
-import { RangedWeapon, TButtons, TCharacterConfig, TCoord, TAi } from "../types/types";
+import
+{
+    RangedWeapon,
+    TButtons,
+    TCharacterConfig,
+    TCoord,
+    TEntityConfig,
+    TStatus,
+    TPhysicsProperties,
+    TAnimationList,
+    TFrameList
+} from "../types/types";
 import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
@@ -25,13 +35,13 @@ export class Entity extends Phaser.GameObjects.Sprite
     public meleeWeapon: MeleeWeapon | undefined;
     public rangedWeapon: RangedWeapon | undefined;
     public canUseState: Set<string>;
-    public status: IStatus;
-    public physicsProperties: IPhysicsProperties;
-    public animList: IAnimationList;
-    public frameList?: IFrameList;
+    public status: TStatus;
+    public physicsProperties: TPhysicsProperties;
+    public animList: TAnimationList;
+    public frameList?: TFrameList;
     public stateMachine: StateMachine;
     public secondaryWeaponGroup: Phaser.GameObjects.Group;
-    public config: any;
+    public config: TEntityConfig;
 
     constructor(config: TCharacterConfig)
     {
@@ -73,14 +83,14 @@ export class Entity extends Phaser.GameObjects.Sprite
         return this.canUseState.has(stateName);
     }
 
-    public setStatus(status: IStatus): Entity
+    public setStatus(status: TStatus): Entity
     {
         this.status = status;
 
         return this;
     }
 
-    public setPhysicsProperties(physicsProperties: IPhysicsProperties): Entity
+    public setPhysicsProperties(physicsProperties: TPhysicsProperties): Entity
     {
         this.physicsProperties = physicsProperties;
 

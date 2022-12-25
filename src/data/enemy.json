@@ -744,7 +744,7 @@
             "death"
         ],
         "resurrect": 0,
-        "weaponOffset": 8
+        "secondaryAttackOffsetY": 8
     },
     "raven": {
         "config": {

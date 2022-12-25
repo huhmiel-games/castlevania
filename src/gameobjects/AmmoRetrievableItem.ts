@@ -1,4 +1,3 @@
-import { DEPTH } from "../constant/depth";
 import GameScene from "../scenes/GameScene";
 import { BaseItemConfig } from "../types/types";
 import BaseRetrievableItem from "./BaseRetrievableItem";

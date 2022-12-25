@@ -27,8 +27,6 @@ export default class BackFlipState extends State
     {
         const { now } = scene.time;
 
-        const { left, right, up, down, a, b, start, select } = character.buttons;
-
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
         // Initialize the jump
@@ -46,11 +44,11 @@ export default class BackFlipState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b, start, select } = character.buttons;
+        const { a } = character.buttons;
 
         const { flipX } = character;
 
-        const { blocked, bottom, top } = character.body;
+        const { blocked, bottom } = character.body;
 
         const { isAttacking } = character.physicsProperties;
 

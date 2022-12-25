@@ -28,9 +28,7 @@ export default class MoveUpState extends State
 
     public execute (scene: GameScene, character: Entity)
     {
-        const { left, right, up, down, a, b,  start, select } = character.buttons;
-
-        const { blocked, touching } = character.body;
+        const { up, down, a } = character.buttons;
 
         const { now } = scene.time;
 
