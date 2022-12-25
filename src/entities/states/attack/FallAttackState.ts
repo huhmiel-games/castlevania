@@ -23,7 +23,9 @@ export default class FallAttackState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
-        character.body.setGravityY(character.physicsProperties.gravity).setDrag(0).setMaxVelocityY(character.physicsProperties.acceleration * 3);
+        character.body.setGravityY(character.physicsProperties.gravity)
+            .setDrag(0)
+            .setMaxVelocityY(character.physicsProperties.speed * 4);
 
         character.anims.play(character.animList.JUMP_ATTACK!, true);
 
@@ -34,7 +36,7 @@ export default class FallAttackState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right,  b } = character.buttons;
+        const { left, right, b } = character.buttons;
 
         const { body } = character;
 

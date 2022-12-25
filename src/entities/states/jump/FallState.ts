@@ -27,7 +27,9 @@ export default class FallState extends State
 
         character.anims.play(character.animList.FALL!, true);
 
-        character.body.setGravityY(character.physicsProperties.gravity).setDrag(0).setMaxVelocityY(character.physicsProperties.speed * 4);
+        character.body.setGravityY(character.physicsProperties.gravity)
+        .setDrag(0)
+        .setMaxVelocityY(character.physicsProperties.speed * 4);
 
         console.log(character.name + ' FALL STATE');
     }
