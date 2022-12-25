@@ -365,6 +365,39 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
+        key: 'bone-dragon-idle',
+        frames: [
+            { key: 'enemies', frame: 'bone-dragon_1' },
+            { key: 'enemies', frame: 'bone-dragon_1' },
+            { key: 'enemies', frame: 'bone-dragon_1' },
+            { key: 'enemies', frame: 'bone-dragon_1' },
+        ],
+        frameRate: 4,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'bone-dragon-attack',
+        frames: [
+            { key: 'enemies', frame: 'bone-dragon_0' },
+            { key: 'enemies', frame: 'bone-dragon_0' },
+            { key: 'enemies', frame: 'bone-dragon_0' },
+            { key: 'enemies', frame: 'bone-dragon_0' },
+        ],
+        frameRate: 8,
+        repeat: 0,
+    });
+
+    scene.anims.create({
+        key: 'bone-dragon-body-idle',
+        frames: [
+            { key: 'enemies', frame: 'bone-dragon-body' },
+        ],
+        frameRate: 4,
+        repeat: -1,
+    });
+
+    scene.anims.create({
         key: 'dragon-cannon',
         frames: [
             { key: 'enemies', frame: 'dragon-cannon_1' },
@@ -480,12 +513,12 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'eagle-fly',
         frames: [
-            { key: 'enemies', frame: 'eagle-fly_2' },
-            { key: 'enemies', frame: 'eagle-fly_1' },
             { key: 'enemies', frame: 'eagle-fly_0' },
+            { key: 'enemies', frame: 'eagle-fly_1' },
+            { key: 'enemies', frame: 'eagle-fly_2' },
         ],
         frameRate: 6,
-        repeat: -1,
+        repeat: 2,
     });
 
     scene.anims.create({

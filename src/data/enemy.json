@@ -800,5 +800,174 @@
         ],
         "collideWithWorld": false,
         "resurrect": 0
+    },
+    "eagle": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "eagle-fly_0",
+            "animList": {
+                "IDLE": "eagle-fly",
+                "FLY": "eagle-fly"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 300,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 100,
+            "acceleration": 300,
+            "stairSpeed": 160,
+            "dragCoeff": 100,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 0
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 8
+            },
+            "damageBody": {
+                "type": "circle",
+                "width": 8,
+                "height": 8
+            }
+        },
+        "state": [
+            "idle",
+            "flyIdle",
+            "flyLeft",
+            "flyRight"
+        ],
+        "collideWithWorld": false,
+        "resurrect": 1000
+    },
+    "bone-dragon": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "bone-dragon_0",
+            "animList": {
+                "IDLE": "bone-dragon-idle",
+                "UP": "bone-dragon-idle",
+                "DOWN": "bone-dragon-idle",
+                "SECONDARY_ATTACK": "bone-dragon-attack"
+            }
+        },
+        "status": {
+            "health": 7,
+            "score": 1000,
+            "life": 0,
+            "ammo": 1000,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 50,
+            "acceleration": 100,
+            "stairSpeed": 160,
+            "dragCoeff": 100,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 6
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 0
+            },
+            "damageBody": {
+                "type": "circle",
+                "width": 8,
+                "height": 8
+            }
+        },
+        "state": [
+            "idle",
+            "up",
+            "down",
+            "secondaryAttack"
+        ],
+        "collideWithWorld": true,
+        "secondaryAttackOffsetY": 10,
+        "withTarget": "playerA",
+        "resurrect": 0
+    },
+    "bone-dragon-body": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "bone-dragon_0",
+            "animList": {
+                "IDLE": "bone-dragon-body-idle",
+                "UP": "bone-dragon-body-idle",
+                "DOWN": "bone-dragon-body-idle"
+            }
+        },
+        "status": {
+            "health": 1000,
+            "score": 0,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 50,
+            "acceleration": 300,
+            "stairSpeed": 160,
+            "dragCoeff": 100,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 5
+        },
+        "physics": {
+            "body": {
+                "width": 8,
+                "height": 8,
+                "offsetX": 4,
+                "offsetY": 4
+            },
+            "damageBody": {
+                "type": "circle",
+                "width": 4,
+                "height": 4
+            }
+        },
+        "state": [
+            "idle",
+            "up",
+            "down"
+        ],
+        "collideWithWorld": false,
+        "resurrect": 0
     }
 }
