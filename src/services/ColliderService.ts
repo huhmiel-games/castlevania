@@ -1,3 +1,4 @@
+import { PLAYER_A_NAME } from '../constant/config';
 import { spawnRetrievableItem } from '../custom/destroyCandle';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
@@ -8,6 +9,7 @@ import Conveyor from '../gameobjects/Conveyor';
 import GameScene from '../scenes/GameScene';
 import DoorService from './DoorService';
 import LayerService from './LayerService';
+import SaveLoadService from './SaveLoadService';
 
 /**
  * @description
@@ -29,7 +31,7 @@ export default class ColliderService
         // one way collision tiles
         scene.colliderLayer.forEachTile((tile) =>
         {
-            if(tile.properties.collides)
+            if (tile.properties.collides)
             {
                 tile.setCollision(true, true, true, false);
             }
@@ -85,6 +87,20 @@ export default class ColliderService
 
                 if (!tile.properties) return;
 
+                if (tile.properties.saveBlock)
+                {
+                    tile.properties.saveBlock = false;
+
+                    const player = scene.getPlayerByName(PLAYER_A_NAME);
+
+                    if (!player.physicsProperties.isDead && player.status.health > 0 && (player.status.life ?? 1) > 0)
+                    {
+                        player.setStatusPosition({ x: player.x, y: player.y });
+
+                        SaveLoadService.saveGameData(player.status);
+                    }
+                }
+
                 if (tile.properties.doorBlock && !tile.canCollide)
                 {
                     DoorService.searchNextStage(scene, tile);
@@ -108,7 +124,7 @@ export default class ColliderService
             {
                 const tile = _tile as unknown as Phaser.Tilemaps.Tile;
 
-                if (!tile || !tile.tilemapLayer)
+                if (!tile || !tile.tilemapLayer || tile.properties.platformBlock)
                 {
                     return false;
                 }
@@ -171,7 +187,7 @@ export default class ColliderService
         {
             const enemy = _enemy as Entity;
 
-            if(enemy.config.collideWithWorld === false)
+            if (enemy.config.collideWithWorld === false)
             {
                 return false;
             }
