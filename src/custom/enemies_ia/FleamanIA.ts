@@ -25,7 +25,7 @@ export class FleamanIA implements IEnemyAI
         }
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, config } = this.parent;
 

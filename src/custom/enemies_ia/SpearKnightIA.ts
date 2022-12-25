@@ -15,7 +15,7 @@ export class SpearKnightIA implements IEnemyAI
         this.scene = parent.scene;
     }
 
-    decides()
+    execute()
     {
         const { body, buttons } = this.parent;
 

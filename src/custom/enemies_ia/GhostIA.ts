@@ -18,7 +18,7 @@ export class GhostIA implements IEnemyAI
         this.parent.body.reset(this.parent.body.x, this.parent.body.y + 8)
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, stateMachine } = this.parent;
 

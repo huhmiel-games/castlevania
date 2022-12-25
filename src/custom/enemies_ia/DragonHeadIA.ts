@@ -20,7 +20,7 @@ export class DragonHeadIA implements IEnemyAI
         this.randomTurnBackTime = this.scene.time.now + 4000;
     }
 
-    decides()
+    execute()
     {
         const { body, buttons } = this.parent;
 

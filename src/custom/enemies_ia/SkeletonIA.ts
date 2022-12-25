@@ -21,7 +21,7 @@ export class SkeletonIA implements IEnemyAI
         this.originPosition = { ...parent.body.center };
     }
 
-    decides()
+    execute()
     {
         const { body, buttons } = this.parent;
 

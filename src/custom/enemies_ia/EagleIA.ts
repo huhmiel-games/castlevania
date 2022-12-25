@@ -94,7 +94,7 @@ export class EagleIA implements IEnemyAI
         });
     }
 
-    decides()
+    execute()
     {
         const { body, buttons } = this.parent;
 

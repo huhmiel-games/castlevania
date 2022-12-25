@@ -15,7 +15,7 @@ export class SkeletonRedIA implements IEnemyAI
         this.scene = parent.scene;
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, stateMachine, physicsProperties } = this.parent;
 

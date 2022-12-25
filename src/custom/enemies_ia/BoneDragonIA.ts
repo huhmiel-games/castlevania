@@ -67,7 +67,7 @@ export class BoneDragonIA implements IEnemyAI
         }
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, active, name } = this.parent;
 

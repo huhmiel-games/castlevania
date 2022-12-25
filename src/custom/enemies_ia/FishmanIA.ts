@@ -21,7 +21,7 @@ export class FishmanIA implements IEnemyAI
         this.originPosition = { ...parent.body.center }.y + TILE_SIZE / 2;
     }
 
-    decides()
+    execute()
     {
         const { body, buttons } = this.parent;
 

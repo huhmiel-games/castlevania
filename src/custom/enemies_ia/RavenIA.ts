@@ -30,7 +30,7 @@ export class RavenIA implements IEnemyAI
         this.parent.anims.play(this.parent.animList.IDLE!);
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, anims } = this.parent;
 

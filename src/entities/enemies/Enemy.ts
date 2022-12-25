@@ -99,7 +99,7 @@ export class Enemy extends Entity
 
         if (!this.active) return;
 
-        this.ai?.decides();
+        this.ai?.execute();
     }
 
     public setAi(ai: IEnemyAI)

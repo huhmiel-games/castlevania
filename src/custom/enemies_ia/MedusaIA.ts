@@ -13,7 +13,7 @@ export class MedusaIA implements IEnemyAI
         this.scene = parent.scene;
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, active } = this.parent;
 

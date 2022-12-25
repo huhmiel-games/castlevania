@@ -14,7 +14,7 @@ export class BatIA implements IEnemyAI
         this.scene = parent.scene;
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, stateMachine } = this.parent;
 

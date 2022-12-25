@@ -82,6 +82,6 @@ export interface IEnemyAI
 {
     parent: Enemy;
     scene: GameScene;
-    decides: ()=> void
+    execute: ()=> void
     reset: () => void
 }

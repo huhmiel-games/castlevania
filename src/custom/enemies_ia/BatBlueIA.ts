@@ -20,7 +20,7 @@ export class BatBlueIA implements IEnemyAI
         this.parent.anims.play('bat-blue-idle');
     }
 
-    decides()
+    execute()
     {
         const { body, buttons, anims } = this.parent;
 

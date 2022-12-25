@@ -29,7 +29,7 @@ export class AxeKnightIA implements IEnemyAI
         }
     }
 
-    decides()
+    execute()
     {
         const { body, buttons } = this.parent;
 

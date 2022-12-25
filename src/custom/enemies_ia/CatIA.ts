@@ -19,7 +19,7 @@ export class CatIA implements IEnemyAI
         this.parent.body.checkCollision.right = false;
     }
 
-    decides()
+    execute()
     {
         const { body, buttons } = this.parent;
 
