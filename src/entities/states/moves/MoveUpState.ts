@@ -22,7 +22,8 @@ export default class MoveUpState extends State
 
         character.anims.play(character.animList.UP!, true);
 
-        character.body.setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0).setAcceleration(0, -character.physicsProperties.acceleration);
+        character.body.setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0)
+        .setAcceleration(0, -character.physicsProperties.acceleration);
     }
 
     public execute (scene: GameScene, character: Entity)
@@ -33,11 +34,21 @@ export default class MoveUpState extends State
 
         const { now } = scene.time;
 
-        const nextState = character.getDirection();
-
-        if (nextState !== EPossibleState.UP)
+        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128)
         {
-            this.stateMachine.transition(nextState, this.stateMachine.state);
+            this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
+
+            return;
+        }
+
+        if (up.isUp && down.isUp && character.canUse(EPossibleState.IDLE))
+        {
+            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+        }
+
+        if(up.isUp && down.isDown && character.canUse(EPossibleState.DOWN))
+        {
+            this.stateMachine.transition(EPossibleState.DOWN, this.stateMachine.state);
         }
     }
 }
