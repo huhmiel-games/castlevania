@@ -28,8 +28,8 @@ export default class FallState extends State
         character.anims.play(character.animList.FALL!, true);
 
         character.body.setGravityY(character.physicsProperties.gravity)
-        .setDrag(0)
-        .setMaxVelocityY(character.physicsProperties.speed * 4);
+            .setDrag(0)
+            .setMaxVelocityY(character.physicsProperties.speed * 4);
 
         console.log(character.name + ' FALL STATE');
     }
@@ -55,7 +55,7 @@ export default class FallState extends State
         if (body.blocked.down)
         {
             character.y = Math.round(character.y); // fix a bug where the character is 1 pixel off from ground
-            
+
             body.setMaxVelocityY(speed * 2);
 
             this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
