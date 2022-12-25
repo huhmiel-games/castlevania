@@ -65,6 +65,8 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
         this.body.reset(this.parent.body.x, this.parent.body.y + (offsetY || -8));
         this.body.setEnable(true);
 
+        const target: Entity | null = this.parent.config.withTarget ? this.scene.getPlayerByName(this.parent.config.withTarget) : null;
+
         if (this.parent instanceof Player)
         {
             this.scene.weaponGroup.add(this);
@@ -74,17 +76,36 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
             this.parent.secondaryWeaponGroup.add(this);
         }
 
-        if (this.parent.flipX)
+        if (this.parent.flipX && !target)
         {
             this.setFlipX(true);
 
             this.body.setVelocityX(-this.speed);
         }
-        else
+        else if(!this.parent.flipX && !target)
         {
             this.setFlipX(false);
 
             this.body.setVelocityX(this.speed);
+        }
+
+        if (this.parent.flipX && target)
+        {
+            this.setFlipX(true);
+
+            const dx = target.damageBody.body.center.x - this.parent.body.center.x;
+            const dy = target.damageBody.body.center.y - this.parent.body.center.y;
+    
+            this.body.setVelocity(dx, dy);
+        }
+        else if(!this.parent.flipX && target)
+        {
+            this.setFlipX(false);
+
+            const dx = target.damageBody.body.center.x - this.parent.body.center.x;
+            const dy = target.damageBody.body.center.y - this.parent.body.center.y;
+    
+            this.body.setVelocity(dx, dy);
         }
 
         if (this.weaponAnim)
