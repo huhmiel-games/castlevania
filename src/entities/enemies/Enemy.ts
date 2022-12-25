@@ -37,6 +37,8 @@ import Boomerang from "../weapons/Boomerang";
 import RecoilLeftState from "../states/walk/RecoilLeftState";
 import RecoilRightState from "../states/walk/RecoilRightState";
 import FlyIdleState from "../states/fly/FlyIdleState";
+import MoveUpState from "../states/moves/MoveUpState";
+import MoveDownState from "../states/moves/MoveDownState";
 
 export class Enemy extends Entity
 {
@@ -97,7 +99,7 @@ export class Enemy extends Entity
 
         if (!this.active) return;
 
-        this.ai.decides();
+        this.ai?.decides();
     }
 
     public setAi(ai: IEnemyAI)
@@ -192,6 +194,25 @@ export class Enemy extends Entity
         this.damageBody.body.setEnable(false);
 
         this.resetAllButtons();
+
+        if (this.name === 'eagle')
+        {
+            this.ai['fleaman']?.kill();
+        }
+
+        if (this.name === 'bone-dragon')
+        {
+            this.ai['childs']?.reverse().forEach((child, i) =>
+            {
+                this.scene.time.addEvent({
+                    delay: 100 * i,
+                    callback: () =>
+                    {
+                        child.die();
+                    }
+                })
+            })
+        }
 
         const deathFlame: Phaser.GameObjects.Sprite = this.scene.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, 'enemies', 'enemy-death-1', false);
 
@@ -395,6 +416,12 @@ export class Enemy extends Entity
                     break;
                 case EPossibleState.FLY_IDLE:
                     possibleStates[EPossibleState.FLY_IDLE] = new FlyIdleState() as FlyIdleState;
+                    break;
+                case EPossibleState.UP:
+                    possibleStates[EPossibleState.UP] = new MoveUpState() as MoveUpState;
+                    break;
+                case EPossibleState.DOWN:
+                    possibleStates[EPossibleState.DOWN] = new MoveDownState() as MoveDownState;
                     break;
                 default:
                     break;
