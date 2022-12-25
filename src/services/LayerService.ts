@@ -35,16 +35,6 @@ export default class LayerService
 
         scene.colliderLayer = colliderLayer;
 
-
-        // clean up active point lights
-        // scene.lightCandlesGroup.children.getArray().forEach(e =>
-        // {
-        //     const torch = e as Phaser.GameObjects.PointLight;
-        //     torch.setActive(false).setVisible(false);
-        // });
-
-
-
         // Background layers
         this.addBackgroundLayers(scene)
 
@@ -136,6 +126,7 @@ export default class LayerService
             layerElement?.setName(layerName);
         });
     }
+
     public static addGroundLayers(scene: GameScene)
     {
         const groundLayers = scene.map.layers.filter(layer => layer.name.startsWith('ground/'));
