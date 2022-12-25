@@ -48,7 +48,7 @@ export default class SecondaryAttackState extends State
 
             weapon.setDepth(character.depth - 1);
 
-            weapon.attack(character.config?.weaponOffset || 8);
+            weapon.attack(character.config?.secondaryAttackOffsetY || 8);
 
             const value = ammo - 1;
 
