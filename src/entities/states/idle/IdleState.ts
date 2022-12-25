@@ -180,13 +180,6 @@ export default class IdleState extends State
             return;
         }
 
-        if (character.canUse(EPossibleState.PROXIMITY) && y.isDown)
-        {
-            this.stateMachine.transition(EPossibleState.PROXIMITY, this.stateMachine.state);
-
-            return;
-        }
-
         if (character.canUse(EPossibleState.FLY_LEFT) && left.isDown)
         {
             this.stateMachine.transition(EPossibleState.FLY_LEFT, this.stateMachine.state);
@@ -197,6 +190,20 @@ export default class IdleState extends State
         if (character.canUse(EPossibleState.FLY_RIGHT) && right.isDown)
         {
             this.stateMachine.transition(EPossibleState.FLY_RIGHT, this.stateMachine.state);
+
+            return;
+        }
+
+        if(character.canUse(EPossibleState.UP) && up.isDown)
+        {
+            this.stateMachine.transition(EPossibleState.UP, this.stateMachine.state);
+
+            return;
+        }
+
+        if(character.canUse(EPossibleState.DOWN) && down.isDown)
+        {
+            this.stateMachine.transition(EPossibleState.DOWN, this.stateMachine.state);
 
             return;
         }
