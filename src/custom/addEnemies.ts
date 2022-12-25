@@ -3,11 +3,7 @@ import { InputController } from "../inputs/InputController";
 import GameScene from "../scenes/GameScene";
 import LayerService from "../services/LayerService";
 import enemyJSON from '../data/enemy.json';
-import DamageBody from "../entities/DamageBody";
-import Weapon from "../entities/weapons/Weapon";
 import { PLAYER_A_NAME } from "../constant/config";
-import { EPossibleState } from "../constant/character";
-import ThrowingKnife from "../entities/weapons/ThrowingKnife";
 import { ZombieIA } from "./enemies_ia/ZombieIA";
 import { BatIA } from "./enemies_ia/BatIA";
 import { MedusaIA } from "./enemies_ia/MedusaIA";
@@ -22,18 +18,14 @@ import { FleamanIA } from "./enemies_ia/FleamanIA";
 import { AxeKnightIA } from "./enemies_ia/AxeKnightIA";
 import { BatBlueIA } from "./enemies_ia/BatBlueIA";
 import { RavenIA } from "./enemies_ia/RavenIA";
+import { EagleIA } from "./enemies_ia/EagleIA";
+import { BoneDragonIA } from "./enemies_ia/BoneDragonIA";
 
 
 export default function addEnemies(scene: GameScene)
 {
     // destroy enemies related colliders
-    scene.enemiesVsWeaponsCollider?.destroy();
-
-    scene.enemiesVsPlayerCollider?.destroy();
-
-    scene.enemiesWeaponsVsPlayerCollider?.destroy();
-
-    scene.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
+    scene.destroyEnemyColliders();
 
     // destroy old zone enemies
     scene.enemies.forEach(enemy =>
@@ -87,6 +79,11 @@ export default function addEnemies(scene: GameScene)
                 }
             }
 
+            if(enemyName === 'bone-dragon')
+            {
+                enemy.addSecondaryWeapon('fireball');
+            }
+
             if (enemyName === 'skeleton')
             {
                 enemy.addSecondaryWeapon('bone');
@@ -104,7 +101,7 @@ export default function addEnemies(scene: GameScene)
                 enemy.addSecondaryWeapon('axe');
             }
 
-            const resurectEnemiesException = ['fishman', 'skeleton-red']
+            const resurectEnemiesException = ['fishman', 'skeleton-red', 'eagle']
 
             if (enemyJSONConfig.resurrect > 0 && !resurectEnemiesException.includes(enemyName))
             {
@@ -120,110 +117,7 @@ export default function addEnemies(scene: GameScene)
         }
     });
 
-    const enemiesDamageBody = scene.enemies.map(enemy => enemy.damageBody);
-
-    const player = scene.getPlayerByName(PLAYER_A_NAME);
-
-
-
-    // enemies make damage to player
-    scene.enemiesVsPlayerCollider = scene.physics.add.overlap(player.damageBody, enemiesDamageBody, (_player, _enemy) =>
-    {
-        const playerDamageBody = _player as DamageBody;
-
-        const enemyDamageBody = _enemy as DamageBody;
-
-        if (enemyDamageBody.parent.name === 'bat')
-        {
-            enemyDamageBody.parent.die();
-        }
-
-        const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
-
-        playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
-
-        playerDamageBody.parent.setStatusHealthDamage(damage);
-    }, (_player, _enemy) =>
-    {
-        const playerDamageBody = _player as DamageBody;
-
-        const enemy = _enemy as DamageBody;
-
-        if (enemy.parent.visible === false)
-        {
-            return false;
-        }
-
-        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
-            || playerDamageBody.parent.physicsProperties.isHurt
-            || !enemy.parent.active
-        )
-        {
-            return false;
-        }
-
-        return true;
-    }, scene).setName('enemiesVsPlayerCollider');
-
-    const enemiesSecondaryWeapons = scene.enemies.filter(enemy => enemy.active).map(enemy => enemy.secondaryWeaponGroup?.getChildren()).flat();
-    // enemies weapons make damage to player
-    scene.enemiesWeaponsVsPlayerCollider = scene.physics.add.overlap(player.damageBody, enemiesSecondaryWeapons, (_player, _weapon) =>
-    {
-        const playerDamageBody = _player as DamageBody;
-
-        const weapon = _weapon as unknown as Weapon;
-
-        weapon.setDisable();
-
-        const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
-
-        playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
-
-        playerDamageBody.parent.setStatusHealthDamage(damage);
-    }, (_player, _weapon) =>
-    {
-        const playerDamageBody = _player as DamageBody;
-
-        if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
-            || playerDamageBody.parent.physicsProperties.isHurt
-        )
-        {
-            return false;
-        }
-
-        return true;
-    }, scene).setName('enemiesWeaponsVsPlayerCollider');
-
-    // player weapons make damage to enemy
-    scene.enemiesVsWeaponsCollider = scene.physics.add.overlap(scene.weaponGroup, enemiesDamageBody, (_weapon, _enemy) =>
-    {
-        const enemy = _enemy as DamageBody;
-
-        const weapon = _weapon as unknown as Weapon;
-
-        enemy.parent.setStatusHealthDamage(weapon.damage);
-
-        scene.playSound(15, undefined, true);
-
-        if (weapon.name === 'holyWater' && enemy.parent.status.health > 0 && enemy.parent.canUse(EPossibleState.STUN))
-        {
-            enemy.parent.stateMachine.transition(EPossibleState.STUN, enemy.parent.stateMachine.state);
-        }
-
-        if (weapon instanceof ThrowingKnife)
-        {
-            weapon.setDisable();
-        }
-
-    }, undefined, scene).setName('enemiesVsWeaponsCollider');
-
-    // player weapons make destroy enemies weapons
-    scene.weaponGroupVsEnemiesSecondaryWeapons = scene.physics.add.overlap(scene.weaponGroup, enemiesSecondaryWeapons, (_weapon, _enemyWeapon) =>
-    {
-        const enemyWeapon = _enemyWeapon as unknown as Weapon;
-        enemyWeapon.setDisable();
-
-    }, undefined, scene).setName('weaponGroupVSenemiesSecondaryWeapons');
+    scene.createEnemyColliders();
 }
 
 function setAIEnemy(enemy: Enemy)
@@ -262,6 +156,12 @@ function setAIEnemy(enemy: Enemy)
             break;
         case 'raven':
             enemy.setAi(new RavenIA(enemy));
+            break;
+        case 'eagle':
+            enemy.setAi(new EagleIA(enemy));
+            break;
+        case 'bone-dragon':
+            enemy.setAi(new BoneDragonIA(enemy));
             break;
         case 'skeleton-red':
             enemy.setAi(new SkeletonRedIA(enemy));
