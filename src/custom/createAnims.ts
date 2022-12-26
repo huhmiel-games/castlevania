@@ -126,6 +126,17 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
+        key: 'richter-jump-secondary-attack',
+        frames: [
+            { key: 'atlas', frame: 'richter-jump-attack2_0', duration: 16 * 2 },
+            { key: 'atlas', frame: 'richter-jump-attack2_1', duration: 16 * 2 },
+            { key: 'atlas', frame: 'richter-jump-attack2_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+
+    scene.anims.create({
         key: 'richter-stair-up-attack',
         frames: [
             { key: 'atlas', frame: 'richter-stair-up-attack_0', duration: 16 * 2 },

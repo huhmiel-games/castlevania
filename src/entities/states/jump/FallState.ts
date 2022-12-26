@@ -19,6 +19,8 @@ export default class FallState extends State
     private jumpTime: number = 0;
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
+        console.log(character.name + ' FALL STATE');
+
         const { now } = scene.time;
 
         this.jumpTime = jumpTime || now;
@@ -30,8 +32,6 @@ export default class FallState extends State
         character.body.setGravityY(character.physicsProperties.gravity)
             .setDrag(0)
             .setMaxVelocityY(character.physicsProperties.speed * 4);
-
-        console.log(character.name + ' FALL STATE');
     }
 
     public execute(scene: GameScene, character: Entity)
@@ -43,6 +43,19 @@ export default class FallState extends State
         const { isAttacking, acceleration, speed } = character.physicsProperties;
 
         const { now } = scene.time;
+
+        if (character.canUse(EPossibleState.FALL_SECONDARY_ATTACK)
+            && up.isDown
+            && a.isDown
+            && a.getDuration(now) < 128 && !isAttacking
+            && character.secondaryWeaponGroup.countActive(false) > 0
+            && character.status.ammo > 0
+        )
+        {
+            this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
+
+            return;
+        }
 
         if (character.canUse(EPossibleState.FALL_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {

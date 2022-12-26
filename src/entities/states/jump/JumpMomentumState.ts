@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EPossibleState, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
@@ -18,6 +18,8 @@ export default class JumpMomentumState extends State
 
     public enter(scene: GameScene, character: Entity)
     {
+        console.log(character.name + ' MOMENTUM STATE');
+
         const { now } = scene.time;
 
         this.momentTime = now;
@@ -26,20 +28,33 @@ export default class JumpMomentumState extends State
 
         character.anims.play(character.animList.JUMP!, true);
 
-        character.body.setGravityY(character.physicsProperties.gravity / 2).setDragY(character.physicsProperties.acceleration * 16).setAccelerationY(100);
-
-        console.log(character.name + ' MOMENTUM STATE');
+        character.body.setGravityY(character.physicsProperties.gravity / 2)
+            .setDragY(character.physicsProperties.acceleration * 16)
+            .setAccelerationY(100);
     }
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { left, right, a } = character.buttons;
+        const { left, right, up, a } = character.buttons;
 
         const { blocked } = character.body;
 
         const { isAttacking } = character.physicsProperties;
 
         const { now } = scene.time;
+
+        if (character.canUse(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK)
+            && up.isDown
+            && a.isDown
+            && a.getDuration(now) < 128 && !isAttacking
+            && character.secondaryWeaponGroup.countActive(false) > 0
+            && character.status.ammo > 0
+        )
+        {
+            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state, this.momentTime);
+
+            return;
+        }
 
         if (character.canUse(EPossibleState.JUMP_MOMENTUM_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
@@ -48,7 +63,7 @@ export default class JumpMomentumState extends State
             return;
         }
 
-        if (this.momentTime + 250 < now)
+        if (this.momentTime + JUMP_MOMENTUM_DELAY < now)
         {
             character.body.setGravityY(character.physicsProperties.gravity);
 

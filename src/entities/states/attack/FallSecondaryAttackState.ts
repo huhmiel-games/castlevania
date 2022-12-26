@@ -1,23 +1,25 @@
 import { EPossibleState } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
+import { RangedWeapon } from "../../../types/types";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
+import { Enemy } from "../../enemies/Enemy";
 import { Entity } from "../../Entity";
 
 /**
  * @description
  * @author © Philippe Pereira 2022
  * @export
- * @class FallAttackState
+ * @class FallSecondaryAttackState
  * @extends {State}
  */
-export default class FallAttackState extends State
+export default class FallSecondaryAttackState extends State
 {
     public stateMachine: StateMachine;
     private jumpTime: number = 0;
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
-        console.log(character.name + ' FALL ATTACK STATE');
+        console.log(character.name + ' FALL SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 
@@ -25,11 +27,18 @@ export default class FallAttackState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
+        character.secondaryAttack();
+
+        if (this.stateMachine.prevState === EPossibleState.FALL)
+        {
+            character.secondaryAttack();
+        }
+
         character.body.setGravityY(character.physicsProperties.gravity)
             .setDrag(0)
             .setMaxVelocityY(character.physicsProperties.speed * 4);
 
-        character.anims.play(character.animList.JUMP_ATTACK!, true);
+        character.anims.play(character.animList.JUMP_SECONDARY_ATTACK!, true);
 
         character.physicsProperties.isAttacking = true;
     }
@@ -45,8 +54,10 @@ export default class FallAttackState extends State
         const { isAttacking, acceleration, speed } = character.physicsProperties;
 
         // Transition to Idle if touching ground
-        if (character.canUse(EPossibleState.IDLE) && body.blocked.down && !isAttacking)
+        if (character.canUse(EPossibleState.IDLE) && body.blocked.down)
         {
+            character.physicsProperties.isAttacking = false;
+
             character.y = Math.round(character.y); // fix a bug where the character is 1 pixel off from ground
 
             character.body.setMaxVelocityY(speed * 2);

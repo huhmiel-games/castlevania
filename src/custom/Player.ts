@@ -7,7 +7,7 @@ import CrouchAttackState from "../entities/states/attack/CrouchAttackState";
 import FallAttackState from "../entities/states/attack/FallAttackState";
 import JumpAttackState from "../entities/states/attack/JumpAttackState";
 import JumpMomentumAttackState from "../entities/states/attack/JumpMomentumAttackState";
-import SecondaryAttackState from "../entities/states/attack/SecondaryAttack";
+import SecondaryAttackState from "../entities/states/attack/SecondaryAttackState";
 import CrouchState from "../entities/states/crouch/CrouchState";
 import DeathState from "../entities/states/death/DeathState";
 import HurtState from "../entities/states/hurt/HurtState";
@@ -35,20 +35,24 @@ import WeaponRetrievableItem from "../gameobjects/WeaponRetrievableItem";
 import SaveLoadService from "../services/SaveLoadService";
 import { TCharacterConfig, TStatus } from "../types/types";
 import StateMachine from "../utils/StateMachine";
-import StairAttackState from "../entities/states/attack/StairAttack";
-import StairSecondaryAttackState from "../entities/states/attack/StairSecondaryAttack";
+import StairAttackState from "../entities/states/attack/StairAttackState";
+import StairSecondaryAttackState from "../entities/states/attack/StairSecondaryAttackState";
 import { PALETTE_DB32 } from "../constant/colors";
+import JumpSecondaryAttackState from "../entities/states/attack/JumpSecondaryAttackState";
+import JumpMomentumSecondaryAttackState from "../entities/states/attack/JumpMomentumSecondaryAttackState";
+import FallSecondaryAttackState from "../entities/states/attack/FallSecondaryAttackState";
 
 export default class Player extends Entity
 {
     public multipleShots: number;
+    groundBottom: number = 0;
     constructor(config: TCharacterConfig)
     {
         super(config);
 
         this.scene = config.scene;
 
-        this.secondaryWeaponGroup = this.scene.secondaryWeaponGroup;// this.scene.weaponGroup;
+        this.secondaryWeaponGroup = this.scene.secondaryWeaponGroup;
 
         this.setName(PLAYER_A_NAME)
             .setDepth(DEPTH.PLAYER)
@@ -105,13 +109,18 @@ export default class Player extends Entity
         {
             const currentAnim = this.anims.getName();
 
-            const { JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK, HURT } = this.animList;
+            const { JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK, HURT, JUMP_SECONDARY_ATTACK } = this.animList;
 
             if ([JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK, HURT].includes(currentAnim))
             {
                 this.meleeWeapon?.body.setEnable(false);
 
                 this.physicsProperties.isAttacking = false;
+            }
+
+            if(currentAnim === JUMP_SECONDARY_ATTACK)
+            {
+                this.secondaryAttacks();
             }
         }, this);
 
@@ -163,6 +172,7 @@ export default class Player extends Entity
             IDLE: 'richter-idle',
             JUMP: 'richter-jump',
             JUMP_ATTACK: 'richter-jump-attack',
+            JUMP_SECONDARY_ATTACK: 'richter-jump-secondary-attack',
             CROUCH: 'richter-crouch',
             CROUCH_ATTACK: 'richter-crouch-attack',
             LEFT: 'richter-walk',
@@ -195,11 +205,14 @@ export default class Player extends Entity
             right: new WalkRightState() as WalkRightState,
             jump: new JumpState() as JumpState,
             jumpAttack: new JumpAttackState() as JumpAttackState,
+            jumpSecondaryAttack: new JumpSecondaryAttackState() as JumpSecondaryAttackState,
             jumpMomentum: new JumpMomentumState() as JumpMomentumState,
             jumpMomentumAttack: new JumpMomentumAttackState() as JumpMomentumAttackState,
+            jumpMomentumSecondaryAttack: new JumpMomentumSecondaryAttackState() as JumpMomentumSecondaryAttackState,
             fall: new FallState() as FallState,
             backFlip: new BackFlipState() as BackFlipState,
             fallAttack: new FallAttackState() as FallAttackState,
+            fallSecondaryAttack: new FallSecondaryAttackState() as FallSecondaryAttackState,
             crouch: new CrouchState() as CrouchState,
             crouchAttack: new CrouchAttackState() as CrouchAttackState,
             hurt: new HurtState() as HurtState,
@@ -244,6 +257,18 @@ export default class Player extends Entity
         )
         {
             this.die();
+        }
+
+        if(this.body.blocked.down)
+        {
+            this.groundBottom = this.body.bottom;
+        }
+
+        if(!this.body.blocked.down && Math.abs(this.body.bottom - this.groundBottom) > 48)
+        {
+            console.log('bug here:', this);
+            
+            
         }
     }
 
@@ -664,6 +689,11 @@ export default class Player extends Entity
                 this.scene.scene.restart();
             }
         });
+    }
+
+    private secondaryAttacks()
+    {
+        
     }
 
     private gameOver()

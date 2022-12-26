@@ -234,6 +234,7 @@ export type TAnimationList =
     SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
     CROUCH_ATTACK?: string | Phaser.Animations.Animation,
     JUMP_ATTACK?: string | Phaser.Animations.Animation,
+    JUMP_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
     UP?: string | Phaser.Animations.Animation,
     DOWN?: string | Phaser.Animations.Animation,
     UPSTAIR_ATTACK?: string | Phaser.Animations.Animation,

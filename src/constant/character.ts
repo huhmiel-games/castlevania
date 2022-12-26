@@ -50,3 +50,5 @@ export const possibleDirection = [
     EPossibleState.UP,
     EPossibleState.UP_RIGHT
 ]
+
+export const JUMP_MOMENTUM_DELAY = 250;

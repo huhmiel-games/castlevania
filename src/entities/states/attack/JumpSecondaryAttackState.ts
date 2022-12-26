@@ -1,25 +1,25 @@
-import { EPossibleState } from "../../../constant/character";
-import GameScene from "../../../scenes/GameScene";
-import State from "../../../utils/State";
-import StateMachine from "../../../utils/StateMachine";
-import { Entity } from "../../Entity";
-
+import State from '../../../utils/State'
+import GameScene from '../../../scenes/GameScene';
+import { Entity } from '../../Entity';
+import StateMachine from '../../../utils/StateMachine';
+import { EPossibleState } from '../../../constant/character';
+import { RangedWeapon } from '../../../types/types';
+import { Enemy } from '../../enemies/Enemy';
 
 /**
  * @description
  * @author © Philippe Pereira 2022
  * @export
- * @class JumpAttackState
+ * @class JumpSecondaryAttackState
  * @extends {State}
  */
-export default class JumpAttackState extends State
+export default class JumpSecondaryAttackState extends State
 {
     public stateMachine: StateMachine;
     private groundYPosition: number;
-
     public enter(scene: GameScene, character: Entity, groundYPosition?: number)
     {
-        console.log(character.name + ' JUMP ATTACK STATE');
+        console.log(character.name + ' JUMP SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 
@@ -27,11 +27,12 @@ export default class JumpAttackState extends State
 
         this.groundYPosition = groundYPosition || character.body.bottom;
 
-        character.body.setDrag(0).setMaxVelocityY(character.physicsProperties.speed * 4);//.setVelocityY(-300);
+        character.secondaryAttack();
 
-        character.anims.play(character.animList.JUMP_ATTACK!, true);
+        character.anims.play(character.animList.JUMP_SECONDARY_ATTACK!, true);
 
-        character.physicsProperties.isAttacking = true;
+        character.body.setAcceleration(0)
+            .setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0);
     }
 
     public execute(scene: GameScene, character: Entity)
@@ -43,7 +44,7 @@ export default class JumpAttackState extends State
         // End of jump
         if (this.groundYPosition - 32 > bottom || b.isUp)
         {
-            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
@@ -51,7 +52,7 @@ export default class JumpAttackState extends State
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }

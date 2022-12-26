@@ -1,24 +1,26 @@
 import { EPossibleState, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
+import { RangedWeapon } from "../../../types/types";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
+import { Enemy } from "../../enemies/Enemy";
 import { Entity } from "../../Entity";
 
 /**
  * @description
  * @author © Philippe Pereira 2022
  * @export
- * @class JumpMomentumAttackState
+ * @class JumpMomentumSecondaryAttackState
  * @extends {State}
  */
-export default class JumpMomentumAttackState extends State
+export default class JumpMomentumSecondaryAttackState extends State
 {
     public stateMachine: StateMachine;
     private momentTime: number = 0;
 
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
-        console.log(character.name + ' MOMENTUM ATTACK STATE');
+        console.log(character.name + ' MOMENTUM SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 
@@ -26,11 +28,16 @@ export default class JumpMomentumAttackState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
+        if (this.stateMachine.prevState === EPossibleState.JUMP_MOMENTUM)
+        {
+            character.secondaryAttack();
+        }
+
         character.body.setGravityY(character.physicsProperties.gravity / 2)
             .setDragY(character.physicsProperties.acceleration * 16)
             .setAccelerationY(100);
 
-        character.anims.play(character.animList.JUMP_ATTACK!, true);
+        character.anims.play(character.animList.JUMP_SECONDARY_ATTACK!, true);
 
         character.physicsProperties.isAttacking = true;
     }
@@ -58,7 +65,7 @@ export default class JumpMomentumAttackState extends State
 
             if (isAttacking)
             {
-                this.stateMachine.transition(EPossibleState.FALL_ATTACK, this.stateMachine.state);
+                this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
 
                 return;
             }
@@ -67,7 +74,7 @@ export default class JumpMomentumAttackState extends State
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }

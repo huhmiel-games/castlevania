@@ -17,6 +17,7 @@ import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
 import DamageBody from "./DamageBody";
+import { Enemy } from "./enemies/Enemy";
 
 /**
  * @description A base class for player and enemies
@@ -207,5 +208,43 @@ export class Entity extends Phaser.GameObjects.Sprite
     public getItem(item: Phaser.Types.Physics.Arcade.GameObjectWithBody)
     {
 
+    }
+
+    public primaryAttack(): void
+    {
+        
+    }
+
+    public secondaryAttack(): void
+    {
+        const ammo = this.status.ammo;
+
+        if(ammo === 0) return;
+
+        const weapon = this.secondaryWeaponGroup.getFirstDead(false, this.body.x, this.body.y, undefined, undefined, true) as RangedWeapon;
+
+        if (!weapon)
+        {
+            return;
+        }
+
+        weapon.parent = this;
+
+        this.physicsProperties.isAttacking = true;
+
+        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
+        {
+            if (this.physicsProperties.isDead) return;
+
+            weapon.setDepth(this.depth - 1);
+
+            weapon.attack(this.config?.secondaryAttackOffsetY || 8);
+
+            const value = ammo - 1;
+
+            this.setStatusAmmo(value);
+
+            this.physicsProperties.isAttacking = false;
+        });
     }
 }

@@ -26,7 +26,7 @@ export default class IdleState extends State
 
         character.body.setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0)
             .setAcceleration(0, 0);
-            
+
 
         console.log(character.name + ' IDLE STATE');
     }
@@ -41,16 +41,22 @@ export default class IdleState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.ATTACK) && a.isDown && up.isUp && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EPossibleState.SECONDARY_ATTACK)
+            && a.isDown
+            && up.isDown
+            && a.getDuration(now) < 128 && !isAttacking
+            && character.secondaryWeaponGroup.countActive(false) > 0
+            && character.status.ammo > 0
+        )
         {
-            this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EPossibleState.ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.state);
 
             return;
         }
@@ -194,14 +200,14 @@ export default class IdleState extends State
             return;
         }
 
-        if(character.canUse(EPossibleState.UP) && up.isDown)
+        if (character.canUse(EPossibleState.UP) && up.isDown)
         {
             this.stateMachine.transition(EPossibleState.UP, this.stateMachine.state);
 
             return;
         }
 
-        if(character.canUse(EPossibleState.DOWN) && down.isDown)
+        if (character.canUse(EPossibleState.DOWN) && down.isDown)
         {
             this.stateMachine.transition(EPossibleState.DOWN, this.stateMachine.state);
 

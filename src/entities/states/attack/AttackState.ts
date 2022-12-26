@@ -16,6 +16,8 @@ export default class AttackState extends State
     public stateMachine: StateMachine;
     public enter(scene: GameScene, character: Entity  )
     {
+        console.log(character.name + ' ATTACK STATE');
+
         const { now } = scene.time;
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
@@ -34,13 +36,13 @@ export default class AttackState extends State
             }
 
             this.stateMachine.transition(this.stateMachine.prevState, this.stateMachine.state);
+
+            return;
         });
 
         character.anims.play(character.animList.ATTACK!, true);
 
         character.body.setAcceleration(0).setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0);
-
-        console.log(character.name + ' ATTACK STATE');
     }
 
     public execute(scene: GameScene, character: Entity)
