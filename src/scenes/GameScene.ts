@@ -455,7 +455,12 @@ export default class GameScene extends Phaser.Scene
                 enemyDamageBody.parent.die();
             }
 
-            const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
+            let damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
+
+            if (enemyDamageBody.parent.name === 'spike')
+            {
+                damage = 16;
+            }
 
             playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
 
@@ -517,6 +522,8 @@ export default class GameScene extends Phaser.Scene
             const enemy = _enemy as DamageBody;
 
             const weapon = _weapon as unknown as Weapon;
+
+            if (enemy.parent.name === 'spike') return;
 
             enemy.parent.setStatusHealthDamage(weapon.damage);
 
