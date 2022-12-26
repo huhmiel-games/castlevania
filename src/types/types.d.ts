@@ -120,6 +120,17 @@ export type BaseItemConfig = {
     name?: string
 }
 
+export type TileSpriteConfig = {
+    scene: GameScene;
+    x: number;
+    y: number;
+    width: number,
+    height: number,
+    textureKey: string;
+    frameKey: string | number;
+    parent: Enemy
+}
+
 export type TWeaponConfig = {
     scene: GameScene,
     parent: Entity,
@@ -162,7 +173,8 @@ export type TEntityConfig = {
         damageBody: {
             type: 'square' | 'circle',
             width: number,
-            height: number
+            height: number,
+            offsetY?: number
         }
     },
     state: string[],
