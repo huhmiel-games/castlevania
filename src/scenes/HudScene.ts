@@ -5,7 +5,7 @@ import { TStatus } from '../types/types';
 /**
  * @author © Philippe Pereira 2022
  * @export
- * @class GameOverScene
+ * @class HudScene
  * @extends {Scene}
  */
 export default class HudScene extends Phaser.Scene
