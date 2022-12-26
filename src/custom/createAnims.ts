@@ -832,4 +832,13 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: -1,
     });
 
+    scene.anims.create({
+        key: 'spike-idle',
+        frames: [
+            { key: 'enemies', frame: 'spikes' },
+        ],
+        frameRate: 1,
+        repeat: -1,
+    });
+
 }

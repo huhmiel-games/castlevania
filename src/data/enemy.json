@@ -824,8 +824,8 @@
         },
         "physicsProperties": {
             "gravity": 0,
-            "speed": 100,
-            "acceleration": 300,
+            "speed": 80,
+            "acceleration": 100,
             "stairSpeed": 160,
             "dragCoeff": 100,
             "isHurt": false,
@@ -968,6 +968,60 @@
             "down"
         ],
         "collideWithWorld": false,
+        "resurrect": 0
+    },
+    "spike": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "spikes",
+            "animList": {
+                "IDLE": "spike-idle",
+                "UP": "spike-idle",
+                "DOWN": "spike-idle"
+            }
+        },
+        "status": {
+            "health": 10000,
+            "score": 0,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 30,
+            "acceleration": 600,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "jumpHeight": 0.3
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 10,
+                "offsetX": 8,
+                "offsetY": 0
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 26,
+                "height": 8,
+                "offsetY": 6
+            }
+        },
+        "state": [
+            "idle"
+        ],
+        "collideWithWorld": true,
         "resurrect": 0
     }
 }

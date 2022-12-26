@@ -20,6 +20,7 @@ import { BatBlueIA } from "./enemies_ia/BatBlueIA";
 import { RavenIA } from "./enemies_ia/RavenIA";
 import { EagleIA } from "./enemies_ia/EagleIA";
 import { BoneDragonIA } from "./enemies_ia/BoneDragonIA";
+import { MovingSpikeIA } from "./enemies_ia/MovingSpikeIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -32,6 +33,15 @@ export default function addEnemies(scene: GameScene)
     {
         scene.children.remove(enemy.damageBody);
         scene.children.remove(enemy);
+        if(enemy.name === 'spike')
+        {
+            const screw = scene.children.getByName('spikeScrew');
+
+            if(screw)
+            {
+                scene.children.remove(screw);
+            }
+        }
     });
     scene.enemies.length = 0;
 
@@ -79,7 +89,7 @@ export default function addEnemies(scene: GameScene)
                 }
             }
 
-            if(enemyName === 'bone-dragon')
+            if (enemyName === 'bone-dragon')
             {
                 enemy.addSecondaryWeapon('fireball');
             }
@@ -171,6 +181,9 @@ function setAIEnemy(enemy: Enemy)
             break;
         case 'axe-knight':
             enemy.setAi(new AxeKnightIA(enemy));
+            break;
+        case 'spike':
+            enemy.setAi(new MovingSpikeIA(enemy));
             break;
 
         default:
