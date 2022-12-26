@@ -50,6 +50,11 @@ export default class ColliderService
             {
                 tile.setCollision(false, false, true, false);
             }
+
+            if (tile.properties.bottomBlock)
+            {
+                tile.setCollision(false, false, false, true);
+            }
         });
 
         scene.physics.add.collider(scene.movingPlatformGroup, scene.colliderLayer).setName('movingPlatformGroupVScolliderLayer');
