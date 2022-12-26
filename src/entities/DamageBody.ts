@@ -36,7 +36,9 @@ export default class DamageBody extends Phaser.GameObjects.Image
 
         if (!body || !this.body) return;
 
-        this.setPosition(body.center.x, body.bottom - this.body.height / 2);
+        const offsetY = this.parent.config?.physics.damageBody.offsetY || 0;
+
+        this.setPosition(body.center.x, body.bottom - this.body.height / 2 + offsetY);
     }
 
     public changeBodySize(width: number, height: number)
