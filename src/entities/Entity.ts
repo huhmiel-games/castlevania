@@ -11,7 +11,8 @@ import
     TStatus,
     TPhysicsProperties,
     TAnimationList,
-    TFrameList
+    TFrameList,
+    TMeleeWeaponConfig
 } from "../types/types";
 import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
@@ -210,9 +211,24 @@ export class Entity extends Phaser.GameObjects.Sprite
 
     }
 
+    public addMeleeWeapon(config: TMeleeWeaponConfig)
+    {
+        this.meleeWeapon = new MeleeWeapon({
+            scene: this.scene,
+            parent: this,
+            x: this.body.x,
+            y: this.body.y,
+            texture: 'whitePixel',
+            frame: ''
+        });
+
+        this.meleeWeapon.setAlpha(0).setSize(config.width, config.height).setName(config.name);
+        this.meleeWeapon.body.setSize(config.width, config.height);
+    }
+
     public primaryAttack(): void
     {
-        
+
     }
 
     public secondaryAttack(): void

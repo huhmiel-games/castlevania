@@ -23,7 +23,6 @@ import GoUpstairRightState from "../entities/states/stair/GoUpstairRightState";
 import WalkLeftState from "../entities/states/walk/WalkLeftState";
 import WalkRightState from "../entities/states/walk/WalkRightState";
 import Boomerang from "../entities/weapons/Boomerang";
-import { MeleeWeapon } from "../entities/weapons/MeleeWeapon";
 import ThrowingAxe from "../entities/weapons/ThrowingAxe";
 import ThrowingBomb from "../entities/weapons/ThrowingBomb";
 import ThrowingKnife from "../entities/weapons/ThrowingKnife";
@@ -45,7 +44,6 @@ import FallSecondaryAttackState from "../entities/states/attack/FallSecondaryAtt
 export default class Player extends Entity
 {
     public multipleShots: number;
-    groundBottom: number = 0;
     constructor(config: TCharacterConfig)
     {
         super(config);
@@ -117,11 +115,6 @@ export default class Player extends Entity
 
                 this.physicsProperties.isAttacking = false;
             }
-
-            if(currentAnim === JUMP_SECONDARY_ATTACK)
-            {
-                this.secondaryAttacks();
-            }
         }, this);
 
         this.on(Phaser.Animations.Events.ANIMATION_UPDATE, () =>
@@ -165,8 +158,6 @@ export default class Player extends Entity
         }
 
         this.scene?.events.on('enemy-score', (score: number) => this.setStatusScore(this.status.score + score));
-
-
 
         this.animList = {
             IDLE: 'richter-idle',
@@ -227,17 +218,7 @@ export default class Player extends Entity
 
         this.canUseState = new Set(Object.keys(this.stateMachine.possibleStates));
 
-        this.meleeWeapon = new MeleeWeapon({
-            scene: this.scene,
-            parent: this,
-            x: this.body.x,
-            y: this.body.y,
-            texture: 'whitePixel',
-            frame: ''
-        });
-
-        this.meleeWeapon.setAlpha(0).setSize(50, 8).setName('whip');
-        this.meleeWeapon.body.setSize(50, 8);
+        this.addMeleeWeapon({ width: 50, height: 8, name: 'whip' });
     }
 
     public preUpdate(time: number, delta: number)
@@ -257,18 +238,6 @@ export default class Player extends Entity
         )
         {
             this.die();
-        }
-
-        if(this.body.blocked.down)
-        {
-            this.groundBottom = this.body.bottom;
-        }
-
-        if(!this.body.blocked.down && Math.abs(this.body.bottom - this.groundBottom) > 48)
-        {
-            console.log('bug here:', this);
-            
-            
         }
     }
 
@@ -689,11 +658,6 @@ export default class Player extends Entity
                 this.scene.scene.restart();
             }
         });
-    }
-
-    private secondaryAttacks()
-    {
-        
     }
 
     private gameOver()
