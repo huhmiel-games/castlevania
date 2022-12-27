@@ -16,7 +16,7 @@ export class BatBlueIA implements IEnemyAI
 
         this.parent.body.setAllowGravity(false);
 
-        this.parent.anims.play('bat-blue-idle');
+        this.parent.anims.play(this.parent.animList.IDLE!);
     }
 
     execute()
@@ -44,7 +44,7 @@ export class BatBlueIA implements IEnemyAI
         {
             body.setAllowGravity(true).setGravityY(800);
 
-            anims.play('bat-blue-fly', true);
+            anims.play(this.parent.animList.FLY!, true);
 
             this.isFalling = true;
         }
