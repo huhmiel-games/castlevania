@@ -30,6 +30,7 @@ export class Orb extends Phaser.GameObjects.Sprite
 
     preUpdate(time: number, delta: number): void
     {
+        super.preUpdate(time, delta);
         // if (this.body.blocked.down && this.body.allowGravity)
         // {
         //     this.body.setAllowGravity(false);

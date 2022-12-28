@@ -6,9 +6,13 @@ import { Enemy } from "./Enemy";
 
 export class Boss extends Enemy
 {
+    static membersCount: number = 0;
+    static isOrb: boolean = false;
     constructor(config: TCharacterConfig, enemyJSON: TEntityConfig)
     {
         super(config, enemyJSON);
+
+        Boss.membersCount += 1;
     }
 
     startBattle()
@@ -34,22 +38,13 @@ export class Boss extends Enemy
     {
         this.scene.enemies.forEach(enemy =>
         {
-            if (enemy === this) return;
+            if (enemy.name === this.name) return;
 
             this.scene.children.remove(enemy.damageBody);
             this.scene.children.remove(enemy);
-
-            if (enemy.name === 'spike')
-            {
-                const screw = this.scene.children.getByName('spikeScrew');
-
-                if (screw)
-                {
-                    this.scene.children.remove(screw);
-                }
-            }
         });
-        this.scene.enemies.length = 0;
+
+        // this.scene.enemies.length = 0;
     }
 
     public setStatusHealthDamage(damage: number): Boss
@@ -62,7 +57,18 @@ export class Boss extends Enemy
 
         const health = this.status.health - 1;
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, health);
+        if (Boss.membersCount === 1)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, health);
+        }
+        else
+        {
+            const bossesTotalHp = this.scene.enemies.filter(elm => elm.name === this.name)
+                .map(elm => elm.status.health)
+                .reduce((acc, elm) => acc + elm);
+
+            this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, Math.round(bossesTotalHp / 2));
+        }
 
         if (health > 0)
         {
@@ -102,6 +108,8 @@ export class Boss extends Enemy
         this.setStatusHealth(0);
 
         this.setStatusIsDead(true);
+
+        Boss.membersCount -= 1;
 
         this.die();
 
@@ -162,7 +170,12 @@ export class Boss extends Enemy
             {
                 this.setVisible(false).clearTint();
 
-                this.addOrb();
+                if (Boss.membersCount === 0 && !Boss.isOrb)
+                {
+                    Boss.isOrb = true;
+
+                    this.addOrb();
+                }
 
                 this.kill();
             }
@@ -178,6 +191,8 @@ export class Boss extends Enemy
                 const orb = new Orb({ scene: this.scene, x: this.x, y: this.y, texture: 'items', frame: 'magic-crystal_0' });
 
                 this.scene.itemsGroup.add(orb);
+
+                Boss.isOrb = false;
             }
         });
     }

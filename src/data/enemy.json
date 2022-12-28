@@ -1034,7 +1034,7 @@
             }
         },
         "status": {
-            "health": 1,
+            "health": 16,
             "score": 3000,
             "life": 0,
             "ammo": 0,
@@ -1182,6 +1182,119 @@
             "right"
         ],
         "collideWithWorld": true,
+        "resurrect": 0
+    },
+    "mummy": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "mummy-walk_2",
+            "animList": {
+                "IDLE": "mummy-idle",
+                "LEFT": "mummy-walk",
+                "RIGHT": "mummy-walk",
+                "SECONDARY_ATTACK": "mummy-attack"
+            }
+        },
+        "status": {
+            "health": 16,
+            "score": 3000,
+            "life": 0,
+            "ammo": 1000,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 40,
+            "acceleration": 200,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 1
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 24,
+                "offsetY": 32
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 16,
+                "height": 46,
+                "offsetY": 2
+            }
+        },
+        "state": [
+            "idle",
+            "left",
+            "right",
+            "secondaryAttack"
+        ],
+        "collideWithWorld": true,
+        "resurrect": 0
+    },
+    "bandage": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "bandage_0",
+            "animList": {
+                "IDLE": "bandage",
+                "FLY": "bandage"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 100,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 80,
+            "acceleration": 300,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 0
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 8
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 24,
+                "height": 13,
+                "offsetY": 0
+            }
+        },
+        "state": [
+            "idle",
+            "flyLeft",
+            "flyRight"
+        ],
+        "collideWithWorld": false,
         "resurrect": 0
     }
 }

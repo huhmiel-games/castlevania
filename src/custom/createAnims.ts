@@ -246,7 +246,7 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'items', frame: 'magic-crystal_0' },
             { key: 'items', frame: 'magic-crystal_1' },
         ],
-        frameRate: 6,
+        frameRate: 9,
         repeat: -1,
     });
 
@@ -765,13 +765,34 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'mummy-walk',
+        key: 'mummy-idle',
         frames: [
             { key: 'enemies', frame: 'mummy-walk_2' },
-            { key: 'enemies', frame: 'mummy-walk_1' },
-            { key: 'enemies', frame: 'mummy-walk_0' },
         ],
         frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'mummy-walk',
+        frames: [
+            { key: 'enemies', frame: 'mummy-walk_0' },
+            { key: 'enemies', frame: 'mummy-walk_1' },
+            { key: 'enemies', frame: 'mummy-walk_2' },
+            { key: 'enemies', frame: 'mummy-walk_1' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'bandage',
+        frames: [
+            { key: 'enemies', frame: 'bandage_0' },
+            { key: 'enemies', frame: 'bandage_2' },
+            { key: 'enemies', frame: 'bandage_4' },
+        ],
+        frameRate: 9,
         repeat: -1,
     });
 

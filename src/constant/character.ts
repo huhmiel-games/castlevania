@@ -53,4 +53,4 @@ export const possibleDirection = [
 
 export const JUMP_MOMENTUM_DELAY = 250;
 
-export const bossNames = ['giant-bat', 'medusa-boss']
+export const bossNames = ['giant-bat', 'medusa-boss', 'mummy']

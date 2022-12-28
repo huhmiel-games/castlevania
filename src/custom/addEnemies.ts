@@ -26,6 +26,7 @@ import { TEntityConfig } from "../types/types";
 import { Boss } from "../entities/enemies/Boss";
 import { GiantBatIA } from "./boss_ia/GiantBatIA";
 import { MedusaBossIA } from "./boss_ia/MedusaBossIA";
+import { MummyIA } from "./boss_ia/MummyIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -202,6 +203,9 @@ function setAIEnemy(enemy: Enemy | Boss)
             break;
         case 'medusa-boss':
             enemy.setAi(new MedusaBossIA(enemy as Boss));
+            break;
+        case 'mummy':
+            enemy.setAi(new MummyIA(enemy as Boss));
             break;
 
         default:
