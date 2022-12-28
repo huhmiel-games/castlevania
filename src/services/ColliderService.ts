@@ -106,7 +106,7 @@ export default class ColliderService
                     }
                 }
 
-                if (tile.properties.doorBlock && !tile.canCollide)
+                if (tile.properties.doorBlock && !tile.canCollide && !scene.isBossBattle)
                 {
                     DoorService.searchNextStage(scene, tile);
 

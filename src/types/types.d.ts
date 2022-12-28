@@ -1,3 +1,4 @@
+import { Boss } from "../entities/enemies/Boss";
 import { Enemy } from "../entities/enemies/Enemy";
 import { Entity } from "../entities/Entity";
 import Boomerang from "../entities/weapons/Boomerang";
@@ -109,6 +110,14 @@ export type TDoor = {
 
 
 export type RangedWeapon = Boomerang | ThrowingAxe | ThrowingBomb | ThrowingKnife | FireBall | undefined;
+
+export type TSpriteConfig = {
+    scene: GameScene;
+    x: number;
+    y: number;
+    texture: string | Phaser.Textures.Texture;
+    frame: string | number;
+}
 
 export type BaseItemConfig = {
     scene: GameScene;
@@ -251,12 +260,18 @@ export type TFrameList =
     stairMiddle: string
 }
 
+export type TMeleeWeaponConfig = {
+    width: number,
+    height: number,
+    name: string
+}
+
 /**
  * Interfaces
  */
 export interface IEnemyAI
 {
-    parent: Enemy;
+    parent: Enemy | Boss;
     scene: GameScene;
     execute: ()=> void
     reset: () => void

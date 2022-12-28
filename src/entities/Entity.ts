@@ -160,6 +160,13 @@ export class Entity extends Phaser.GameObjects.Sprite
         return this;
     }
 
+    public setStatusStage(stage: number): Entity
+    {
+        this.status.stage = stage;
+
+        return this;
+    }
+
     public setStatusSpeed(speed: number): Entity
     {
         this.physicsProperties.speed = speed;

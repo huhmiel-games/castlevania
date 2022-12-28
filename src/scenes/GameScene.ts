@@ -1,6 +1,6 @@
 // @ts-ignore
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
-import { FONTS, FONTS_SIZES, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
+import { FONTS, FONTS_SIZES, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
 import { InputController } from '../inputs/InputController';
 import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
@@ -15,6 +15,7 @@ import { EPossibleState } from '../constant/character.js';
 import DamageBody from '../entities/DamageBody.js';
 import ThrowingKnife from '../entities/weapons/ThrowingKnife.js';
 import Weapon from '../entities/weapons/Weapon.js';
+import { Orb } from '../gameobjects/Orb.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -45,10 +46,12 @@ export default class GameScene extends Phaser.Scene
     debugGraphics: Phaser.GameObjects.Graphics;
     public enemyWeaponGroup: Phaser.GameObjects.Group;
     public enemiesWeaponsVsPlayerCollider: Phaser.Physics.Arcade.Collider;
-    weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
+    public weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
     childrenText: Phaser.GameObjects.BitmapText
-    enemiesDamageBody: DamageBody[];
-    enemiesSecondaryWeapons: Phaser.GameObjects.GameObject[];
+    public enemiesDamageBody: DamageBody[];
+    public enemiesSecondaryWeapons: Phaser.GameObjects.GameObject[];
+    public isBossBattle: boolean = false;
+    public isChangingStage: boolean = false;
 
     constructor()
     {
@@ -289,6 +292,8 @@ export default class GameScene extends Phaser.Scene
                     LayerService.addConveyors(this);
 
                     addEnemies(this);
+
+                    this.isChangingStage = false;
                 }
             }
         })
@@ -412,6 +417,132 @@ export default class GameScene extends Phaser.Scene
 
             SaveLoadService.saveGameData(player.status);
         }
+    }
+
+    public endStage()
+    {
+        const orb = this.children.getByName('orb') as Orb;
+
+        orb?.body.setEnable(false);
+
+        orb.setActive(false).setVisible(false);
+
+        const player = this.getPlayerByName(PLAYER_A_NAME);
+
+        this.playSong(10, false);
+        this.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
+        {
+            orb?.destroy();
+
+            const timer = this.time.addEvent({
+                delay: 100,
+                repeat: player.status.ammo,
+                callback: () =>
+                {
+                    if (timer.getRepeatCount() > 0)
+                    {
+                        this.playSound(5);
+
+                        player.setStatusAmmo(player.status.ammo - 1);
+
+                        player.setStatusScore(player.status.score + 100);
+                    }
+
+                    if (timer.getRepeatCount() === 0)
+                    {
+                        this.playSound(4);
+
+                        this.isBossBattle = false;
+
+                        this.nextStage();
+                    }
+                }
+            });
+        });
+    }
+
+    private nextStage()
+    {
+        this.isChangingStage = true;
+
+        const player = this.getPlayerByName(PLAYER_A_NAME);
+
+        player.setStatusHealth(16).setStatusAmmo(5);
+
+        this.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
+
+        this.cameras.main.removeBounds();
+
+        this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+        switch (player.status.stage)
+        {
+            case 15:
+                player.setStatusPosition(STAGE_START_POSITION[21])
+                    .setStatusStage(21)
+                    .setFlipX(false);
+
+                player.body.reset(STAGE_START_POSITION[21].x, STAGE_START_POSITION[21].y);
+
+                break;
+
+            case 26:
+                player.setStatusPosition(STAGE_START_POSITION[31])
+                    .setStatusStage(31)
+                    .setFlipX(true);
+
+                player.body.reset(STAGE_START_POSITION[31].x, STAGE_START_POSITION[31].y);
+
+                break;
+
+            case 36:
+                player.setStatusPosition(STAGE_START_POSITION[41])
+                    .setStatusStage(41)
+                    .setFlipX(false);
+
+                player.body.reset(STAGE_START_POSITION[41].x, STAGE_START_POSITION[41].y);
+
+                break;
+
+            case 45:
+                player.setStatusPosition(STAGE_START_POSITION[51])
+                    .setStatusStage(51)
+                    .setFlipX(false);
+
+                player.body.reset(STAGE_START_POSITION[51].x, STAGE_START_POSITION[51].y);
+
+                break;
+
+            case 57:
+                player.setStatusPosition(STAGE_START_POSITION[61])
+                    .setStatusStage(61)
+                    .setFlipX(true);
+
+                player.body.reset(STAGE_START_POSITION[61].x, STAGE_START_POSITION[61].y);
+
+                break;
+
+            default:
+                break;
+        }
+
+        SaveLoadService.saveGameData(player.status);
+
+        this.setCurrentStage();
+    }
+
+    private cleanupBossBattle()
+    {
+        const currentZone = this.getPlayerCurrentStage();
+
+        if (!currentZone) return;
+
+        const { x, y, width, height } = currentZone;
+
+        this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
+            .setBoundsCollision(true, true, true, true);
+
+        this.cameras.main.setBounds(x!, y!, width!, height!);
     }
 
     private setParallaxImagePosition(width: number)

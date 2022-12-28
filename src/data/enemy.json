@@ -1023,5 +1023,165 @@
         ],
         "collideWithWorld": true,
         "resurrect": 0
+    },
+    "giant-bat": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "giant-bat-idle_0",
+            "animList": {
+                "IDLE": "giant-bat-idle",
+                "FLY": "giant-bat-fly"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 3000,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 80,
+            "acceleration": 600,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 1
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 8
+            },
+            "damageBody": {
+                "type": "circle",
+                "width": 10,
+                "height": 10
+            }
+        },
+        "state": [
+            "idle"
+        ],
+        "collideWithWorld": false,
+        "resurrect": 0
+    },
+    "medusa-boss": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "medusa_0",
+            "animList": {
+                "IDLE": "medusa-boss-fly",
+                "FLY": "medusa-boss-fly"
+            }
+        },
+        "status": {
+            "health": 16,
+            "score": 3000,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 30,
+            "acceleration": 200,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 1
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 8
+            },
+            "damageBody": {
+                "type": "circle",
+                "width": 8,
+                "height": 8,
+                "offsetY": 6
+            }
+        },
+        "state": [
+            "idle"
+        ],
+        "collideWithWorld": true,
+        "resurrect": 0
+    },
+    "snake": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "snake_0",
+            "animList": {
+                "IDLE": "snake-walk",
+                "LEFT": "snake-walk",
+                "RIGHT": "snake-walk"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 3000,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 400,
+            "speed": 40,
+            "acceleration": 200,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 1
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 0,
+                "offsetY": 0
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 16,
+                "height": 9
+            }
+        },
+        "state": [
+            "idle",
+            "left",
+            "right"
+        ],
+        "collideWithWorld": true,
+        "resurrect": 0
     }
 }

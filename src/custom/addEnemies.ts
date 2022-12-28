@@ -21,6 +21,11 @@ import { RavenIA } from "./enemies_ia/RavenIA";
 import { EagleIA } from "./enemies_ia/EagleIA";
 import { BoneDragonIA } from "./enemies_ia/BoneDragonIA";
 import { MovingSpikeIA } from "./enemies_ia/MovingSpikeIA";
+import { bossNames } from "../constant/character";
+import { TEntityConfig } from "../types/types";
+import { Boss } from "../entities/enemies/Boss";
+import { GiantBatIA } from "./boss_ia/GiantBatIA";
+import { MedusaBossIA } from "./boss_ia/MedusaBossIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -33,11 +38,11 @@ export default function addEnemies(scene: GameScene)
     {
         scene.children.remove(enemy.damageBody);
         scene.children.remove(enemy);
-        if(enemy.name === 'spike')
+        if (enemy.name === 'spike')
         {
             const screw = scene.children.getByName('spikeScrew');
 
-            if(screw)
+            if (screw)
             {
                 scene.children.remove(screw);
             }
@@ -56,9 +61,16 @@ export default function addEnemies(scene: GameScene)
         {
             const enemyName: string = LayerService.convertTiledObjectProperties(enemyObj.properties)?.name;
 
-            const enemyJSONConfig = JSON.parse(JSON.stringify(enemyJSON[enemyName]));
+            const enemyJSONConfig: TEntityConfig = JSON.parse(JSON.stringify(enemyJSON[enemyName]));
             enemyJSONConfig.status.position.x = enemyObj.x!;
             enemyJSONConfig.status.position.y = enemyObj.y!;
+
+            if (bossNames.includes(enemyName))
+            {
+                addBoss(scene, enemyName, enemyObj, enemyJSONConfig);
+
+                return
+            }
 
             const enemy = new Enemy({
                 scene: scene,
@@ -130,7 +142,7 @@ export default function addEnemies(scene: GameScene)
     scene.createEnemyColliders();
 }
 
-function setAIEnemy(enemy: Enemy)
+function setAIEnemy(enemy: Enemy | Boss)
 {
     switch (enemy.name)
     {
@@ -185,8 +197,30 @@ function setAIEnemy(enemy: Enemy)
         case 'spike':
             enemy.setAi(new MovingSpikeIA(enemy));
             break;
+        case 'giant-bat':
+            enemy.setAi(new GiantBatIA(enemy as Boss));
+            break;
+        case 'medusa-boss':
+            enemy.setAi(new MedusaBossIA(enemy as Boss));
+            break;
 
         default:
             break;
     }
+}
+
+function addBoss(scene: GameScene, bossName: string, bossObj: Phaser.Types.Tilemaps.TiledObject, bossJSONConfig: TEntityConfig)
+{
+    const boss = new Boss({
+        scene: scene,
+        x: bossObj.x!,
+        y: bossObj.y!,
+        texture: 'enemies',
+        frame: bossJSONConfig.config.defaultFrame,
+        buttons: InputController.getInstance().getNewButtons()
+    }, bossJSONConfig);
+
+    boss.setName(bossName);
+
+    setAIEnemy(boss);
 }

@@ -40,6 +40,7 @@ import { PALETTE_DB32 } from "../constant/colors";
 import JumpSecondaryAttackState from "../entities/states/attack/JumpSecondaryAttackState";
 import JumpMomentumSecondaryAttackState from "../entities/states/attack/JumpMomentumSecondaryAttackState";
 import FallSecondaryAttackState from "../entities/states/attack/FallSecondaryAttackState";
+import { Orb } from "../gameobjects/Orb";
 
 export default class Player extends Entity
 {
@@ -233,6 +234,7 @@ export default class Player extends Entity
         }
 
         if (!this.physicsProperties.isDead
+            && !this.scene.isChangingStage
             && (this.body.top >= this.scene.cameras.main.getBounds().bottom + TILE_SIZE
                 || this.body.bottom === this.scene.colliderLayer.height)
         )
@@ -322,6 +324,11 @@ export default class Player extends Entity
 
                     break;
                 }
+
+                case _item instanceof Orb:
+                    {
+                        this.scene.endStage();
+                    }
             default:
                 break;
         }
@@ -642,6 +649,8 @@ export default class Player extends Entity
 
             return;
         }
+
+        this.scene.isBossBattle = false;
 
         this.setStatusHealth(16).setStatusAmmo(5);
 

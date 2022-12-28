@@ -263,7 +263,7 @@ export class Enemy extends Entity
     }
 
     public kill(): void
-    {
+    {        
         this.scene.children.remove(this.damageBody);
 
         this.scene.children.remove(this);
@@ -275,7 +275,7 @@ export class Enemy extends Entity
             delay: forceNow === false ? Phaser.Math.RND.between(1000, this.config.resurrect) : 0,
             callback: () =>
             {
-                if (!this.scene)
+                if (!this.scene || this.scene.isBossBattle)
                 {
                     this.destroy();
 

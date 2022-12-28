@@ -240,6 +240,16 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: -1,
     });
 
+    scene.anims.create({
+        key: 'orb',
+        frames: [
+            { key: 'items', frame: 'magic-crystal_0' },
+            { key: 'items', frame: 'magic-crystal_1' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
     /**
      * Enemies anims
      */
@@ -450,14 +460,14 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: -1,
     });
 
-    scene.anims.create({
-        key: 'axe',
-        frames: [
-            { key: 'enemies', frame: 'axe' },
-        ],
-        frameRate: 2,
-        repeat: -1,
-    });
+    // scene.anims.create({
+    //     key: 'axe',
+    //     frames: [
+    //         { key: 'enemies', frame: 'axe' },
+    //     ],
+    //     frameRate: 2,
+    //     repeat: -1,
+    // });
 
     scene.anims.create({
         key: 'cat-run',
@@ -511,10 +521,19 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
+        key: 'giant-bat-idle',
+        frames: [
+            { key: 'enemies', frame: 'giant-bat-idle_0' },
+        ],
+        frameRate: 2,
+        repeat: -1,
+    });
+
+    scene.anims.create({
         key: 'giant-bat-fly',
         frames: [
-            { key: 'enemies', frame: 'giant-bat-fly_1' },
             { key: 'enemies', frame: 'giant-bat-fly_0' },
+            { key: 'enemies', frame: 'giant-bat-fly_1' },
             { key: 'enemies', frame: 'giant-bat-fly_2' },
         ],
         frameRate: 6,
@@ -536,15 +555,6 @@ export default function createAnims(scene: Phaser.Scene)
         key: 'fleaman-jump',
         frames: [
             { key: 'enemies', frame: 'fleaman-jump-forward' },
-        ],
-        frameRate: 2,
-        repeat: -1,
-    });
-
-    scene.anims.create({
-        key: 'giant-bat-idle',
-        frames: [
-            { key: 'enemies', frame: 'giant-bat-idle_0' },
         ],
         frameRate: 2,
         repeat: -1,
@@ -766,19 +776,19 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'jump',
+        key: 'dracula2-jump',
         frames: [
-            { key: 'enemies', frame: 'jump_0' },
-            { key: 'enemies', frame: 'jump_1' },
+            { key: 'enemies', frame: 'dracula2-jump_0' },
+            { key: 'enemies', frame: 'dracula2-jump_1' },
         ],
         frameRate: 4,
         repeat: -1,
     });
 
     scene.anims.create({
-        key: 'attack',
+        key: 'dracula2-attack',
         frames: [
-            { key: 'enemies', frame: 'attack_0' },
+            { key: 'enemies', frame: 'dracula2-attack_0' },
         ],
         frameRate: 2,
         repeat: -1,
@@ -797,9 +807,9 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'idle',
+        key: 'dracula2-idle',
         frames: [
-            { key: 'enemies', frame: 'idle' },
+            { key: 'enemies', frame: 'dracula2-idle' },
         ],
         frameRate: 2,
         repeat: -1,
@@ -832,12 +842,12 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'fly',
+        key: 'dracula2-fly',
         frames: [
-            { key: 'enemies', frame: 'fly_1' },
-            { key: 'enemies', frame: 'fly_2' },
-            { key: 'enemies', frame: 'fly_0' },
-            { key: 'enemies', frame: 'fly_3' },
+            { key: 'enemies', frame: 'dracula2-fly_1' },
+            { key: 'enemies', frame: 'dracula2-fly_2' },
+            { key: 'enemies', frame: 'dracula2-fly_0' },
+            { key: 'enemies', frame: 'dracula2-fly_3' },
         ],
         frameRate: 8,
         repeat: -1,
@@ -849,6 +859,36 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'spikes' },
         ],
         frameRate: 1,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'medusa-boss-idle',
+        frames: [
+            { key: 'enemies', frame: 'medusa_0' },
+            { key: 'enemies', frame: 'medusa_1' },
+        ],
+        frameRate: 3,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'medusa-boss-fly',
+        frames: [
+            { key: 'enemies', frame: 'medusa_0' },
+            { key: 'enemies', frame: 'medusa_1' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'snake-walk',
+        frames: [
+            { key: 'enemies', frame: 'snake_0' },
+            { key: 'enemies', frame: 'snake_1' },
+        ],
+        frameRate: 6,
         repeat: -1,
     });
 

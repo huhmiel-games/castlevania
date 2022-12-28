@@ -65,5 +65,16 @@ export const enum HUD_EVENTS_NAMES
     STAGE = 'hud-stage',
     WEAPON = 'hud-weapon',
     RESET = 'hud-reset',
-    SHOTS = 'hud-shots'
+    SHOTS = 'hud-shots',
+    BOSS_HEALTH = 'hud-boss-health'
+}
+
+export const STAGE_START_POSITION = {
+    '11': { x:   2 * TILE_SIZE, y: 69 * TILE_SIZE },
+    '21': { x: 225 * TILE_SIZE, y: 65 * TILE_SIZE },
+    '31': { x: 110 * TILE_SIZE, y: 30 * TILE_SIZE },
+    '41': { x: 277 * TILE_SIZE, y: 74 * TILE_SIZE },
+    '51': { x: 527 * TILE_SIZE, y: 67 * TILE_SIZE },
+    '61': { x: 478 * TILE_SIZE, y: 34 * TILE_SIZE },
+    '71': { x: 334 * TILE_SIZE, y: 19 * TILE_SIZE },
 }

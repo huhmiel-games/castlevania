@@ -42,6 +42,7 @@ export default class HudScene extends Phaser.Scene
         this.gameScene.events.on(HUD_EVENTS_NAMES.WEAPON, this.setWeaponImage, this);
         this.gameScene.events.on(HUD_EVENTS_NAMES.RESET, this.resetData, this);
         this.gameScene.events.on(HUD_EVENTS_NAMES.SHOTS, this.setShots, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.BOSS_HEALTH, this.setBossHealth, this);
 
         this.getPlayerStatus();
 
@@ -89,7 +90,7 @@ export default class HudScene extends Phaser.Scene
 
         for (let i = 0; i < 16; i += 1)
         {
-            this.add.image(56 + i * 4, 21, 'items', 'health_1').setOrigin(0, 0).setName(`enemy-health_${i + 1}`);
+            this.add.image(56 + i * 4, 21, 'items', 'health_1').setOrigin(0, 0).setName(`boss-health_${i + 1}`);
         }
 
         this.startCountDown(300);
@@ -152,6 +153,26 @@ export default class HudScene extends Phaser.Scene
             else
             {
                 child.setFrame('health_0');
+            }
+        });
+
+        return this;
+    }
+
+    private setBossHealth(health: number)
+    {
+        const children = this.children.getAll().filter(obj => obj.name.startsWith('boss-health_')) as Phaser.GameObjects.Image[];
+        children.forEach(child =>
+        {
+            const id = Number(child.name.match(/\d+/g));
+
+            if (id > health)
+            {
+                child.setFrame('health_2');
+            }
+            else
+            {
+                child.setFrame('health_1');
             }
         });
 
