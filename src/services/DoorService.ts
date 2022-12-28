@@ -65,8 +65,6 @@ export default class DoorService
             delay: 32,
             callback: () =>
             {
-
-
                 scene.colliderLayer.copy(tile.x, tile.y, 1, 1, tile.x, tile.y - 3);
                 scene.colliderLayer.copy(tile.x, tile.y, 1, 1, tile.x, tile.y - 2);
                 scene.colliderLayer.copy(tile.x, tile.y, 1, 1, tile.x, tile.y - 1);
