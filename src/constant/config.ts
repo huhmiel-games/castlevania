@@ -3,7 +3,7 @@ export const GAMENAME = 'Castlevania';
 export const WIDTH = 256; // 320; // 256; // 384; // 512;
 export const HEIGHT = 208; // 176;  // 144;  // 240; // 288;
 export const MOBILE_OS = ['android', 'cordova', 'iOS', 'iPad', 'iPhone', 'kindle', 'windowsPhone'];
-export const GAMEPAD_AXIS_THRESHOLD = 0.2;
+export const GAMEPAD_AXIS_THRESHOLD = 0.6;
 
 // MAP
 export const TILE_SIZE = 16;
