@@ -83,7 +83,7 @@ export class Boss extends Enemy
         }
         else
         {
-            const bossesTotalHp = this.scene.enemies.filter(elm => elm.name === this.name)
+            const bossesTotalHp = this.scene.enemies.filter(elm => elm.active && elm.name === this.name)
                 .map(elm => elm.status.health)
                 .reduce((acc, elm) => acc + elm);
 
