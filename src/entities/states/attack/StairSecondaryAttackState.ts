@@ -25,36 +25,6 @@ export default class StairSecondaryAttackState extends State
 
         character.secondaryAttack();
 
-        // const weapon = scene.secondaryWeaponGroup.getFirstDead(false, character.body.x, character.body.y, undefined, undefined, true) as RangedWeapon;
-
-        // const ammo = character.status.ammo;
-
-        // if (!weapon || ammo === 0)
-        // {
-        //     this.stateMachine.transition(EPossibleState.STAIR_ATTACK, this.stateMachine.prevState, direction);
-
-        //     return;
-        // }
-
-        // character.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
-        // {
-        //     weapon.attack();
-
-        //     const value = ammo - 1;
-
-        //     character.setStatusAmmo(value);
-
-        //     character.physicsProperties.isAttacking = false;
-
-        //     character.setFrame(currentFrameName);
-
-        //     this.stateMachine.transition(this.stateMachine.prevState, this.stateMachine.state);
-
-        //     return;
-        // });
-
-        // const currentFrameName = character.frame.name;
-
         if (direction === 'up')
         {
             character.anims.play(character.animList.UPSTAIR_SECONDARY_ATTACK!, true);
