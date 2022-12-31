@@ -39,6 +39,7 @@ export default function addEnemies(scene: GameScene)
     // destroy old zone enemies
     scene.enemies.forEach((enemy) =>
     {
+        enemy.destroy();
         scene.children.remove(enemy.damageBody);
         scene.children.remove(enemy);
         if (enemy.name === 'spike')
