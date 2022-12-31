@@ -62,8 +62,7 @@ export class Boss extends Enemy
         this.scene?.children.remove(this);
 
         this.ai.reset();
-        // this.scene.enemiesDamageBody = this.scene.enemiesDamageBody.filter(elm => elm !== this.damageBody);
-        // this.scene.enemies = this.scene.enemies.filter(elm => elm !== this);
+
         this.damageBody.destroy();
         this.destroy();
     }
@@ -204,7 +203,7 @@ export class Boss extends Enemy
             {
                 this.setVisible(false).clearTint();
 
-                if (Boss.membersCount === 0)
+                if (Boss.membersCount === 0 && this.scene)
                 {
                     this.scene.addOrb();
 
