@@ -52,7 +52,6 @@ export default class GameScene extends Phaser.Scene
     public isChangingStage: boolean = false;
     public isOrb: boolean = false;
     debugGraphics: Phaser.GameObjects.Graphics;
-    childrenText: Phaser.GameObjects.BitmapText
 
     constructor()
     {
@@ -146,13 +145,10 @@ export default class GameScene extends Phaser.Scene
         }
 
         this.cameraFollowPlayer();
-
-        this.childrenText = this.add.bitmapText(WIDTH / 8 * 7, 16, FONTS.GALAXY, '', FONTS_SIZES.GALAXY, 1).setDepth(2000).setScrollFactor(0, 0)
-    }
+            }
 
     public update(time: number, delta: number): void
     {
-        this.childrenText.setText(this.children.list.length.toString());
 
         if (this.inputController.playerAButtons.x.isDown)
         {
