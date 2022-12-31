@@ -104,8 +104,25 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
 
             const dx = target.damageBody.body.center.x - this.parent.body.center.x;
             const dy = target.damageBody.body.center.y - this.parent.body.center.y;
-    
+
             this.body.setVelocity(dx, dy);
+        }
+
+        if(target)
+        {
+            if(target.damageBody.body.center.x > this.parent.body.center.x)
+            {
+                const angle = Phaser.Math.Angle.BetweenPoints(this.parent.damageBody, target.damageBody);
+
+                this.setAngle(Phaser.Math.RadToDeg(angle));
+            }
+
+            if(target.damageBody.body.center.x < this.parent.body.center.x)
+            {
+                const angle = Phaser.Math.Angle.BetweenPoints(target.damageBody, this.parent.damageBody);
+
+                this.setAngle(Phaser.Math.RadToDeg(angle));
+            }
         }
 
         if (this.weaponAnim)
