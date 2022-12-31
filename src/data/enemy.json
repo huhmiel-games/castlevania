@@ -242,7 +242,7 @@
             }
         },
         "physicsProperties": {
-            "gravity": 800,
+            "gravity": 400,
             "speed": 15,
             "acceleration": 100,
             "stairSpeed": 160,
@@ -502,7 +502,8 @@
         "state": [
             "idle",
             "secondaryAttack",
-            "death"
+            "death",
+            "stun"
         ],
         "resurrect": 0,
         "secondaryAttackOffsetY": 8
@@ -908,7 +909,8 @@
             "idle",
             "up",
             "down",
-            "secondaryAttack"
+            "secondaryAttack",
+            "stun"
         ],
         "collideWithWorld": true,
         "secondaryAttackOffsetY": 10,
@@ -1071,7 +1073,8 @@
             }
         },
         "state": [
-            "idle"
+            "idle",
+            "stun"
         ],
         "collideWithWorld": false,
         "resurrect": 0
@@ -1124,7 +1127,8 @@
             }
         },
         "state": [
-            "idle"
+            "idle",
+            "stun"
         ],
         "collideWithWorld": true,
         "resurrect": 0
@@ -1191,8 +1195,7 @@
             "animList": {
                 "IDLE": "mummy-idle",
                 "LEFT": "mummy-walk",
-                "RIGHT": "mummy-walk",
-                "SECONDARY_ATTACK": "mummy-attack"
+                "RIGHT": "mummy-walk"
             }
         },
         "status": {
@@ -1237,7 +1240,7 @@
             "idle",
             "left",
             "right",
-            "secondaryAttack"
+            "stun"
         ],
         "collideWithWorld": true,
         "resurrect": 0
@@ -1296,5 +1299,127 @@
         ],
         "collideWithWorld": false,
         "resurrect": 0
+    },
+    "frank": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "frank_1",
+            "animList": {
+                "IDLE": "frank-idle",
+                "LEFT": "frank-walk",
+                "RIGHT": "frank-walk"
+            }
+        },
+        "status": {
+            "health": 16,
+            "score": 5000,
+            "life": 0,
+            "ammo": 0,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 0,
+            "speed": 20,
+            "acceleration": 200,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 1
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 8,
+                "offsetY": 48
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 16,
+                "height": 64,
+                "offsetY": 0
+            }
+        },
+        "state": [
+            "idle",
+            "left",
+            "right",
+            "stun"
+        ],
+        "collideWithWorld": true,
+        "resurrect": 0
+    },
+    "igor": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "fleaman-idle_0",
+            "animList": {
+                "IDLE": "fleaman-idle",
+                "LEFT": "fleaman-walk",
+                "RIGHT": "fleaman-walk",
+                "JUMP": "fleaman-jump",
+                "JUMP_MOMENTUM": "fleaman-jump",
+                "FALL": "fleaman-fall",
+                "JUMP_SECONDARY_ATTACK": "fleaman-attack"
+            }
+        },
+        "status": {
+            "health": 1000,
+            "score": 0,
+            "life": 0,
+            "ammo": 1000,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 1000,
+            "speed": 0,
+            "acceleration": 600,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "jumpHeight": 5
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 1,
+                "offsetY": 4
+            },
+            "damageBody": {
+                "type": "circle",
+                "width": 7,
+                "height": 8
+            }
+        },
+        "state": [
+            "idle",
+            "jump",
+            "jumpMomentum",
+            "fall",
+            "jumpMomentumSecondaryAttack",
+            "fallSecondaryAttack",
+            "stun"
+        ],
+        "resurrect": 0,
+        "collideWithWorld": true,
+        "withTarget": "playerA",
+        "secondaryAttackOffsetY": 8
     }
 }

@@ -460,14 +460,14 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: -1,
     });
 
-    // scene.anims.create({
-    //     key: 'axe',
-    //     frames: [
-    //         { key: 'enemies', frame: 'axe' },
-    //     ],
-    //     frameRate: 2,
-    //     repeat: -1,
-    // });
+    scene.anims.create({
+        key: 'fleaman-attack',
+        frames: [
+            { key: 'enemies', frame: 'fleaman-idle_0' },
+        ],
+        frameRate: 6,
+        repeat: 0,
+    });
 
     scene.anims.create({
         key: 'cat-run',
@@ -910,6 +910,25 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'snake_1' },
         ],
         frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'frank-walk',
+        frames: [
+            { key: 'enemies', frame: 'frank_0' },
+            { key: 'enemies', frame: 'frank_1' },
+        ],
+        frameRate: 4,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'frank-idle',
+        frames: [
+            { key: 'enemies', frame: 'frank_1' },
+        ],
+        frameRate: 1,
         repeat: -1,
     });
 

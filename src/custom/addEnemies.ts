@@ -27,6 +27,8 @@ import { Boss } from "../entities/enemies/Boss";
 import { GiantBatIA } from "./boss_ia/GiantBatIA";
 import { MedusaBossIA } from "./boss_ia/MedusaBossIA";
 import { MummyIA } from "./boss_ia/MummyIA";
+import { FrankIA } from "./boss_ia/FrankIA";
+import { IgorIA } from "./boss_ia/IgorIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -35,7 +37,7 @@ export default function addEnemies(scene: GameScene)
     scene.destroyEnemyColliders();
 
     // destroy old zone enemies
-    scene.enemies.forEach(enemy =>
+    scene.enemies.forEach((enemy) =>
     {
         scene.children.remove(enemy.damageBody);
         scene.children.remove(enemy);
@@ -48,8 +50,11 @@ export default function addEnemies(scene: GameScene)
                 scene.children.remove(screw);
             }
         }
+
+        enemy.kill();
     });
-    scene.enemies.length = 0;
+    // scene.enemies.length = 0;
+    // scene.enemiesDamageBody.length = 0;
 
     // create zone enemies
     const enemyLayer = LayerService.getObjectLayerByName(scene, 'enemies');
@@ -206,6 +211,12 @@ function setAIEnemy(enemy: Enemy | Boss)
             break;
         case 'mummy':
             enemy.setAi(new MummyIA(enemy as Boss));
+            break;
+        case 'frank':
+            enemy.setAi(new FrankIA(enemy as Boss));
+            break;
+        case 'igor':
+            enemy.setAi(new IgorIA(enemy as Boss));
             break;
 
         default:
