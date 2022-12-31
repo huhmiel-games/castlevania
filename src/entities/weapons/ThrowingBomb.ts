@@ -93,7 +93,7 @@ export default class ThrowingBomb extends Phaser.GameObjects.Sprite implements W
 
     public attack()
     {
-        this.anims.stop();
+        this.anims?.stop();
 
         this.hasExploded = false;
 
