@@ -23,6 +23,8 @@ export class MedusaIA implements IEnemyAI
 
         const { now } = this.scene.time;
 
+        if (!active) return;
+
         if (left.isUp && right.isUp && active && this.parent.isInsideCameraByPixels(64))
         {
             this.parent.resetAllButtons();
