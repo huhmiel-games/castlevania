@@ -106,7 +106,7 @@ export class EagleIA implements IEnemyAI
 
         const { now } = this.scene.time;
 
-        if (this.fleaman)
+        if (this.fleaman && this.fleaman.body)
         {
             this.fleaman.body.reset(this.parent.body.center.x, this.parent.body.center.y + 10);
         }

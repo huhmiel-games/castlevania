@@ -146,10 +146,14 @@ export class FishmanIA implements IEnemyAI
             return;
         }
 
-        // if(b.isUp && this.hasJumped && body.bottom === this.originPosition)
-        // {
-        //     this.hasJumped = false;
-        // }
+        if(b.isUp && this.hasJumped && body.bottom === this.originPosition)
+        {
+            this.randomJumpTime = 0;
+
+            // this.parent.resetAllButtons();
+
+            this.hasJumped = false;
+        }
     }
 
     reset()
