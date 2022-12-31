@@ -1212,7 +1212,7 @@
         },
         "physicsProperties": {
             "gravity": 0,
-            "speed": 40,
+            "speed": 25,
             "acceleration": 200,
             "stairSpeed": 160,
             "dragCoeff": 10,
