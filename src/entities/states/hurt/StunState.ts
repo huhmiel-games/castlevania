@@ -14,7 +14,6 @@ export default class StunState extends State
 {
     private stunTime: number;
     public stateMachine: StateMachine;
-
     public enter(scene: GameScene, character: Entity)
     {
         const { now } = scene.time;
@@ -23,8 +22,12 @@ export default class StunState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
+        for (const key in character.buttons) {
+            character.buttons[key].setUp(now);
+        }
+
         // Stop player
-        character.body.setDragX(100000);
+        character.body.setMaxVelocity(0, 0);
 
         if (character.physicsProperties.isAttacking)
         {
@@ -33,10 +36,7 @@ export default class StunState extends State
             character.physicsProperties.isAttacking = false;
         }
 
-        if(character.animList.IDLE)
-        {
-            character.anims.play(character.animList.IDLE, true);
-        }
+        character.anims.pause();
 
         console.log(character.name + ' STUN STATE');
     }
@@ -47,9 +47,13 @@ export default class StunState extends State
 
         if (this.stunTime + 600 < now && !character.physicsProperties.isDead)
         {
-            character.body.setDragX(0);
+            character.anims.resume();
 
-            this.stateMachine.transition(character.stateMachine.prevState, this.stateMachine.state);
+            const {speed, maxSpeedY} = character.config.physicsProperties;
+            
+            character.body.setMaxVelocity(speed, maxSpeedY || speed);
+
+            this.stateMachine.transition(character.stateMachine.initialState, this.stateMachine.state);
         }
     }
 }
