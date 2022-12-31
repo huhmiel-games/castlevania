@@ -14,7 +14,7 @@ export default function preloadAssets(scene: Phaser.Scene)
     scene.load.image('dark-background', 'assets/graphics/tilesets/dark-background_extruded.png');
     scene.load.image('back-moon', 'assets/graphics/backgrounds/back-moon.png');
     scene.load.image('back-mountain', 'assets/graphics/backgrounds/back-mountain.png');
-    scene.load.image('back-castle', 'assets/graphics/backgrounds/back-castle.png');
+    scene.load.image('back-castle', 'assets/graphics/backgrounds/back-castle3.png');
     scene.load.image('back-castle-entrance', 'assets/graphics/backgrounds/back-castle-entrance.png');
     scene.load.image('back-castle-entrance-front', 'assets/graphics/backgrounds/back-castle-entrance-front.png');
     scene.load.image('back-clock', 'assets/graphics/backgrounds/back-clock.png');
