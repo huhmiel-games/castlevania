@@ -22,6 +22,8 @@ export class MummyIA implements IEnemyAI
 
         this.parent.damageBody.body.setEnable(false);
 
+        this.parent.setAlpha(0);
+
         this.parent.anims.play(this.parent.animList.IDLE!);
 
         if (this.scene.getPlayerByName(PLAYER_A_NAME).body.center.x < this.parent.body.center.x)
@@ -38,18 +40,44 @@ export class MummyIA implements IEnemyAI
 
         const { now } = this.scene.time;
 
+        const { left, right } = buttons;
+
         const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-        if (player.body.bottom === body.bottom && !this.scene.isBossBattle)
+        if (player.body.left > 273 * 16 && !this.scene.isBossBattle)
         {
-            this.parent.startBattle();
+            this.scene.isBossBattle = true;
 
-            this.scene.time.addEvent({
-                delay: 1000,
-                callback: () =>
-                {
-                    MummyIA.phase = 1;
-                }
+            MummyIA.phase = 0;
+
+            this.scene.cameras.main.stopFollow().pan(280 * 16, 6 * 16, 1000);
+            this.scene.cameras.main.once(Phaser.Cameras.Scene2D.Events.PAN_COMPLETE, () =>
+            {
+                const mummies = this.scene.enemies.filter(elm => elm.name === 'mummy') as Boss[];
+
+                mummies.forEach(elm => {
+                    elm.ai['phaseCount'] = now + Phaser.Math.RND.integerInRange(5000, 9000);
+                })
+
+                this.parent.startBattle();
+
+                this.scene.tweens.add({
+                    duration: 500,
+                    repeat: 0,
+                    targets: mummies,
+                    alpha: { from: 0, to: 1 },
+                    ease: Phaser.Math.Easing.Elastic
+                })
+
+                this.scene.time.addEvent({
+                    delay: 1000,
+                    callback: () =>
+                    {
+                        MummyIA.phase = 1;
+
+                        this.scene.cameraFollowPlayer();
+                    }
+                });
             });
         }
 
@@ -60,18 +88,18 @@ export class MummyIA implements IEnemyAI
             // if blocked change direction
             if (blocked.left && (distance >= 55 || body.bottom !== player.body.bottom))
             {
-                buttons.left.setUp(now);
+                left.setUp(now);
 
-                buttons.right.setDown(now);
+                right.setDown(now);
 
                 return;
             }
 
             if (blocked.right && (distance >= 55 || body.bottom !== player.body.bottom))
             {
-                buttons.right.setUp(now);
+                right.setUp(now);
 
-                buttons.left.setDown(now);
+                left.setDown(now);
 
                 return;
             }
@@ -81,16 +109,16 @@ export class MummyIA implements IEnemyAI
             {
                 if (center.x < player.body.center.x)
                 {
-                    buttons.left.setUp(now);
+                    left.setUp(now);
 
-                    buttons.right.setDown(now);
+                    right.setDown(now);
 
                     return;
                 }
 
-                buttons.right.setUp(now);
+                right.setUp(now);
 
-                buttons.left.setDown(now);
+                left.setDown(now);
 
                 return;
             }
@@ -98,17 +126,36 @@ export class MummyIA implements IEnemyAI
 
         if (MummyIA.phase === 1 && this.phaseCount < now)
         {
+            this.parent.resetAllButtons();
+
             this.addBandage(now);
 
-            this.phaseCount = now + Phaser.Math.RND.integerInRange(3000, 6000);
+            this.phaseCount = now + Phaser.Math.RND.integerInRange(5000, 9000);
+        }
+        else if (MummyIA.phase === 1 && left.isUp && right.isUp)
+        {
+            if (center.x > player.body.center.x)
+            {
+                left.setUp(now);
+
+                right.setDown(now);
+
+                return;
+            }
+
+            right.setUp(now);
+
+            left.setDown(now);
+
+            return;
         }
 
         // mummy start moving
-        if (this.scene.isBossBattle && !this.parent.damageBody.body.enable)
+        if (MummyIA.phase === 1 && this.scene.isBossBattle && !this.parent.damageBody.body.enable)
         {
             this.parent.damageBody.body.setEnable(true);
 
-            this.phaseCount = now + Phaser.Math.RND.integerInRange(3000, 6000);
+            this.phaseCount = now + Phaser.Math.RND.integerInRange(5000, 9000);
 
             if (center.x > player.body.center.x)
             {
@@ -121,7 +168,7 @@ export class MummyIA implements IEnemyAI
         }
     }
 
-    addBandage(now)
+    addBandage(now: number)
     {
         const inputController = InputController.getInstance();
 
@@ -132,17 +179,17 @@ export class MummyIA implements IEnemyAI
             x: this.parent.flipX ? this.parent.body.left : this.parent.body.right,
             y: this.parent.damageBody.body.center.y,
             texture: 'enemies',
-            frame: 'snake_0',
+            frame: 'bandage_0',
             buttons: inputController.getNewButtons()
         }, enemyJSONConfig);
 
-        bandage.setName('snake');
+        bandage.setName('bandage');
 
         bandage.setAi(new BandageIA(bandage));
 
         this.scene.enemiesDamageBody.push(bandage.damageBody);
 
-        if(this.parent.flipX)
+        if (this.parent.flipX)
         {
             bandage.buttons.left.setDown(now);
 
@@ -154,6 +201,6 @@ export class MummyIA implements IEnemyAI
 
     reset()
     {
-
+        if (!this.scene.isBossBattle) MummyIA.phase = 0;
     }
 }
