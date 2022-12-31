@@ -74,6 +74,8 @@ export class GiantBatIA implements IEnemyAI
                     repeat: 1,
                     callback: () =>
                     {
+                        if (!this.parent.active) return;
+
                         this.parent.body.stop();
 
                         if (timer.getRepeatCount() === 0)
