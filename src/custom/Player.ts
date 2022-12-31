@@ -41,6 +41,7 @@ import JumpSecondaryAttackState from "../entities/states/attack/JumpSecondaryAtt
 import JumpMomentumSecondaryAttackState from "../entities/states/attack/JumpMomentumSecondaryAttackState";
 import FallSecondaryAttackState from "../entities/states/attack/FallSecondaryAttackState";
 import { Orb } from "../gameobjects/Orb";
+import { Boss } from "../entities/enemies/Boss";
 
 export default class Player extends Entity
 {
@@ -95,7 +96,7 @@ export default class Player extends Entity
                 }
             });
 
-            SaveLoadService.saveGameData(this.status);
+            SaveLoadService.saveGameData(this.status.toJson());
         }
 
         this.frameList = {
@@ -158,7 +159,7 @@ export default class Player extends Entity
 
         }
 
-        this.scene?.events.on('enemy-score', (score: number) => this.setStatusScore(this.status.score + score));
+        this.scene?.events.on('enemy-score', (score: number) => this.status.setScore(this.status.score + score));
 
         this.animList = {
             IDLE: 'richter-idle',
@@ -256,7 +257,7 @@ export default class Player extends Entity
 
                     this.scene.playSound(23);
 
-                    this.setStatusAmmo(value);
+                    this.status.setAmmo(value);
 
                     this.scene.itemsGroup.remove(bigHeart, true, true);
 
@@ -272,7 +273,7 @@ export default class Player extends Entity
 
                     const value = this.status.ammo + littleHeart.quantity;
 
-                    this.setStatusAmmo(value);
+                    this.status.setAmmo(value);
 
                     this.scene.itemsGroup.remove(littleHeart, true, true);
 
@@ -288,7 +289,7 @@ export default class Player extends Entity
 
                     const value = this.status.score + moneyBag.quantity;
 
-                    this.setStatusScore(value);
+                    this.status.setScore(value);
 
                     this.scene.itemsGroup.remove(moneyBag, true, true);
 
@@ -325,10 +326,10 @@ export default class Player extends Entity
                     break;
                 }
 
-                case _item instanceof Orb:
-                    {
-                        this.scene.endStage();
-                    }
+            case _item instanceof Orb:
+                {
+                    this.scene.endStage();
+                }
             default:
                 break;
         }
@@ -369,7 +370,7 @@ export default class Player extends Entity
 
                 const newHealth = Phaser.Math.Clamp(health + 6, 0, 16);
 
-                this.setStatusHealth(newHealth);
+                this.status.setHealth(newHealth);
 
                 break;
 
@@ -568,7 +569,7 @@ export default class Player extends Entity
 
         if (health > 0)
         {
-            this.setStatusHealth(health);
+            this.status.setHealth(health);
 
             this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
 
@@ -603,7 +604,7 @@ export default class Player extends Entity
             return this;
         }
 
-        this.setStatusHealth(0);
+        this.status.setHealth(0);
 
         if (this.name === PLAYER_A_NAME)
         {
@@ -617,15 +618,6 @@ export default class Player extends Entity
         return this;
     }
 
-    public setStatusScore(score: number): Entity
-    {
-        this.status.score = score;
-
-        this.scene?.events.emit(HUD_EVENTS_NAMES.SCORE, this.status.score);
-
-        return this;
-    }
-
     public die(): void
     {
         this.physicsProperties.isDead = true;
@@ -634,7 +626,7 @@ export default class Player extends Entity
 
         this.anims.play(this.animList.DEAD!);
 
-        this.status.life! -= 1;
+        this.status.setLife(this.status.life - 1);
 
         this.multipleShots = 1;
 
@@ -642,19 +634,22 @@ export default class Player extends Entity
 
         this.scene.playSong(12, false);
 
+        if (this.scene.isBossBattle)
+        {
+            Boss.endBossBattle(this.scene);
+        }
+
         // GAME OVER
-        if (this.status.life! < 0)
+        if (this.status.life < 0)
         {
             this.gameOver();
 
             return;
         }
 
-        this.scene.isBossBattle = false;
+        this.status.setHealth(16).setAmmo(5);
 
-        this.setStatusHealth(16).setStatusAmmo(5);
-
-        SaveLoadService.saveGameData(this.status);
+        SaveLoadService.saveGameData(this.status.toJson());
 
         this.scene.events.emit('hud-life', this.status.life);
 
@@ -740,7 +735,7 @@ export default class Player extends Entity
             position: position
         });
 
-        SaveLoadService.saveGameData(this.status);
+        SaveLoadService.saveGameData(this.status.toJson());
 
         this.scene.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
         {

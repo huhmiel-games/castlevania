@@ -31,6 +31,7 @@ export default class GameScene extends Phaser.Scene
     public colliderLayer: Phaser.Tilemaps.TilemapLayer;
     public characters: Entity[] = [];
     public enemies: Entity[] = [];
+    public enemiesDamageBody: DamageBody[] = [];
     public enemyDeathGroup: Phaser.GameObjects.Group;
     public enemiesVsWeaponsCollider: Phaser.Physics.Arcade.Collider;
     public enemiesVsPlayerCollider: Phaser.Physics.Arcade.Collider;
@@ -43,15 +44,15 @@ export default class GameScene extends Phaser.Scene
     public secondaryWeaponGroup: Phaser.GameObjects.Group;
     public currentPlayingSong: Phaser.Sound.BaseSound | null;
     public musicIndex: number = 0;
-    debugGraphics: Phaser.GameObjects.Graphics;
     public enemyWeaponGroup: Phaser.GameObjects.Group;
     public enemiesWeaponsVsPlayerCollider: Phaser.Physics.Arcade.Collider;
     public weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
-    childrenText: Phaser.GameObjects.BitmapText
-    public enemiesDamageBody: DamageBody[];
     public enemiesSecondaryWeapons: Phaser.GameObjects.GameObject[];
     public isBossBattle: boolean = false;
     public isChangingStage: boolean = false;
+    public isOrb: boolean = false;
+    debugGraphics: Phaser.GameObjects.Graphics;
+    childrenText: Phaser.GameObjects.BitmapText
 
     constructor()
     {
@@ -178,7 +179,7 @@ export default class GameScene extends Phaser.Scene
 
         if (this.inputController.playerAButtons.l1.isDown)
         {
-            const status = { ...this.characters[0].status };
+            const status = { ...this.characters[0].status.toJson() };
             status.position.x = this.characters[0].x;
             status.position.y = this.characters[0].y;
             SaveLoadService.saveGameData(status);
@@ -253,7 +254,7 @@ export default class GameScene extends Phaser.Scene
 
         this.enemyDeathGroup = this.add.group({
             classType: Phaser.GameObjects.Sprite,
-            maxSize: 10,
+            maxSize: 20,
         });
     }
 
@@ -413,9 +414,9 @@ export default class GameScene extends Phaser.Scene
 
         if (!player.physicsProperties.isDead && player.status.health > 0 && (player.status.life ?? 1) > 0)
         {
-            player.setStatusPosition({ x: player.x, y: player.y });
+            player.status.setPosition({ x: player.x, y: player.y });
 
-            SaveLoadService.saveGameData(player.status);
+            SaveLoadService.saveGameData(player.status.toJson());
         }
     }
 
@@ -443,9 +444,9 @@ export default class GameScene extends Phaser.Scene
                     {
                         this.playSound(5);
 
-                        player.setStatusAmmo(player.status.ammo - 1);
+                        player.status.setAmmo(player.status.ammo - 1);
 
-                        player.setStatusScore(player.status.score + 100);
+                        player.status.setScore(player.status.score + 100);
                     }
 
                     if (timer.getRepeatCount() === 0)
@@ -467,56 +468,53 @@ export default class GameScene extends Phaser.Scene
 
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
-        player.setStatusHealth(16).setStatusAmmo(5);
+        player.status.setHealth(16).setAmmo(5);
+
+        this.isOrb = false;
 
         this.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
 
-        this.cameras.main.removeBounds();
+        this.cameras.main.removeBounds().fadeOut(10);
 
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
         switch (player.status.stage)
         {
             case 15:
-                player.setStatusPosition(STAGE_START_POSITION[21])
-                    .setStatusStage(21)
-                    .setFlipX(false);
+                player.status.setPosition(STAGE_START_POSITION[21]).setStage(21);
+                player.setFlipX(false);
 
                 player.body.reset(STAGE_START_POSITION[21].x, STAGE_START_POSITION[21].y);
 
                 break;
 
             case 26:
-                player.setStatusPosition(STAGE_START_POSITION[31])
-                    .setStatusStage(31)
-                    .setFlipX(true);
+                player.status.setPosition(STAGE_START_POSITION[31]).setStage(31);
+                player.setFlipX(true);
 
                 player.body.reset(STAGE_START_POSITION[31].x, STAGE_START_POSITION[31].y);
 
                 break;
 
-            case 36:
-                player.setStatusPosition(STAGE_START_POSITION[41])
-                    .setStatusStage(41)
-                    .setFlipX(false);
+            case 35:
+                player.status.setPosition(STAGE_START_POSITION[41]).setStage(41);
+                player.setFlipX(false);
 
                 player.body.reset(STAGE_START_POSITION[41].x, STAGE_START_POSITION[41].y);
 
                 break;
 
-            case 45:
-                player.setStatusPosition(STAGE_START_POSITION[51])
-                    .setStatusStage(51)
-                    .setFlipX(false);
+            case 44:
+                player.status.setPosition(STAGE_START_POSITION[51]).setStage(51)
+                player.setFlipX(false);
 
                 player.body.reset(STAGE_START_POSITION[51].x, STAGE_START_POSITION[51].y);
 
                 break;
 
             case 57:
-                player.setStatusPosition(STAGE_START_POSITION[61])
-                    .setStatusStage(61)
-                    .setFlipX(true);
+                player.status.setPosition(STAGE_START_POSITION[61]).setStage(61)
+                player.setFlipX(true);
 
                 player.body.reset(STAGE_START_POSITION[61].x, STAGE_START_POSITION[61].y);
 
@@ -526,9 +524,16 @@ export default class GameScene extends Phaser.Scene
                 break;
         }
 
-        SaveLoadService.saveGameData(player.status);
+        SaveLoadService.saveGameData(player.status.toJson());
 
-        this.setCurrentStage();
+        this.time.addEvent({
+            delay: 1000,
+            callback: () =>
+            {
+                this.setCurrentStage();
+                this.cameras.main.fadeIn(200);
+            }
+        })
     }
 
     private cleanupBossBattle()
@@ -691,5 +696,24 @@ export default class GameScene extends Phaser.Scene
         this.enemiesWeaponsVsPlayerCollider?.destroy();
 
         this.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
+    }
+
+    public addOrb()
+    {
+        if (this.isOrb) return;
+
+        this.isOrb = true;
+
+        this.time.addEvent({
+            delay: 1000,
+            callback: () =>
+            {
+                const cam = this.cameras.main;
+
+                const orb = new Orb({ scene: this, x: cam.worldView.centerX, y: cam.worldView.centerY - 64, texture: 'items', frame: 'magic-crystal_0' });
+
+                this.itemsGroup.add(orb);
+            }
+        });
     }
 }

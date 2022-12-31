@@ -100,9 +100,9 @@ export default class ColliderService
 
                     if (!player.physicsProperties.isDead && player.status.health > 0 && (player.status.life ?? 1) > 0)
                     {
-                        player.setStatusPosition({ x: player.x, y: player.y });
+                        player.status.setPosition({ x: player.x, y: player.y });
 
-                        SaveLoadService.saveGameData(player.status);
+                        SaveLoadService.saveGameData(player.status.toJson());
                     }
                 }
 

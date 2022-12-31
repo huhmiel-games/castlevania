@@ -19,6 +19,7 @@ import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
 import DamageBody from "./DamageBody";
 import { Enemy } from "./enemies/Enemy";
+import { Status } from "./Status";
 
 /**
  * @description A base class for player and enemies
@@ -37,7 +38,7 @@ export class Entity extends Phaser.GameObjects.Sprite
     public meleeWeapon: MeleeWeapon | undefined;
     public rangedWeapon: RangedWeapon | undefined;
     public canUseState: Set<string>;
-    public status: TStatus;
+    public status: Status;
     public physicsProperties: TPhysicsProperties;
     public animList: TAnimationList;
     public frameList?: TFrameList;
@@ -87,7 +88,7 @@ export class Entity extends Phaser.GameObjects.Sprite
 
     public setStatus(status: TStatus): Entity
     {
-        this.status = status;
+        this.status = new Status(this.scene, this, status)
 
         return this;
     }
@@ -99,70 +100,22 @@ export class Entity extends Phaser.GameObjects.Sprite
         return this;
     }
 
-    public setStatusScore(score: number): Entity
-    {
-        this.status.score = score;
-
-        if (this.name === PLAYER_A_NAME)
-        {
-            this.scene.events.emit(HUD_EVENTS_NAMES.SCORE, this.status.score);
-        }
-
-        return this;
-    }
-
-    public setStatusHealth(health: number): Entity
-    {
-        this.status.health = health;
-
-        if (this.name === PLAYER_A_NAME)
-        {
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
-        }
-
-        return this;
-    }
-
-    public setStatusAmmo(value: number): Entity
-    {
-        this.status.ammo = value;
-
-        if (this.name === PLAYER_A_NAME)
-        {
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEART, this.status.ammo);
-        }
-
-        return this;
-    }
-
     public setStatusHealthDamage(damage: number): Entity
     {
         const health = this.status.health - damage;
 
         if (health > 0)
         {
-            this.setStatusHealth(health);
-
-            if (this.name === PLAYER_A_NAME)
-            {
-                this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
-            }
+            this.status.setHealth(health);
 
             return this;
         }
 
-        this.setStatusHealth(0);
+        this.status.setHealth(0);
 
         this.setStatusIsDead(true);
 
         this.die();
-
-        return this;
-    }
-
-    public setStatusStage(stage: number): Entity
-    {
-        this.status.stage = stage;
 
         return this;
     }
@@ -177,13 +130,6 @@ export class Entity extends Phaser.GameObjects.Sprite
     public setStatusAcceleration(acceleration: number): Entity
     {
         this.physicsProperties.acceleration = acceleration;
-
-        return this;
-    }
-
-    public setStatusPosition(position: TCoord): Entity
-    {
-        this.status.position = position;
 
         return this;
     }
@@ -240,9 +186,9 @@ export class Entity extends Phaser.GameObjects.Sprite
 
     public secondaryAttack(): void
     {
-        const ammo = this.status.ammo;
+        const { ammo } = this.status;
 
-        if(ammo === 0) return;
+        if (ammo === 0) return;
 
         const weapon = this.secondaryWeaponGroup.getFirstDead(false, this.body.x, this.body.y, undefined, undefined, true) as RangedWeapon;
 
@@ -263,11 +209,19 @@ export class Entity extends Phaser.GameObjects.Sprite
 
             weapon.attack(this.config?.secondaryAttackOffsetY || 8);
 
-            const value = ammo - 1;
-
-            this.setStatusAmmo(value);
+            this.status.setAmmo(ammo - 1);
 
             this.physicsProperties.isAttacking = false;
         });
+    }
+
+    public kill(): void
+    {
+        this.scene?.children.remove(this.damageBody);
+
+        this.scene?.children.remove(this);
+
+        this.damageBody.destroy();
+        this.destroy();
     }
 }

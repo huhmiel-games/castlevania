@@ -38,6 +38,10 @@ import RecoilRightState from "../states/walk/RecoilRightState";
 import FlyIdleState from "../states/fly/FlyIdleState";
 import MoveUpState from "../states/moves/MoveUpState";
 import MoveDownState from "../states/moves/MoveDownState";
+import StunState from "../states/hurt/StunState";
+import JumpSecondaryAttackState from "../states/attack/JumpSecondaryAttackState";
+import JumpMomentumSecondaryAttackState from "../states/attack/JumpMomentumSecondaryAttackState";
+import FallSecondaryAttackState from "../states/attack/FallSecondaryAttackState";
 
 export class Enemy extends Entity
 {
@@ -89,6 +93,8 @@ export class Enemy extends Entity
         this.canUseState = new Set(Object.keys(this.stateMachine.possibleStates));
 
         this.scene.enemies.push(this);
+
+        this.scene.enemiesDamageBody.push(this.damageBody);
     }
 
     public preUpdate(time: number, delta: number)
@@ -119,7 +125,7 @@ export class Enemy extends Entity
 
         if (health > 0)
         {
-            this.setStatusHealth(health);
+            this.status.setHealth(health);
 
             this.setTint(PALETTE_DB32.ROMAN)
 
@@ -152,7 +158,7 @@ export class Enemy extends Entity
             return this;
         }
 
-        this.setStatusHealth(0);
+        this.status.setHealth(0);
 
         this.setStatusIsDead(true);
 
@@ -245,7 +251,7 @@ export class Enemy extends Entity
         }
         else
         {
-            throw new Error("No death free in enemyDeathGroup");
+            console.error("No death free in enemyDeathGroup");
 
         }
     }
@@ -263,10 +269,14 @@ export class Enemy extends Entity
     }
 
     public kill(): void
-    {        
-        this.scene.children.remove(this.damageBody);
+    {
+        this.scene?.children.remove(this.damageBody);
 
-        this.scene.children.remove(this);
+        this.scene?.children.remove(this);
+
+        this.ai?.reset();
+        this.damageBody.destroy();
+        this.destroy();
     }
 
     private resurrects(forceNow: boolean = false)
@@ -307,6 +317,12 @@ export class Enemy extends Entity
                         delay: 32,
                         callback: () =>
                         {
+                            if(!this.active)
+                            {
+                                this.damageBody.setActive(false);
+
+                                return;
+                            }
                             this.damageBody.setActive(true);
                             this.damageBody.body.setEnable(true);
                         }
@@ -367,6 +383,15 @@ export class Enemy extends Entity
                 case EPossibleState.JUMP_MOMENTUM_ATTACK:
                     possibleStates[EPossibleState.JUMP_MOMENTUM_ATTACK] = new JumpMomentumAttackState() as JumpMomentumAttackState;
                     break;
+                case EPossibleState.JUMP_SECONDARY_ATTACK:
+                    possibleStates[EPossibleState.JUMP_SECONDARY_ATTACK] = new JumpSecondaryAttackState() as JumpSecondaryAttackState;
+                    break;
+                case EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK:
+                    possibleStates[EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK] = new JumpMomentumSecondaryAttackState() as JumpMomentumSecondaryAttackState;
+                    break;
+                case EPossibleState.FALL_SECONDARY_ATTACK:
+                    possibleStates[EPossibleState.FALL_SECONDARY_ATTACK] = new FallSecondaryAttackState() as FallSecondaryAttackState;
+                    break;
                 case EPossibleState.FALL:
                     possibleStates[EPossibleState.FALL] = new FallState() as FallState;
                     break;
@@ -384,6 +409,9 @@ export class Enemy extends Entity
                     break;
                 case EPossibleState.HURT:
                     possibleStates[EPossibleState.HURT] = new HurtState() as HurtState;
+                    break;
+                case EPossibleState.STUN:
+                    possibleStates[EPossibleState.STUN] = new StunState() as StunState;
                     break;
                 case EPossibleState.UPSTAIR_RIGHT:
                     possibleStates[EPossibleState.UPSTAIR_RIGHT] = new GoUpstairRightState() as GoUpstairRightState;
@@ -431,6 +459,8 @@ export class Enemy extends Entity
 
     public resetAllButtons()
     {
+        if (!this || !this.scene) return;
+
         const { now } = this.scene.time;
 
         for (let key in this.buttons)

@@ -1,18 +1,26 @@
 import { PALETTE_DB32 } from "../../constant/colors";
 import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
 import { Orb } from "../../gameobjects/Orb";
+import GameScene from "../../scenes/GameScene";
 import { TCharacterConfig, TEntityConfig } from "../../types/types";
 import { Enemy } from "./Enemy";
 
 export class Boss extends Enemy
 {
     static membersCount: number = 0;
-    static isOrb: boolean = false;
     constructor(config: TCharacterConfig, enemyJSON: TEntityConfig)
     {
         super(config, enemyJSON);
 
-        Boss.membersCount += 1;
+        if(Boss.membersCount < 2)
+        {
+            Boss.membersCount += 1;
+        }
+
+        if(Boss.membersCount > 2)
+        {
+            throw new Error("Boss member count error");
+        }
     }
 
     startBattle()
@@ -38,13 +46,26 @@ export class Boss extends Enemy
     {
         this.scene.enemies.forEach(enemy =>
         {
-            if (enemy.name === this.name) return;
+            if (enemy.name === this.name || enemy.name === 'igor') return;
 
             this.scene.children.remove(enemy.damageBody);
             this.scene.children.remove(enemy);
+            enemy.damageBody.destroy();
+            enemy.destroy()
         });
+    }
 
-        // this.scene.enemies.length = 0;
+    public kill(): void
+    {
+        this.scene?.children.remove(this.damageBody);
+
+        this.scene?.children.remove(this);
+
+        this.ai.reset();
+        // this.scene.enemiesDamageBody = this.scene.enemiesDamageBody.filter(elm => elm !== this.damageBody);
+        // this.scene.enemies = this.scene.enemies.filter(elm => elm !== this);
+        this.damageBody.destroy();
+        this.destroy();
     }
 
     public setStatusHealthDamage(damage: number): Boss
@@ -72,7 +93,7 @@ export class Boss extends Enemy
 
         if (health > 0)
         {
-            this.setStatusHealth(health);
+            this.status.setHealth(health);
 
             this.setTint(PALETTE_DB32.ROMAN);
 
@@ -105,11 +126,14 @@ export class Boss extends Enemy
             return this;
         }
 
-        this.setStatusHealth(0);
+        this.status.setHealth(0);
 
         this.setStatusIsDead(true);
 
-        Boss.membersCount -= 1;
+        if(Boss.membersCount <= 2)
+        {
+            Boss.membersCount -= 1;
+        }
 
         this.die();
 
@@ -132,6 +156,16 @@ export class Boss extends Enemy
         this.setTintFill(PALETTE_DB32.BLACK);
 
         this.scene.events.emit('enemy-score', this.status.score);
+
+        if(this.name === 'frank')
+        {
+            const igor = this.scene.children.getByName('igor');
+
+            if(igor)
+            {
+                (igor as Enemy).die();
+            }
+        }
 
         for (let i = 0; i < 6; i += 1)
         {
@@ -161,7 +195,7 @@ export class Boss extends Enemy
                         throw new Error("No death free in enemyDeathGroup");
                     }
                 }
-            })
+            });
         }
 
         this.scene.time.addEvent({
@@ -170,11 +204,11 @@ export class Boss extends Enemy
             {
                 this.setVisible(false).clearTint();
 
-                if (Boss.membersCount === 0 && !Boss.isOrb)
+                if (Boss.membersCount === 0)
                 {
-                    Boss.isOrb = true;
+                    this.scene.addOrb();
 
-                    this.addOrb();
+                    Boss.endBossBattle(this.scene);
                 }
 
                 this.kill();
@@ -182,17 +216,24 @@ export class Boss extends Enemy
         })
     }
 
-    addOrb()
+    public addOrb()
     {
-        this.scene.time.addEvent({
-            delay: 1000,
-            callback: () =>
+        this.scene.addOrb();
+    }
+
+    public static endBossBattle(scene: GameScene)
+    {
+        scene.isBossBattle = false;
+
+        Boss.membersCount = 0;
+
+        scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
+
+        scene.enemies.forEach(elm =>
+        {
+            if (elm instanceof Enemy || elm instanceof Boss)
             {
-                const orb = new Orb({ scene: this.scene, x: this.x, y: this.y, texture: 'items', frame: 'magic-crystal_0' });
-
-                this.scene.itemsGroup.add(orb);
-
-                Boss.isOrb = false;
+                elm.kill();
             }
         });
     }
