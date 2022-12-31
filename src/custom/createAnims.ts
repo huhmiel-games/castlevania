@@ -781,7 +781,7 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'mummy-walk_2' },
             { key: 'enemies', frame: 'mummy-walk_1' },
         ],
-        frameRate: 6,
+        frameRate: 5,
         repeat: -1,
     });
 
