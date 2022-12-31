@@ -6,6 +6,7 @@ import { IEnemyAI, TEntityConfig } from "../../types/types";
 import enemyJSON from '../../data/enemy.json';
 import { SnakeIA } from "./SnakeIA";
 import { InputController } from "../../inputs/InputController";
+import { EPossibleState } from "../../constant/character";
 
 
 export class MedusaBossIA implements IEnemyAI
@@ -68,7 +69,7 @@ export class MedusaBossIA implements IEnemyAI
             });
         }
 
-        if (this.phase === 1)
+        if (this.phase === 1 && this.parent.stateMachine.state !== EPossibleState.STUN)
         {
             anims.play(animList.FLY!, true);
 
@@ -80,7 +81,7 @@ export class MedusaBossIA implements IEnemyAI
             this.parent.body.setAcceleration(dx, dy);
         }
 
-        if (this.phase === 1 && this.phaseCount < now)
+        if (this.phase === 1 && this.phaseCount < now && this.parent.stateMachine.state !== EPossibleState.STUN)
         {
             this.phaseCount = now + 3000;
 
