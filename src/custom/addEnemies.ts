@@ -29,6 +29,8 @@ import { MedusaBossIA } from "./boss_ia/MedusaBossIA";
 import { MummyIA } from "./boss_ia/MummyIA";
 import { FrankIA } from "./boss_ia/FrankIA";
 import { IgorIA } from "./boss_ia/IgorIA";
+import { DeathIA } from "./boss_ia/DeathIA";
+import { GiantBatBridgeIA } from "./enemies_ia/GiantBatBridgeIA";
 
 
 export default function addEnemies(scene: GameScene)
@@ -219,6 +221,12 @@ function setAIEnemy(enemy: Enemy | Boss)
         case 'igor':
             enemy.setAi(new IgorIA(enemy as Boss));
             break;
+        case 'death':
+            enemy.setAi(new DeathIA(enemy as Boss));
+            break;
+        case 'bat-bridge':
+            enemy.setAi(new GiantBatBridgeIA(enemy as Enemy));
+            break;
 
         default:
             break;
@@ -237,6 +245,13 @@ function addBoss(scene: GameScene, bossName: string, bossObj: Phaser.Types.Tilem
     }, bossJSONConfig);
 
     boss.setName(bossName);
+
+    if (bossName === 'death')
+    {
+        boss.addSecondaryWeapon('scythe');
+        boss.addSecondaryWeapon('scythe');
+        boss.addSecondaryWeapon('scythe');
+    }
 
     setAIEnemy(boss);
 }

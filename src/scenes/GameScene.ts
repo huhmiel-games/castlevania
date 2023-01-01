@@ -508,7 +508,7 @@ export default class GameScene extends Phaser.Scene
 
                 break;
 
-            case 57:
+            case 56:
                 player.status.setPosition(STAGE_START_POSITION[61]).setStage(61)
                 player.setFlipX(true);
 
@@ -661,7 +661,10 @@ export default class GameScene extends Phaser.Scene
 
             this.playSound(15, undefined, true);
 
-            if (weapon.name === 'holyWater' && enemy.parent.status.health > 0 && enemy.parent.canUse(EPossibleState.STUN))
+            if ((weapon.name === 'holyWater' || enemy.parent.config.stunWith?.includes(weapon.name)) 
+            && enemy.parent.status.health > 0 
+            && enemy.parent.canUse(EPossibleState.STUN)
+            )
             {
                 enemy.parent.stateMachine.transition(EPossibleState.STUN, enemy.parent.stateMachine.state);
             }

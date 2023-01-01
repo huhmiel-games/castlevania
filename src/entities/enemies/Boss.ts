@@ -2,7 +2,7 @@ import { PALETTE_DB32 } from "../../constant/colors";
 import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
 import { Orb } from "../../gameobjects/Orb";
 import GameScene from "../../scenes/GameScene";
-import { TCharacterConfig, TEntityConfig } from "../../types/types";
+import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
 import { Enemy } from "./Enemy";
 
 export class Boss extends Enemy
@@ -12,12 +12,12 @@ export class Boss extends Enemy
     {
         super(config, enemyJSON);
 
-        if(Boss.membersCount < 2)
+        if (Boss.membersCount < 2)
         {
             Boss.membersCount += 1;
         }
 
-        if(Boss.membersCount > 2)
+        if (Boss.membersCount > 2)
         {
             throw new Error("Boss member count error");
         }
@@ -129,7 +129,7 @@ export class Boss extends Enemy
 
         this.setStatusIsDead(true);
 
-        if(Boss.membersCount <= 2)
+        if (Boss.membersCount <= 2)
         {
             Boss.membersCount -= 1;
         }
@@ -156,11 +156,11 @@ export class Boss extends Enemy
 
         this.scene.events.emit('enemy-score', this.status.score);
 
-        if(this.name === 'frank')
+        if (this.name === 'frank')
         {
             const igor = this.scene.children.getByName('igor');
 
-            if(igor)
+            if (igor)
             {
                 (igor as Enemy).die();
             }
@@ -172,7 +172,7 @@ export class Boss extends Enemy
                 delay: 200 * i,
                 callback: () =>
                 {
-                    const deathFlame: Phaser.GameObjects.Sprite = this.scene.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, 'enemies', 'enemy-death-1', false);
+                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, 'enemies', 'enemy-death-1', false);
 
                     if (deathFlame)
                     {
@@ -215,11 +215,6 @@ export class Boss extends Enemy
         })
     }
 
-    public addOrb()
-    {
-        this.scene.addOrb();
-    }
-
     public static endBossBattle(scene: GameScene)
     {
         scene.isBossBattle = false;
@@ -235,5 +230,30 @@ export class Boss extends Enemy
                 elm.kill();
             }
         });
+    }
+
+    public secondaryAttack(): void
+    {
+        const { ammo } = this.status;
+
+        if (ammo === 0) return;
+
+        for(let i = 0; i < 3; i += 1)
+        {
+            const weapon = this.secondaryWeaponGroup.getFirstDead(false, this.body.x, this.body.y, undefined, undefined, true) as RangedWeapon;
+
+            if (!weapon)
+            {
+                return;
+            }
+    
+            weapon.parent = this;
+    
+            weapon.setDepth(this.depth - 1);
+    
+            weapon.attack(this.config?.secondaryAttackOffsetY || 8);
+    
+            this.status.setAmmo(ammo - 1);
+        }
     }
 }

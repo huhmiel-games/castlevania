@@ -662,7 +662,7 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: -1,
     });
 
-    
+
 
     scene.anims.create({
         key: 'skeleton-idle',
@@ -929,6 +929,39 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'frank_1' },
         ],
         frameRate: 1,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'death-idle',
+        frames: [
+            { key: 'enemies', frame: 'death_0' },
+        ],
+        frameRate: 1,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'death-fly',
+        frames: [
+            { key: 'enemies', frame: 'death_0' },
+            { key: 'enemies', frame: 'death_1' },
+            { key: 'enemies', frame: 'death_2' },
+            { key: 'enemies', frame: 'death_1' },
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'scythe',
+        frames: [
+            { key: 'enemies', frame: 'scythe_0' },
+            { key: 'enemies', frame: 'scythe_1' },
+            { key: 'enemies', frame: 'scythe_2' },
+            { key: 'enemies', frame: 'scythe_3' },
+        ],
+        frameRate: 8,
         repeat: -1,
     });
 

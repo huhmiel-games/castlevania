@@ -191,6 +191,7 @@ export type TEntityConfig = {
     secondaryAttackOffsetY?: number,
     alignToPlayer?: boolean,
     withTarget?: string,
+    stunWith?: string[],
     resurrect: number
 }
 

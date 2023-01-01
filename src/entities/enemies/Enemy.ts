@@ -42,6 +42,7 @@ import StunState from "../states/hurt/StunState";
 import JumpSecondaryAttackState from "../states/attack/JumpSecondaryAttackState";
 import JumpMomentumSecondaryAttackState from "../states/attack/JumpMomentumSecondaryAttackState";
 import FallSecondaryAttackState from "../states/attack/FallSecondaryAttackState";
+import { Scythe } from "../weapons/Scythe";
 
 export class Enemy extends Entity
 {
@@ -317,7 +318,7 @@ export class Enemy extends Entity
                         delay: 32,
                         callback: () =>
                         {
-                            if(!this.active)
+                            if (!this.active)
                             {
                                 this.damageBody.setActive(false);
 
@@ -533,6 +534,27 @@ export class Enemy extends Entity
 
                 this.scene.enemyWeaponGroup.add(axe);
                 this.secondaryWeaponGroup.add(axe);
+
+                break;
+
+            case 'scythe':
+                const scythe = new Scythe({
+                    scene: this.scene,
+                    parent: this,
+                    damage: 1.5,
+                    x: this.body.x,
+                    y: this.body.y,
+                    texture: 'enemies',
+                    frame: 'scythe_0',
+                    anims: 'scythe',
+                    sound: 10,
+                    group: 'enemyWeaponGroup'
+                });
+
+                scythe.setName('scythe');
+
+                this.scene.enemyWeaponGroup.add(scythe);
+                this.secondaryWeaponGroup.add(scythe);
 
                 break;
 
