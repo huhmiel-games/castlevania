@@ -32,7 +32,7 @@ export class SkeletonIA implements IEnemyAI
 
         const { now } = this.scene.time;
 
-        if(this.scene.cameras.main.getBounds().bottom < this.parent.damageBody.body.top)
+        if (this.scene.cameras.main.getBounds().bottom < this.parent.damageBody.body.top)
         {
             this.parent.physicsProperties.isDead = true;
         }
@@ -52,12 +52,14 @@ export class SkeletonIA implements IEnemyAI
 
         if (currentRadius > this.radius / 2
             && currentRadius < this.radius
-            && this.isGoingToOriginPosition)
+            && this.isGoingToOriginPosition
+        )
         {
             return;
         }
         else if (currentRadius < this.radius / 2
-            && this.isGoingToOriginPosition)
+            && this.isGoingToOriginPosition
+        )
         {
             this.isGoingToOriginPosition = false;
         }
@@ -148,14 +150,11 @@ export class SkeletonIA implements IEnemyAI
         // face the player
         if (!blocked.right
             && currentRadius < this.radius
-            && blocked.down 
+            && blocked.down
             && body.right < player.body.left
             && this.distanceToPlayer > 80)
         {
-            left.setUp(now);
             y.setUp(now);
-
-            right.setDown(now);
         }
         if (!blocked.left
             && currentRadius < this.radius
@@ -163,17 +162,15 @@ export class SkeletonIA implements IEnemyAI
             && body.left > player.body.right
             && this.distanceToPlayer > 80)
         {
-            right.setUp(now);
             y.setUp(now);
-
-            left.setDown(now);
         }
 
         // try to reach player to the left
         if (this.distanceToPlayer > 80
             && blocked.down
             && currentRadius < this.radius
-            && body.left > player.body.right)
+            && body.left > player.body.right
+        )
         {
             right.setUp(now);
             y.setUp(now);
@@ -185,7 +182,8 @@ export class SkeletonIA implements IEnemyAI
         if (this.distanceToPlayer > 80
             && blocked.down
             && currentRadius < this.radius
-            && body.right < player.body.left)
+            && body.right < player.body.left
+        )
         {
             left.setUp(now);
             y.setUp(now);
@@ -257,7 +255,7 @@ export class SkeletonIA implements IEnemyAI
 
                         this.isAttacking = false;
                     }
-                })
+                });
             }
         }
     }
