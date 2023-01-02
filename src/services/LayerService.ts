@@ -85,8 +85,10 @@ export default class LayerService
 
     public static addMovingPlatforms(scene: GameScene)
     {
+        scene.movingPlatformGroup.clear(true, true);
         scene.children.list.filter(e => e.name === 'movingPlatform').forEach(movingPlatform => {
             scene.children.remove(movingPlatform);
+            
         });
 
         const platformLayer = this.getObjectLayerByName(scene, 'movingPlatform');
@@ -164,7 +166,7 @@ export default class LayerService
 
         layerCandle.getTilesWithin().forEach(tile =>
         {
-            if (tile.properties.light && scene.isInPlayerStage({ x: tile.pixelX, y: tile.pixelY }))
+            if (tile.properties.light && scene.isInPlayerStage({ x: tile.pixelX, y: tile.pixelY + 1 }))
             {
                 const candle = scene.lightCandlesGroup.get(tile.pixelX + TILE_SIZE / 2, tile.pixelY + TILE_SIZE / 4) as Phaser.GameObjects.PointLight;
                 candle.attenuation = LIGHT_ATTENUATION;
