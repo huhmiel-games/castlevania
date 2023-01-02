@@ -1,26 +1,14 @@
 import { PALETTE_DB32 } from "../../constant/colors";
 import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
-import { Orb } from "../../gameobjects/Orb";
 import GameScene from "../../scenes/GameScene";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
 import { Enemy } from "./Enemy";
 
 export class Boss extends Enemy
 {
-    static membersCount: number = 0;
     constructor(config: TCharacterConfig, enemyJSON: TEntityConfig)
     {
         super(config, enemyJSON);
-
-        if (Boss.membersCount < 2)
-        {
-            Boss.membersCount += 1;
-        }
-
-        if (Boss.membersCount > 2)
-        {
-            throw new Error("Boss member count error");
-        }
     }
 
     startBattle()
@@ -77,7 +65,7 @@ export class Boss extends Enemy
 
         const health = this.status.health - 1;
 
-        if (Boss.membersCount === 1)
+        if (this.getRemainingActiveBosses() === 1)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, health);
         }
@@ -128,11 +116,6 @@ export class Boss extends Enemy
         this.status.setHealth(0);
 
         this.setStatusIsDead(true);
-
-        if (Boss.membersCount <= 2)
-        {
-            Boss.membersCount -= 1;
-        }
 
         this.die();
 
@@ -193,7 +176,8 @@ export class Boss extends Enemy
                     {
                         throw new Error("No death free in enemyDeathGroup");
                     }
-                }
+                },
+                callbackScope: this
             });
         }
 
@@ -203,7 +187,7 @@ export class Boss extends Enemy
             {
                 this.setVisible(false).clearTint();
 
-                if (Boss.membersCount === 0 && this.scene)
+                if (this.getRemainingActiveBosses() === 0 && this.scene)
                 {
                     this.scene.addOrb();
 
@@ -215,13 +199,17 @@ export class Boss extends Enemy
         })
     }
 
+    private getRemainingActiveBosses(): number
+    {
+        if (!this.scene) return 0;
+        return this.scene.enemies.filter(enemy => enemy instanceof Boss && enemy.active).length;
+    }
+
     public static endBossBattle(scene: GameScene)
     {
         scene.isBossBattle = false;
 
-        Boss.membersCount = 0;
-
-        scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
+        // scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
 
         scene.enemies.forEach(elm =>
         {
@@ -238,7 +226,7 @@ export class Boss extends Enemy
 
         if (ammo === 0) return;
 
-        for(let i = 0; i < 3; i += 1)
+        for (let i = 0; i < 3; i += 1)
         {
             const weapon = this.secondaryWeaponGroup.getFirstDead(false, this.body.x, this.body.y, undefined, undefined, true) as RangedWeapon;
 
@@ -246,13 +234,13 @@ export class Boss extends Enemy
             {
                 return;
             }
-    
+
             weapon.parent = this;
-    
+
             weapon.setDepth(this.depth - 1);
-    
+
             weapon.attack(this.config?.secondaryAttackOffsetY || 8);
-    
+
             this.status.setAmmo(ammo - 1);
         }
     }
