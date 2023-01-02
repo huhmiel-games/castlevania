@@ -62,12 +62,10 @@ export class GiantBatIA implements IEnemyAI
                     x: Phaser.Math.RND.integerInRange(cam.worldView.left + 64, cam.worldView.right - 64),
                     y: Phaser.Math.RND.integerInRange(cam.worldView.top + 64, cam.worldView.bottom - 64),
                 }
-                const dx = randomDestination.x - this.parent.body.center.x;
-                const dy = randomDestination.y - this.parent.body.center.y;
 
                 this.parent.body.setMaxVelocity(40, 40).setDrag(0, 0);
 
-                this.parent.body.setVelocity(dx, dy);
+                this.scene.physics.accelerateTo(this.parent, randomDestination.x, randomDestination.y);
 
                 const timer = this.scene.time.addEvent({
                     delay: 1000,
@@ -76,7 +74,7 @@ export class GiantBatIA implements IEnemyAI
                     {
                         if (!this.parent.active) return;
 
-                        this.parent.body.stop();
+                        this.parent.body.setMaxVelocity(this.parent.config.physicsProperties.speed / 8);
 
                         if (timer.getRepeatCount() === 0)
                         {
@@ -100,12 +98,9 @@ export class GiantBatIA implements IEnemyAI
             {
                 this.isFlying = true;
 
-                const dx = player.damageBody.body.center.x - this.parent.body.center.x;
-                const dy = player.damageBody.body.center.y - this.parent.body.center.y;
-
                 this.parent.body.setMaxVelocity(60, 60).setDrag(0, 0);
 
-                this.parent.body.setVelocity(dx * 10, dy * 10);
+                this.scene.physics.accelerateTo(this.parent, player.body.center.x, player.body.center.y);
 
                 anims.timeScale = 2;
 
@@ -114,7 +109,9 @@ export class GiantBatIA implements IEnemyAI
                     repeat: 1,
                     callback: () =>
                     {
-                        this.parent.body.setVelocity(-dx, -dy);
+                        if (!this.parent.active) return;
+
+                        body.setAcceleration(-body.acceleration.x, -body.acceleration.y);
 
                         if (timer.getRepeatCount() === 0)
                         {
