@@ -1,3 +1,4 @@
+import { EPossibleState } from '../constant/character';
 import { PLAYER_A_NAME } from '../constant/config';
 import { spawnRetrievableItem } from '../custom/destroyCandle';
 import DamageBody from '../entities/DamageBody';
@@ -115,11 +116,23 @@ export default class ColliderService
 
                 if (tile.properties.changeZoneBlock)
                 {
-                    scene.setCurrentStage();
+                    const tileStage = scene.getTileStage(tile);
 
-                    tile.destroy();
+                    const player = scene.getPlayerByName(PLAYER_A_NAME);
 
-                    return;
+                    if(tileStage && tileStage === player.status.stage)
+                    {
+                        return
+                    }
+
+                    if (!player.stateMachine.state.startsWith('jump') && !player.stateMachine.state.startsWith('fall'))
+                    {
+                        scene.setCurrentStage();
+
+                        //tile.destroy();
+
+                        return;
+                    }
                 }
             }
         ).setName('playersVScolliderLayer');
