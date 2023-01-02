@@ -144,8 +144,10 @@ export default class GameScene extends Phaser.Scene
             this.events.emit(HUD_EVENTS_NAMES.RESET);
         }
 
+        this.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
+
         this.cameraFollowPlayer();
-            }
+    }
 
     public update(time: number, delta: number): void
     {
@@ -329,6 +331,27 @@ export default class GameScene extends Phaser.Scene
         const isY = y! >= currentZone.y! && y! <= currentZone.y! + currentZone.height!;
 
         return (isX && isY);
+    }
+
+    public getTileStage(tile: Phaser.Tilemaps.Tile): number | null
+    {
+        const { pixelX, pixelY } = tile;
+
+        const stages = LayerService.getObjectLayerByName(this, 'zone');
+
+        if (stages)
+        {
+            const tileStage = stages.objects.find(stage => pixelX! >= stage.x!
+                && pixelX! < stage.x! + stage.width!
+                && pixelY! >= stage.y!
+                && pixelY! < stage.y! + stage.height!
+            )
+            const stageProperties = LayerService.convertTiledObjectProperties(tileStage?.properties);
+            
+            return stageProperties?.stage || null;
+        }
+
+        return null;
     }
 
     private canEnterStage(door: TDoor): boolean
@@ -661,9 +684,9 @@ export default class GameScene extends Phaser.Scene
 
             this.playSound(15, undefined, true);
 
-            if ((weapon.name === 'holyWater' || enemy.parent.config.stunWith?.includes(weapon.name)) 
-            && enemy.parent.status.health > 0 
-            && enemy.parent.canUse(EPossibleState.STUN)
+            if ((weapon.name === 'holyWater' || enemy.parent.config.stunWith?.includes(weapon.name))
+                && enemy.parent.status.health > 0
+                && enemy.parent.canUse(EPossibleState.STUN)
             )
             {
                 enemy.parent.stateMachine.transition(EPossibleState.STUN, enemy.parent.stateMachine.state);
@@ -714,5 +737,12 @@ export default class GameScene extends Phaser.Scene
                 this.itemsGroup.add(orb);
             }
         });
+    }
+
+    public isInsideCameraByPixels(body: Phaser.Physics.Arcade.Body, offset: number = 128): boolean
+    {
+        const cam = this.cameras.main;
+
+        return body.right < cam.worldView.right + offset && body.left > cam.worldView.left - offset
     }
 }
