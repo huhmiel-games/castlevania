@@ -46,7 +46,7 @@ export class Scythe extends Phaser.GameObjects.Sprite implements Weapon
     {
         super.preUpdate(time, delta);
 
-        if (!this.scene.cameras.main.worldView.contains(this.body.center.x, this.body.center.y))
+        if (!this.scene.isInsideCameraByPixels(this.body, 16))
         {
             this.setDisable();
         }

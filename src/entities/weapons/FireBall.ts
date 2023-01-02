@@ -46,7 +46,7 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
     {
         super.preUpdate(time, delta);
 
-        if (!this.scene.cameras.main.worldView.contains(this.body.center.x, this.body.center.y))
+        if (!this.scene.isInsideCameraByPixels(this.body, 16))
         {
             this.setDisable();
         }
@@ -76,6 +76,7 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
             this.parent.secondaryWeaponGroup.add(this);
         }
 
+        // straight fire
         if (this.parent.flipX && !target)
         {
             this.setFlipX(true);
@@ -89,25 +90,21 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
             this.body.setVelocityX(this.speed);
         }
 
+        // fire on target
         if (this.parent.flipX && target)
         {
             this.setFlipX(true);
 
-            const dx = target.damageBody.body.center.x - this.parent.body.center.x;
-            const dy = target.damageBody.body.center.y - this.parent.body.center.y;
-    
-            this.body.setVelocity(dx, dy);
+            this.scene.physics.accelerateToObject(this, target, this.speed * 2);
         }
         else if(!this.parent.flipX && target)
         {
             this.setFlipX(false);
 
-            const dx = target.damageBody.body.center.x - this.parent.body.center.x;
-            const dy = target.damageBody.body.center.y - this.parent.body.center.y;
-
-            this.body.setVelocity(dx, dy);
+            this.scene.physics.accelerateToObject(this, target, this.speed * 2);
         }
 
+        // adjust fire angle
         if(target)
         {
             if(target.damageBody.body.center.x > this.parent.body.center.x)
