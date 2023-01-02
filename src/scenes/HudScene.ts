@@ -235,7 +235,7 @@ export default class HudScene extends Phaser.Scene
     {
         const lifeText = this.children.getByName('life') as Phaser.GameObjects.BitmapText;
 
-        lifeText.setText(`p-${life.toString().padStart(2, '0')}`);
+        lifeText.setText(`p-${Phaser.Math.Clamp(life, 0, 10).toString().padStart(2, '0')}`);
 
         return this;
     }
