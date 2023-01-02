@@ -14,11 +14,9 @@ export default class DamageBody extends Phaser.GameObjects.Image
 
         this.parent = config.parent;
 
-        this.scene.add.existing(this);
-
         this.scene.physics.world.enable(this);
 
-        this.setActive(true).setVisible(true).setDepth(DEPTH.WEAPON).setAlpha(0).setOrigin(0.5, 1);
+        this.setActive(true).setOrigin(0.5, 1);
 
         this.body.setAllowGravity(false).setEnable(true).setSize(config.width, config.height);
 
