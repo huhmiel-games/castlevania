@@ -39,6 +39,25 @@ export default function addEnemies(scene: GameScene)
     scene.destroyEnemyColliders();
 
     // destroy old zone enemies
+    for (let i = 0; i < scene.enemies.length; i += 1)
+    {
+        const enemy = scene.enemies[i];
+        scene.enemies[i].destroy();
+        scene.enemies.splice(i, 1);
+        scene.children.remove(enemy.damageBody);
+        scene.children.remove(enemy);
+        if (enemy.name === 'spike')
+        {
+            const screw = scene.children.getByName('spikeScrew');
+
+            if (screw)
+            {
+                scene.children.remove(screw);
+            }
+        }
+
+        enemy.kill();
+    }
     scene.enemies.forEach((enemy) =>
     {
         enemy.destroy();
@@ -56,8 +75,8 @@ export default function addEnemies(scene: GameScene)
 
         enemy.kill();
     });
-    // scene.enemies.length = 0;
-    // scene.enemiesDamageBody.length = 0;
+
+    scene.enemyWeaponGroup.clear(true);
 
     // create zone enemies
     const enemyLayer = LayerService.getObjectLayerByName(scene, 'enemies');
