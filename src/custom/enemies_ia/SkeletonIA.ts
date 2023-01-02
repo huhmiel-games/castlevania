@@ -148,7 +148,8 @@ export class SkeletonIA implements IEnemyAI
         // face the player
         if (!blocked.right
             && currentRadius < this.radius
-            && blocked.down && center.x < player.body.center.x
+            && blocked.down 
+            && body.right < player.body.left
             && this.distanceToPlayer > 80)
         {
             left.setUp(now);
@@ -159,7 +160,7 @@ export class SkeletonIA implements IEnemyAI
         if (!blocked.left
             && currentRadius < this.radius
             && blocked.down
-            && center.x > player.body.center.x
+            && body.left > player.body.right
             && this.distanceToPlayer > 80)
         {
             right.setUp(now);
@@ -172,7 +173,7 @@ export class SkeletonIA implements IEnemyAI
         if (this.distanceToPlayer > 80
             && blocked.down
             && currentRadius < this.radius
-            && center.x > player.body.center.x)
+            && body.left > player.body.right)
         {
             right.setUp(now);
             y.setUp(now);
@@ -184,7 +185,7 @@ export class SkeletonIA implements IEnemyAI
         if (this.distanceToPlayer > 80
             && blocked.down
             && currentRadius < this.radius
-            && center.x < player.body.center.x)
+            && body.right < player.body.left)
         {
             left.setUp(now);
             y.setUp(now);
