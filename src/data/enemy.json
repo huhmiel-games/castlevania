@@ -1049,8 +1049,8 @@
         },
         "physicsProperties": {
             "gravity": 0,
-            "speed": 80,
-            "acceleration": 600,
+            "speed": 200,
+            "acceleration": 60,
             "stairSpeed": 160,
             "dragCoeff": 10,
             "isHurt": false,
@@ -1131,7 +1131,7 @@
         ],
         "collideWithWorld": false,
         "resurrect": 0,
-        "stunWith": ["holyWater", "whip", "cross"]
+        "stunWith": ["holyWater", "cross", "axe", "dagger"]
     },
     "medusa-boss": {
         "config": {
