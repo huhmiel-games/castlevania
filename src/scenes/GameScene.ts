@@ -524,14 +524,14 @@ export default class GameScene extends Phaser.Scene
 
                         this.isBossBattle = false;
 
-                        this.credits();
+                        this.showCastleDestruction();
                     }
                 }
             });
         });
     }
 
-    private credits()
+    private showCastleDestruction()
     {
         this.cameras.main.fadeOut(1000);
         this.time.addEvent({
@@ -566,14 +566,14 @@ export default class GameScene extends Phaser.Scene
                     {
                         this.playSong(13, false);
 
-                        this.giveCredits();
+                        this.showCredits();
                     }
                 })
             }
         });
     }
 
-    private giveCredits()
+    private showCredits()
     {
         const crediText = this.add.bitmapText(WIDTH / 2, HEIGHT / 2, FONTS.GALAXY, '', FONTS_SIZES.GALAXY, 1)
             .setScrollFactor(0, 0)
