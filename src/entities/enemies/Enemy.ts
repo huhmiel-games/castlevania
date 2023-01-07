@@ -43,6 +43,7 @@ import JumpSecondaryAttackState from "../states/attack/JumpSecondaryAttackState"
 import JumpMomentumSecondaryAttackState from "../states/attack/JumpMomentumSecondaryAttackState";
 import FallSecondaryAttackState from "../states/attack/FallSecondaryAttackState";
 import { Scythe } from "../weapons/Scythe";
+import SaveLoadService from "../../services/SaveLoadService";
 
 export class Enemy extends Entity
 {
@@ -197,6 +198,10 @@ export class Enemy extends Entity
 
         this.damageBody.setActive(false);
         this.damageBody.body.setEnable(false);
+
+        SaveLoadService.setEnemiesDeathCount();
+
+        SaveLoadService.setSavedGameTime(this.scene);
 
         this.resetAllButtons();
 

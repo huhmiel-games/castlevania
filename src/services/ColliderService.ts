@@ -27,7 +27,7 @@ export default class ColliderService
     public static addColliders(scene: GameScene)
     {
         // full side collision tiles
-        scene.colliderLayer.setCollisionByProperty({ collides: true });
+        scene.colliderLayer.setCollisionByProperty({ collides: true }).setName('collideLayer');
 
         // one way collision tiles
         scene.colliderLayer.forEachTile((tile) =>

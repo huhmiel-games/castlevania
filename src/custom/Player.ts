@@ -246,6 +246,8 @@ export default class Player extends Entity
 
     public getItem(_item: Phaser.Types.Physics.Arcade.GameObjectWithBody)
     {
+        SaveLoadService.setSavedGameTime(this.scene);
+
         switch (true)
         {
             case _item instanceof BigAmmoRetrievableItem:
@@ -328,6 +330,12 @@ export default class Player extends Entity
 
             case _item instanceof Orb:
                 {
+                    if(this.status.stage === 73)
+                    {
+                        this.scene.endGame();
+
+                        return;
+                    }
                     this.scene.endStage();
                 }
             default:
@@ -565,11 +573,13 @@ export default class Player extends Entity
 
         this.physicsProperties.isHurt = true;
 
-        const health = this.status.health - damage;
+        const health = this.status.health - Phaser.Math.Clamp(damage, 0, 4);
 
         if (health > 0)
         {
             this.status.setHealth(health);
+
+            SaveLoadService.setSavedGameTime(this.scene);
 
             this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
 
@@ -629,6 +639,10 @@ export default class Player extends Entity
         this.status.setLife(this.status.life - 1);
 
         this.multipleShots = 1;
+
+        SaveLoadService.setPlayerDeathCount();
+
+        SaveLoadService.setSavedGameTime(this.scene);
 
         this.clearSecondaryWeapons();
 

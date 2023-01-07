@@ -1,6 +1,6 @@
 // @ts-ignore
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
-import { FONTS, FONTS_SIZES, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
+import { FONTS, FONTS_SIZES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
 import { InputController } from '../inputs/InputController';
 import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
@@ -16,6 +16,8 @@ import DamageBody from '../entities/DamageBody.js';
 import ThrowingKnife from '../entities/weapons/ThrowingKnife.js';
 import Weapon from '../entities/weapons/Weapon.js';
 import { Orb } from '../gameobjects/Orb.js';
+import creditsData from '../data/credits.json';
+import { DEPTH } from '../constant/depth.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -290,6 +292,12 @@ export default class GameScene extends Phaser.Scene
                     LayerService.addMovingPlatforms(this);
                     LayerService.addConveyors(this);
 
+                    if (zoneData?.stage === 71)
+                    {
+                        const backCastle = this.children.getByName('back-castle') as Phaser.GameObjects.Image;
+                        backCastle.setAlpha(0);
+                    }
+
                     addEnemies(this);
 
                     this.isChangingStage = false;
@@ -347,7 +355,7 @@ export default class GameScene extends Phaser.Scene
                 && pixelY! < stage.y! + stage.height!
             )
             const stageProperties = LayerService.convertTiledObjectProperties(tileStage?.properties);
-            
+
             return stageProperties?.stage || null;
         }
 
@@ -479,6 +487,130 @@ export default class GameScene extends Phaser.Scene
                 }
             });
         });
+    }
+
+    public endGame()
+    {
+        const orb = this.children.getByName('orb') as Orb;
+
+        orb?.body.setEnable(false);
+
+        orb.setActive(false).setVisible(false);
+
+        const player = this.getPlayerByName(PLAYER_A_NAME);
+
+        this.playSong(11, false);
+        this.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
+        {
+            orb?.destroy();
+
+            const timer = this.time.addEvent({
+                delay: 100,
+                repeat: player.status.ammo,
+                callback: () =>
+                {
+                    if (timer.getRepeatCount() > 0)
+                    {
+                        this.playSound(5);
+
+                        player.status.setAmmo(player.status.ammo - 1);
+
+                        player.status.setScore(player.status.score + 100);
+                    }
+
+                    if (timer.getRepeatCount() === 0)
+                    {
+                        this.playSound(4);
+
+                        this.isBossBattle = false;
+
+                        this.credits();
+                    }
+                }
+            });
+        });
+    }
+
+    private credits()
+    {
+        this.cameras.main.fadeOut(1000);
+        this.time.addEvent({
+            delay: 1000,
+            callback: () =>
+            {
+                this.getPlayerByName(PLAYER_A_NAME).setActive(false).setVisible(false);
+
+                LayerService.getGroundLayers(this).forEach(layer => layer.setAlpha(0));
+
+                const mountains = this.children.getByName('parallax-mountain') as Phaser.GameObjects.TileSprite;
+                mountains.setAlpha(1).setPosition(-64, 16);
+
+                const castle = this.children.getByName('back-castle') as Phaser.GameObjects.Image;
+                castle.setAlpha(1).setOrigin(0.5, 0).setPosition(184, -8).setScrollFactor(0, 0);
+
+                this.cameras.main.fadeIn(1000);
+                console.log(this);
+
+                this.tweens.add({
+                    targets: castle,
+                    delay: 2000,
+                    duration: 8000,
+                    y: 256,
+                    angle: -30,
+                    onUpdate: () =>
+                    {
+                        this.playSound(33, 0.5, true);
+                        this.cameras.main.shake(50, 0.01, false)
+                    },
+                    onComplete: () =>
+                    {
+                        this.playSong(13, false);
+
+                        this.giveCredits();
+                    }
+                })
+            }
+        });
+    }
+
+    private giveCredits()
+    {
+        const crediText = this.add.bitmapText(WIDTH / 2, HEIGHT / 2, FONTS.GALAXY, '', FONTS_SIZES.GALAXY, 1)
+            .setScrollFactor(0, 0)
+            .setOrigin(0.5, 0.5)
+            .setDepth(DEPTH.FRONT_LAYER)
+            .setTintFill(PALETTE_DB32.HOT_CINNAMON);
+
+        const titles = Object.keys(creditsData.credits);
+
+        const creditTimer = this.time.addEvent({
+            startAt: 51000 / titles.length - 1,
+            delay: 51000 / titles.length - 1,
+            repeat: titles.length,
+            callback: () =>
+            {
+                const count = titles.length - creditTimer.getRepeatCount();
+
+                if (count < titles.length)
+                {
+                    const title: string = titles[count].replace(/_+/g, ' ').toLowerCase();
+
+                    if (title === 'your score')
+                    {
+                        const content = `score: ${this.getPlayerByName(PLAYER_A_NAME).status.score}\ndeath: ${SaveLoadService.getPlayerDeathCount()}\nenemies killed: ${SaveLoadService.getEnemiesDeathCount()}\ntime: ${SaveLoadService.getSavedGameTimeToString()}`;
+
+                        crediText.setText(`${title}\n${content}`).setLeftAlign();
+
+                        return;
+                    }
+
+                    const content: string = creditsData.credits[titles[count]].join('\n ').toLowerCase()
+
+                    crediText.setText(`${title}\n${content}`).setOrigin(0.5, 0.5).setCenterAlign();
+                }
+            }
+        });
+
     }
 
     private nextStage()
@@ -679,6 +811,14 @@ export default class GameScene extends Phaser.Scene
             const weapon = _weapon as unknown as Weapon;
 
             if (enemy.parent.name === 'spike') return;
+
+            if (enemy.parent.name === 'dracula')
+            {
+                if (weapon.body.center.y < 155 || weapon.body.center.y > 165)
+                {
+                    return;
+                }
+            }
 
             enemy.parent.setStatusHealthDamage(weapon.damage);
 

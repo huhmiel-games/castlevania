@@ -1,6 +1,8 @@
 import { PALETTE_DB32 } from "../../constant/colors";
 import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
+import { addDraculaHead, addFinalBoss } from "../../custom/addEnemies";
 import GameScene from "../../scenes/GameScene";
+import SaveLoadService from "../../services/SaveLoadService";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
 import { Enemy } from "./Enemy";
 
@@ -67,7 +69,14 @@ export class Boss extends Enemy
 
         if (this.getRemainingActiveBosses() === 1)
         {
-            this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, health);
+            if (this.name === 'dracula2')
+            {
+                this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, Math.ceil(health / 2));
+            }
+            else
+            {
+                this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, health);
+            }
         }
         else
         {
@@ -137,6 +146,10 @@ export class Boss extends Enemy
 
         this.setTintFill(PALETTE_DB32.BLACK);
 
+        SaveLoadService.setEnemiesDeathCount();
+
+        SaveLoadService.setSavedGameTime(this.scene);
+
         this.scene.events.emit('enemy-score', this.status.score);
 
         if (this.name === 'frank')
@@ -147,6 +160,19 @@ export class Boss extends Enemy
             {
                 (igor as Enemy).die();
             }
+        }
+
+        if (this.name === 'dracula')
+        {
+            this.setActive(true);
+
+            this.clearTint();
+
+            addDraculaHead(this.scene, this.body.center.x, this.damageBody.body.top, this.flipX);
+
+            this.anims.play(this.animList.DEAD!);
+
+            return;
         }
 
         for (let i = 0; i < 6; i += 1)
@@ -160,8 +186,40 @@ export class Boss extends Enemy
                     if (deathFlame)
                     {
                         deathFlame.setOrigin(0.5, 1);
-                        deathFlame.x = this.damageBody.body.left + (i * 4);
+                        deathFlame.x = (this.damageBody.body.left - this.width / 12) + (i * this.width / 12);
                         deathFlame.y = this.damageBody.body.bottom + 8;
+                        deathFlame.setActive(true).setVisible(true);
+                        deathFlame.setDepth(this.depth - 1);
+
+                        deathFlame.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
+                        {
+                            deathFlame.setActive(false).setVisible(false);
+                        });
+
+                        deathFlame.anims.play('enemy-death', true);
+                    }
+                    else
+                    {
+                        throw new Error("No death free in enemyDeathGroup");
+                    }
+                },
+                callbackScope: this
+            });
+        }
+
+        for (let i = 0; i < 6; i += 1)
+        {
+            this.scene.time.addEvent({
+                delay: 200 * i,
+                callback: () =>
+                {
+                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, 'enemies', 'enemy-death-1', false);
+
+                    if (deathFlame)
+                    {
+                        deathFlame.setOrigin(0.5, 1);
+                        deathFlame.x = (this.damageBody.body.left - this.width / 12) + (i * this.width / 12);
+                        deathFlame.y = this.damageBody.body.center.y - 8;
                         deathFlame.setActive(true).setVisible(true);
                         deathFlame.setDepth(this.depth - 1);
 
@@ -189,9 +247,18 @@ export class Boss extends Enemy
 
                 if (this.getRemainingActiveBosses() === 0 && this.scene)
                 {
-                    this.scene.addOrb();
+                    if (this.name === 'dracula')
+                    {
+                        addDraculaHead(this.scene, this.body.center.x, this.damageBody.body.top, this.flipX);
 
-                    Boss.endBossBattle(this.scene);
+                        this.anims.play(this.animList.DEAD!);
+                    }
+                    else
+                    {
+                        this.scene.addOrb();
+
+                        Boss.endBossBattle(this.scene);
+                    }
                 }
 
                 this.kill();

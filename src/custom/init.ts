@@ -57,7 +57,7 @@ export default function init(scene: GameScene)
     scene.characters.push(playerA);
 
     // background image
-    scene.add.image(0, 0, 'back-moon').setOrigin(0, 0).setScrollFactor(0, 0);
+    scene.add.image(0, 0, 'back-moon').setOrigin(0, 0).setScrollFactor(0, 0).setName('back-moon');
 
     scene.add.tileSprite(0, 0, scene.map.widthInPixels, 176, 'back-mountain')
         .setOrigin(0, 0)

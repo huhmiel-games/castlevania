@@ -799,7 +799,7 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'dracula2-jump',
         frames: [
-            { key: 'enemies', frame: 'dracula2-jump_0' },
+            //{ key: 'enemies', frame: 'dracula2-jump_0' },
             { key: 'enemies', frame: 'dracula2-jump_1' },
         ],
         frameRate: 4,
@@ -809,22 +809,11 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'dracula2-attack',
         frames: [
-            { key: 'enemies', frame: 'dracula2-attack_0' },
+            { key: 'enemies', frame: 'dracula2-idle' },
+            { key: 'enemies', frame: 'dracula2-attack_0', duration: 100 },
         ],
         frameRate: 2,
-        repeat: -1,
-    });
-
-    scene.anims.create({
-        key: 'dracula-appears',
-        frames: [
-            { key: 'enemies', frame: 'dracula-appears_0' },
-            { key: 'enemies', frame: 'dracula-appears_1' },
-            { key: 'enemies', frame: 'dracula-appears_2' },
-            { key: 'enemies', frame: 'dracula-appears_3' },
-        ],
-        frameRate: 8,
-        repeat: -1,
+        repeat: 0,
     });
 
     scene.anims.create({
@@ -837,32 +826,6 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
-        key: 'dracula-attack',
-        frames: [
-            { key: 'enemies', frame: 'dracula-attack_3' },
-            { key: 'enemies', frame: 'dracula-attack_1' },
-            { key: 'enemies', frame: 'dracula-attack_2' },
-            { key: 'enemies', frame: 'dracula-attack_4' },
-            { key: 'enemies', frame: 'dracula-attack_5' },
-            { key: 'enemies', frame: 'dracula-attack_6' },
-            { key: 'enemies', frame: 'dracula-attack_0' },
-        ],
-        frameRate: 14,
-        repeat: -1,
-    });
-
-    scene.anims.create({
-        key: 'dracula-sleeping',
-        frames: [
-            { key: 'enemies', frame: 'dracula-sleeping_0' },
-            { key: 'enemies', frame: 'dracula-sleeping_1' },
-            { key: 'enemies', frame: 'dracula-sleeping_3' },
-        ],
-        frameRate: 6,
-        repeat: -1,
-    });
-
-    scene.anims.create({
         key: 'dracula2-fly',
         frames: [
             { key: 'enemies', frame: 'dracula2-fly_1' },
@@ -871,7 +834,65 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'dracula2-fly_3' },
         ],
         frameRate: 8,
+        yoyo: true,
         repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'dracula-appears',
+        frames: [
+            { key: 'enemies', frame: 'dracula-appears_0' },
+            { key: 'enemies', frame: 'dracula-appears_1' },
+            { key: 'enemies', frame: 'dracula-appears_2' },
+            { key: 'enemies', frame: 'dracula-appears_3' },
+        ],
+        frameRate: 12,
+        repeat: 0,
+    });
+
+    scene.anims.create({
+        key: 'dracula-first-appears',
+        frames: [
+            { key: 'enemies', frame: 'dracula-first-appears_0' },
+            { key: 'enemies', frame: 'dracula-first-appears_1' },
+            { key: 'enemies', frame: 'dracula-first-appears_2' },
+            { key: 'enemies', frame: 'dracula-first-appears_3' },
+            { key: 'enemies', frame: 'dracula-attack_0', duration: 1000 },
+        ],
+        frameRate: 8,
+        repeat: 0,
+    });
+
+    scene.anims.create({
+        key: 'dracula-attack',
+        frames: [
+            { key: 'enemies', frame: 'dracula-attack_0' },
+            { key: 'enemies', frame: 'dracula-attack_1' },
+            { key: 'enemies', frame: 'dracula-attack_2', duration: 500 },
+        ],
+        frameRate: 8,
+        repeat: 0,
+    });
+
+    scene.anims.create({
+        key: 'dracula-idle',
+        frames: [
+            { key: 'enemies', frame: 'dracula-attack_0' },
+            { key: 'enemies', frame: 'dracula-attack_1' }
+        ],
+        frameRate: 4,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: 'dracula-death',
+        frames: [
+            { key: 'enemies', frame: 'dracula-death_0' },
+            { key: 'enemies', frame: 'dracula-death_1' },
+            { key: 'enemies', frame: 'dracula-death_2' }
+        ],
+        frameRate: 8,
+        repeat: 0,
     });
 
     scene.anims.create({

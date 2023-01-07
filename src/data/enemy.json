@@ -1540,5 +1540,125 @@
         "collideWithWorld": true,
         "resurrect": 0,
         "withTarget": "playerA"
+    },
+    "dracula": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "dracula-attack_0",
+            "animList": {
+                "IDLE": "dracula-idle",
+                "SECONDARY_ATTACK": "dracula-attack",
+                "DOWN": "dracula-first-appears",
+                "UP": "dracula-appears",
+                "DEAD": "dracula-death"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 0,
+            "life": 0,
+            "ammo": 3000,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 600,
+            "speed": 20,
+            "acceleration": 200,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 1
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 16,
+                "offsetY": 64
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 10,
+                "height": 52,
+                "offsetY": 0
+            }
+        },
+        "state": [
+            "idle",
+            "stun"
+        ],
+        "collideWithWorld": true,
+        "resurrect": 0
+    },
+    "dracula2": {
+        "config": {
+            "texture": "enemies",
+            "defaultFrame": "dracula2-idle",
+            "animList": {
+                "IDLE": "dracula2-idle",
+                "SECONDARY_ATTACK": "dracula2-attack",
+                "JUMP": "dracula2-jump",
+                "JUMP_MOMENTUM": "dracula2-jump",
+                "FALL": "dracula2-jump",
+                "FLY": "dracula2-fly"
+            }
+        },
+        "status": {
+            "health": 1,
+            "score": 50000,
+            "life": 0,
+            "ammo": 3000,
+            "stage": 1,
+            "canTakeStairs": false,
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "physicsProperties": {
+            "gravity": 600,
+            "speed": 60,
+            "acceleration": 600,
+            "stairSpeed": 160,
+            "dragCoeff": 10,
+            "isHurt": false,
+            "isDead": false,
+            "isAttacking": false,
+            "isPaused": false,
+            "sinHeight": 1,
+            "jumpHeight": 3
+        },
+        "physics": {
+            "body": {
+                "width": 16,
+                "height": 16,
+                "offsetX": 72,
+                "offsetY": 108
+            },
+            "damageBody": {
+                "type": "square",
+                "width": 32,
+                "height": 62,
+                "offsetY": 0
+            }
+        },
+        "state": [
+            "idle",
+            "jump",
+            "jumpMomentum",
+            "fall",
+            "secondaryAttack",
+            "stun"
+        ],
+        "collideWithWorld": true,
+        "resurrect": 0
     }
 }
