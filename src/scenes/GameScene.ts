@@ -549,7 +549,6 @@ export default class GameScene extends Phaser.Scene
                 castle.setAlpha(1).setOrigin(0.5, 0).setPosition(184, -8).setScrollFactor(0, 0);
 
                 this.cameras.main.fadeIn(1000);
-                console.log(this);
 
                 this.tweens.add({
                     targets: castle,
