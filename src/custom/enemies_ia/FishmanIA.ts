@@ -8,20 +8,26 @@ export class FishmanIA implements IEnemyAI
 {
     parent: Enemy;
     scene: GameScene;
+    private phase: 0 | 1 | 2 = 0; // 0 underwater 1 jump 2 walk
     private randomJumpTime: number = 0;
     private randomAttackTime: number = 0;
-    private hasJumped: boolean = false;
-    private originPosition: number;
+    private isJumping: boolean = false;
     constructor(parent: Enemy)
     {
         this.parent = parent;
         this.scene = parent.scene;
-        this.originPosition = { ...parent.body.center }.y + TILE_SIZE / 2;
+
+        if (this.randomJumpTime === 0 && this.scene.cameras.main.worldView.contains(this.parent.body.center.x, this.parent.body.center.y))
+        {
+            this.randomJumpTime = this.scene.time.now + Phaser.Math.RND.between(50, 5000);
+        }
     }
 
     execute()
     {
-        const { body, buttons } = this.parent;
+        const { body, buttons, stateMachine } = this.parent;
+
+        const { state, prevState } = stateMachine;
 
         const { left, right, up, a, b } = buttons;
 
@@ -31,73 +37,52 @@ export class FishmanIA implements IEnemyAI
 
         const { now } = this.scene.time;
 
-        if (!this.hasJumped && this.randomJumpTime === 0 && cam.worldView.contains(center.x, center.y))
+        if (this.randomJumpTime === 0 && this.scene.isInsideCameraByPixels(this.parent.damageBody.body, 32))
         {
             this.randomJumpTime = now + Phaser.Math.RND.between(50, 5000);
         }
 
-        
-
-        // first jump
-        if (!this.hasJumped && blocked.down && this.parent.isInsideCameraByPixels(128) && this.randomJumpTime < now)
-        {
-            this.hasJumped = true;
-
-            this.parent.resetAllButtons();
-
-            b.setDown(now);
-
-            return;
-        }
-
-        // turn back if blocked
-        if (this.hasJumped && blocked.left && cam.worldView.contains(center.x, center.y))
-        {
-            this.parent.resetAllButtons();
-
-            right.setDown(now);
-
-            return;
-        }
-
-        if (this.hasJumped && blocked.right && cam.worldView.contains(center.x, center.y))
-        {
-            this.parent.resetAllButtons();
-
-            left.setDown(now);
-
-            return;
-        }
-
-        // turn back if no tile on ground
-        if (this.hasJumped && right.isDown && !this.scene.colliderLayer.getTileAtWorldXY(this.parent.body.right, this.parent.body.bottom + TILE_SIZE / 8)?.canCollide)
-        {
-            this.parent.resetAllButtons();
-
-            left.setDown(now);
-
-            return;
-        }
-
-        if (this.hasJumped && left.isDown && !this.scene.colliderLayer.getTileAtWorldXY(this.parent.body.left, this.parent.body.bottom + TILE_SIZE / 8)?.canCollide)
-        {
-            this.parent.resetAllButtons();
-
-            right.setDown(now);
-
-            return;
-        }
-
-        // walk to player after first jump or attack
-        if (this.hasJumped
-            && blocked.down
-            && (
-                this.parent.stateMachine.prevState === EPossibleState.FALL
-                || this.parent.stateMachine.prevState === EPossibleState.SECONDARY_ATTACK
-            )
+        // jump from underwater
+        if (this.phase === 0
+            && this.randomJumpTime !== 0
+            && this.randomJumpTime < now
+            && state === EPossibleState.IDLE
+            && !this.isJumping
+            && this.scene.colliderLayer.getTileAtWorldXY(center.x, center.y - 8)?.properties?.waterBlock === true
         )
         {
-            this.parent.resetAllButtons();
+            body.reset(this.getRandomX(), body.y);
+
+            this.isJumping = true;
+
+            this.scene.time.addEvent({
+                delay: 32,
+                callback: () =>
+                {
+                    left.setUp(now);
+                    right.setUp(now);
+                    b.setDown(now);
+
+                    this.scene.playSound(15);
+
+                    this.phase = 1;
+                }
+            });
+
+            return;
+        }
+
+        // start walking
+        if (this.phase === 1
+            && state === EPossibleState.IDLE
+            && prevState === EPossibleState.FALL
+            && blocked.down
+            && this.isJumping
+        )
+        {
+            this.isJumping = false;
+
+            b.setUp(now);
 
             const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
@@ -110,13 +95,61 @@ export class FishmanIA implements IEnemyAI
                 right.setDown(now);
             }
 
-            this.randomAttackTime = now + Phaser.Math.RND.between(3000, 20000);
+            this.randomAttackTime = now + Phaser.Math.RND.between(3000, 10000);
 
             return;
         }
 
+        // stop jumping on top 
+        if (body.top < cam.worldView.top + 32)
+        {
+            b.setUp(now);
+        }
+
+        // turn back if blocked
+        if (blocked.left)
+        {
+            this.parent.resetAllButtons();
+
+            this.killIfOutsideScreen();
+
+            right.setDown(now);
+
+            return;
+        }
+
+        if (blocked.right)
+        {
+            this.parent.resetAllButtons();
+
+            this.killIfOutsideScreen();
+
+            left.setDown(now);
+
+            return;
+        }
+
+        // back to water
+        if (this.phase === 1
+            && this.scene.colliderLayer.getTileAtWorldXY(center.x, center.y - 8)?.properties?.waterBlock === true
+            && !this.isJumping
+        )
+        {
+            this.parent.resetAllButtons();
+
+            this.scene.playSound(16, 0.5, true);
+
+            this.randomJumpTime = now + Phaser.Math.RND.between(50, 5000);
+
+            this.phase = 0;
+        }
+
         // attack the player with fireball
-        if (this.hasJumped && blocked.down && cam.worldView.contains(center.x, center.y) && this.randomAttackTime > 0 && this.randomAttackTime < now)
+        if (blocked.down
+            && this.randomAttackTime > 0
+            && this.randomAttackTime < now
+            && !(this.scene.colliderLayer.getTileAtWorldXY(center.x, center.y - 8)?.properties?.waterBlock)
+        )
         {
             this.randomAttackTime = 0;
 
@@ -137,7 +170,7 @@ export class FishmanIA implements IEnemyAI
                 {
                     if (!this.parent.active) return;
 
-                    this.randomAttackTime = now + Phaser.Math.RND.between(3000, 20000);
+                    this.randomAttackTime = now + Phaser.Math.RND.between(3000, 10000);
                 }
             })
 
@@ -145,22 +178,40 @@ export class FishmanIA implements IEnemyAI
             a.setDown(now);
             return;
         }
+    }
 
-        if(b.isUp && this.hasJumped && body.bottom === this.originPosition)
+    private getRandomX()
+    {
+        const canView = this.scene.cameras.main.worldView;
+
+        let rndX = Phaser.Math.RND.integerInRange(canView.left + 16, canView.right - 16);
+
+        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+
+        while (Math.abs(player.body.center.x - rndX) < 24
+            || !(this.scene.colliderLayer.getTileAtWorldXY(rndX, this.parent.body.y + 8)?.properties?.waterBlock)
+        )
         {
-            this.randomJumpTime = 0;
-
-            // this.parent.resetAllButtons();
-
-            this.hasJumped = false;
+            rndX = Phaser.Math.RND.integerInRange(canView.left + 16, canView.right - 16);
         }
+
+        return rndX;
     }
 
     reset()
     {
         this.parent.resetAllButtons();
-        this.hasJumped = false;
-        this.randomJumpTime = 0;
+        this.phase = 0;
+        this.isJumping = false;
+        this.randomJumpTime = this.scene.time.now + Phaser.Math.RND.between(50, 5000);
         this.randomAttackTime = 0;
+    }
+
+    killIfOutsideScreen()
+    {
+        if (this.scene.isInsideCameraByPixels(this.parent.body, 64) === false)
+        {
+            this.parent.killAndRespawn();
+        }
     }
 }
