@@ -99,7 +99,7 @@ export default class LayerService
         {
             if (scene.isInPlayerStage(platform))
             {
-                const newPlatform = new MovingPlatform({ scene: scene, x: platform.x! + TILE_SIZE, y: platform.y! - TILE_SIZE, texture: 'items', frame: 'movingPlatform' });
+                const newPlatform = new MovingPlatform({ scene: scene, x: platform.x! + TILE_SIZE - 8, y: platform.y! - TILE_SIZE, texture: 'items', frame: 'movingPlatform' });
 
                 scene.movingPlatformGroup.add(newPlatform);
             }
