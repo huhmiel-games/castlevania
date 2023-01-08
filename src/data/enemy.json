@@ -362,17 +362,17 @@
             }
         },
         "physicsProperties": {
-            "gravity": 800,
+            "gravity": 400,
             "speed": 25,
-            "maxSpeedY": 500,
-            "acceleration": 1000,
+            "maxSpeedY": 300,
+            "acceleration": 300,
             "stairSpeed": 160,
             "dragCoeff": 10,
             "isHurt": false,
             "isDead": false,
             "isAttacking": false,
             "isPaused": false,
-            "jumpHeight": 8
+            "jumpHeight": 12
         },
         "physics": {
             "body": {
@@ -384,7 +384,7 @@
             "damageBody": {
                 "type": "square",
                 "width": 10,
-                "height": 32
+                "height": 29
             }
         },
         "state": [
@@ -397,7 +397,7 @@
             "secondaryAttack",
             "death"
         ],
-        "resurrect": 20000
+        "resurrect": 5000
     },
     "ghost": {
         "config": {
