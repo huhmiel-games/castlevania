@@ -34,6 +34,16 @@ export default class ColliderService
         {
             if (tile.properties.collides)
             {
+                tile.setCollision(true, true, true, true);
+            }
+
+            if (tile.properties.leftTopRightBlock)
+            {
+                tile.setCollision(true, true, true, false);
+            }
+
+            if (tile.properties.passCrouchBlock)
+            {
                 tile.setCollision(true, true, true, false);
             }
 
@@ -120,7 +130,7 @@ export default class ColliderService
 
                     const player = scene.getPlayerByName(PLAYER_A_NAME);
 
-                    if(tileStage && tileStage === player.status.stage)
+                    if (tileStage && tileStage === player.status.stage)
                     {
                         return
                     }
@@ -143,6 +153,13 @@ export default class ColliderService
                 const tile = _tile as unknown as Phaser.Tilemaps.Tile;
 
                 if (!tile || !tile.tilemapLayer || tile.properties.platformBlock)
+                {
+                    return false;
+                }
+
+                const player = _player as Entity;
+
+                if (tile.properties.passCrouchBlock && player.stateMachine.state.startsWith(EPossibleState.CROUCH))
                 {
                     return false;
                 }
@@ -206,6 +223,13 @@ export default class ColliderService
             const enemy = _enemy as Entity;
 
             if (enemy.config.collideWithWorld === false)
+            {
+                return false;
+            }
+
+            const tile = _tile as unknown as Phaser.Tilemaps.Tile;
+
+            if (!tile || !tile.tilemapLayer || tile.properties?.platformBlock)
             {
                 return false;
             }
