@@ -12,7 +12,6 @@ export class EagleIA implements IEnemyAI
     scene: GameScene;
     isFlying: boolean = false;
     direction: string;
-    hasFleaman: boolean = true;
     fleaman: Enemy | undefined;
     constructor(parent: Enemy)
     {
@@ -61,7 +60,7 @@ export class EagleIA implements IEnemyAI
 
             const distance = Math.abs(player.body.center.x - this.parent.body.center.x);
 
-            if (distance < 64 && this.fleaman)
+            if (distance > 32 && distance < 120 && this.fleaman)
             {
                 this.fleaman.setActive(true);
 
@@ -69,7 +68,7 @@ export class EagleIA implements IEnemyAI
             }
 
             this.scene.time.addEvent({
-                delay: 200,
+                delay: 64,
                 callback: () =>
                 {
                     if (!this.parent.active) return;
@@ -115,7 +114,10 @@ export class EagleIA implements IEnemyAI
         {
             this.parent.resetAllButtons();
 
-            this.createFleaman();
+            if(this.fleaman === undefined ||this.fleaman.active === false)
+            {
+                this.createFleaman();
+            }
 
             this.isFlying = true;
 
@@ -140,12 +142,17 @@ export class EagleIA implements IEnemyAI
             }
         }
 
-        if (this.parent.active && this.parent.isOutsideCameraByPixels(64))
+        if (this.parent.active && this.parent.isOutsideCameraByPixels(128))
         {
             this.fleaman?.kill();
 
             this.parent.killAndRespawn();
         }
+    }
+
+    private randomPositionX(): number
+    {
+        return Phaser.Math.RND.integerInRange(16, 128);
     }
 
     reset()
@@ -156,6 +163,10 @@ export class EagleIA implements IEnemyAI
         {
             this.fleaman.kill();
         }
+
+        const rnd = Phaser.Math.RND.between(0, 100);
+        const x = rnd > 25 ? this.scene.cameras.main.worldView.right + this.randomPositionX() : this.scene.cameras.main.worldView.left - this.randomPositionX();
+        this.parent.body?.reset(x, this.parent.body.y);
 
         this.handleFly();
     }

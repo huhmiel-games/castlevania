@@ -547,8 +547,9 @@ export default function createAnims(scene: Phaser.Scene)
             { key: 'enemies', frame: 'eagle-fly_1' },
             { key: 'enemies', frame: 'eagle-fly_2' },
         ],
-        frameRate: 6,
-        repeat: 2,
+        yoyo: true,
+        frameRate: 9,
+        repeat: 1,
     });
 
     scene.anims.create({

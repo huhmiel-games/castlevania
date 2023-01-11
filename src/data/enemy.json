@@ -825,7 +825,7 @@
         },
         "physicsProperties": {
             "gravity": 0,
-            "speed": 80,
+            "speed": 90,
             "acceleration": 100,
             "stairSpeed": 160,
             "dragCoeff": 100,
