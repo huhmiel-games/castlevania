@@ -66,7 +66,7 @@ export class Enemy extends Entity
 
         this.setPhysicsProperties(enemyJSON.physicsProperties)
             .setStatus(enemyJSON.status)
-            .setDepth(DEPTH.GROUND_LAYER + 1)
+            .setDepth(DEPTH.ENEMY)
 
         this.body.setMaxVelocity(this.physicsProperties.speed, this.physicsProperties.speed * 4)
             .setSize(enemyJSON.physics.body.width, enemyJSON.physics.body.height)
