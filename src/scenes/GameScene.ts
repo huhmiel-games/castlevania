@@ -811,6 +811,11 @@ export default class GameScene extends Phaser.Scene
 
             if (enemy.parent.name === 'spike') return;
 
+            if(!enemy.parent.active && enemy.parent.name === 'fleaman')
+            {
+                enemy.parent.setActive(true).die();
+            }
+
             if (enemy.parent.name === 'dracula')
             {
                 if (weapon.body.center.y < 155 || weapon.body.center.y > 165)
