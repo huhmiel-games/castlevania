@@ -1,8 +1,10 @@
-import { PLAYER_A_NAME } from "../../constant/config";
+import { HEIGHT, PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../../entities/enemies/Enemy";
 import GameScene from "../../scenes/GameScene";
 import enemyJSON from '../../data/enemy.json';
 import { IEnemyAI } from "../../types/types";
+import { PALETTE_DB32 } from "../../constant/colors";
+import { DEPTH } from "../../constant/depth";
 
 export class BoneDragonIA implements IEnemyAI
 {
@@ -38,7 +40,7 @@ export class BoneDragonIA implements IEnemyAI
             const enemyJSONConfig = JSON.parse(JSON.stringify(enemyJSON["bone-dragon-body"]));
             enemyJSONConfig.status.position.x = this.parent.body.center.x + ((6 - i) * 8);
             enemyJSONConfig.status.position.y = this.parent.body.center.y - ((6 - i) * 8);
-            enemyJSONConfig.physicsProperties.acceleration = this.parent.config.physicsProperties.acceleration // 6 * i// / (7 - i)// / 6 / (6 - i);
+            enemyJSONConfig.physicsProperties.acceleration = this.parent.config.physicsProperties.acceleration;
             enemyJSONConfig.config.defaultFrame = 'bone-dragon-body'
 
             const enemy = new Enemy({
@@ -50,14 +52,11 @@ export class BoneDragonIA implements IEnemyAI
                 buttons: this.parent.buttons
             }, enemyJSONConfig);
 
-            //enemy.body.setMaxVelocityY(this.parent.config.physicsProperties.acceleration / (6 - i))
-
-            enemy.body.setMaxVelocityX(0).setAllowGravity(false).setGravityY(0);
-            enemy.setName('vertebrae' + i);
-            enemy.setActive(true);
-            enemy.setFlipX(true);
-            // enemy.setAi(new BoneDragonIA(enemy));
-            // enemy.ai['head'] = this.parent;
+            enemy.body.setImmovable().setMaxVelocity(0).setGravityY(0).setAllowGravity(false);
+            enemy.setName('vertebrae' + i)
+                .setDepth(this.parent.depth - i)
+                .setActive(true)
+                .setFlipX(true);
 
             this.childs.push(enemy);
 
@@ -97,7 +96,9 @@ export class BoneDragonIA implements IEnemyAI
 
         name === 'bone-dragon' && this.childs.forEach((child, i) =>
         {
-            child.body.setVelocityY(this.parent.body.velocity.y * i / 6)
+            const diff = this.parent.y - this.childs[0].y;
+
+            child.y = this.parent.y - diff / Math.sqrt(Math.pow(i, 3) + 1);
         })
 
         if (center.y < this.originPosition.y - 80 && body.velocity.y < 0)
@@ -160,7 +161,7 @@ export class BoneDragonIA implements IEnemyAI
 
                         a.setUp(now);
                         up.setUp(now);
-                        
+
 
                         down.setDown(now);
 
