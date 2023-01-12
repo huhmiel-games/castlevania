@@ -1,6 +1,7 @@
-import { WIDTH, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYER_A_NAME } from '../constant/config';
+import { WIDTH, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYER_A_NAME, COUNTDOWN_EVENT } from '../constant/config';
 import GameScene from './GameScene';
 import { TStatus } from '../types/types';
+import { PALETTE_DB32 } from '../constant/colors';
 
 /**
  * @author © Philippe Pereira 2022
@@ -43,6 +44,7 @@ export default class HudScene extends Phaser.Scene
         this.gameScene.events.on(HUD_EVENTS_NAMES.RESET, this.resetData, this);
         this.gameScene.events.on(HUD_EVENTS_NAMES.SHOTS, this.setShots, this);
         this.gameScene.events.on(HUD_EVENTS_NAMES.BOSS_HEALTH, this.setBossHealth, this);
+        this.gameScene.events.on(COUNTDOWN_EVENT, this.setCountDownText, this)
 
         this.getPlayerStatus();
 
@@ -92,8 +94,6 @@ export default class HudScene extends Phaser.Scene
         {
             this.add.image(56 + i * 4, 21, 'items', 'health_1').setOrigin(0, 0).setName(`boss-health_${i + 1}`);
         }
-
-        this.startCountDown(300);
 
         this.resetData();
     }
@@ -218,19 +218,6 @@ export default class HudScene extends Phaser.Scene
         weaponImage.setFrame(frame).setAlpha(1);
     }
 
-    private startCountDown(time: number)
-    {
-        const countDown = this.time.addEvent({
-            delay: 1000,
-            repeat: time,
-            callback: this.setCountDownText,
-            callbackScope: this
-        })
-
-
-        countDown.args = [countDown];
-    }
-
     private setLife(life: number)
     {
         const lifeText = this.children.getByName('life') as Phaser.GameObjects.BitmapText;
@@ -240,15 +227,19 @@ export default class HudScene extends Phaser.Scene
         return this;
     }
 
-    private setCountDownText(timerEvent: Phaser.Time.TimerEvent)
+    private setCountDownText(countdown: number)
     {
         const countDownText = this.children.getByName('countDown') as Phaser.GameObjects.BitmapText;
 
-        countDownText.setText(`time ${timerEvent.repeatCount.toString().padStart(4, '0')}`);
+        countDownText.setText(`time ${countdown.toString().padStart(4, '0')}`);
 
-        if (timerEvent.repeatCount === 0)
+        if(countdown < 30 && countdown % 2 === 1)
         {
-            // const player = this.gameScene.children.getByName(PLAYER_A_NAME) as Entity;
+            countDownText.setCharacterTint(0, 4, true, PALETTE_DB32.WELL_READ);
+
+            return;
         }
+        
+        countDownText.setCharacterTint(0, 4);
     }
 }

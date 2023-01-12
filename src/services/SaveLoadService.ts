@@ -1,4 +1,4 @@
-import { GAMENAME, HEIGHT, WIDTH } from "../constant/config";
+import { STAGE_COUNTDOWN_DEFAULT, GAMENAME, HEIGHT, WIDTH } from "../constant/config";
 import { TJoystickPosition, TKeyMapping, TStatus, TVirtualKeyMapping, TWorld } from "../types/types";
 import GameScene from '../scenes/GameScene';
 
@@ -147,6 +147,25 @@ export default class SaveLoadService
     public static resetSceneFirstTimeStamp(scene: GameScene): void
     {
         scene.firstTimestamp = new Date().getTime();
+    }
+
+    public static getStageCountDown(): number
+    {
+        const data = localStorage.getItem(`${GAMENAME}_stageCountdown`);
+
+        if(data)
+        {
+            return Number(data);
+        }
+
+        this.setStageCountDown(STAGE_COUNTDOWN_DEFAULT);
+        
+        return STAGE_COUNTDOWN_DEFAULT;
+    }
+
+    public static setStageCountDown(countDown: number): void
+    {
+        localStorage.setItem(`${GAMENAME}_stageCountdown`, JSON.stringify(countDown));
     }
     // #endregion
 

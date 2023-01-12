@@ -78,3 +78,16 @@ export const STAGE_START_POSITION = {
     '61': { x: 478 * TILE_SIZE, y: 34 * TILE_SIZE },
     '71': { x: 334 * TILE_SIZE, y: 19 * TILE_SIZE },
 }
+
+export const STAGE_COUNTDOWN_DEFAULT = 300;
+export const STAGE_COUNTDOWN = {
+    '11': 300,
+    '21': 400,
+    '31': 500,
+    '41': 400,
+    '51': 500,
+    '61': 700,
+}
+
+
+export const COUNTDOWN_EVENT = 'countdown-event';
