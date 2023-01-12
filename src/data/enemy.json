@@ -1554,7 +1554,7 @@
             }
         },
         "status": {
-            "health": 1,
+            "health": 16,
             "score": 0,
             "life": 0,
             "ammo": 3000,
@@ -1612,7 +1612,7 @@
             }
         },
         "status": {
-            "health": 1,
+            "health": 32,
             "score": 50000,
             "life": 0,
             "ammo": 3000,
