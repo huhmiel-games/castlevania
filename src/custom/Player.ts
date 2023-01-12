@@ -107,11 +107,7 @@ export default class Player extends Entity
 
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
         {
-            const currentAnim = this.anims.getName();
-
-            const { JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK, HURT, JUMP_SECONDARY_ATTACK } = this.animList;
-
-            if ([JUMP_ATTACK, CROUCH_ATTACK, UPSTAIR_ATTACK, DOWNSTAIR_ATTACK, HURT].includes(currentAnim))
+            if (this.meleeWeapon?.body.enable)
             {
                 this.meleeWeapon?.body.setEnable(false);
 
@@ -330,7 +326,7 @@ export default class Player extends Entity
 
             case _item instanceof Orb:
                 {
-                    if(this.status.stage === 73)
+                    if (this.status.stage === 73)
                     {
                         this.scene.endGame();
 

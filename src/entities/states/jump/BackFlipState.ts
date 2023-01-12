@@ -44,7 +44,7 @@ export default class BackFlipState extends State
 
     public execute(scene: GameScene, character: Entity)
     {
-        const { a } = character.buttons;
+        const { a, up } = character.buttons;
 
         const { flipX } = character;
 
@@ -53,6 +53,20 @@ export default class BackFlipState extends State
         const { isAttacking } = character.physicsProperties;
 
         const { now } = scene.time;
+
+        if (character.canUse(EPossibleState.JUMP_SECONDARY_ATTACK)
+            && up.isDown
+            && a.isDown
+            && a.getDuration(now) < 128
+            && !isAttacking
+            && character.secondaryWeaponGroup.countActive(false) > 0
+            && character.status.ammo > 0
+        )
+        {
+            this.stateMachine.transition(EPossibleState.JUMP_SECONDARY_ATTACK, this.stateMachine.state, this.groundYPosition);
+
+            return;
+        }
 
         if (character.canUse(EPossibleState.JUMP_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
