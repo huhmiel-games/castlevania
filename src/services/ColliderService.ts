@@ -229,7 +229,7 @@ export default class ColliderService
 
             const tile = _tile as unknown as Phaser.Tilemaps.Tile;
 
-            if (!tile || !tile.tilemapLayer || tile.properties?.platformBlock)
+            if (!tile || !tile.tilemapLayer || (tile.properties?.platformBlock && enemy.name !== 'spike'))
             {
                 return false;
             }
