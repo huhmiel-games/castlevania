@@ -1,5 +1,5 @@
 import { EPossibleState } from "../constant/character";
-import { HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, TILE_SIZE } from "../constant/config";
+import { HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../constant/config";
 import { DEPTH } from "../constant/depth";
 import { Entity } from "../entities/Entity";
 import AttackState from "../entities/states/attack/AttackState";
@@ -569,7 +569,7 @@ export default class Player extends Entity
 
         this.physicsProperties.isHurt = true;
 
-        const health = this.status.health - Phaser.Math.Clamp(damage, 0, 4);
+        const health = this.status.health - (damage === 16 ? 16 : Phaser.Math.Clamp(damage, 0, 4));
 
         if (health > 0)
         {
@@ -635,6 +635,8 @@ export default class Player extends Entity
         this.status.setLife(this.status.life - 1);
 
         this.multipleShots = 1;
+
+        this.scene.stageCountdown.stop();
 
         SaveLoadService.setPlayerDeathCount();
 
@@ -746,6 +748,10 @@ export default class Player extends Entity
         });
 
         SaveLoadService.saveGameData(this.status.toJson());
+
+        const stage = this.status.stage.toString().substring(0, 1) + 1;
+
+        this.scene.stageCountdown.reset(false, STAGE_COUNTDOWN[stage]);
 
         this.scene.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
         {
