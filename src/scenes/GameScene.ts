@@ -1,6 +1,6 @@
 // @ts-ignore
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
-import { FONTS, FONTS_SIZES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
+import { COUNTDOWN_EVENT, FONTS, FONTS_SIZES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, STAGE_COUNTDOWN, STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
 import { InputController } from '../inputs/InputController';
 import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
@@ -18,6 +18,7 @@ import Weapon from '../entities/weapons/Weapon.js';
 import { Orb } from '../gameobjects/Orb.js';
 import creditsData from '../data/credits.json';
 import { DEPTH } from '../constant/depth.js';
+import { StageCountDown } from '../utils/StageCountDown.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -53,6 +54,7 @@ export default class GameScene extends Phaser.Scene
     public isBossBattle: boolean = false;
     public isChangingStage: boolean = false;
     public isOrb: boolean = false;
+    public stageCountdown = new StageCountDown(this);
     debugGraphics: Phaser.GameObjects.Graphics;
 
     constructor()
@@ -136,6 +138,8 @@ export default class GameScene extends Phaser.Scene
         WorldRooms.generate(this);
 
         this.setCurrentStage();
+
+        this.stageCountdown.restart();
 
         if (!this.scene.isActive(SCENES_NAMES.HUD))
         {
@@ -254,7 +258,7 @@ export default class GameScene extends Phaser.Scene
 
         this.enemyDeathGroup = this.add.group({
             classType: Phaser.GameObjects.Sprite,
-            maxSize: 20,
+            maxSize: 30,
         });
     }
 
@@ -278,8 +282,6 @@ export default class GameScene extends Phaser.Scene
                     || height !== cameraBounds.height
                 )
                 {
-                    this.setParallaxImagePosition(width!);
-
                     this.cameras.main.setBounds(x!, y!, width!, height!);
 
                     const zoneData = LayerService.convertTiledObjectProperties(currentZone.properties);
@@ -444,6 +446,8 @@ export default class GameScene extends Phaser.Scene
             player.status.setPosition({ x: player.x, y: player.y });
 
             SaveLoadService.saveGameData(player.status.toJson());
+
+            this.stageCountdown.save();
         }
     }
 
@@ -455,37 +459,66 @@ export default class GameScene extends Phaser.Scene
 
         orb.setActive(false).setVisible(false);
 
+        this.stageCountdown.stop();
+
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
         this.playSong(10, false);
+
+        this.stageCountdown.stop();
+
         this.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
         {
             orb?.destroy();
 
-            const timer = this.time.addEvent({
-                delay: 100,
-                repeat: player.status.ammo,
+
+            const timerTime = this.time.addEvent({
+                delay: 50,
+                repeat: this.stageCountdown.getCountDown(),
                 callback: () =>
                 {
-                    if (timer.getRepeatCount() > 0)
+                    if (timerTime.getRepeatCount() > 0)
                     {
                         this.playSound(5);
 
-                        player.status.setAmmo(player.status.ammo - 1);
+                        this.stageCountdown.decrementCountdown();
 
-                        player.status.setScore(player.status.score + 100);
+                        player.status.setScore(player.status.score + 10);
+
+                        this.events.emit(COUNTDOWN_EVENT, this.stageCountdown.getCountDown())
                     }
 
-                    if (timer.getRepeatCount() === 0)
+                    if (timerTime.getRepeatCount() === 0)
                     {
-                        this.playSound(4);
+                        const timerAmmo = this.time.addEvent({
+                            delay: 50,
+                            repeat: player.status.ammo,
+                            callback: () =>
+                            {
+                                if (timerAmmo.getRepeatCount() > 0)
+                                {
+                                    this.playSound(5);
 
-                        this.isBossBattle = false;
+                                    player.status.setAmmo(player.status.ammo - 1);
 
-                        this.nextStage();
+                                    player.status.setScore(player.status.score + 100);
+                                }
+
+                                if (timerAmmo.getRepeatCount() === 0)
+                                {
+                                    this.playSound(4);
+
+                                    this.isBossBattle = false;
+
+                                    this.nextStage();
+                                }
+                            }
+                        });
                     }
                 }
             });
+
+
         });
     }
 
@@ -636,6 +669,8 @@ export default class GameScene extends Phaser.Scene
 
                 player.body.reset(STAGE_START_POSITION[21].x, STAGE_START_POSITION[21].y);
 
+                this.stageCountdown.reset(true, STAGE_COUNTDOWN[21]);
+
                 break;
 
             case 26:
@@ -643,6 +678,8 @@ export default class GameScene extends Phaser.Scene
                 player.setFlipX(true);
 
                 player.body.reset(STAGE_START_POSITION[31].x, STAGE_START_POSITION[31].y);
+
+                this.stageCountdown.reset(true, STAGE_COUNTDOWN[31]);
 
                 break;
 
@@ -652,6 +689,8 @@ export default class GameScene extends Phaser.Scene
 
                 player.body.reset(STAGE_START_POSITION[41].x, STAGE_START_POSITION[41].y);
 
+                this.stageCountdown.reset(true, STAGE_COUNTDOWN[41]);
+
                 break;
 
             case 44:
@@ -660,6 +699,8 @@ export default class GameScene extends Phaser.Scene
 
                 player.body.reset(STAGE_START_POSITION[51].x, STAGE_START_POSITION[51].y);
 
+                this.stageCountdown.reset(true, STAGE_COUNTDOWN[51]);
+
                 break;
 
             case 56:
@@ -667,6 +708,8 @@ export default class GameScene extends Phaser.Scene
                 player.setFlipX(true);
 
                 player.body.reset(STAGE_START_POSITION[61].x, STAGE_START_POSITION[61].y);
+
+                this.stageCountdown.reset(true, STAGE_COUNTDOWN[61]);
 
                 break;
 
@@ -686,24 +729,6 @@ export default class GameScene extends Phaser.Scene
         })
     }
 
-    private cleanupBossBattle()
-    {
-        const currentZone = this.getPlayerCurrentStage();
-
-        if (!currentZone) return;
-
-        const { x, y, width, height } = currentZone;
-
-        this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
-            .setBoundsCollision(true, true, true, true);
-
-        this.cameras.main.setBounds(x!, y!, width!, height!);
-    }
-
-    private setParallaxImagePosition(width: number)
-    {
-        // const backParallax = this.children.getByName('parallax-mountain') as Phaser.GameObjects.TileSprite;
-    }
     public cameraFollowPlayer(): Phaser.Cameras.Scene2D.Camera
     {
         this.cameras.main.startFollow(this.getPlayerByName(PLAYER_A_NAME), true, 0.2, 0.1, 0, 0)
@@ -757,14 +782,10 @@ export default class GameScene extends Phaser.Scene
 
             const enemy = _enemy as DamageBody;
 
-            if (enemy.parent.visible === false)
-            {
-                return false;
-            }
-
             if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
                 || playerDamageBody.parent.physicsProperties.isHurt
                 || !enemy.parent.active
+                || enemy.parent.visible === false
             )
             {
                 return false;
@@ -811,7 +832,7 @@ export default class GameScene extends Phaser.Scene
 
             if (enemy.parent.name === 'spike') return;
 
-            if(!enemy.parent.active && enemy.parent.name === 'fleaman')
+            if (!enemy.parent.active && enemy.parent.name === 'fleaman')
             {
                 enemy.parent.setActive(true).die();
             }
