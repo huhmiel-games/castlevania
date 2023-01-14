@@ -6,7 +6,7 @@ import LayerService from "../services/LayerService";
 import ScoreRetrievableItem from "../gameobjects/ScoreRetrievableItem";
 import WeaponRetrievableItem from "../gameobjects/WeaponRetrievableItem";
 import BaseRetrievableItem from "../gameobjects/BaseRetrievableItem";
-import Player from "./Player";
+import Player from "./entities/Player";
 
 export default function destroyCandle(scene: GameScene, _whip: unknown, _candle: unknown)
 {

@@ -3,7 +3,7 @@ import { DEPTH } from "../constant/depth";
 import GameScene from "../scenes/GameScene";
 import SaveLoadService from "../services/SaveLoadService";
 import { TStatus } from "../types/types";
-import Player from "./Player";
+import Player from "./entities/Player";
 
 export default function init(scene: GameScene)
 {

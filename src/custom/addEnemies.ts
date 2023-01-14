@@ -1,4 +1,4 @@
-import { Enemy } from "./enemies/Enemy";
+import { Enemy } from "./entities/Enemy";
 import { InputController } from "../inputs/InputController";
 import GameScene from "../scenes/GameScene";
 import LayerService from "../services/LayerService";
@@ -23,7 +23,7 @@ import { BoneDragonIA } from "./enemies_ia/BoneDragonIA";
 import { MovingSpikeIA } from "./enemies_ia/MovingSpikeIA";
 import { bossNames } from "../constant/character";
 import { TEntityConfig } from "../types/types";
-import { Boss } from "./enemies/Boss";
+import { Boss } from "./entities/Boss";
 import { GiantBatIA } from "./boss_ia/GiantBatIA";
 import { MedusaBossIA } from "./boss_ia/MedusaBossIA";
 import { MummyIA } from "./boss_ia/MummyIA";

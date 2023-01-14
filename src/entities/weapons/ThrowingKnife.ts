@@ -1,9 +1,9 @@
 import { DEPTH } from "../../constant/depth";
 import destroyCandle from "../../custom/destroyCandle";
-import Player from "../../custom/Player";
+import Player from "../../custom/entities/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
-import { Enemy } from "../../custom/enemies/Enemy";
+import { Enemy } from "../../custom/entities/Enemy";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
 

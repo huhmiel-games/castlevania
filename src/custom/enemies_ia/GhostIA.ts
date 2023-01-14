@@ -1,5 +1,5 @@
 import { PLAYER_A_NAME } from "../../constant/config";
-import { Enemy } from "../enemies/Enemy";
+import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
 

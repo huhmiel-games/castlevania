@@ -1,5 +1,5 @@
-import { Boss } from "../custom/enemies/Boss";
-import { Enemy } from "../custom/enemies/Enemy";
+import { Boss } from "../custom/entities/Boss";
+import { Enemy } from "../custom/entities/Enemy";
 import { Entity } from "../entities/Entity";
 import Boomerang from "../entities/weapons/Boomerang";
 import FireBall from "../entities/weapons/FireBall";
