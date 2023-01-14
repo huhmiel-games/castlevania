@@ -27,7 +27,9 @@ export class MedusaBossIA implements IEnemyAI
 
         this.parent.anims.play(this.parent.animList.IDLE!);
 
-        this.scene.add.image(1904, 472, 'enemies', 'medusa-statue_0').setName('medusaStatue').setDepth(this.parent.depth - 1);
+        this.scene.add.image(1904, 472, 'enemies', 'medusa-statue_0')
+            .setName('medusaStatue')
+            .setDepth(this.parent.depth - 1);
     }
 
     execute()
