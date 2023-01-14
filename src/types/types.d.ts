@@ -9,9 +9,7 @@ import ThrowingKnife from "../entities/weapons/ThrowingKnife";
 import { Key } from "../inputs/Key";
 import GameScene from "../scenes/GameScene";
 
-/**
- * Types
- */
+//// Types ////
 export type Tdata = {
     playerRoomName: string,
     x: number,
@@ -195,6 +193,15 @@ export type TEntityConfig = {
     resurrect: number
 }
 
+export type TDamageBodyConfig = { 
+    scene: GameScene; 
+    parent: Entity, 
+    x: number; 
+    y: number, 
+    width: number, 
+    height: number 
+}
+
 export type TSoundList =
 {
     [key: string]: Phaser.Sound.BaseSound;
@@ -267,9 +274,14 @@ export type TMeleeWeaponConfig = {
     name: string
 }
 
-/**
- * Interfaces
- */
+//// Interfaces ////
+
+export interface ICustomGame
+{
+    scene: GameScene
+    init: () => void
+}
+
 export interface IEnemyAI
 {
     parent: Enemy | Boss;

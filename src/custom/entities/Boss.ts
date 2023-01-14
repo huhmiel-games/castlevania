@@ -1,6 +1,6 @@
+import { ENEMY_NAMES } from "../../constant/character";
 import { PALETTE_DB32 } from "../../constant/colors";
 import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
-import { addDraculaHead, addFinalBoss } from "../addEnemies";
 import GameScene from "../../scenes/GameScene";
 import SaveLoadService from "../../services/SaveLoadService";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
@@ -36,7 +36,7 @@ export class Boss extends Enemy
     {
         this.scene.enemies.forEach(enemy =>
         {
-            if (enemy.name === this.name || enemy.name === 'igor') return;
+            if (enemy.name === this.name || enemy.name === ENEMY_NAMES.IGOR) return;
 
             this.scene.children.remove(enemy.damageBody);
             this.scene.children.remove(enemy);
@@ -57,7 +57,7 @@ export class Boss extends Enemy
         this.destroy();
     }
 
-    public setStatusHealthDamage(damage: number): Boss
+    public setDamage(damage: number): Boss
     {
         if (!this.scene) this.destroy();
 
@@ -69,7 +69,7 @@ export class Boss extends Enemy
 
         if (this.getRemainingActiveBosses() === 1)
         {
-            if (this.name === 'dracula2')
+            if (this.name === ENEMY_NAMES.DRACULA_2)
             {
                 this.scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, Math.ceil(health / 2));
             }
@@ -124,7 +124,7 @@ export class Boss extends Enemy
 
         this.status.setHealth(0);
 
-        this.setStatusIsDead(true);
+        this.setDead(true);
 
         this.die();
 
@@ -152,9 +152,9 @@ export class Boss extends Enemy
 
         this.scene.events.emit('enemy-score', this.status.score);
 
-        if (this.name === 'frank')
+        if (this.name === ENEMY_NAMES.FRANK)
         {
-            const igor = this.scene.children.getByName('igor');
+            const igor = this.scene.children.getByName(ENEMY_NAMES.IGOR);
 
             if (igor)
             {
@@ -162,13 +162,13 @@ export class Boss extends Enemy
             }
         }
 
-        if (this.name === 'dracula')
+        if (this.name === ENEMY_NAMES.DRACULA)
         {
             this.setActive(true);
 
             this.clearTint();
 
-            addDraculaHead(this.scene, this.body.center.x, this.damageBody.body.top, this.flipX);
+            this.scene.customGame.addDraculaHead(this.body.center.x, this.damageBody.body.top, this.flipX);
 
             this.anims.play(this.animList.DEAD!);
 
@@ -247,15 +247,15 @@ export class Boss extends Enemy
 
                 if (this.getRemainingActiveBosses() === 0 && this.scene)
                 {
-                    if (this.name === 'dracula')
+                    if (this.name === ENEMY_NAMES.DRACULA)
                     {
-                        addDraculaHead(this.scene, this.body.center.x, this.damageBody.body.top, this.flipX);
+                        this.scene.customGame.addDraculaHead(this.body.center.x, this.damageBody.body.top, this.flipX);
 
                         this.anims.play(this.animList.DEAD!);
                     }
                     else
                     {
-                        this.scene.addOrb();
+                        this.scene.customGame.addOrb();
 
                         Boss.endBossBattle(this.scene);
                     }
@@ -275,8 +275,6 @@ export class Boss extends Enemy
     public static endBossBattle(scene: GameScene)
     {
         scene.isBossBattle = false;
-
-        // scene.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
 
         scene.enemies.forEach(elm =>
         {

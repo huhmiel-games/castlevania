@@ -1,5 +1,4 @@
 import { DEPTH } from "../../constant/depth";
-import destroyCandle from "../../custom/destroyCandle";
 import Player from "../../custom/entities/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
@@ -17,6 +16,7 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
     public parent: Entity;
     public weaponGroup: Phaser.GameObjects.Group;
     public damage: number = 0;
+    public canStun: boolean = false;
     public speed: number = 300;
     private weaponAnim?: string;
     private sfx: number;
@@ -102,7 +102,7 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
 
     public destroyObject(_candle: unknown)
     {
-        destroyCandle(this.scene, this, _candle);
+        this.scene.customGame.destroyTileItem(this, _candle);
     }
 
     public destroyTile(_tile: Phaser.Tilemaps.Tile)

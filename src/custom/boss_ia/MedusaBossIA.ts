@@ -6,7 +6,7 @@ import { IEnemyAI, TEntityConfig } from "../../types/types";
 import enemyJSON from '../../data/enemy.json';
 import { SnakeIA } from "./SnakeIA";
 import { InputController } from "../../inputs/InputController";
-import { EPossibleState } from "../../constant/character";
+import { ENEMY_NAMES, EPossibleState } from "../../constant/character";
 
 
 export class MedusaBossIA implements IEnemyAI
@@ -95,7 +95,7 @@ export class MedusaBossIA implements IEnemyAI
     {
         const inputController = InputController.getInstance();
 
-        const enemyJSONConfig: TEntityConfig = JSON.parse(JSON.stringify(enemyJSON['snake']));
+        const enemyJSONConfig: TEntityConfig = JSON.parse(JSON.stringify(enemyJSON[ENEMY_NAMES.SNAKE]));
 
         const snake = new Enemy({
             scene: this.scene,
@@ -106,11 +106,11 @@ export class MedusaBossIA implements IEnemyAI
             buttons: inputController.getNewButtons()
         }, enemyJSONConfig);
 
-        snake.setName('snake');
+        snake.setName(ENEMY_NAMES.SNAKE);
 
         snake.setAi(new SnakeIA(snake));
 
-        this.scene.enemiesDamageBody.push(snake.damageBody)
+        this.scene.customGame.enemiesDamageBody.push(snake.damageBody)
     }
 
     reset()

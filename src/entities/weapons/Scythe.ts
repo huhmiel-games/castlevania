@@ -12,6 +12,7 @@ export class Scythe extends Phaser.GameObjects.Sprite implements Weapon
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
     public damage: number = 0;
+    public canStun: boolean = false;
     public speed: number = 100;
     private weaponAnim?: string;
     private sfx: number;

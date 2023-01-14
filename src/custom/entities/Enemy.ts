@@ -4,7 +4,7 @@ import StateTimestamp from "../../utils/StateTimestamp";
 import { PALETTE_DB32 } from "../../constant/colors";
 import { DEPTH } from "../../constant/depth";
 import { Entity } from "../../entities/Entity";
-import { EPossibleState } from "../../constant/character";
+import { ENEMY_NAMES, EPossibleState } from "../../constant/character";
 import StateMachine from "../../utils/StateMachine";
 import AttackState from "../../entities/states/attack/AttackState";
 import DeathState from "../../entities/states/death/DeathState";
@@ -44,6 +44,7 @@ import JumpMomentumSecondaryAttackState from "../../entities/states/attack/JumpM
 import FallSecondaryAttackState from "../../entities/states/attack/FallSecondaryAttackState";
 import { Scythe } from "../../entities/weapons/Scythe";
 import SaveLoadService from "../../services/SaveLoadService";
+import { WEAPON_NAMES } from "../../constant/weapons";
 
 export class Enemy extends Entity
 {
@@ -96,7 +97,7 @@ export class Enemy extends Entity
 
         this.scene.enemies.push(this);
 
-        this.scene.enemiesDamageBody.push(this.damageBody);
+        this.scene.customGame.enemiesDamageBody.push(this.damageBody);
     }
 
     public preUpdate(time: number, delta: number)
@@ -115,7 +116,7 @@ export class Enemy extends Entity
         return this;
     }
 
-    public setStatusHealthDamage(damage: number): Entity
+    public setDamage(damage: number): Entity
     {
         if (!this.scene) this.destroy();
 
@@ -145,7 +146,7 @@ export class Enemy extends Entity
                         this.clearTint()
                     }
                 }
-            })
+            });
 
             this.scene?.time.addEvent({
                 delay: 500,
@@ -162,7 +163,7 @@ export class Enemy extends Entity
 
         this.status.setHealth(0);
 
-        this.setStatusIsDead(true);
+        this.setDead(true);
 
         this.die();
 
@@ -205,12 +206,12 @@ export class Enemy extends Entity
 
         this.resetAllButtons();
 
-        if (this.name === 'eagle')
+        if (this.name === ENEMY_NAMES.EAGLE)
         {
-            this.ai['fleaman']?.kill();
+            this.ai[ENEMY_NAMES.FLEAMAN]?.kill();
         }
 
-        if (this.name === 'bone-dragon')
+        if (this.name === ENEMY_NAMES.BONE_DRAGON)
         {
             this.ai['childs']?.reverse().forEach((child, i) =>
             {
@@ -475,11 +476,11 @@ export class Enemy extends Entity
         }
     }
 
-    public addSecondaryWeapon(weaponType: string)
+    public addSecondaryWeapon(weaponType: WEAPON_NAMES)
     {
         switch (weaponType)
         {
-            case 'fireball':
+            case WEAPON_NAMES.FIREBALL:
                 const fireball = new FireBall({
                     scene: this.scene,
                     parent: this,
@@ -493,14 +494,14 @@ export class Enemy extends Entity
                     group: 'enemyWeaponGroup'
                 });
 
-                fireball.setName('fireball');
+                fireball.setName(WEAPON_NAMES.FIREBALL);
 
                 this.scene.enemyWeaponGroup.add(fireball);
                 this.secondaryWeaponGroup.add(fireball);
 
                 break;
 
-            case 'bone':
+            case WEAPON_NAMES.BONE:
                 const bone = new ThrowingAxe({
                     scene: this.scene,
                     parent: this,
@@ -514,14 +515,14 @@ export class Enemy extends Entity
                     group: 'enemyWeaponGroup'
                 });
 
-                bone.setName('bone');
+                bone.setName(WEAPON_NAMES.BONE);
 
                 this.scene.enemyWeaponGroup.add(bone);
                 this.secondaryWeaponGroup.add(bone);
 
                 break;
 
-            case 'axe':
+            case WEAPON_NAMES.AXE:
                 const axe = new Boomerang({
                     scene: this.scene,
                     parent: this,
@@ -535,14 +536,14 @@ export class Enemy extends Entity
                     group: 'enemyWeaponGroup'
                 }, 15, 1500);
 
-                axe.setName('axe');
+                axe.setName(WEAPON_NAMES.AXE);
 
                 this.scene.enemyWeaponGroup.add(axe);
                 this.secondaryWeaponGroup.add(axe);
 
                 break;
 
-            case 'scythe':
+            case WEAPON_NAMES.SCYTHE:
                 const scythe = new Scythe({
                     scene: this.scene,
                     parent: this,
@@ -556,7 +557,7 @@ export class Enemy extends Entity
                     group: 'enemyWeaponGroup'
                 });
 
-                scythe.setName('scythe');
+                scythe.setName(WEAPON_NAMES.SCYTHE);
 
                 this.scene.enemyWeaponGroup.add(scythe);
                 this.secondaryWeaponGroup.add(scythe);

@@ -168,7 +168,7 @@ export default class LayerService
         {
             if (tile.properties.light && scene.isInPlayerStage({ x: tile.pixelX, y: tile.pixelY + 1 }))
             {
-                const candle = scene.lightCandlesGroup.get(tile.pixelX + TILE_SIZE / 2, tile.pixelY + TILE_SIZE / 4) as Phaser.GameObjects.PointLight;
+                const candle = scene.lightItemsGroup.get(tile.pixelX + TILE_SIZE / 2, tile.pixelY + TILE_SIZE / 4) as Phaser.GameObjects.PointLight;
                 candle.attenuation = LIGHT_ATTENUATION;
                 candle.radius = LIGHT_RADIUS;
                 candle.intensity = LIGHT_INTENSITY;

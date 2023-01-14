@@ -69,6 +69,8 @@ export class StageCountDown
 
     private emitCountDownEvent()
     {
+        if(this.scene.isPaused) return;
+
         this.countDown -= 1;
 
         if(this.countDown < 30)
@@ -80,7 +82,7 @@ export class StageCountDown
         {
             const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-            player.setStatusHealthDamage(16);
+            player.setDamage(16);
         }
 
         this.scene.events.emit(COUNTDOWN_EVENT, this.countDown);

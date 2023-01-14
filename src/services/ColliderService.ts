@@ -1,6 +1,5 @@
 import { EPossibleState } from '../constant/character';
 import { PLAYER_A_NAME } from '../constant/config';
-import { spawnRetrievableItem } from '../custom/destroyCandle';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
 import { MeleeWeapon } from '../entities/weapons/MeleeWeapon';
@@ -187,7 +186,7 @@ export default class ColliderService
 
                 scene.playSound(21, 1);
 
-                spawnRetrievableItem(scene, tile);
+                scene.customGame.spawnRetrievableItem(tile);
 
                 tile.setCollision(false, false, false, false, true).destroy();
             }

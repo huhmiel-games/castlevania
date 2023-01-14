@@ -2,6 +2,7 @@ import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
+import { ENEMY_NAMES } from "../../constant/character";
 
 export class DragonHeadIA implements IEnemyAI
 {
@@ -31,7 +32,7 @@ export class DragonHeadIA implements IEnemyAI
 
         const { now } = this.scene.time;
 
-        const otherDragons = this.scene.enemies.filter(enemy => enemy.name === 'dragonhead' && enemy.active);
+        const otherDragons = this.scene.enemies.filter(enemy => enemy.name === ENEMY_NAMES.DRAGON_HEAD && enemy.active);
 
         if (this.scene.physics.world.collide(this.parent, otherDragons))
         {

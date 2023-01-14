@@ -2,9 +2,7 @@ import { HEIGHT, PLAYER_A_NAME, WIDTH } from "../../constant/config";
 import { Boss } from "../entities/Boss";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
-import { EPossibleState } from "../../constant/character";
 import { DEPTH } from "../../constant/depth";
-import Weapon from "../../entities/weapons/Weapon";
 import FireBall from "../../entities/weapons/FireBall";
 
 

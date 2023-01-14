@@ -1,9 +1,9 @@
-import { LEFT } from "phaser";
 import { EPossibleState } from "../../constant/character";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
+import { WEAPON_NAMES } from "../../constant/weapons";
 
 export class IgorIA implements IEnemyAI
 {
@@ -20,7 +20,7 @@ export class IgorIA implements IEnemyAI
 
         this.parent.body.setMaxVelocityY(0);
 
-        this.parent.addSecondaryWeapon('fireball');
+        this.parent.addSecondaryWeapon(WEAPON_NAMES.FIREBALL);
     }
 
     execute()

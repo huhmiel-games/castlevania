@@ -1,4 +1,3 @@
-import { WIDTH } from "../constant/config";
 import { DEPTH } from "../constant/depth";
 import GameScene from "../scenes/GameScene";
 import { TSpriteConfig } from "../types/types";

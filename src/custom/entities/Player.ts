@@ -42,6 +42,8 @@ import JumpMomentumSecondaryAttackState from "../../entities/states/attack/JumpM
 import FallSecondaryAttackState from "../../entities/states/attack/FallSecondaryAttackState";
 import { Orb } from "../../gameobjects/Orb";
 import { Boss } from "./Boss";
+import { TILE_ITEMS } from "../../constant/tiles";
+import { WEAPON_NAMES } from "../../constant/weapons";
 
 export default class Player extends Entity
 {
@@ -52,7 +54,7 @@ export default class Player extends Entity
 
         this.scene = config.scene;
 
-        this.secondaryWeaponGroup = this.scene.secondaryWeaponGroup;
+        this.secondaryWeaponGroup = this.scene.playersSecondaryWeaponGroup;
 
         this.setName(PLAYER_A_NAME)
             .setDepth(DEPTH.PLAYER)
@@ -223,6 +225,8 @@ export default class Player extends Entity
     {
         super.preUpdate(time, delta);
 
+        const { start } = this.buttons;
+
         if (this.physicsProperties.isDead && this.anims.getName() !== this.animList.DEAD)
         {
             this.anims.stop();
@@ -237,6 +241,11 @@ export default class Player extends Entity
         )
         {
             this.die();
+        }
+
+        if (start.isDown && start.getDuration(time) < 16)
+        {
+            this.scene.setPause();
         }
     }
 
@@ -299,7 +308,7 @@ export default class Player extends Entity
                     const weapon = _item as WeaponRetrievableItem;
                     weapon.body.setEnable(false);
 
-                    this.addSecondaryWeapon(weapon.name);
+                    this.addSecondaryWeapon(weapon.name as WEAPON_NAMES);
 
                     this.scene.playSound(23);
 
@@ -315,7 +324,7 @@ export default class Player extends Entity
 
                     const { name } = item;
 
-                    this.addItem(name);
+                    this.addItem(name as TILE_ITEMS);
 
                     this.scene.playSound(23);
 
@@ -339,37 +348,37 @@ export default class Player extends Entity
         }
     }
 
-    private addItem(itemName: string)
+    private addItem(itemName: TILE_ITEMS)
     {
         switch (itemName)
         {
-            case 'double-shot':
+            case TILE_ITEMS.DOUBLE_SHOT:
                 {
-                    if (this.scene.secondaryWeaponGroup.getLength() === 0) return;
+                    if (this.scene.playersSecondaryWeaponGroup.getLength() === 0) return;
 
                     this.setMultipleShots(2);
 
-                    const secondaryWeaponName = this.scene.secondaryWeaponGroup.getChildren()[0].name;
+                    const secondaryWeaponName = this.scene.playersSecondaryWeaponGroup.getChildren()[0].name;
 
-                    this.addSecondaryWeapon(secondaryWeaponName);
+                    this.addSecondaryWeapon(secondaryWeaponName as WEAPON_NAMES);
 
                     break;
                 }
 
-            case 'triple-shot':
+            case TILE_ITEMS.TRIPLE_SHOT:
                 {
-                    if (this.scene.secondaryWeaponGroup.getLength() === 0) return;
+                    if (this.scene.playersSecondaryWeaponGroup.getLength() === 0) return;
 
                     this.setMultipleShots(3);
 
-                    const secondaryWeaponName = this.scene.secondaryWeaponGroup.getChildren()[0].name;
+                    const secondaryWeaponName = this.scene.playersSecondaryWeaponGroup.getChildren()[0].name;
 
-                    this.addSecondaryWeapon(secondaryWeaponName);
+                    this.addSecondaryWeapon(secondaryWeaponName as WEAPON_NAMES);
 
                     break;
                 }
 
-            case 'pork':
+            case TILE_ITEMS.PORK:
                 const { health } = this.status;
 
                 const newHealth = Phaser.Math.Clamp(health + 6, 0, 16);
@@ -378,7 +387,7 @@ export default class Player extends Entity
 
                 break;
 
-            case 'rosary':
+            case TILE_ITEMS.ROSARY:
                 const cam = this.scene.cameras.main;
                 const visibleEnemies = this.scene.enemies.filter(enemy => enemy.active && cam.worldView.contains(enemy.body.center.x, enemy.body.center.y));
 
@@ -409,9 +418,9 @@ export default class Player extends Entity
         this.scene.events.emit(HUD_EVENTS_NAMES.SHOTS, value);
     }
 
-    public addSecondaryWeapon(weaponType: string)
+    public addSecondaryWeapon(weaponType: WEAPON_NAMES)
     {
-        let secondaryWeaponName: string | null = this.scene.secondaryWeaponGroup.getChildren()[0]?.name;
+        let secondaryWeaponName: string | null = this.scene.playersSecondaryWeaponGroup.getChildren()[0]?.name;
 
         if (secondaryWeaponName !== weaponType && this.multipleShots > 1)
         {
@@ -422,22 +431,22 @@ export default class Player extends Entity
 
         switch (weaponType)
         {
-            case 'cross':
+            case WEAPON_NAMES.CROSS:
                 this.addCross();
 
                 break;
 
-            case 'dagger':
+            case WEAPON_NAMES.DAGGER:
                 this.addDagger();
 
                 break;
 
-            case 'holyWater':
+            case WEAPON_NAMES.HOLY_WATER:
                 this.addHolyWater();
 
                 break;
 
-            case 'axe':
+            case WEAPON_NAMES.AXE:
                 this.addAxe();
 
                 break;
@@ -452,7 +461,7 @@ export default class Player extends Entity
 
     private clearSecondaryWeapons()
     {
-        this.scene.secondaryWeaponGroup.clear(true, true);
+        this.scene.playersSecondaryWeaponGroup.clear(true, true);
     }
 
     private addCross()
@@ -474,12 +483,12 @@ export default class Player extends Entity
                 group: 'weaponGroup'
             });
 
-            weapon.setName('cross');
+            weapon.setName(WEAPON_NAMES.CROSS);
 
             this.secondaryWeaponGroup.add(weapon);
         }
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'cross');
+        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, WEAPON_NAMES.CROSS);
     }
 
     private addHolyWater()
@@ -501,7 +510,7 @@ export default class Player extends Entity
                 group: 'weaponGroup'
             });
 
-            weapon.setName('holyWater');
+            weapon.setName(WEAPON_NAMES.HOLY_WATER);
 
             this.secondaryWeaponGroup.add(weapon);
         }
@@ -528,12 +537,12 @@ export default class Player extends Entity
                 group: 'weaponGroup'
             });
 
-            weapon.setName('axe');
+            weapon.setName(WEAPON_NAMES.AXE);
 
             this.secondaryWeaponGroup.add(weapon);
         }
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'axe');
+        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, WEAPON_NAMES.AXE);
     }
 
     private addDagger()
@@ -555,15 +564,15 @@ export default class Player extends Entity
                 group: 'weaponGroup'
             });
 
-            weapon.setName('dagger');
+            weapon.setName(WEAPON_NAMES.DAGGER);
 
             this.secondaryWeaponGroup.add(weapon);
         }
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'dagger');
+        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, WEAPON_NAMES.DAGGER);
     }
 
-    public setStatusHealthDamage(damage: number): Entity
+    public setDamage(damage: number): Entity
     {
         if (this.physicsProperties.isHurt) return this;
 
@@ -617,7 +626,7 @@ export default class Player extends Entity
             this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, 0);
         }
 
-        this.setStatusIsDead(true);
+        this.setDead(true);
 
         this.die();
 
@@ -664,7 +673,7 @@ export default class Player extends Entity
 
         SaveLoadService.saveGameData(this.status.toJson());
 
-        this.scene.events.emit('hud-life', this.status.life);
+        this.scene.events.emit(HUD_EVENTS_NAMES.LIFE, this.status.life);
 
         this.scene.cameras.main.fade(1000);
 

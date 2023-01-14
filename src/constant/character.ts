@@ -54,3 +54,34 @@ export const possibleDirection = [
 export const JUMP_MOMENTUM_DELAY = 250;
 
 export const bossNames = ['giant-bat', 'medusa-boss', 'mummy', 'frank', 'death', 'dracula'];
+
+export enum ENEMY_NAMES {
+    ZOMBIE = 'zombie',
+    BAT = 'bat',
+    BAT_BLUE = 'bat-blue',
+    MEDUSA = 'medusa',
+    SPEAR_KNIGHT = 'spear-knight',
+    CAT = 'cat',
+    FISHMAN = 'fishman',
+    GHOST = 'ghost',
+    DRAGON_HEAD = 'dragonhead',
+    SKELETON = 'skeleton',
+    SKELETON_RED = 'skeleton-red',
+    RAVEN = 'raven',
+    EAGLE = 'eagle',
+    BONE_DRAGON = 'bone-dragon',
+    FLEAMAN = 'fleaman',
+    AXE_KNIGHT = 'axe-knight',
+    SPIKE = 'spike',
+    GIANT_BAT = 'giant-bat',
+    MEDUSA_BOSS = 'medusa-boss',
+    SNAKE = 'snake',
+    MUMMY = 'mummy',
+    BANDAGE = 'bandage',
+    FRANK= 'frank',
+    IGOR = 'igor',
+    DEATH = 'death',
+    BAT_BRIDGE = 'bat-bridge',
+    DRACULA = 'dracula',
+    DRACULA_2 = 'dracula2'
+}

@@ -5,6 +5,7 @@ import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { FleamanIA } from "./FleamanIA";
 import { IEnemyAI } from "../../types/types";
+import { ENEMY_NAMES } from "../../constant/character";
 
 export class EagleIA implements IEnemyAI
 {
@@ -41,11 +42,11 @@ export class EagleIA implements IEnemyAI
             buttons: inputController.getNewButtons()
         }, enemyJSONConfig);
 
-        this.fleaman.setName('fleaman');
+        this.fleaman.setName(ENEMY_NAMES.FLEAMAN);
         this.fleaman.setActive(false);
         this.fleaman.setAi(new FleamanIA(this.fleaman));
 
-        this.scene.enemiesDamageBody.push(this.fleaman.damageBody);
+        this.scene.customGame.enemiesDamageBody.push(this.fleaman.damageBody);
     }
 
     handleFly()

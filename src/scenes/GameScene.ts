@@ -1,6 +1,12 @@
 // @ts-ignore
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
-import { COUNTDOWN_EVENT, FONTS, FONTS_SIZES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_BACKTRACK, STAGE_COUNTDOWN, STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH } from '../constant/config';
+import
+{
+    COUNTDOWN_EVENT, FONTS, FONTS_SIZES,
+    HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME,
+    SCENES_NAMES, STAGE_BACKTRACK, STAGE_COUNTDOWN,
+    STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH
+} from '../constant/config';
 import { InputController } from '../inputs/InputController';
 import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
@@ -9,16 +15,12 @@ import WorldRooms from '../utils/WorldRooms.js';
 import { TCoord, TDoor } from '../types/types.js';
 import SaveLoadService from '../services/SaveLoadService.js';
 import { PALETTE_DB32 } from '../constant/colors.js';
-import init from '../custom/init.js';
-import addEnemies from '../custom/addEnemies.js';
-import { EPossibleState } from '../constant/character.js';
 import DamageBody from '../entities/DamageBody.js';
-import ThrowingKnife from '../entities/weapons/ThrowingKnife.js';
-import Weapon from '../entities/weapons/Weapon.js';
 import { Orb } from '../gameobjects/Orb.js';
 import creditsData from '../data/credits.json';
 import { DEPTH } from '../constant/depth.js';
 import { StageCountDown } from '../utils/StageCountDown.js';
+import { CustomeGame } from '../custom/CustomGame.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -31,30 +33,25 @@ export default class GameScene extends Phaser.Scene
     public inputController: InputController;
     public map: Phaser.Tilemaps.Tilemap;
     public firstTimestamp: number = 0;
+    public customGame: CustomeGame;
     public colliderLayer: Phaser.Tilemaps.TilemapLayer;
     public characters: Entity[] = [];
     public enemies: Entity[] = [];
-    public enemiesDamageBody: DamageBody[] = [];
     public enemyDeathGroup: Phaser.GameObjects.Group;
-    public enemiesVsWeaponsCollider: Phaser.Physics.Arcade.Collider;
-    public enemiesVsPlayerCollider: Phaser.Physics.Arcade.Collider;
     public isTouchingDoor: boolean = false;
-    public lightCandlesGroup: Phaser.GameObjects.Group;
+    public lightItemsGroup: Phaser.GameObjects.Group;
     public movingPlatformGroup: Phaser.GameObjects.Group;
     public conveyorGroup: Phaser.GameObjects.Group;
     public itemsGroup: Phaser.GameObjects.Group;
     public playersWeaponGroup: Phaser.GameObjects.Group;
-    public secondaryWeaponGroup: Phaser.GameObjects.Group;
+    public playersSecondaryWeaponGroup: Phaser.GameObjects.Group;
     public currentPlayingSong: Phaser.Sound.BaseSound | null;
     public musicIndex: number = 0;
     public enemyWeaponGroup: Phaser.GameObjects.Group;
-    public enemiesWeaponsVsPlayerCollider: Phaser.Physics.Arcade.Collider;
-    public weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
-    public enemiesSecondaryWeapons: Phaser.GameObjects.GameObject[];
     public isBossBattle: boolean = false;
     public isChangingStage: boolean = false;
-    public isOrb: boolean = false;
     public stageCountdown = new StageCountDown(this);
+    public isPaused: boolean = false;
     debugGraphics: Phaser.GameObjects.Graphics;
 
     constructor()
@@ -68,12 +65,12 @@ export default class GameScene extends Phaser.Scene
 
     public init(data: any)
     {
-        console.log('death here?');
-        if (data?.retry === true)
-        {
-            this.characters.forEach(character => character.destroy());
-            this.characters.length = 0;
-        }
+        // console.log('death here?');
+        // if (data?.retry === true)
+        // {
+        //     this.characters.forEach(character => character.destroy());
+        //     this.characters.length = 0;
+        // }
         // @ts-ignore
         // this.plugins.get('SceneWatcher').watchAll();
     }
@@ -116,7 +113,8 @@ export default class GameScene extends Phaser.Scene
         this.characters.length = 0;
 
         // init custom data game
-        init(this);
+        this.customGame = new CustomeGame(this);
+        this.customGame.init();
 
         LayerService.addLayers(this);
 
@@ -191,6 +189,43 @@ export default class GameScene extends Phaser.Scene
         }
     }
 
+    setPause()
+    {
+        if (this.isPaused)
+        {
+            this.physics.world.resume();
+
+            this.anims.resumeAll();
+
+            this.currentPlayingSong?.resume();
+
+            this.isPaused = false;
+
+            this.children.getByName('pauseText')?.destroy();
+
+            return;
+        }
+
+        this.isPaused = true;
+
+        this.anims.pauseAll();
+
+        this.physics.world.pause();
+
+        this.currentPlayingSong?.pause();
+
+        this.playSound(1);
+
+        this.add.bitmapText(WIDTH / 2, (HEIGHT - TILED_WORLD_OFFSET_Y) / 2, FONTS.GALAXY, 'pause', FONTS_SIZES.GALAXY, 1)
+            .setScrollFactor(0, 0)
+            .setOrigin(0.5, 0.5)
+            .setName('pauseText')
+            .setDepth(2000);
+
+            console.log(this);
+            
+    }
+
     public shutdown()
     {
 
@@ -245,13 +280,13 @@ export default class GameScene extends Phaser.Scene
 
         this.playersWeaponGroup = this.add.group();
 
-        this.secondaryWeaponGroup = this.add.group();
-        this.secondaryWeaponGroup.maxSize = 3;
+        this.playersSecondaryWeaponGroup = this.add.group();
+        this.playersSecondaryWeaponGroup.maxSize = 3;
 
         this.enemyWeaponGroup = this.add.group();
         this.enemyWeaponGroup.maxSize = 10;
 
-        this.lightCandlesGroup = this.add.group({
+        this.lightItemsGroup = this.add.group({
             classType: Phaser.GameObjects.PointLight,
             maxSize: 30,
         });
@@ -300,7 +335,7 @@ export default class GameScene extends Phaser.Scene
                         backCastle.setAlpha(0);
                     }
 
-                    addEnemies(this);
+                    this.customGame.addEnemies();
 
                     this.isChangingStage = false;
                 }
@@ -653,7 +688,7 @@ export default class GameScene extends Phaser.Scene
 
         player.status.setHealth(16).setAmmo(5);
 
-        this.isOrb = false;
+        this.customGame.isOrb = false;
 
         this.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
 
@@ -746,162 +781,6 @@ export default class GameScene extends Phaser.Scene
         if (player === null) throw new Error(`no player named ${playerName} found`);
 
         return player as Entity;
-    }
-
-    public createEnemyColliders()
-    {
-        this.enemiesDamageBody = this.enemies.map(enemy => enemy.damageBody);
-
-        const player = this.getPlayerByName(PLAYER_A_NAME);
-
-        // enemies make damage to player
-        this.enemiesVsPlayerCollider = this.physics.add.overlap(player.damageBody, this.enemiesDamageBody, (_player, _enemy) =>
-        {
-            const playerDamageBody = _player as DamageBody;
-
-            const enemyDamageBody = _enemy as DamageBody;
-
-            if (enemyDamageBody.parent.name === 'bat')
-            {
-                enemyDamageBody.parent.die();
-            }
-
-            let damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
-
-            if (enemyDamageBody.parent.name === 'spike')
-            {
-                damage = 16;
-            }
-
-            playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
-
-            playerDamageBody.parent.setStatusHealthDamage(damage);
-        }, (_player, _enemy) =>
-        {
-            const playerDamageBody = _player as DamageBody;
-
-            const enemy = _enemy as DamageBody;
-
-            if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
-                || playerDamageBody.parent.physicsProperties.isHurt
-                || !enemy.parent.active
-                || enemy.parent.visible === false
-            )
-            {
-                return false;
-            }
-
-            return true;
-        }, this).setName('enemiesVsPlayerCollider');
-
-        this.enemiesSecondaryWeapons = this.enemies.filter(enemy => enemy.active).map(enemy => enemy.secondaryWeaponGroup?.getChildren()).flat();
-        // enemies weapons make damage to player
-        this.enemiesWeaponsVsPlayerCollider = this.physics.add.overlap(player.damageBody, this.enemiesSecondaryWeapons, (_player, _weapon) =>
-        {
-            const playerDamageBody = _player as DamageBody;
-
-            const weapon = _weapon as unknown as Weapon;
-
-            weapon.setDisable();
-
-            const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
-
-            playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
-
-            playerDamageBody.parent.setStatusHealthDamage(damage);
-        }, (_player, _weapon) =>
-        {
-            const playerDamageBody = _player as DamageBody;
-
-            if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
-                || playerDamageBody.parent.physicsProperties.isHurt
-            )
-            {
-                return false;
-            }
-
-            return true;
-        }, this).setName('enemiesWeaponsVsPlayerCollider');
-
-        // player weapons make damage to enemy
-        this.enemiesVsWeaponsCollider = this.physics.add.overlap(this.playersWeaponGroup, this.enemiesDamageBody, (_weapon, _enemy) =>
-        {
-            const enemy = _enemy as DamageBody;
-
-            const weapon = _weapon as unknown as Weapon;
-
-            if (enemy.parent.name === 'spike') return;
-
-            if (!enemy.parent.active && enemy.parent.name === 'fleaman')
-            {
-                enemy.parent.setActive(true).die();
-            }
-
-            if (enemy.parent.name === 'dracula')
-            {
-                if (weapon.body.center.y < 155 || weapon.body.center.y > 165)
-                {
-                    return;
-                }
-            }
-
-            enemy.parent.setStatusHealthDamage(weapon.damage);
-
-            this.playSound(15, undefined, true);
-
-            if ((weapon.name === 'holyWater' || enemy.parent.config.stunWith?.includes(weapon.name))
-                && enemy.parent.status.health > 0
-                && enemy.parent.canUse(EPossibleState.STUN)
-            )
-            {
-                enemy.parent.stateMachine.transition(EPossibleState.STUN, enemy.parent.stateMachine.state);
-            }
-
-            if (weapon instanceof ThrowingKnife)
-            {
-                weapon.setDisable();
-            }
-
-        }, undefined, this).setName('enemiesVsWeaponsCollider');
-
-        // player weapons make destroy enemies weapons
-        this.weaponGroupVsEnemiesSecondaryWeapons = this.physics.add.overlap(this.playersWeaponGroup, this.enemiesSecondaryWeapons, (_weapon, _enemyWeapon) =>
-        {
-            const enemyWeapon = _enemyWeapon as unknown as Weapon;
-            enemyWeapon.setDisable();
-
-        }, undefined, this).setName('weaponGroupVSenemiesSecondaryWeapons');
-    }
-
-    public destroyEnemyColliders()
-    {
-        // destroy enemies related colliders
-        this.enemiesVsWeaponsCollider?.destroy();
-
-        this.enemiesVsPlayerCollider?.destroy();
-
-        this.enemiesWeaponsVsPlayerCollider?.destroy();
-
-        this.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
-    }
-
-    public addOrb()
-    {
-        if (this.isOrb) return;
-
-        this.isOrb = true;
-
-        this.time.addEvent({
-            delay: 1000,
-            callback: () =>
-            {
-                const cam = this.cameras.main;
-
-                const orb = new Orb({ scene: this, x: cam.worldView.centerX, y: cam.worldView.centerY - 64, texture: 'items', frame: 'magic-crystal_0' });
-
-                this.itemsGroup.add(orb);
-            }
-        });
     }
 
     public isInsideCameraByPixels(body: Phaser.Physics.Arcade.Body, offset: number = 128): boolean

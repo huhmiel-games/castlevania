@@ -1,12 +1,10 @@
 import { EPossibleState, possibleDirection } from "../constant/character";
-import { HUD_EVENTS_NAMES, PLAYER_A_NAME } from "../constant/config";
 import GameScene from "../scenes/GameScene";
 import
 {
     RangedWeapon,
     TButtons,
     TCharacterConfig,
-    TCoord,
     TEntityConfig,
     TStatus,
     TPhysicsProperties,
@@ -18,7 +16,6 @@ import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
 import DamageBody from "./DamageBody";
-import { Enemy } from "../custom/entities/Enemy";
 import { Status } from "./Status";
 
 /**
@@ -71,7 +68,7 @@ export class Entity extends Phaser.GameObjects.Sprite
     {
         super.preUpdate(time, delta);
 
-        if (this.physicsProperties.isDead || this.physicsProperties.isPaused || !this.active) return;
+        if (this.physicsProperties.isDead || this.physicsProperties.isPaused || !this.active || this.scene.isPaused) return;
 
         this.stateMachine.step();
     }
@@ -100,7 +97,7 @@ export class Entity extends Phaser.GameObjects.Sprite
         return this;
     }
 
-    public setStatusHealthDamage(damage: number): Entity
+    public setDamage(damage: number): Entity
     {
         const health = this.status.health - damage;
 
@@ -113,28 +110,14 @@ export class Entity extends Phaser.GameObjects.Sprite
 
         this.status.setHealth(0);
 
-        this.setStatusIsDead(true);
+        this.setDead(true);
 
         this.die();
 
         return this;
     }
 
-    public setStatusSpeed(speed: number): Entity
-    {
-        this.physicsProperties.speed = speed;
-
-        return this;
-    }
-
-    public setStatusAcceleration(acceleration: number): Entity
-    {
-        this.physicsProperties.acceleration = acceleration;
-
-        return this;
-    }
-
-    public setStatusIsDead(isDead: boolean): Entity
+    public setDead(isDead: boolean): Entity
     {
         this.physicsProperties.isDead = isDead;
 

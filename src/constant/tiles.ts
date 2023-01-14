@@ -19,3 +19,20 @@ export enum DOORS_TILE_INDEX
     MIDDLE_OPEN = 114,
     TOP_OPEN = 98
 } 
+
+export enum TILE_ITEMS
+{
+    HEART = 'heart',
+    BIG_HEART = 'bigheart',
+    RED_BAG = 'red-bag',
+    PURPLE_BAG = 'purple-bag',
+    WHITE_BAG = 'white-bag',
+    DAGGER = 'dagger',
+    AXE = 'axe',
+    HOLY_WATER = 'holy-water',
+    CROSS = 'cross',
+    ROSARY = 'rosary',
+    PORK = 'pork',
+    DOUBLE_SHOT = 'double-shot',
+    TRIPLE_SHOT = 'triple-shot'
+}

@@ -6,6 +6,7 @@ import { InputController } from "../../inputs/InputController";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI, TEntityConfig } from "../../types/types";
 import { BandageIA } from "./BandageIA";
+import { ENEMY_NAMES } from "../../constant/character";
 
 export class MummyIA implements IEnemyAI
 {
@@ -172,7 +173,7 @@ export class MummyIA implements IEnemyAI
     {
         const inputController = InputController.getInstance();
 
-        const enemyJSONConfig: TEntityConfig = JSON.parse(JSON.stringify(enemyJSON['bandage']));
+        const enemyJSONConfig: TEntityConfig = JSON.parse(JSON.stringify(enemyJSON[ENEMY_NAMES.BANDAGE]));
 
         const bandage = new Enemy({
             scene: this.scene,
@@ -183,11 +184,11 @@ export class MummyIA implements IEnemyAI
             buttons: inputController.getNewButtons()
         }, enemyJSONConfig);
 
-        bandage.setName('bandage');
+        bandage.setName(ENEMY_NAMES.BANDAGE);
 
         bandage.setAi(new BandageIA(bandage));
 
-        this.scene.enemiesDamageBody.push(bandage.damageBody);
+        this.scene.customGame.enemiesDamageBody.push(bandage.damageBody);
 
         if (this.parent.flipX)
         {

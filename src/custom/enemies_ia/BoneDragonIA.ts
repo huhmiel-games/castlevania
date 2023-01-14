@@ -1,10 +1,9 @@
-import { HEIGHT, PLAYER_A_NAME } from "../../constant/config";
+import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import enemyJSON from '../../data/enemy.json';
 import { IEnemyAI } from "../../types/types";
-import { PALETTE_DB32 } from "../../constant/colors";
-import { DEPTH } from "../../constant/depth";
+import { ENEMY_NAMES } from "../../constant/character";
 
 export class BoneDragonIA implements IEnemyAI
 {
@@ -60,7 +59,7 @@ export class BoneDragonIA implements IEnemyAI
 
             this.childs.push(enemy);
 
-            this.scene.enemiesDamageBody.push(enemy.damageBody);
+            this.scene.customGame.enemiesDamageBody.push(enemy.damageBody);
         }
     }
 
@@ -81,7 +80,7 @@ export class BoneDragonIA implements IEnemyAI
             return;
         }
 
-        if (up.isUp && down.isUp && a.isUp && active && this.parent.isInsideCameraByPixels(64) && name === 'bone-dragon')
+        if (up.isUp && down.isUp && a.isUp && active && this.parent.isInsideCameraByPixels(64) && name === ENEMY_NAMES.BONE_DRAGON)
         {
             this.parent.resetAllButtons();
 
@@ -94,7 +93,7 @@ export class BoneDragonIA implements IEnemyAI
             return;
         }
 
-        name === 'bone-dragon' && this.childs.forEach((child, i) =>
+        name === ENEMY_NAMES.BONE_DRAGON && this.childs.forEach((child, i) =>
         {
             const diff = this.parent.y - this.childs[0].y;
 
@@ -111,7 +110,7 @@ export class BoneDragonIA implements IEnemyAI
             this.changeDirectionTime = now + 2000;
         }
 
-        if (up.isDown && a.isUp && this.changeDirectionTime < now && name === 'bone-dragon')
+        if (up.isDown && a.isUp && this.changeDirectionTime < now && name === ENEMY_NAMES.BONE_DRAGON)
         {
             body.stop();
 
@@ -121,7 +120,7 @@ export class BoneDragonIA implements IEnemyAI
             this.changeDirectionTime = now + Phaser.Math.RND.integerInRange(600, 1000);
         }
 
-        if (down.isDown && a.isUp && this.changeDirectionTime < now && name === 'bone-dragon')
+        if (down.isDown && a.isUp && this.changeDirectionTime < now && name === ENEMY_NAMES.BONE_DRAGON)
         {
             body.stop();
 
@@ -132,7 +131,7 @@ export class BoneDragonIA implements IEnemyAI
         }
 
         // attack the player with fireball
-        if (name === 'bone-dragon'
+        if (name === ENEMY_NAMES.BONE_DRAGON
             && !this.isAttacking
             && a.isUp
             && cam.worldView.contains(center.x, center.y)

@@ -1,5 +1,4 @@
 import { DEPTH } from "../../constant/depth";
-import destroyCandle from "../../custom/destroyCandle";
 import Player from "../../custom/entities/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
@@ -16,6 +15,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
     public body: Phaser.Physics.Arcade.Body;
     public parent: Entity;
     public damage: number = 0;
+    public canStun: boolean = false;
     public speed: number = 100;
     public isBack: boolean = false;
     private weaponAnim: string;
@@ -144,7 +144,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
     public destroyObject(_candle: unknown)
     {
-        destroyCandle(this.scene, this, _candle);
+        this.scene.customGame.destroyTileItem(this, _candle);
     }
 
     public destroyTile(_tile: Phaser.Tilemaps.Tile)

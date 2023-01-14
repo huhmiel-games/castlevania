@@ -1,5 +1,5 @@
 import { EPossibleState } from "../../constant/character";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";

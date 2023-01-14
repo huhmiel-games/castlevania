@@ -1,6 +1,5 @@
 import { EPossibleState } from "../../constant/character";
 import { DEPTH } from "../../constant/depth";
-import destroyCandle from "../../custom/destroyCandle";
 import GameScene from "../../scenes/GameScene";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
@@ -12,6 +11,7 @@ export class MeleeWeapon extends Phaser.GameObjects.Image implements Weapon
     public weaponGroup: Phaser.GameObjects.Group;
     public parent: Entity;
     public damage: number = 1.5;
+    public canStun: boolean = false;
     constructor(config: { scene: GameScene; parent: Entity, x: number; y: number; texture: string; frame: string; })
     {
         super(config.scene, config.x, config.y, config.texture, config.frame);
@@ -91,7 +91,7 @@ export class MeleeWeapon extends Phaser.GameObjects.Image implements Weapon
 
     public destroyObject(_candle: unknown)
     {
-        destroyCandle(this.scene, this, _candle)
+        this.scene.customGame.destroyTileItem(this, _candle)
     }
 
     public destroyTile(_tile: Phaser.Tilemaps.Tile)
