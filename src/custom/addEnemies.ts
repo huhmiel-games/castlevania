@@ -34,7 +34,6 @@ import { GiantBatBridgeIA } from "./enemies_ia/GiantBatBridgeIA";
 import { DraculaIA } from "./boss_ia/DraculaIA";
 import { Dracula2IA } from "./boss_ia/Dracula2IA";
 import { DEPTH } from "../constant/depth";
-import Weapon from "../entities/weapons/Weapon";
 
 
 export default function addEnemies(scene: GameScene)
