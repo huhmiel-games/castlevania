@@ -3,7 +3,7 @@ import GameScene from "../../../scenes/GameScene";
 import { RangedWeapon } from "../../../types/types";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
-import { Enemy } from "../../enemies/Enemy";
+import { Enemy } from "../../../custom/enemies/Enemy";
 import { Entity } from "../../Entity";
 
 /**

@@ -1,6 +1,6 @@
 import { PLAYER_A_NAME } from "../../constant/config";
-import { Boss } from "../../entities/enemies/Boss";
-import { Enemy } from "../../entities/enemies/Enemy";
+import { Boss } from "../enemies/Boss";
+import { Enemy } from "../enemies/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI, TEntityConfig } from "../../types/types";
 import enemyJSON from '../../data/enemy.json';

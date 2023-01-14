@@ -1,6 +1,6 @@
 import { PALETTE_DB32 } from "../../constant/colors";
 import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
-import { addDraculaHead, addFinalBoss } from "../../custom/addEnemies";
+import { addDraculaHead, addFinalBoss } from "../addEnemies";
 import GameScene from "../../scenes/GameScene";
 import SaveLoadService from "../../services/SaveLoadService";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";

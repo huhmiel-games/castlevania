@@ -41,7 +41,7 @@ import JumpSecondaryAttackState from "../entities/states/attack/JumpSecondaryAtt
 import JumpMomentumSecondaryAttackState from "../entities/states/attack/JumpMomentumSecondaryAttackState";
 import FallSecondaryAttackState from "../entities/states/attack/FallSecondaryAttackState";
 import { Orb } from "../gameobjects/Orb";
-import { Boss } from "../entities/enemies/Boss";
+import { Boss } from "./enemies/Boss";
 
 export default class Player extends Entity
 {
@@ -659,7 +659,8 @@ export default class Player extends Entity
             return;
         }
 
-        this.status.setHealth(16).setAmmo(5);
+        const currentSavedScore = JSON.parse(SaveLoadService.loadGameData() as string).score
+        this.status.setHealth(16).setAmmo(5).setScore(currentSavedScore);
 
         SaveLoadService.saveGameData(this.status.toJson());
 
@@ -737,10 +738,11 @@ export default class Player extends Entity
                 break;
         }
 
+        const currentSavedScore = JSON.parse(SaveLoadService.loadGameData() as string).score
         this.setStatus({
             health: 16,
             life: 3,
-            score: 0,
+            score: currentSavedScore,
             stage: this.status.stage,
             ammo: 5,
             canTakeStairs: false,

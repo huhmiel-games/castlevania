@@ -3,7 +3,7 @@ import destroyCandle from "../../custom/destroyCandle";
 import Player from "../../custom/Player";
 import GameScene from "../../scenes/GameScene";
 import { TWeaponConfig } from "../../types/types";
-import { Enemy } from "../enemies/Enemy";
+import { Enemy } from "../../custom/enemies/Enemy";
 import { Entity } from "../Entity";
 import Weapon from "./Weapon";
 

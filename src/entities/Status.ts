@@ -27,6 +27,16 @@ export class Status
         this.position = status.position;
     }
 
+    public load()
+    {
+
+    }
+
+    public save()
+    {
+        
+    }
+
     public toJson(): TStatus
     {
         const { health, life, ammo, score, stage, canTakeStairs, position } = this;

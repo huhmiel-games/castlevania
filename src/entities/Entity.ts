@@ -18,7 +18,7 @@ import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
 import { MeleeWeapon } from "./weapons/MeleeWeapon";
 import DamageBody from "./DamageBody";
-import { Enemy } from "./enemies/Enemy";
+import { Enemy } from "../custom/enemies/Enemy";
 import { Status } from "./Status";
 
 /**

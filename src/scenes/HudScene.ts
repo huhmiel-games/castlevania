@@ -79,11 +79,9 @@ export default class HudScene extends Phaser.Scene
             .setOrigin(0, 0)
             .setName('heartText')
 
-
         this.add.bitmapText(169, 22, FONTS.GALAXY, 'p-03', 8, 1)
             .setOrigin(0, 0)
             .setName('life')
-
 
         for (let i = 0; i < 16; i += 1)
         {
@@ -232,14 +230,5 @@ export default class HudScene extends Phaser.Scene
         const countDownText = this.children.getByName('countDown') as Phaser.GameObjects.BitmapText;
 
         countDownText.setText(`time ${countdown.toString().padStart(4, '0')}`);
-
-        if(countdown < 30 && countdown % 2 === 1)
-        {
-            countDownText.setCharacterTint(0, 4, true, PALETTE_DB32.WELL_READ);
-
-            return;
-        }
-        
-        countDownText.setCharacterTint(0, 4);
     }
 }

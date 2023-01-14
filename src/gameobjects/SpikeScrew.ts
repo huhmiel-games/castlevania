@@ -1,5 +1,5 @@
 import { DEPTH } from "../constant/depth";
-import { Enemy } from "../entities/enemies/Enemy";
+import { Enemy } from "../custom/enemies/Enemy";
 import GameScene from "../scenes/GameScene";
 import { TileSpriteConfig } from "../types/types";
 

@@ -1,5 +1,5 @@
 import { HEIGHT, PLAYER_A_NAME } from "../../constant/config";
-import { Enemy } from "../../entities/enemies/Enemy";
+import { Enemy } from "../enemies/Enemy";
 import GameScene from "../../scenes/GameScene";
 import enemyJSON from '../../data/enemy.json';
 import { IEnemyAI } from "../../types/types";

@@ -4,7 +4,7 @@ import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
 import { RangedWeapon } from '../../../types/types';
-import { Enemy } from '../../enemies/Enemy';
+import { Enemy } from '../../../custom/enemies/Enemy';
 
 /**
  * @description

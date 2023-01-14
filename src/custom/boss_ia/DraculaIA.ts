@@ -1,5 +1,5 @@
 import { HEIGHT, PLAYER_A_NAME, WIDTH } from "../../constant/config";
-import { Boss } from "../../entities/enemies/Boss";
+import { Boss } from "../enemies/Boss";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
 import { EPossibleState } from "../../constant/character";
