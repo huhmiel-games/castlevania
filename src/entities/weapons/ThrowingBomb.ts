@@ -102,7 +102,7 @@ export default class ThrowingBomb extends Phaser.GameObjects.Sprite implements W
 
         if (this.parent instanceof Player)
         {
-            this.scene.weaponGroup.add(this);
+            this.scene.playersWeaponGroup.add(this);
         }
         else if (this.parent instanceof Enemy)
         {

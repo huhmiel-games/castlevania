@@ -69,7 +69,7 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
 
         if (this.parent instanceof Player)
         {
-            this.scene.weaponGroup.add(this);
+            this.scene.playersWeaponGroup.add(this);
         }
         else if (this.parent instanceof Enemy)
         {

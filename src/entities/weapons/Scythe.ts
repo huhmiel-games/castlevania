@@ -77,7 +77,7 @@ export class Scythe extends Phaser.GameObjects.Sprite implements Weapon
 
         if (this.parent instanceof Player)
         {
-            this.scene.weaponGroup.add(this);
+            this.scene.playersWeaponGroup.add(this);
         }
         else if (this.parent instanceof Enemy)
         {

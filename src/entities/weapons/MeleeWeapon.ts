@@ -26,7 +26,7 @@ export class MeleeWeapon extends Phaser.GameObjects.Image implements Weapon
 
         this.body.setAllowGravity(false).setEnable(false);
 
-        this.scene.weaponGroup.add(this);
+        this.scene.playersWeaponGroup.add(this);
 
         this.onPostUpdateEvent();
     }

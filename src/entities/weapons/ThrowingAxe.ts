@@ -81,7 +81,7 @@ export default class ThrowingAxe extends Phaser.GameObjects.Sprite implements We
 
         if (this.parent instanceof Player)
         {
-            this.scene.weaponGroup.add(this);
+            this.scene.playersWeaponGroup.add(this);
         }
         else if (this.parent instanceof Enemy)
         {

@@ -170,7 +170,7 @@ export default class ColliderService
         ).setName('playersVScolliderLayer');
 
         // weapons collisions
-        scene.physics.add.overlap(scene.weaponGroup, scene.colliderLayer, (_weapon, _tile) =>
+        scene.physics.add.overlap(scene.playersWeaponGroup, scene.colliderLayer, (_weapon, _tile) =>
         {
             const tile = _tile as unknown as Phaser.Tilemaps.Tile;
 
@@ -193,7 +193,7 @@ export default class ColliderService
             }
         }, undefined, scene).setName('weaponGroupVScolliderLayer');
 
-        scene.physics.add.collider(scene.weaponGroup, scene.colliderLayer, undefined, (_weapon, _tile) =>
+        scene.physics.add.collider(scene.playersWeaponGroup, scene.colliderLayer, undefined, (_weapon, _tile) =>
         {
             if (_weapon instanceof ThrowingBomb)
             {
@@ -207,7 +207,7 @@ export default class ColliderService
 
         if (candlesLayer)
         {
-            scene.physics.add.overlap(scene.weaponGroup, candlesLayer,
+            scene.physics.add.overlap(scene.playersWeaponGroup, candlesLayer,
                 (_weapon, _candle) =>
                 {
                     const weapon = _weapon as unknown as Weapon;

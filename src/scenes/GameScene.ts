@@ -43,7 +43,7 @@ export default class GameScene extends Phaser.Scene
     public movingPlatformGroup: Phaser.GameObjects.Group;
     public conveyorGroup: Phaser.GameObjects.Group;
     public itemsGroup: Phaser.GameObjects.Group;
-    public weaponGroup: Phaser.GameObjects.Group;
+    public playersWeaponGroup: Phaser.GameObjects.Group;
     public secondaryWeaponGroup: Phaser.GameObjects.Group;
     public currentPlayingSong: Phaser.Sound.BaseSound | null;
     public musicIndex: number = 0;
@@ -243,7 +243,7 @@ export default class GameScene extends Phaser.Scene
 
         this.itemsGroup = this.add.group();
 
-        this.weaponGroup = this.add.group();
+        this.playersWeaponGroup = this.add.group();
 
         this.secondaryWeaponGroup = this.add.group();
         this.secondaryWeaponGroup.maxSize = 3;
@@ -824,7 +824,7 @@ export default class GameScene extends Phaser.Scene
         }, this).setName('enemiesWeaponsVsPlayerCollider');
 
         // player weapons make damage to enemy
-        this.enemiesVsWeaponsCollider = this.physics.add.overlap(this.weaponGroup, this.enemiesDamageBody, (_weapon, _enemy) =>
+        this.enemiesVsWeaponsCollider = this.physics.add.overlap(this.playersWeaponGroup, this.enemiesDamageBody, (_weapon, _enemy) =>
         {
             const enemy = _enemy as DamageBody;
 
@@ -865,7 +865,7 @@ export default class GameScene extends Phaser.Scene
         }, undefined, this).setName('enemiesVsWeaponsCollider');
 
         // player weapons make destroy enemies weapons
-        this.weaponGroupVsEnemiesSecondaryWeapons = this.physics.add.overlap(this.weaponGroup, this.enemiesSecondaryWeapons, (_weapon, _enemyWeapon) =>
+        this.weaponGroupVsEnemiesSecondaryWeapons = this.physics.add.overlap(this.playersWeaponGroup, this.enemiesSecondaryWeapons, (_weapon, _enemyWeapon) =>
         {
             const enemyWeapon = _enemyWeapon as unknown as Weapon;
             enemyWeapon.setDisable();
