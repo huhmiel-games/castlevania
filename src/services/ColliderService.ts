@@ -1,4 +1,4 @@
-import { EPossibleState } from '../constant/character';
+import { ENEMY_NAMES, EPossibleState } from '../constant/character';
 import { PLAYER_A_NAME } from '../constant/config';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
@@ -228,7 +228,7 @@ export default class ColliderService
 
             const tile = _tile as unknown as Phaser.Tilemaps.Tile;
 
-            if (!tile || !tile.tilemapLayer || (tile.properties?.platformBlock && enemy.name !== 'spike'))
+            if (!tile || !tile.tilemapLayer || (tile.properties?.platformBlock && enemy.name !== ENEMY_NAMES.SPIKE))
             {
                 return false;
             }

@@ -54,7 +54,7 @@ export class MummyIA implements IEnemyAI
             this.scene.cameras.main.stopFollow().pan(280 * 16, 6 * 16, 1000);
             this.scene.cameras.main.once(Phaser.Cameras.Scene2D.Events.PAN_COMPLETE, () =>
             {
-                const mummies = this.scene.enemies.filter(elm => elm.name === 'mummy') as Boss[];
+                const mummies = this.scene.enemies.filter(elm => elm.name === ENEMY_NAMES.MUMMY) as Boss[];
 
                 mummies.forEach(elm => {
                     elm.ai['phaseCount'] = now + Phaser.Math.RND.integerInRange(5000, 9000);
