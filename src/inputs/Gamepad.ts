@@ -10,7 +10,7 @@ export class CustomGamepad
     private savedGamepadMapping = SaveLoadService.getGamepadMapping();
     private inputController: InputController;
     private playerButtons: TButtons;
-    private isAxisEnabled: boolean = false;
+    private isAxisEnabled: boolean = SaveLoadService.getConfigAxis();
 
     constructor (id: number, gamepad: Phaser.Input.Gamepad.Gamepad, playerButtons: TButtons)
     {
@@ -114,5 +114,15 @@ export class CustomGamepad
                 playerButtons.down.setUp(timestamp);
             }
         }
+    }
+
+    public setIsAxisEnabled()
+    {
+        this.isAxisEnabled = !this.isAxisEnabled;
+    }
+
+    public getIsAxisEnabled()
+    {
+        return this.isAxisEnabled;
     }
 }

@@ -153,13 +153,13 @@ export default class SaveLoadService
     {
         const data = localStorage.getItem(`${GAMENAME}_stageCountdown`);
 
-        if(data)
+        if (data)
         {
             return Number(data);
         }
 
         this.setStageCountDown(STAGE_COUNTDOWN_DEFAULT);
-        
+
         return STAGE_COUNTDOWN_DEFAULT;
     }
 
@@ -284,12 +284,16 @@ export default class SaveLoadService
             select: Phaser.Input.Keyboard.KeyCodes.SPACE
         };
 
-        if (!localStorage.getItem(`${GAMENAME}_KEYBOARD_MAPPING`))
-        {
-            const keysToString = JSON.stringify(keys);
+        const keysToString = JSON.stringify(keys);
 
-            localStorage.setItem(`${GAMENAME}_KEYBOARD_MAPPING`, keysToString);
-        }
+        localStorage.setItem(`${GAMENAME}_KEYBOARD_MAPPING`, keysToString);
+
+        // if (!localStorage.getItem(`${GAMENAME}_KEYBOARD_MAPPING`))
+        // {
+        //     const keysToString = JSON.stringify(keys);
+
+        //     localStorage.setItem(`${GAMENAME}_KEYBOARD_MAPPING`, keysToString);
+        // }
 
         return keys;
     }

@@ -367,6 +367,48 @@
 					}
 				},
 				{
+					"filename": "keyboard",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 7,
+						"w": 16,
+						"h": 9
+					},
+					"frame": {
+						"x": 35,
+						"y": 44,
+						"w": 16,
+						"h": 9
+					}
+				},
+				{
+					"filename": "gamepad",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 8,
+						"w": 16,
+						"h": 8
+					},
+					"frame": {
+						"x": 87,
+						"y": 19,
+						"w": 16,
+						"h": 8
+					}
+				},
+				{
 					"filename": "axe",
 					"rotated": false,
 					"trimmed": true,
@@ -381,8 +423,8 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 35,
-						"y": 44,
+						"x": 105,
+						"y": 19,
 						"w": 15,
 						"h": 14
 					}
@@ -402,56 +444,14 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 19,
-						"y": 59,
+						"x": 87,
+						"y": 29,
 						"w": 14,
 						"h": 15
 					}
 				},
 				{
 					"filename": "cross",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 1,
-						"y": 67,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross-back_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 87,
-						"y": 19,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross-back_2",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -472,6 +472,48 @@
 					}
 				},
 				{
+					"filename": "weapon-cross-back_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 53,
+						"y": 46,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "weapon-cross-back_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 35,
+						"y": 55,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
 					"filename": "weapon-cross-back_3",
 					"rotated": false,
 					"trimmed": true,
@@ -486,8 +528,8 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 52,
-						"y": 46,
+						"x": 19,
+						"y": 62,
 						"w": 14,
 						"h": 14
 					}
@@ -507,10 +549,31 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 52,
-						"y": 62,
+						"x": 1,
+						"y": 67,
 						"w": 14,
 						"h": 14
+					}
+				},
+				{
+					"filename": "health_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 3,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 3,
+						"h": 7
+					},
+					"frame": {
+						"x": 122,
+						"y": 19,
+						"w": 3,
+						"h": 7
 					}
 				},
 				{
@@ -528,29 +591,8 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 35,
-						"y": 60,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross_2",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
 						"x": 103,
-						"y": 19,
+						"y": 35,
 						"w": 14,
 						"h": 14
 					}
@@ -571,7 +613,7 @@
 					},
 					"frame": {
 						"x": 119,
-						"y": 19,
+						"y": 46,
 						"w": 8,
 						"h": 15
 					}
@@ -592,9 +634,30 @@
 					},
 					"frame": {
 						"x": 119,
-						"y": 36,
+						"y": 35,
 						"w": 8,
 						"h": 8
+					}
+				},
+				{
+					"filename": "weapon-cross_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 85,
+						"y": 46,
+						"w": 14,
+						"h": 14
 					}
 				},
 				{
@@ -612,8 +675,8 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 85,
-						"y": 35,
+						"x": 69,
+						"y": 50,
 						"w": 14,
 						"h": 14
 					}
@@ -633,8 +696,8 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 68,
-						"y": 50,
+						"x": 51,
+						"y": 62,
 						"w": 14,
 						"h": 14
 					}
@@ -654,8 +717,8 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 68,
-						"y": 66,
+						"x": 35,
+						"y": 71,
 						"w": 13,
 						"h": 16
 					}
@@ -675,31 +738,10 @@
 						"h": 13
 					},
 					"frame": {
-						"x": 101,
-						"y": 35,
+						"x": 17,
+						"y": 78,
 						"w": 13,
 						"h": 13
-					}
-				},
-				{
-					"filename": "little-heart",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 8,
-						"h": 8
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 8,
-						"h": 8
-					},
-					"frame": {
-						"x": 116,
-						"y": 46,
-						"w": 8,
-						"h": 8
 					}
 				},
 				{
@@ -717,8 +759,8 @@
 						"h": 13
 					},
 					"frame": {
-						"x": 101,
-						"y": 50,
+						"x": 1,
+						"y": 83,
 						"w": 13,
 						"h": 13
 					}
@@ -738,7 +780,7 @@
 						"h": 11
 					},
 					"frame": {
-						"x": 84,
+						"x": 101,
 						"y": 51,
 						"w": 13,
 						"h": 11
@@ -759,10 +801,31 @@
 						"h": 14
 					},
 					"frame": {
-						"x": 84,
-						"y": 64,
+						"x": 85,
+						"y": 62,
 						"w": 12,
 						"h": 14
+					}
+				},
+				{
+					"filename": "little-heart",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 8,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 8,
+						"h": 8
+					},
+					"frame": {
+						"x": 116,
+						"y": 63,
+						"w": 8,
+						"h": 8
 					}
 				},
 				{
@@ -781,7 +844,7 @@
 					},
 					"frame": {
 						"x": 116,
-						"y": 56,
+						"y": 73,
 						"w": 8,
 						"h": 8
 					}
@@ -801,8 +864,8 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 98,
-						"y": 65,
+						"x": 99,
+						"y": 64,
 						"w": 6,
 						"h": 16
 					}
@@ -822,8 +885,8 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 106,
-						"y": 65,
+						"x": 107,
+						"y": 64,
 						"w": 6,
 						"h": 16
 					}
@@ -843,31 +906,10 @@
 						"h": 12
 					},
 					"frame": {
-						"x": 83,
-						"y": 80,
+						"x": 107,
+						"y": 82,
 						"w": 6,
 						"h": 12
-					}
-				},
-				{
-					"filename": "health_2",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 3,
-						"h": 7
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 3,
-						"h": 7
-					},
-					"frame": {
-						"x": 91,
-						"y": 80,
-						"w": 3,
-						"h": 7
 					}
 				}
 			]

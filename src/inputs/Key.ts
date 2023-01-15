@@ -33,6 +33,9 @@ export class Key
         this.timeUp = timestamp;
     }
 
+    /**
+     * return now - timedown
+     */
     getDuration(now: number): number
     {
         if (this.isDown)

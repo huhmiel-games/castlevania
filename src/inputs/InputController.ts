@@ -63,11 +63,11 @@ export class InputController
      */
     public keyboardDownEvent(event: KeyboardEvent): void
     {
+        if (!this.isActive) return;
+
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();
-
-        if (!this.isActive) return;
 
         const { playerAButtons } = this;
 
@@ -89,6 +89,8 @@ export class InputController
      */
     public keyboardUpEvent(event: KeyboardEvent): void
     {
+        if (!this.isActive) return;
+
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();
@@ -206,5 +208,14 @@ export class InputController
             const key: Key = this.playerAButtons[button]
             key.setUp(0);
         }
+    }
+
+    public changeConfig()
+    {
+        this.savedKeyMapping = SaveLoadService.getKeyboardMapping();
+
+        this.savedGamepadMapping = SaveLoadService.getGamepadMapping();
+
+        this.gamepads.forEach(gamepad => gamepad.setIsAxisEnabled());
     }
 }
