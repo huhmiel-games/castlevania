@@ -10,6 +10,7 @@ import GameScene from './scenes/GameScene';
 import MenuScene from './scenes/MenuScene';
 import GameOverScene from './scenes/GameOverScene.js';
 import HudScene from './scenes/HudScene.js';
+import OptionsScene from './scenes/OptionsScene.js';
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -55,7 +56,7 @@ const config: Phaser.Types.Core.GameConfig = {
             debugShowStaticBody: true,
         },
     },
-    scene: [BootScene, LoadScene, MenuScene, GameScene, HudScene, GameOverScene],
+    scene: [BootScene, LoadScene, MenuScene, OptionsScene, GameScene, HudScene, GameOverScene],
 };
 
 const game = new Phaser.Game(config);
