@@ -35,6 +35,8 @@ export type TCoord = {
     y: number
 }
 
+export type ObjectWithXY = Phaser.GameObjects.Components.Transform;
+
 export type TButtons = {
     left: Key;
     right: Key;
@@ -274,6 +276,8 @@ export type TMeleeWeaponConfig = {
     name: string
 }
 
+
+
 //// Interfaces ////
 
 export interface ICustomGame
@@ -288,4 +292,14 @@ export interface IEnemyAI
     scene: GameScene;
     execute: ()=> void
     reset: () => void
+}
+
+export interface ICustomEffect {
+    scene: GameScene,
+    name: string,
+    isActive: boolean,
+    start: () => void,
+    stop: () => void,
+    update: () => void,
+    destroy: () => void
 }
