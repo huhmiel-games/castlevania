@@ -18,7 +18,7 @@
         "start:browser": "npm run build && rm -rf ./dist-mobile/www/* && cp -r ./build/* ./dist-mobile/www/ && cd ./dist-mobile && cordova run browser"
     },
     "dependencies": {
-        "phaser": "^3.60.0-beta.14",
+        "phaser": "^3.60.0-beta.18",
         "phaser3-rex-plugins": "^1.1.68"
     },
     "devDependencies": {
