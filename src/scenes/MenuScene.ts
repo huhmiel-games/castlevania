@@ -1,4 +1,4 @@
-import { FONTS, FONTS_SIZES, HEIGHT, SCENES_NAMES, WIDTH } from "../constant/config";
+import { ATLAS_NAMES, FONTS, FONTS_SIZES, HEIGHT, SCENES_NAMES, WIDTH } from "../constant/config";
 import { InputController } from "../inputs/InputController";
 
 export default class MenuScene extends Phaser.Scene
@@ -65,16 +65,16 @@ export default class MenuScene extends Phaser.Scene
         this.anims.create({
             key: 'holy',
             frames: [
-                { key: 'items', frame: 'weapon-holywater_1' },
-                { key: 'items', frame: 'weapon-holywater_2' },
-                { key: 'items', frame: 'weapon-holywater_3' },
-                { key: 'items', frame: 'weapon-holywater_4' },
+                { key: ATLAS_NAMES.ITEMS, frame: 'weapon-holywater_1' },
+                { key: ATLAS_NAMES.ITEMS, frame: 'weapon-holywater_2' },
+                { key: ATLAS_NAMES.ITEMS, frame: 'weapon-holywater_3' },
+                { key: ATLAS_NAMES.ITEMS, frame: 'weapon-holywater_4' },
             ],
             frameRate: 16,
             repeat: -1,
         });
 
-        this.icon = this.add.sprite(0, 0, 'items', 'weapon-holywater_1')
+        this.icon = this.add.sprite(0, 0, ATLAS_NAMES.ITEMS, 'weapon-holywater_1')
             .setOrigin(0.5, 1)
             .setAlpha(0)
             .setPosition(play1PButton.x - 32, this.iconPosition[this.choice])

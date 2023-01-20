@@ -1,6 +1,6 @@
 import { Scene } from 'phaser';
 import { PALETTE_DB32 } from '../constant/colors';
-import { WIDTH, FONTS, FONTS_SIZES, SCENES_NAMES, BUTTONS_NAMES, HEIGHT } from '../constant/config';
+import { WIDTH, FONTS, FONTS_SIZES, SCENES_NAMES, BUTTONS_NAMES, HEIGHT, ATLAS_NAMES } from '../constant/config';
 import { InputController } from '../inputs/InputController';
 import SaveLoadService from '../services/SaveLoadService';
 import { TKeyMapping } from '../types/types';
@@ -70,8 +70,8 @@ export default class OptionsScene extends Scene
 
         this.add.image(0, 0, 'whitePixel').setDisplaySize(WIDTH, HEIGHT).setTintFill(PALETTE_DB32.BLACK).setOrigin(0, 0).setAlpha(0.85);
 
-        this.add.image(WIDTH / 3 + 8, 48, 'items', 'keyboard').setOrigin(0, 0.5);
-        this.add.image(WIDTH / 3 * 2 + 8, 48, 'items', 'gamepad').setOrigin(0, 0.5);
+        this.add.image(WIDTH / 3 + 8, 48, ATLAS_NAMES.ITEMS, 'keyboard').setOrigin(0, 0.5);
+        this.add.image(WIDTH / 3 * 2 + 8, 48, ATLAS_NAMES.ITEMS, 'gamepad').setOrigin(0, 0.5);
 
         this.add.bitmapText(WIDTH / 2, 16, FONTS.GALAXY, 'options', FONTS_SIZES.GALAXY, 1)
             .setOrigin(0.5, 0.5)
@@ -117,7 +117,7 @@ export default class OptionsScene extends Scene
 
         this.iconPosition = this.keysText.map(elm => elm.y);
 
-        this.icon = this.add.sprite(WIDTH / 14, this.iconPosition[this.choice], 'items', 'weapon-holywater_1')
+        this.icon = this.add.sprite(WIDTH / 14, this.iconPosition[this.choice], ATLAS_NAMES.ITEMS, 'weapon-holywater_1')
             .setOrigin(0.5, 0.7)
             .play('holy');
 

@@ -1,12 +1,15 @@
+import { ATLAS_NAMES } from "../constant/config";
+
 export default function preloadAssets(scene: Phaser.Scene)
 {
-    scene.load.atlas('atlas', '/assets/graphics/atlas/richter.png', '/assets/graphics/atlas/richter.json');
-    scene.load.atlas('items', '/assets/graphics/atlas/items.png', '/assets/graphics/atlas/items.json');
-    scene.load.atlas('enemies', '/assets/graphics/atlas/enemies.png', '/assets/graphics/atlas/enemies.json'); 
+    scene.load.atlas(ATLAS_NAMES.PLAYER, '/assets/graphics/atlas/richter.png', '/assets/graphics/atlas/richter.json');
+    scene.load.atlas(ATLAS_NAMES.ITEMS, '/assets/graphics/atlas/items.png', '/assets/graphics/atlas/items.json');
+    scene.load.atlas(ATLAS_NAMES.ENEMIES, '/assets/graphics/atlas/enemies.png', '/assets/graphics/atlas/enemies.json'); 
 
     scene.load.spritesheet('health', '/assets/graphics/hud/health-3x8.png', { frameWidth: 3, frameHeight: 7 });
     scene.load.image('weaponFrame', '/assets/graphics/hud/weapon-frame.png');
-    scene.load.image('heart', '/assets/graphics/hud/heart.png')
+    scene.load.image('heart', '/assets/graphics/hud/heart.png');
+    scene.load.image('thunder', '/assets/graphics/backgrounds/thunder.png');
 
     scene.load.image('colliderTileset', 'assets/graphics/tilesets/colliderTileset_extruded.png');
     scene.load.image('main', 'assets/graphics/tilesets/main_extruded.png');

@@ -1,11 +1,11 @@
-import { PLAYER_A_NAME } from "../../constant/config";
+import { ATLAS_NAMES, PLAYER_A_NAME } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import enemyJSON from '../../data/enemy.json';
 import { IEnemyAI } from "../../types/types";
 import { ENEMY_NAMES } from "../../constant/character";
 import { Curve } from "../../utils/Curve";
-import { PALETTE_DB32 } from "../../constant/colors";
+import { BoneDragonBodyIA } from "./BoneDragonBodyIA";
 
 export class BoneDragonIA implements IEnemyAI
 {
@@ -19,6 +19,7 @@ export class BoneDragonIA implements IEnemyAI
     isAttacking: boolean = false;
     timeAttack: number = 0;
     curve: Curve;
+    isStarted: boolean = false;
     constructor(parent: Enemy)
     {
         this.parent = parent;
@@ -27,6 +28,8 @@ export class BoneDragonIA implements IEnemyAI
         this.originPosition = { ...parent.body.center };
 
         this.parent.setFlipX(true).setOrigin(0.4, 0.5);
+
+        this.parent.body.setEnable(false);
 
         this.parent.body.setMaxVelocityX(0);
     }
@@ -40,8 +43,8 @@ export class BoneDragonIA implements IEnemyAI
             if (!this.parent.active || !this.scene) return;
 
             const enemyJSONConfig = JSON.parse(JSON.stringify(enemyJSON["bone-dragon-body"]));
-            enemyJSONConfig.status.position.x = this.parent.body.center.x + ((6 - i) * 8);
-            enemyJSONConfig.status.position.y = this.parent.body.center.y - ((6 - i) * 8);
+            enemyJSONConfig.status.position.x = this.parent.body.center.x;
+            enemyJSONConfig.status.position.y = this.parent.body.center.y;
             enemyJSONConfig.physicsProperties.acceleration = this.parent.config.physicsProperties.acceleration;
             enemyJSONConfig.config.defaultFrame = 'bone-dragon-body'
 
@@ -49,15 +52,16 @@ export class BoneDragonIA implements IEnemyAI
                 scene: this.scene,
                 x: enemyJSONConfig.status.position.x,
                 y: enemyJSONConfig.status.position.y,
-                texture: 'enemies',
+                texture: ATLAS_NAMES.ENEMIES,
                 frame: enemyJSONConfig.config.defaultFrame,
                 buttons: this.parent.buttons
             }, enemyJSONConfig);
 
-            enemy.body.setImmovable().setMaxVelocity(0).setGravityY(0).setAllowGravity(false);
+
             enemy.setName('vertebrae' + i)
                 .setActive(true)
-                .setFlipX(true);
+                .setFlipX(true)
+                .setAi(new BoneDragonBodyIA(enemy));
 
             this.childs.push(enemy);
 
@@ -82,33 +86,68 @@ export class BoneDragonIA implements IEnemyAI
             return;
         }
 
-        if (up.isUp && down.isUp && a.isUp && active && this.parent.isInsideCameraByPixels(64) && name === ENEMY_NAMES.BONE_DRAGON)
+        // start the dragon
+        if (!this.isStarted
+            && up.isUp
+            && down.isUp
+            && a.isUp
+            && active
+            && this.parent.isInsideCameraByPixels(0))
         {
+            this.isStarted = true;
+
             this.parent.resetAllButtons();
+
+            this.scene.enemies.forEach(enemy => {
+                if(enemy.name === ENEMY_NAMES.EAGLE && enemy.active && enemy.body && !this.scene.isInsideCameraByPixels(enemy.body, 32))
+                {
+                    enemy.kill();
+                }
+            });
 
             this.createVertebrae();
 
-            up.setDown(now);
+            this.scene.tweens.add({
+                duration: 1000,
+                targets: this.parent,
+                x: this.parent.x - 48,
+                onComplete: () =>
+                {
+                    this.parent.body.setEnable(true);
 
-            this.changeDirectionTime = now + 1000;
+                    up.setDown(now);
 
-            return;
+                    this.changeDirectionTime = now + 1000;
+
+                    this.scene.enemies.forEach(enemy => {
+                        if(enemy.name === ENEMY_NAMES.EAGLE && enemy.active && enemy.body && !this.scene.isInsideCameraByPixels(enemy.body, 32))
+                        {
+                            enemy.kill();
+                        }
+                    });
+
+                    return;
+                }
+            });
         }
 
-        name === ENEMY_NAMES.BONE_DRAGON && this.childs.forEach((child, i) =>
+        if (!this.isStarted) return;
+
+        // update the childs bodies
+        this.childs.forEach((child, i) =>
         {
-            if(!this.curve || i === 0)
+            if (!this.curve || i === 0)
             {
                 this.curve = new Curve(this.childs[0], this.parent, this.childs.length + 2);
             }
 
-            const {x, y } = this.curve.getCorrectedPoints(i)
-            
+            const { x, y } = this.curve.getCorrectedPoints(i);
+
             child.x = x;
             child.y = y;
-        })
+        });
 
-        if (center.y < this.originPosition.y - 80 && body.velocity.y < 0)
+        if (center.y < this.originPosition.y - 32 && body.velocity.y < 0)
         {
             body.stop();
 
@@ -118,7 +157,7 @@ export class BoneDragonIA implements IEnemyAI
             this.changeDirectionTime = now + 2000;
         }
 
-        if (up.isDown && a.isUp && this.changeDirectionTime < now && name === ENEMY_NAMES.BONE_DRAGON)
+        if (up.isDown && a.isUp && this.changeDirectionTime < now )
         {
             body.stop();
 
@@ -128,7 +167,7 @@ export class BoneDragonIA implements IEnemyAI
             this.changeDirectionTime = now + Phaser.Math.RND.integerInRange(600, 1000);
         }
 
-        if (down.isDown && a.isUp && this.changeDirectionTime < now && name === ENEMY_NAMES.BONE_DRAGON)
+        if (down.isDown && a.isUp && this.changeDirectionTime < now )
         {
             body.stop();
 
@@ -139,8 +178,7 @@ export class BoneDragonIA implements IEnemyAI
         }
 
         // attack the player with fireball
-        if (name === ENEMY_NAMES.BONE_DRAGON
-            && !this.isAttacking
+        if (!this.isAttacking
             && a.isUp
             && cam.worldView.contains(center.x, center.y)
             && now > this.timeAttack)

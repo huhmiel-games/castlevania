@@ -3,6 +3,7 @@ import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
 import { DEPTH } from "../../constant/depth";
 import SpikeScrew from "../../gameobjects/SpikeScrew";
+import { ATLAS_NAMES } from "../../constant/config";
 
 export class MovingSpikeIA implements IEnemyAI
 {
@@ -25,7 +26,7 @@ export class MovingSpikeIA implements IEnemyAI
             y: this.parent.y - 32,
             width: 6,
             height: 16,
-            textureKey: 'items',
+            textureKey: ATLAS_NAMES.ITEMS,
             frameKey: 'screw_0',
             parent: this.parent
         })

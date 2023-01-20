@@ -1,4 +1,4 @@
-import { PLAYER_A_NAME } from "../../constant/config";
+import { ATLAS_NAMES, PLAYER_A_NAME } from "../../constant/config";
 import { Boss } from "../entities/Boss";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
@@ -27,7 +27,7 @@ export class MedusaBossIA implements IEnemyAI
 
         this.parent.anims.play(this.parent.animList.IDLE!);
 
-        this.scene.add.image(1904, 472, 'enemies', 'medusa-statue_0')
+        this.scene.add.image(1904, 472, ATLAS_NAMES.ENEMIES, 'medusa-statue_0')
             .setName('medusaStatue')
             .setDepth(this.parent.depth - 1);
     }
@@ -101,7 +101,7 @@ export class MedusaBossIA implements IEnemyAI
             scene: this.scene,
             x: this.parent.body.center.x,
             y: this.parent.body.center.y,
-            texture: 'enemies',
+            texture: ATLAS_NAMES.ENEMIES,
             frame: 'snake_0',
             buttons: inputController.getNewButtons()
         }, enemyJSONConfig);

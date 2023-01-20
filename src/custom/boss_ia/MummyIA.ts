@@ -1,4 +1,4 @@
-import { PLAYER_A_NAME } from "../../constant/config";
+import { ATLAS_NAMES, PLAYER_A_NAME } from "../../constant/config";
 import enemyJSON from '../../data/enemy.json';
 import { Boss } from "../entities/Boss";
 import { Enemy } from "../entities/Enemy";
@@ -179,7 +179,7 @@ export class MummyIA implements IEnemyAI
             scene: this.scene,
             x: this.parent.flipX ? this.parent.body.left : this.parent.body.right,
             y: this.parent.damageBody.body.center.y,
-            texture: 'enemies',
+            texture: ATLAS_NAMES.ENEMIES,
             frame: 'bandage_0',
             buttons: inputController.getNewButtons()
         }, enemyJSONConfig);

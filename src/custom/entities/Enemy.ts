@@ -1,5 +1,5 @@
 import { IEnemyAI, TCharacterConfig, TEntityConfig } from "../../types/types";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { ATLAS_NAMES, PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
 import StateTimestamp from "../../utils/StateTimestamp";
 import { PALETTE_DB32 } from "../../constant/colors";
 import { DEPTH } from "../../constant/depth";
@@ -225,7 +225,7 @@ export class Enemy extends Entity
             })
         }
 
-        const deathFlame: Phaser.GameObjects.Sprite = this.scene.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, 'enemies', 'enemy-death-1', false);
+        const deathFlame: Phaser.GameObjects.Sprite = this.scene.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, ATLAS_NAMES.ENEMIES, 'enemy-death-1', false);
 
         if (deathFlame)
         {
@@ -487,7 +487,7 @@ export class Enemy extends Entity
                     damage: 1.5,
                     x: this.body.x,
                     y: this.body.y,
-                    texture: 'enemies',
+                    texture: ATLAS_NAMES.ENEMIES,
                     frame: 'fireBall_0',
                     anims: 'fireBall',
                     sound: 10,
@@ -508,7 +508,7 @@ export class Enemy extends Entity
                     damage: 1,
                     x: this.body.x,
                     y: this.body.y,
-                    texture: 'enemies',
+                    texture: ATLAS_NAMES.ENEMIES,
                     frame: 'skeleton-bone_0',
                     anims: 'skeleton-bone',
                     sound: 10,
@@ -529,7 +529,7 @@ export class Enemy extends Entity
                     damage: 1.5,
                     x: this.body.x,
                     y: this.body.y,
-                    texture: 'items',
+                    texture: ATLAS_NAMES.ITEMS,
                     frame: 'weapon-axe',
                     anims: 'axe',
                     sound: 10,
@@ -550,7 +550,7 @@ export class Enemy extends Entity
                     damage: 1.5,
                     x: this.body.x,
                     y: this.body.y,
-                    texture: 'enemies',
+                    texture: ATLAS_NAMES.ENEMIES,
                     frame: 'scythe_0',
                     anims: 'scythe',
                     sound: 10,

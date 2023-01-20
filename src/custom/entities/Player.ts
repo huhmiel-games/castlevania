@@ -1,5 +1,5 @@
 import { EPossibleState } from "../../constant/character";
-import { HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../../constant/config";
+import { ATLAS_NAMES, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import { Entity } from "../../entities/Entity";
 import AttackState from "../../entities/states/attack/AttackState";
@@ -476,7 +476,7 @@ export default class Player extends Entity
                 damage: 1.5,
                 x: this.body.x,
                 y: this.body.y,
-                texture: 'items',
+                texture: ATLAS_NAMES.ITEMS,
                 frame: 'weapon-cross_1',
                 anims: 'cross',
                 sound: 8,
@@ -503,7 +503,7 @@ export default class Player extends Entity
                 damage: 1,
                 x: this.body.x,
                 y: this.body.y,
-                texture: 'items',
+                texture: ATLAS_NAMES.ITEMS,
                 frame: 'weapon-holywater',
                 anims: 'holy-water',
                 sound: 31,
@@ -530,7 +530,7 @@ export default class Player extends Entity
                 damage: 1.5,
                 x: this.body.x,
                 y: this.body.y,
-                texture: 'items',
+                texture: ATLAS_NAMES.ITEMS,
                 frame: 'weapon-axe',
                 anims: 'axe',
                 sound: 10,
@@ -557,7 +557,7 @@ export default class Player extends Entity
                 damage: 1,
                 x: this.body.x,
                 y: this.body.y,
-                texture: 'items',
+                texture: ATLAS_NAMES.ITEMS,
                 frame: 'dagger',
                 anims: 'dagger',
                 sound: 9,

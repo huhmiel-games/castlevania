@@ -1,6 +1,6 @@
 import { ENEMY_NAMES } from "../../constant/character";
 import { PALETTE_DB32 } from "../../constant/colors";
-import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
+import { ATLAS_NAMES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
 import GameScene from "../../scenes/GameScene";
 import SaveLoadService from "../../services/SaveLoadService";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
@@ -181,7 +181,9 @@ export class Boss extends Enemy
                 delay: 200 * i,
                 callback: () =>
                 {
-                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, 'enemies', 'enemy-death-1', false);
+                    if (!this.active) return;
+
+                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, ATLAS_NAMES.ENEMIES, 'enemy-death-1', false);
 
                     if (deathFlame)
                     {
@@ -213,7 +215,7 @@ export class Boss extends Enemy
                 delay: 200 * i,
                 callback: () =>
                 {
-                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, 'enemies', 'enemy-death-1', false);
+                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, ATLAS_NAMES.ENEMIES, 'enemy-death-1', false);
 
                     if (deathFlame)
                     {

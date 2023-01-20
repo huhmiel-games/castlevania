@@ -1,4 +1,4 @@
-import { LIGHT_ATTENUATION, LIGHT_ATTENUATION_END, LIGHT_ATTENUATION_START, LIGHT_COLOR, LIGHT_INTENSITY, LIGHT_RADIUS, TILE_SIZE } from '../constant/config';
+import { ATLAS_NAMES, LIGHT_ATTENUATION, LIGHT_ATTENUATION_END, LIGHT_ATTENUATION_START, LIGHT_COLOR, LIGHT_INTENSITY, LIGHT_RADIUS, TILE_SIZE } from '../constant/config';
 import { DEPTH } from '../constant/depth';
 import { DOORS_TILE_INDEX } from '../constant/tiles';
 import Conveyor from '../gameobjects/Conveyor';
@@ -99,7 +99,7 @@ export default class LayerService
         {
             if (scene.isInPlayerStage(platform))
             {
-                const newPlatform = new MovingPlatform({ scene: scene, x: platform.x! + TILE_SIZE - 8, y: platform.y! - TILE_SIZE, texture: 'items', frame: 'movingPlatform' });
+                const newPlatform = new MovingPlatform({ scene: scene, x: platform.x! + TILE_SIZE - 8, y: platform.y! - TILE_SIZE, texture: ATLAS_NAMES.ITEMS, frame: 'movingPlatform' });
 
                 scene.movingPlatformGroup.add(newPlatform);
             }

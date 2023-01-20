@@ -70,6 +70,13 @@ export const enum HUD_EVENTS_NAMES
     BOSS_HEALTH = 'hud-boss-health'
 }
 
+export const enum ATLAS_NAMES
+{
+    PLAYER = 'atlas',
+    ENEMIES = 'enemies',
+    ITEMS = 'items'
+}
+
 export const STAGE_START_POSITION = {
     '11': { x:   2 * TILE_SIZE, y: 69 * TILE_SIZE },
     '21': { x: 225 * TILE_SIZE, y: 65 * TILE_SIZE },

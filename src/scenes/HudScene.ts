@@ -1,4 +1,4 @@
-import { WIDTH, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYER_A_NAME, COUNTDOWN_EVENT } from '../constant/config';
+import { WIDTH, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYER_A_NAME, COUNTDOWN_EVENT, ATLAS_NAMES } from '../constant/config';
 import GameScene from './GameScene';
 import { TStatus } from '../types/types';
 import { PALETTE_DB32 } from '../constant/colors';
@@ -70,10 +70,10 @@ export default class HudScene extends Phaser.Scene
             .setName('stage')
             .setText(`stage ${this.playerStatus.stage?.toString().padStart(2, '0')}`)
 
-        this.add.image(128, 20, 'items', 'weapon-frame').setOrigin(0, 0.5);
-        this.add.image(144, 20, 'items', '').setOrigin(0.5, 0.5).setName('weaponImage').setAlpha(0);
-        this.add.image(168, 12, 'items', 'heart').setOrigin(0, 0);
-        this.add.image(208, 12, 'items', 'double-shot').setOrigin(0, 0).setName('shotImage').setAlpha(0);
+        this.add.image(128, 20, ATLAS_NAMES.ITEMS, 'weapon-frame').setOrigin(0, 0.5);
+        this.add.image(144, 20, ATLAS_NAMES.ITEMS, '').setOrigin(0.5, 0.5).setName('weaponImage').setAlpha(0);
+        this.add.image(168, 12, ATLAS_NAMES.ITEMS, 'heart').setOrigin(0, 0);
+        this.add.image(208, 12, ATLAS_NAMES.ITEMS, 'double-shot').setOrigin(0, 0).setName('shotImage').setAlpha(0);
 
         this.add.bitmapText(177, 13, FONTS.GALAXY, '-00', 8, 1)
             .setOrigin(0, 0)
@@ -85,12 +85,12 @@ export default class HudScene extends Phaser.Scene
 
         for (let i = 0; i < 16; i += 1)
         {
-            this.add.image(56 + i * 4, 11, 'items', 'health_0').setOrigin(0, 0).setName(`player-health_${i + 1}`);
+            this.add.image(56 + i * 4, 11, ATLAS_NAMES.ITEMS, 'health_0').setOrigin(0, 0).setName(`player-health_${i + 1}`);
         }
 
         for (let i = 0; i < 16; i += 1)
         {
-            this.add.image(56 + i * 4, 21, 'items', 'health_1').setOrigin(0, 0).setName(`boss-health_${i + 1}`);
+            this.add.image(56 + i * 4, 21, ATLAS_NAMES.ITEMS, 'health_1').setOrigin(0, 0).setName(`boss-health_${i + 1}`);
         }
 
         this.resetData();
