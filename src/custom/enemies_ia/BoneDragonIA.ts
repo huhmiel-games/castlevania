@@ -4,6 +4,8 @@ import GameScene from "../../scenes/GameScene";
 import enemyJSON from '../../data/enemy.json';
 import { IEnemyAI } from "../../types/types";
 import { ENEMY_NAMES } from "../../constant/character";
+import { Curve } from "../../utils/Curve";
+import { PALETTE_DB32 } from "../../constant/colors";
 
 export class BoneDragonIA implements IEnemyAI
 {
@@ -16,6 +18,7 @@ export class BoneDragonIA implements IEnemyAI
     originPosition: { x: number; y: number; };
     isAttacking: boolean = false;
     timeAttack: number = 0;
+    curve: Curve;
     constructor(parent: Enemy)
     {
         this.parent = parent;
@@ -23,7 +26,7 @@ export class BoneDragonIA implements IEnemyAI
 
         this.originPosition = { ...parent.body.center };
 
-        this.parent.setFlipX(true);
+        this.parent.setFlipX(true).setOrigin(0.4, 0.5);
 
         this.parent.body.setMaxVelocityX(0);
     }
@@ -53,7 +56,6 @@ export class BoneDragonIA implements IEnemyAI
 
             enemy.body.setImmovable().setMaxVelocity(0).setGravityY(0).setAllowGravity(false);
             enemy.setName('vertebrae' + i)
-                .setDepth(this.parent.depth - i)
                 .setActive(true)
                 .setFlipX(true);
 
@@ -95,9 +97,15 @@ export class BoneDragonIA implements IEnemyAI
 
         name === ENEMY_NAMES.BONE_DRAGON && this.childs.forEach((child, i) =>
         {
-            const diff = this.parent.y - this.childs[0].y;
+            if(!this.curve || i === 0)
+            {
+                this.curve = new Curve(this.childs[0], this.parent, this.childs.length + 2);
+            }
 
-            child.y = this.parent.y - diff / Math.sqrt(Math.pow(i, 3) + 1);
+            const {x, y } = this.curve.getCorrectedPoints(i)
+            
+            child.x = x;
+            child.y = y;
         })
 
         if (center.y < this.originPosition.y - 80 && body.velocity.y < 0)
