@@ -22,6 +22,7 @@ export default class ThrowingBomb extends Phaser.GameObjects.Sprite implements W
     private sfx: number;
     private timestamp: number = 0;
     private hasExploded: boolean = false;
+    private defaultFrame: string;
     constructor(config: TWeaponConfig)
     {
         super(config.scene, config.x, config.y, config.texture, config.frame);
@@ -43,6 +44,8 @@ export default class ThrowingBomb extends Phaser.GameObjects.Sprite implements W
         this.body.setAllowGravity(true).setEnable(false).setCircle(8);
 
         this.weaponAnim = config.anims;
+
+        this.defaultFrame = config.frame;
 
         this.setDisable();
 
@@ -94,6 +97,8 @@ export default class ThrowingBomb extends Phaser.GameObjects.Sprite implements W
     public attack()
     {
         this.anims?.stop();
+
+        this.setFrame(this.defaultFrame);
 
         this.hasExploded = false;
 
