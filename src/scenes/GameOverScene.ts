@@ -16,7 +16,7 @@ export default class GameOverScene extends Phaser.Scene
         super(SCENES_NAMES.GAMEOVER);
     }
 
-    public create(data)
+    public create()
     {
         this.inputController = InputController.getInstance();
         this.inputController.isActive = false;
