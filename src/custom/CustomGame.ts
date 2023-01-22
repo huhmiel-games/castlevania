@@ -794,7 +794,22 @@ export class CustomeGame implements ICustomGame
 
             damageBody.parent.setDamage(weapon.damage);
 
-            if(damageBody.parent.status.health <= 0 && !BOSS_NAMES.includes(damageBody.parent.name))
+            if (damageBody.parent.status.health > 0 && weapon.name !== WEAPON_NAMES.AXE && weapon.name !== WEAPON_NAMES.HOLY_WATER)
+            {
+                const impact = this.scene.impactGroup?.get(damageBody.body.center.x, weapon.body.center.y);
+
+                if (impact)
+                {
+                    impact.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => impact.setActive(false).setVisible(false));
+                    impact.setDepth(DEPTH.FRONT_LAYER)
+                        .setFlipX(damageBody.body.center.x > weapon.body.center.x ? false : true)
+                        .setActive(true)
+                        .setVisible(true)
+                        .play('impact');
+                }
+            }
+
+            if (damageBody.parent.status.health <= 0 && !BOSS_NAMES.includes(damageBody.parent.name))
             {
                 this.dropRandomItem(damageBody.body.center, damageBody.parent);
             }
@@ -828,7 +843,7 @@ export class CustomeGame implements ICustomGame
 
             const smoke = this.scene.smokeGroup.get(enemyWeapon.body.center.x, enemyWeapon.body.center.y);
 
-            if(smoke)
+            if (smoke)
             {
                 smoke.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => smoke.setActive(false).setVisible(false));
                 smoke.setDepth(DEPTH.FRONT_LAYER).setActive(true).setVisible(true).play('smoke');
