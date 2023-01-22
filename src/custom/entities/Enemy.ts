@@ -45,6 +45,7 @@ import FallSecondaryAttackState from "../../entities/states/attack/FallSecondary
 import { Scythe } from "../../entities/weapons/Scythe";
 import SaveLoadService from "../../services/SaveLoadService";
 import { WEAPON_NAMES } from "../../constant/weapons";
+import { error } from "../../utils/log";
 
 export class Enemy extends Entity
 {
@@ -258,7 +259,7 @@ export class Enemy extends Entity
         }
         else
         {
-            console.error("No death free in enemyDeathGroup");
+            error("No death free in enemyDeathGroup");
 
         }
     }

@@ -15,3 +15,11 @@ export function warn(message: string)
         console.warn(message);
     }
 }
+
+export function error(message: string)
+{
+    if (isDev)
+    {
+        console.error(message);
+    }
+}
