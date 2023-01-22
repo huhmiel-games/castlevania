@@ -2,6 +2,7 @@ import { ATLAS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import GameScene from "../../scenes/GameScene";
 import { ICustomEffect } from "../../types/types";
+import { Thunder } from "./Thunder";
 
 export class RainEffect implements ICustomEffect
 {
@@ -11,7 +12,7 @@ export class RainEffect implements ICustomEffect
     private rainEmitter: Phaser.GameObjects.Particles.ParticleEmitter;
     private deathZone: Phaser.GameObjects.Particles.Zones.DeathZone;
     private rainDropGroup: Phaser.GameObjects.Group;
-    private thunder: Phaser.GameObjects.Image | null;
+    private thunder: Thunder | null;
     constructor(scene: GameScene)
     {
         this.scene = scene;
@@ -39,7 +40,7 @@ export class RainEffect implements ICustomEffect
             visible: true,
         });
 
-        this.thunder = this.scene.add.image(37 * 16, 60 * 16, 'thunder').setOrigin(0, 0).setVisible(false);
+        this.thunder = new Thunder({scene: this.scene, x: 37 * 16, y: 60 * 16, texture: 'thunder', frame: 0});
 
         this.rainEmitter.setDepth(DEPTH.FRONT_LAYER + 50);
 
@@ -58,7 +59,7 @@ export class RainEffect implements ICustomEffect
             // add raindrop on particle kill
             const drop = this.rainDropGroup.getFirstDead(true, particle.x, particle.bounds.bottom - 16, ATLAS_NAMES.ITEMS, 'rain-ground_0', true);
 
-            drop?.setActive(true).setVisible(true).setDepth(DEPTH.FRONT_LAYER + 51).setScrollFactor(0, 1);
+            drop?.setActive(true).setVisible(true).setDepth(this.rainEmitter.depth).setScrollFactor(0, 1);
             drop?.anims.play('rain');
 
             this.scene.time.addEvent({
@@ -89,9 +90,9 @@ export class RainEffect implements ICustomEffect
 
         const player = this.scene.getPlayerByName(PLAYER_A_NAME);
 
-        if (player.body.center.x > 38 * 16)
+        if (player.status.stage === 11 && player.body.center.x > 38 * 16 && this.thunder?.active)
         {
-            this.showThunder();
+            this.thunder?.showThunder();
         }
     }
 
@@ -124,33 +125,8 @@ export class RainEffect implements ICustomEffect
         this.thunder?.destroy();
     }
 
-    showThunder()
+    setDepth(depth: number)
     {
-        if (this.thunder === null || this.thunder.visible) return;
-
-        this.thunder.setVisible(true);
-
-        this.scene.playSound(34, 1);
-
-        this.scene.cameras.main.flash(75);
-
-        this.scene.tweens.add({
-            targets: this.thunder,
-            alpha: 0,
-            yoyo: true,
-            duration: 150
-        });
-
-        this.scene.time.addEvent({
-            delay: 300,
-            callback: () =>
-            {
-                this.thunder?.setVisible(false);
-
-                this.thunder?.destroy();
-
-                this.thunder = null;
-            }
-        });
+        this.rainEmitter.setDepth(depth);
     }
 }
