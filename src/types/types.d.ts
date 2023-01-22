@@ -154,11 +154,11 @@ export type TWeaponConfig = {
 }
 
 export type TAi = {
-    button: string; 
+    button: string;
     delay: number;
     distance?: number,
     condition: {
-        
+
         x?: string,
         button: string
     }
@@ -195,80 +195,80 @@ export type TEntityConfig = {
     resurrect: number
 }
 
-export type TDamageBodyConfig = { 
-    scene: GameScene; 
-    parent: Entity, 
-    x: number; 
-    y: number, 
-    width: number, 
-    height: number 
+export type TDamageBodyConfig = {
+    scene: GameScene;
+    parent: Entity,
+    x: number;
+    y: number,
+    width: number,
+    height: number
 }
 
 export type TSoundList =
-{
-    [key: string]: Phaser.Sound.BaseSound;
-}
+    {
+        [key: string]: Phaser.Sound.BaseSound;
+    }
 
 export type TStatus =
-{
-    health: number,
-    score: number,
-    life: number,
-    ammo: number,
-    stage: number,
-    canTakeStairs: boolean,
-    position: TCoord,
-}
+    {
+        health: number,
+        score: number,
+        life: number,
+        ammo: number,
+        stage: number,
+        canTakeStairs: boolean,
+        position: TCoord,
+    }
 
 export type TPhysicsProperties =
-{
-    gravity: number,
-    speed: number,
-    maxSpeedY?: number,
-    acceleration: number,
-    dragCoeff: number,
-    stairSpeed?: number,
-    isHurt: boolean,
-    isDead: boolean,
-    isAttacking: boolean,
-    isPaused: boolean,
-    sinHeight?: number,
-    jumpHeight?: number
-}
+    {
+        gravity: number,
+        speed: number,
+        maxSpeedY?: number,
+        acceleration: number,
+        dragCoeff: number,
+        stairSpeed?: number,
+        isHurt: boolean,
+        isDead: boolean,
+        isAttacking: boolean,
+        isPaused: boolean,
+        sinHeight?: number,
+        jumpHeight?: number
+    }
 
 export type TAnimationList =
-{
-    IDLE?: string | Phaser.Animations.Animation,
-    JUMP?: string | Phaser.Animations.Animation,
-    BACK_FLIP?: string | Phaser.Animations.Animation,
-    CROUCH?: string | Phaser.Animations.Animation,
-    LEFT?: string | Phaser.Animations.Animation,
-    RIGHT?: string | Phaser.Animations.Animation,
-    HURT?: string | Phaser.Animations.Animation,
-    DEAD?: string | Phaser.Animations.Animation,
-    FALL?: string | Phaser.Animations.Animation,
-    UPSTAIR?: string | Phaser.Animations.Animation,
-    DOWNSTAIR?: string | Phaser.Animations.Animation,
-    ATTACK?: string | Phaser.Animations.Animation,
-    SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
-    CROUCH_ATTACK?: string | Phaser.Animations.Animation,
-    JUMP_ATTACK?: string | Phaser.Animations.Animation,
-    JUMP_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
-    UP?: string | Phaser.Animations.Animation,
-    DOWN?: string | Phaser.Animations.Animation,
-    UPSTAIR_ATTACK?: string | Phaser.Animations.Animation,
-    DOWNSTAIR_ATTACK?: string | Phaser.Animations.Animation,
-    UPSTAIR_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
-    DOWNSTAIR_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
-    FLY?: string | Phaser.Animations.Animation
-}
+    {
+        IDLE?: string | Phaser.Animations.Animation,
+        JUMP?: string | Phaser.Animations.Animation,
+        BACK_FLIP?: string | Phaser.Animations.Animation,
+        CROUCH?: string | Phaser.Animations.Animation,
+        LEFT?: string | Phaser.Animations.Animation,
+        RIGHT?: string | Phaser.Animations.Animation,
+        HURT?: string | Phaser.Animations.Animation,
+        DEAD?: string | Phaser.Animations.Animation,
+        FALL?: string | Phaser.Animations.Animation,
+        UPSTAIR?: string | Phaser.Animations.Animation,
+        DOWNSTAIR?: string | Phaser.Animations.Animation,
+        ATTACK?: string | Phaser.Animations.Animation,
+        SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
+        CROUCH_ATTACK?: string | Phaser.Animations.Animation,
+        JUMP_ATTACK?: string | Phaser.Animations.Animation,
+        JUMP_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
+        UP?: string | Phaser.Animations.Animation,
+        DOWN?: string | Phaser.Animations.Animation,
+        UPSTAIR_ATTACK?: string | Phaser.Animations.Animation,
+        DOWNSTAIR_ATTACK?: string | Phaser.Animations.Animation,
+        UPSTAIR_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
+        DOWNSTAIR_SECONDARY_ATTACK?: string | Phaser.Animations.Animation,
+        FLY?: string | Phaser.Animations.Animation
+    }
 
 export type TFrameList =
-{
-    stairDown: string,
-    stairUp: string,
-    stairMiddle: string
-}
+    {
+        stairDown: string,
+        stairUp: string,
+        stairMiddle: string
+    }
 
 export type TMeleeWeaponConfig = {
     width: number,
@@ -283,6 +283,7 @@ export type TMeleeWeaponConfig = {
 export interface ICustomGame
 {
     scene: GameScene
+    customEffects: Map<string, ICustomEffect>
     init: () => void
 }
 
@@ -290,11 +291,12 @@ export interface IEnemyAI
 {
     parent: Enemy | Boss;
     scene: GameScene;
-    execute: ()=> void
+    execute: () => void
     reset: () => void
 }
 
-export interface ICustomEffect {
+export interface ICustomEffect
+{
     scene: GameScene,
     name: string,
     isActive: boolean,
