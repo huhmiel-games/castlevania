@@ -51,7 +51,7 @@ export default class GameScene extends Phaser.Scene
     public isChangingStage: boolean = false;
     public stageCountdown = new StageCountDown(this);
     public isPaused: boolean = false;
-    
+
     debugGraphics: Phaser.GameObjects.Graphics;
 
     constructor()
@@ -509,8 +509,6 @@ export default class GameScene extends Phaser.Scene
 
         this.playSong(10, false);
 
-        this.stageCountdown.stop();
-
         this.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
         {
             orb?.destroy();
@@ -574,6 +572,8 @@ export default class GameScene extends Phaser.Scene
 
         orb.setActive(false).setVisible(false);
 
+        this.stageCountdown.stop();
+
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
         this.playSong(11, false);
@@ -581,27 +581,48 @@ export default class GameScene extends Phaser.Scene
         {
             orb?.destroy();
 
-            const timer = this.time.addEvent({
-                delay: 100,
-                repeat: player.status.ammo,
+            const timerTime = this.time.addEvent({
+                delay: 50,
+                repeat: this.stageCountdown.getCountDown(),
                 callback: () =>
                 {
-                    if (timer.getRepeatCount() > 0)
+                    if (timerTime.getRepeatCount() > 0)
                     {
                         this.playSound(5);
 
-                        player.status.setAmmo(player.status.ammo - 1);
+                        this.stageCountdown.decrementCountdown();
 
-                        player.status.setScore(player.status.score + 100);
+                        player.status.setScore(player.status.score + 10);
+
+                        this.events.emit(COUNTDOWN_EVENT, this.stageCountdown.getCountDown())
                     }
 
-                    if (timer.getRepeatCount() === 0)
+                    if (timerTime.getRepeatCount() === 0)
                     {
-                        this.playSound(4);
+                        const timerAmmo = this.time.addEvent({
+                            delay: 50,
+                            repeat: player.status.ammo,
+                            callback: () =>
+                            {
+                                if (timerAmmo.getRepeatCount() > 0)
+                                {
+                                    this.playSound(5);
 
-                        this.isBossBattle = false;
+                                    player.status.setAmmo(player.status.ammo - 1);
 
-                        this.showCastleDestruction();
+                                    player.status.setScore(player.status.score + 100);
+                                }
+
+                                if (timerAmmo.getRepeatCount() === 0)
+                                {
+                                    this.playSound(4);
+
+                                    this.isBossBattle = false;
+
+                                    this.showCastleDestruction();
+                                }
+                            }
+                        });
                     }
                 }
             });
