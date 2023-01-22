@@ -2,6 +2,7 @@
 import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
 import
 {
+    ATLAS_NAMES,
     COUNTDOWN_EVENT, FONTS, FONTS_SIZES,
     HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME,
     SCENES_NAMES, STAGE_BACKTRACK, STAGE_COUNTDOWN,
@@ -54,6 +55,8 @@ export default class GameScene extends Phaser.Scene
     public isPaused: boolean = false;
 
     debugGraphics: Phaser.GameObjects.Graphics;
+    smokeGroup: Phaser.GameObjects.Group;
+    puffGroup: Phaser.GameObjects.Group;
 
     constructor()
     {
@@ -297,6 +300,20 @@ export default class GameScene extends Phaser.Scene
         this.enemyDeathGroup = this.add.group({
             classType: Phaser.GameObjects.Sprite,
             maxSize: 100,
+        });
+
+        this.smokeGroup = this.add.group({
+            classType: Phaser.GameObjects.Sprite,
+            key: ATLAS_NAMES.ITEMS,
+            frame: 'smoke_1',
+            maxSize: 6,
+        });
+
+        this.puffGroup = this.add.group({
+            classType: Phaser.GameObjects.Sprite,
+            key: ATLAS_NAMES.ITEMS,
+            frame: 'puff_1',
+            maxSize: 6,
         });
     }
 
