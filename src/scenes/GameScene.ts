@@ -12,10 +12,9 @@ import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
 import ColliderService from '../services/ColliderService.js';
 import WorldRooms from '../utils/WorldRooms.js';
-import { TCoord, TDoor } from '../types/types.js';
+import { ICustomEffect, TCoord, TDoor } from '../types/types.js';
 import SaveLoadService from '../services/SaveLoadService.js';
 import { PALETTE_DB32 } from '../constant/colors.js';
-import DamageBody from '../entities/DamageBody.js';
 import { Orb } from '../gameobjects/Orb.js';
 import creditsData from '../data/credits.json';
 import { DEPTH } from '../constant/depth.js';
@@ -52,6 +51,7 @@ export default class GameScene extends Phaser.Scene
     public isChangingStage: boolean = false;
     public stageCountdown = new StageCountDown(this);
     public isPaused: boolean = false;
+    
     debugGraphics: Phaser.GameObjects.Graphics;
 
     constructor()
@@ -155,6 +155,11 @@ export default class GameScene extends Phaser.Scene
 
     public update(time: number, delta: number): void
     {
+        // update customEffects
+        this.customGame.customEffects.forEach(effect =>
+        {
+            if (effect.isActive) effect.update();
+        });
 
         if (this.inputController.playerAButtons.x.isDown)
         {
@@ -222,8 +227,8 @@ export default class GameScene extends Phaser.Scene
             .setName('pauseText')
             .setDepth(2000);
 
-            console.log(this);
-            
+        console.log(this);
+
     }
 
     public shutdown()
@@ -293,7 +298,7 @@ export default class GameScene extends Phaser.Scene
 
         this.enemyDeathGroup = this.add.group({
             classType: Phaser.GameObjects.Sprite,
-            maxSize: 30,
+            maxSize: 100,
         });
     }
 
@@ -320,6 +325,10 @@ export default class GameScene extends Phaser.Scene
                     this.cameras.main.setBounds(x!, y!, width!, height!);
 
                     const zoneData = LayerService.convertTiledObjectProperties(currentZone.properties);
+
+                    this.customGame.addCustomEffects();
+
+                    this.customGame.checkCustomStageEffect(zoneData?.stage);
 
                     this.changeMajorStage(zoneData?.stage);
 

@@ -1,5 +1,5 @@
 import { bossNames, ENEMY_NAMES, EPossibleState } from "../constant/character";
-import { TILE_SIZE, PLAYER_A_NAME, HEIGHT } from "../constant/config";
+import { TILE_SIZE, PLAYER_A_NAME, HEIGHT, ATLAS_NAMES } from "../constant/config";
 import { DEPTH } from "../constant/depth";
 import { TILE_ITEMS } from "../constant/tiles";
 import { WEAPON_NAMES } from "../constant/weapons";
@@ -17,7 +17,7 @@ import { InputController } from "../inputs/InputController";
 import GameScene from "../scenes/GameScene";
 import LayerService from "../services/LayerService";
 import SaveLoadService from "../services/SaveLoadService";
-import { ICustomGame, TEntityConfig, TStatus } from "../types/types";
+import { ICustomEffect, ICustomGame, TEntityConfig, TStatus } from "../types/types";
 import { DeathIA } from "./boss_ia/DeathIA";
 import { Dracula2IA } from "./boss_ia/Dracula2IA";
 import { DraculaIA } from "./boss_ia/DraculaIA";
@@ -47,10 +47,12 @@ import { ZombieIA } from "./enemies_ia/ZombieIA";
 import { Boss } from "./entities/Boss";
 import { Enemy } from "./entities/Enemy";
 import Player from "./entities/Player";
+import { RainEffect } from "./environmentEffects/Rain";
 
 export class CustomeGame implements ICustomGame
 {
     public scene: GameScene;
+    public customEffects: Map<string, ICustomEffect> = new Map();
     public isOrb: boolean = false;
     public enemiesVsWeaponsCollider: Phaser.Physics.Arcade.Collider;
     public enemiesVsPlayerCollider: Phaser.Physics.Arcade.Collider;
@@ -58,6 +60,8 @@ export class CustomeGame implements ICustomGame
     public weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
     public enemiesSecondaryWeapons: Phaser.GameObjects.GameObject[];
     public enemiesDamageBody: DamageBody[] = [];
+    // public rainEffect: ICustomEffect;
+
 
     constructor(scene: GameScene)
     {
@@ -81,7 +85,7 @@ export class CustomeGame implements ICustomGame
                 health: 16,
                 life: 3,
                 score: 0,
-                stage: 1,
+                stage: 11,
                 ammo: 5,
                 canTakeStairs: false,
                 position: {
@@ -110,7 +114,7 @@ export class CustomeGame implements ICustomGame
             scene: this.scene,
             x: data.position.x,
             y: data.position.y,
-            texture: 'atlas',
+            texture: ATLAS_NAMES.PLAYER,
             frame: '',
             buttons: this.scene.inputController.playerAButtons
         });
@@ -169,7 +173,7 @@ export class CustomeGame implements ICustomGame
 
     public spawnRetrievableItem(tileItem: Phaser.Tilemaps.Tile)
     {
-        const itemLayer = LayerService.getObjectLayerByName(this.scene, 'items') as Phaser.Tilemaps.ObjectLayer;
+        const itemLayer = LayerService.getObjectLayerByName(this.scene, ATLAS_NAMES.ITEMS) as Phaser.Tilemaps.ObjectLayer;
 
         const itemObject = itemLayer.objects.find(item => item.x === tileItem.pixelX && item.y === tileItem.pixelY + TILE_SIZE);
 
@@ -190,7 +194,7 @@ export class CustomeGame implements ICustomGame
 
                     if (player.multipleShots === 1)
                     {
-                        const doubleShot = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: TILE_ITEMS.DOUBLE_SHOT, quantity: 1, name: TILE_ITEMS.DOUBLE_SHOT })
+                        const doubleShot = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: TILE_ITEMS.DOUBLE_SHOT, quantity: 1, name: TILE_ITEMS.DOUBLE_SHOT })
                         this.scene.itemsGroup.add(doubleShot);
                         this.setItemTimer(doubleShot);
                         break;
@@ -198,7 +202,7 @@ export class CustomeGame implements ICustomGame
 
                     if (player.multipleShots === 2)
                     {
-                        const tripleShot = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'triple-shot', quantity: 1, name: 'triple-shot' })
+                        const tripleShot = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'triple-shot', quantity: 1, name: 'triple-shot' })
                         this.scene.itemsGroup.add(tripleShot);
                         this.setItemTimer(tripleShot);
                         break;
@@ -206,67 +210,67 @@ export class CustomeGame implements ICustomGame
                 }
 
             case TILE_ITEMS.HEART:
-                const heart = new AmmoRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'little-heart', quantity: 1 });
+                const heart = new AmmoRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'little-heart', quantity: 1 });
                 this.scene.itemsGroup.add(heart);
                 this.setItemTimer(heart);
                 break;
 
             case TILE_ITEMS.BIG_HEART:
-                const bigheart = new BigAmmoRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'big-heart', quantity: 5 });
+                const bigheart = new BigAmmoRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'big-heart', quantity: 5 });
                 this.scene.itemsGroup.add(bigheart);
                 this.setItemTimer(bigheart);
                 break;
 
             case TILE_ITEMS.RED_BAG:
-                const redBag = new ScoreRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'purple-bag', quantity: 100 });
+                const redBag = new ScoreRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'purple-bag', quantity: 100 });
                 this.scene.itemsGroup.add(redBag);
                 this.setItemTimer(redBag);
                 break;
 
             case TILE_ITEMS.PURPLE_BAG:
-                const purpleBag = new ScoreRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'purple-bag', quantity: 400 });
+                const purpleBag = new ScoreRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'purple-bag', quantity: 400 });
                 this.scene.itemsGroup.add(purpleBag);
                 this.setItemTimer(purpleBag);
                 break;
 
             case TILE_ITEMS.WHITE_BAG:
-                const whiteBag = new ScoreRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'purple-bag', quantity: 700 });
+                const whiteBag = new ScoreRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'purple-bag', quantity: 700 });
                 this.scene.itemsGroup.add(whiteBag);
                 this.setItemTimer(whiteBag);
                 break;
 
             case TILE_ITEMS.DAGGER:
-                const dagger = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'dagger', quantity: 1, name: 'dagger' })
+                const dagger = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'dagger', quantity: 1, name: 'dagger' })
                 this.scene.itemsGroup.add(dagger);
                 this.setItemTimer(dagger);
                 break;
 
             case TILE_ITEMS.HOLY_WATER:
-                const holyWater = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'holy-water', quantity: 1, name: 'holyWater' })
+                const holyWater = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'holy-water', quantity: 1, name: 'holyWater' })
                 this.scene.itemsGroup.add(holyWater);
                 this.setItemTimer(holyWater);
                 break;
 
             case TILE_ITEMS.AXE:
-                const axe = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'axe', quantity: 1, name: 'axe' })
+                const axe = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'axe', quantity: 1, name: 'axe' })
                 this.scene.itemsGroup.add(axe);
                 this.setItemTimer(axe);
                 break;
 
             case TILE_ITEMS.CROSS:
-                const cross = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'cross', quantity: 1, name: 'cross' })
+                const cross = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'cross', quantity: 1, name: 'cross' })
                 this.scene.itemsGroup.add(cross);
                 this.setItemTimer(cross);
                 break;
 
             case TILE_ITEMS.ROSARY:
-                const rosary = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'rosary', quantity: 1, name: 'rosary' })
+                const rosary = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'rosary', quantity: 1, name: 'rosary' })
                 this.scene.itemsGroup.add(rosary);
                 this.setItemTimer(rosary);
                 break;
 
             case TILE_ITEMS.PORK:
-                const pork = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: 'items', frame: 'pork', quantity: 1, name: 'pork' })
+                const pork = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'pork', quantity: 1, name: 'pork' })
                 this.scene.itemsGroup.add(pork);
                 this.setItemTimer(pork);
                 break;
@@ -321,7 +325,7 @@ export class CustomeGame implements ICustomGame
             {
                 const cam = this.scene.cameras.main;
 
-                const orb = new Orb({ scene: this.scene, x: cam.worldView.centerX, y: cam.worldView.centerY - 64, texture: 'items', frame: 'magic-crystal_0' });
+                const orb = new Orb({ scene: this.scene, x: cam.worldView.centerX, y: cam.worldView.centerY - 64, texture: ATLAS_NAMES.ITEMS, frame: 'magic-crystal_0' });
 
                 this.scene.itemsGroup.add(orb);
             }
@@ -462,7 +466,7 @@ export class CustomeGame implements ICustomGame
         this.scene.enemyWeaponGroup.clear(true);
 
         // create zone enemies
-        const enemyLayer = LayerService.getObjectLayerByName(this.scene, 'enemies');
+        const enemyLayer = LayerService.getObjectLayerByName(this.scene, ATLAS_NAMES.ENEMIES);
 
         const inputController = InputController.getInstance();
 
@@ -471,6 +475,11 @@ export class CustomeGame implements ICustomGame
             if (this.scene.isInPlayerStage(enemyObj))
             {
                 const enemyName: string = LayerService.convertTiledObjectProperties(enemyObj.properties)?.name;
+
+                // if (enemyName === ENEMY_NAMES.EAGLE)
+                // {
+                //     return;
+                // }
 
                 const enemyJSONConfig: TEntityConfig = JSON.parse(JSON.stringify(enemyJSON[enemyName]));
                 enemyJSONConfig.status.position.x = enemyObj.x!;
@@ -487,7 +496,7 @@ export class CustomeGame implements ICustomGame
                     scene: this.scene,
                     x: enemyObj.x!,
                     y: enemyObj.y!,
-                    texture: 'enemies',
+                    texture: ATLAS_NAMES.ENEMIES,
                     frame: enemyJSONConfig.config.defaultFrame,
                     buttons: inputController.getNewButtons()
                 }, enemyJSONConfig);
@@ -570,7 +579,7 @@ export class CustomeGame implements ICustomGame
             scene: this.scene,
             x: bossObj.x!,
             y: bossObj.y!,
-            texture: 'enemies',
+            texture: ATLAS_NAMES.ENEMIES,
             frame: bossJSONConfig.config.defaultFrame,
             buttons: InputController.getInstance().getNewButtons()
         }, bossJSONConfig);
@@ -613,7 +622,7 @@ export class CustomeGame implements ICustomGame
             scene: this.scene,
             x: x,
             y: y,
-            texture: 'enemies',
+            texture: ATLAS_NAMES.ENEMIES,
             frame: bossJSONConfig.config.defaultFrame,
             buttons: InputController.getInstance().getNewButtons()
         }, bossJSONConfig);
@@ -631,7 +640,7 @@ export class CustomeGame implements ICustomGame
 
     addDraculaHead(x: number, y: number, flipX: boolean)
     {
-        const draculaHead = this.scene.add.sprite(x, y, 'enemies', 'dracula-head')
+        const draculaHead = this.scene.add.sprite(x, y, ATLAS_NAMES.ENEMIES, 'dracula-head')
             .setActive(true)
             .setVisible(true)
             .setOrigin(0.5, 0.5)
@@ -779,7 +788,7 @@ export class CustomeGame implements ICustomGame
                 damageBody.parent.setActive(true).die();
             }
 
-            if(damageBody.hasCustomZoneHit && !damageBody.checkZoneHit(weapon.body.center.y))
+            if (damageBody.hasCustomZoneHit && !damageBody.checkZoneHit(weapon.body.center.y))
             {
                 return;
             }
@@ -822,5 +831,41 @@ export class CustomeGame implements ICustomGame
         this.enemiesWeaponsVsPlayerCollider?.destroy();
 
         this.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
+    }
+
+    public addCustomEffects()
+    {
+        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+
+        if (player.status.stage === 11 && this.customEffects.get('rainEffect') === undefined)
+        {
+            const rainEffect = new RainEffect(this.scene);
+            this.customEffects.set(rainEffect.name, rainEffect);
+        }
+
+        this.checkCustomStageEffect(player.status.stage);
+    }
+
+    public checkCustomStageEffect(stage: number)
+    {
+        if (stage === 11)
+        {
+            this.customEffects.get('rainEffect')?.start();
+        }
+
+        if (stage === 12)
+        {
+            const rain = this.customEffects.get('rainEffect');
+
+            if (rain && rain instanceof RainEffect)
+            {
+                rain.setDepth(DEPTH.BACKGROUND_LAYER - 5);
+            }
+        }
+
+        if (stage === 21)
+        {
+            this.customEffects.get('rainEffect')?.destroy();
+        }
     }
 }
