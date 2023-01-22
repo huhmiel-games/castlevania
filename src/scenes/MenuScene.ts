@@ -19,8 +19,8 @@ export default class MenuScene extends Phaser.Scene
             visible: false
         });
 
-        this.inputController = InputController.getInstance();
-        this.inputController.isActive = false;
+        // this.inputController = InputController.getInstance(this);
+        // this.inputController.isActive = false;
 
         this.startGameScene = this.startGameScene.bind(this);
         this.startOptionScene = this.startOptionScene.bind(this);
