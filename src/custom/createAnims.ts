@@ -1011,4 +1011,33 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: -1,
     });
 
+    scene.anims.create({
+        key: 'smoke',
+        frames: [
+            { key: ATLAS_NAMES.ITEMS, frame: 'smoke_1' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'smoke_2' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'smoke_3' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'smoke_4' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'smoke_5' },
+        ],
+        frameRate: 22,
+        repeat: 0,
+    });
+
+    scene.anims.create({
+        key: 'puff',
+        frames: [
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_1' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_2' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_3' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_4' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_5' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_6' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_7' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'puff_8' },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+
 }
