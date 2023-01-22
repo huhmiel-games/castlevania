@@ -1,5 +1,6 @@
 import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
+import { DEPTH } from "../../../constant/depth";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
 import { log } from "../../../utils/log";
@@ -27,6 +28,19 @@ export default class IdleState extends State
 
         character.body.setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0)
             .setAcceleration(0, 0);
+
+        if(character.visible && this.stateMachine.prevState?.startsWith('fall'))
+        {
+            const { x, y } = character.body.center;
+
+            const puff = scene.puffGroup?.get(x, y);
+
+            if(puff)
+            {
+                puff.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => puff.setActive(false).setVisible(false));
+                puff.setDepth(DEPTH.FRONT_LAYER).setActive(true).setVisible(true).play('puff');
+            }
+        }
 
 
         log(character.name + ' IDLE STATE');
