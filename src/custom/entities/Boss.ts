@@ -4,6 +4,7 @@ import { ATLAS_NAMES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../
 import GameScene from "../../scenes/GameScene";
 import SaveLoadService from "../../services/SaveLoadService";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
+import { bossDeathEffect } from "../bossDeathEffect";
 import { Enemy } from "./Enemy";
 
 export class Boss extends Enemy
@@ -175,71 +176,7 @@ export class Boss extends Enemy
             return;
         }
 
-        for (let i = 0; i < 6; i += 1)
-        {
-            this.scene.time.addEvent({
-                delay: 200 * i,
-                callback: () =>
-                {
-                    if (!this.active) return;
-
-                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, ATLAS_NAMES.ENEMIES, 'enemy-death-1', false);
-
-                    if (deathFlame)
-                    {
-                        deathFlame.setOrigin(0.5, 1);
-                        deathFlame.x = (this.damageBody.body.left - this.width / 12) + (i * this.width / 12);
-                        deathFlame.y = this.damageBody.body.bottom + 8;
-                        deathFlame.setActive(true).setVisible(true);
-                        deathFlame.setDepth(this.depth - 1);
-
-                        deathFlame.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
-                        {
-                            deathFlame.setActive(false).setVisible(false);
-                        });
-
-                        deathFlame.anims.play('enemy-death', true);
-                    }
-                    else
-                    {
-                        throw new Error("No death free in enemyDeathGroup");
-                    }
-                },
-                callbackScope: this
-            });
-        }
-
-        for (let i = 0; i < 6; i += 1)
-        {
-            this.scene.time.addEvent({
-                delay: 200 * i,
-                callback: () =>
-                {
-                    const deathFlame: Phaser.GameObjects.Sprite = this.scene?.enemyDeathGroup.get(this.damageBody.body.center.x, this.damageBody.body.bottom, ATLAS_NAMES.ENEMIES, 'enemy-death-1', false);
-
-                    if (deathFlame)
-                    {
-                        deathFlame.setOrigin(0.5, 1);
-                        deathFlame.x = (this.damageBody.body.left - this.width / 12) + (i * this.width / 12);
-                        deathFlame.y = this.damageBody.body.center.y - 8;
-                        deathFlame.setActive(true).setVisible(true);
-                        deathFlame.setDepth(this.depth - 1);
-
-                        deathFlame.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
-                        {
-                            deathFlame.setActive(false).setVisible(false);
-                        });
-
-                        deathFlame.anims.play('enemy-death', true);
-                    }
-                    else
-                    {
-                        throw new Error("No death free in enemyDeathGroup");
-                    }
-                },
-                callbackScope: this
-            });
-        }
+        bossDeathEffect(this.scene, this);
 
         this.scene.time.addEvent({
             delay: 1200,

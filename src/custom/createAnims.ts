@@ -286,6 +286,18 @@ export default function createAnims(scene: Phaser.Scene)
     });
 
     scene.anims.create({
+        key: 'boss-death',
+        frames: [
+            { key: ATLAS_NAMES.ENEMIES, frame: 'enemy-death-2' },
+            { key: ATLAS_NAMES.ENEMIES, frame: 'enemy-death-3' },
+            { key: ATLAS_NAMES.ENEMIES, frame: 'enemy-death-4' },
+            { key: ATLAS_NAMES.ENEMIES, frame: 'enemy-death-5' },
+        ],
+        frameRate: 12,
+        repeat: 2,
+    });
+
+    scene.anims.create({
         key: 'zombie-dead',
         frames: [
             { key: ATLAS_NAMES.ENEMIES, frame: 'zombie-dead_1' },
