@@ -1,10 +1,11 @@
-import { bossNames, ENEMY_NAMES, EPossibleState } from "../constant/character";
+import { BOSS_NAMES, ENEMY_NAMES, EPossibleState } from "../constant/character";
 import { TILE_SIZE, PLAYER_A_NAME, HEIGHT, ATLAS_NAMES } from "../constant/config";
 import { DEPTH } from "../constant/depth";
 import { TILE_ITEMS } from "../constant/tiles";
 import { WEAPON_NAMES } from "../constant/weapons";
 import enemyJSON from '../data/enemy.json';
 import DamageBody from "../entities/DamageBody";
+import { Entity } from "../entities/Entity";
 import ThrowingKnife from "../entities/weapons/ThrowingKnife";
 import Weapon from "../entities/weapons/Weapon";
 import AmmoRetrievableItem from "../gameobjects/AmmoRetrievableItem";
@@ -60,8 +61,6 @@ export class CustomeGame implements ICustomGame
     public weaponGroupVsEnemiesSecondaryWeapons: Phaser.Physics.Arcade.Collider;
     public enemiesSecondaryWeapons: Phaser.GameObjects.GameObject[];
     public enemiesDamageBody: DamageBody[] = [];
-    // public rainEffect: ICustomEffect;
-
 
     constructor(scene: GameScene)
     {
@@ -246,7 +245,7 @@ export class CustomeGame implements ICustomGame
                 break;
 
             case TILE_ITEMS.HOLY_WATER:
-                const holyWater = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'holy-water', quantity: 1, name: 'holyWater' })
+                const holyWater = new WeaponRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'holy-water', quantity: 1, name: 'holy-water' })
                 this.scene.itemsGroup.add(holyWater);
                 this.setItemTimer(holyWater);
                 break;
@@ -280,7 +279,7 @@ export class CustomeGame implements ICustomGame
         }
     }
 
-    private setItemTimer(item: BaseRetrievableItem)
+    public setItemTimer(item: BaseRetrievableItem)
     {
         this.scene.time.addEvent({
             delay: 5000,
@@ -485,7 +484,7 @@ export class CustomeGame implements ICustomGame
                 enemyJSONConfig.status.position.x = enemyObj.x!;
                 enemyJSONConfig.status.position.y = enemyObj.y!;
 
-                if (bossNames.includes(enemyName))
+                if (BOSS_NAMES.includes(enemyName))
                 {
                     this.addBoss(enemyName, enemyObj, enemyJSONConfig);
 
@@ -795,6 +794,11 @@ export class CustomeGame implements ICustomGame
 
             damageBody.parent.setDamage(weapon.damage);
 
+            if(damageBody.parent.status.health <= 0 && !BOSS_NAMES.includes(damageBody.parent.name))
+            {
+                this.dropRandomItem(damageBody.body.center, damageBody.parent);
+            }
+
             this.scene.playSound(15, undefined, true);
 
             if ((weapon.canStun || damageBody.parent.config.stunWith?.includes(weapon.name))
@@ -818,6 +822,20 @@ export class CustomeGame implements ICustomGame
             const enemyWeapon = _enemyWeapon as unknown as Weapon;
             enemyWeapon.setDisable();
 
+            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+
+            player.status.setScore(player.status.score + 100);
+
+            const smoke = this.scene.smokeGroup.get(enemyWeapon.body.center.x, enemyWeapon.body.center.y);
+
+            if(smoke)
+            {
+                smoke.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => smoke.setActive(false).setVisible(false));
+                smoke.setDepth(DEPTH.FRONT_LAYER).setActive(true).setVisible(true).play('smoke');
+            }
+
+            this.dropRandomItem(enemyWeapon.body.center, enemyWeapon.parent);
+
         }, undefined, this).setName('weaponGroupVSenemiesSecondaryWeapons');
     }
 
@@ -831,6 +849,82 @@ export class CustomeGame implements ICustomGame
         this.enemiesWeaponsVsPlayerCollider?.destroy();
 
         this.weaponGroupVsEnemiesSecondaryWeapons?.destroy();
+    }
+
+    private dropRandomItem(center: Phaser.Math.Vector2, enemy: Entity)
+    {
+        const chance = Phaser.Math.RND.between(0, 100);
+
+        switch (true)
+        {
+            case (chance > 20):
+                return;
+            case (chance > 10):
+                // give little heart
+                const heart = new AmmoRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'little-heart', quantity: 1 });
+                this.scene.itemsGroup.add(heart);
+                this.setItemTimer(heart);
+                return;
+            case (chance > 5 && enemy.name !== ENEMY_NAMES.DRACULA):
+                // give secondary weapon
+                const weaponChoice = Phaser.Math.RND.integerInRange(1, 4);
+                if (weaponChoice === 1)
+                {
+                    const dagger = new WeaponRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'dagger', quantity: 1, name: 'dagger' })
+                    this.scene.itemsGroup.add(dagger);
+                    this.setItemTimer(dagger);
+                }
+
+                if (weaponChoice === 2)
+                {
+                    const axe = new WeaponRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'axe', quantity: 1, name: 'axe' })
+                    this.scene.itemsGroup.add(axe);
+                    this.setItemTimer(axe);
+                }
+
+                if (weaponChoice === 3)
+                {
+                    const cross = new WeaponRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'cross', quantity: 1, name: 'cross' })
+                    this.scene.itemsGroup.add(cross);
+                    this.setItemTimer(cross);
+                }
+
+                if (weaponChoice === 4)
+                {
+                    const holyWater = new WeaponRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'holy-water', quantity: 1, name: 'holy-water' })
+                    this.scene.itemsGroup.add(holyWater);
+                    this.setItemTimer(holyWater);
+                }
+                return;
+            case (chance > 0):
+                // give double-shot
+                if (this.scene.playersSecondaryWeaponGroup.getLength() === 0)
+                {
+                    const bigheart = new BigAmmoRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'big-heart', quantity: 5 });
+                    this.scene.itemsGroup.add(bigheart);
+                    this.setItemTimer(bigheart);
+                }
+                else
+                {
+                    const player = this.scene.getPlayerByName(PLAYER_A_NAME) as Player;
+
+                    if (player.multipleShots === 1)
+                    {
+                        const doubleShot = new BaseRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: TILE_ITEMS.DOUBLE_SHOT, quantity: 1, name: TILE_ITEMS.DOUBLE_SHOT })
+                        this.scene.itemsGroup.add(doubleShot);
+                        this.setItemTimer(doubleShot);
+                        break;
+                    }
+
+                    if (player.multipleShots === 2)
+                    {
+                        const tripleShot = new BaseRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'triple-shot', quantity: 1, name: 'triple-shot' })
+                        this.scene.itemsGroup.add(tripleShot);
+                        this.setItemTimer(tripleShot);
+                        break;
+                    }
+                }
+        }
     }
 
     public addCustomEffects()

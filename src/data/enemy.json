@@ -1131,7 +1131,7 @@
         ],
         "collideWithWorld": false,
         "resurrect": 0,
-        "stunWith": ["holyWater", "cross", "axe", "dagger"]
+        "stunWith": ["holy-water", "cross", "axe", "dagger"]
     },
     "medusa-boss": {
         "config": {

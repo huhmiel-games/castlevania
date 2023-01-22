@@ -304,6 +304,8 @@ export default class Player extends Entity
 
             case _item instanceof WeaponRetrievableItem:
                 {
+                    this.dropSecondaryWeapon();
+
                     const weapon = _item as WeaponRetrievableItem;
                     weapon.body.setEnable(false);
 
@@ -345,6 +347,36 @@ export default class Player extends Entity
             default:
                 break;
         }
+    }
+
+    private dropSecondaryWeapon()
+    {
+        if (this.scene.playersSecondaryWeaponGroup.getLength() === 0) return;
+
+        const secondaryWeaponName = this.scene.playersSecondaryWeaponGroup.getChildren()[0].name;
+
+        const weapon = new WeaponRetrievableItem({ scene: this.scene, x: this.x, y: this.y, texture: ATLAS_NAMES.ITEMS, frame: secondaryWeaponName, quantity: 1, name: secondaryWeaponName })
+
+        if (this.flipX)
+        {
+            weapon.body.setVelocity(150, -150);
+        }
+        else
+        {
+            weapon.body.setVelocity(-150, -150);
+        }
+
+        this.scene.time.addEvent({
+            delay: 250,
+            callback: () =>
+            {
+                weapon.body.setVelocity(0, 0);
+
+                this.scene.itemsGroup.add(weapon);
+
+                this.scene.customGame.setItemTimer(weapon);
+            }
+        });
     }
 
     private addItem(itemName: TILE_ITEMS)
