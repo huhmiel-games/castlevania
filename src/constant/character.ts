@@ -53,8 +53,6 @@ export const possibleDirection = [
 
 export const JUMP_MOMENTUM_DELAY = 250;
 
-export const bossNames = ['giant-bat', 'medusa-boss', 'mummy', 'frank', 'death', 'dracula'];
-
 export enum ENEMY_NAMES {
     ZOMBIE = 'zombie',
     BAT = 'bat',
@@ -85,3 +83,13 @@ export enum ENEMY_NAMES {
     DRACULA = 'dracula',
     DRACULA_2 = 'dracula2'
 }
+
+export const BOSS_NAMES = [
+    ENEMY_NAMES.GIANT_BAT as string, 
+    ENEMY_NAMES.MEDUSA_BOSS as string, 
+    ENEMY_NAMES.MUMMY as string, 
+    ENEMY_NAMES.FRANK as string, 
+    ENEMY_NAMES.DEATH as string, 
+    ENEMY_NAMES.DRACULA as string,
+    ENEMY_NAMES.DRACULA_2 as string
+];
