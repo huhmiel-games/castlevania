@@ -5,6 +5,7 @@ import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
 import { RangedWeapon } from '../../../types/types';
 import { Enemy } from '../../../custom/entities/Enemy';
+import { log } from '../../../utils/log';
 
 /**
  * @description
@@ -18,7 +19,7 @@ export default class SecondaryAttackState extends State
     public stateMachine: StateMachine;
     public enter(scene: GameScene, character: Entity)
     {
-        console.log(character.name + ' SECONDARY ATTACK STATE');
+        log(character.name + ' SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 

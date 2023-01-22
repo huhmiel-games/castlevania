@@ -3,6 +3,7 @@ import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
+import { log } from '../../../utils/log';
 
 /**
  * @description
@@ -29,7 +30,7 @@ export default class FlyIdleState extends State
         body.setDrag(acceleration * dragCoeff, acceleration * dragCoeff)
             .setAcceleration(0, 0);
 
-        console.log(character.name + ' FLY IDLE STATE');
+        log(character.name + ' FLY IDLE STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

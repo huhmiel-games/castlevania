@@ -2,6 +2,7 @@ import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -26,7 +27,7 @@ export default class WalkRightState extends State
 
         character.body.setDrag(0, 0).setAcceleration(character.physicsProperties.acceleration, 0);
 
-        console.log(character.name + ' RIGHT STATE');
+        log(character.name + ' RIGHT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

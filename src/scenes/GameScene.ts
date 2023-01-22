@@ -20,6 +20,7 @@ import creditsData from '../data/credits.json';
 import { DEPTH } from '../constant/depth.js';
 import { StageCountDown } from '../utils/StageCountDown.js';
 import { CustomeGame } from '../custom/CustomGame.js';
+import { warn } from '../utils/log.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -65,7 +66,7 @@ export default class GameScene extends Phaser.Scene
 
     public init(data: any)
     {
-        // console.log('death here?');
+        // log('death here?');
         // if (data?.retry === true)
         // {
         //     this.characters.forEach(character => character.destroy());
@@ -226,9 +227,6 @@ export default class GameScene extends Phaser.Scene
             .setOrigin(0.5, 0.5)
             .setName('pauseText')
             .setDepth(2000);
-
-        console.log(this);
-
     }
 
     public shutdown()
@@ -457,12 +455,12 @@ export default class GameScene extends Phaser.Scene
     {
         if (this.canEnterStage(nextDoor) === false)
         {
-            console.warn('zone already visited'.toUpperCase());
+            warn('zone already visited'.toUpperCase());
 
             return;
         }
 
-        console.warn('changing zone'.toUpperCase());
+        warn('changing zone'.toUpperCase());
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
         if (!player) throw new Error("No player found");

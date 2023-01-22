@@ -1,5 +1,6 @@
 import { EPossibleState, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -18,7 +19,7 @@ export default class JumpMomentumAttackState extends State
 
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
-        console.log(character.name + ' MOMENTUM ATTACK STATE');
+        log(character.name + ' MOMENTUM ATTACK STATE');
 
         const { now } = scene.time;
 

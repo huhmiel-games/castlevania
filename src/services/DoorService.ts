@@ -1,6 +1,7 @@
 import { TILE_SIZE } from '../constant/config';
 import GameScene from '../scenes/GameScene';
 import { TDoor } from '../types/types';
+import { warn } from '../utils/log';
 import LayerService from './LayerService';
 import SaveLoadService from './SaveLoadService';
 
@@ -14,8 +15,6 @@ export default class DoorService
 {
     public static searchNextStage(scene: GameScene, tile: Phaser.Tilemaps.Tile)
     {
-        console.log(tile);
-
         const doors = SaveLoadService.getWorld().maps[0].doors;
 
         // create an empty nextRoom object
@@ -54,7 +53,7 @@ export default class DoorService
             }
         });
 
-        if (!nextZone.side) return console.warn('no zone found...');
+        if (!nextZone.side) return warn('no zone found...');
 
         const doorFound = LayerService.openDoorTiles(scene, tile);
 
@@ -87,32 +86,13 @@ export default class DoorService
         {
             const doorSound = scene.sound.get('SFX30');
 
-            // scene.characters[0].anims.pause();
-
-            // scene.time.addEvent({
-            //     delay: 128,
-            //     callback: () =>
-            //     {
-            //         scene.changeStage(nextZone);
-
-            //         // scene.characters[0].anims.resume();
-            //     }
-            // })
-
-            // doorSound?.once(Phaser.Sound.Events.COMPLETE, () =>
-            // {
-            //     console.warn('door sound ended');
-
-            //     scene.changeStage(nextZone);
-            // });
-
             scene.changeStage(nextZone);
 
             doorSound?.play();
         }
         else
         {
-            console.warn('no door tiles');
+            warn('no door tiles');
 
             scene.changeStage(nextZone);
         }

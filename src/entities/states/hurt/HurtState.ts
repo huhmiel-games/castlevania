@@ -1,5 +1,6 @@
 import { EPossibleState } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -42,7 +43,7 @@ export default class HurtState extends State
 
         character.anims.play(character.animList.HURT!, true);
 
-        console.log(character.name + ' HURT STATE');
+        log(character.name + ' HURT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

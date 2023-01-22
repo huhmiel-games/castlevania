@@ -2,6 +2,7 @@ import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -28,7 +29,7 @@ export default class IdleState extends State
             .setAcceleration(0, 0);
 
 
-        console.log(character.name + ' IDLE STATE');
+        log(character.name + ' IDLE STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

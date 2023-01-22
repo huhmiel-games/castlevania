@@ -1,6 +1,7 @@
 import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -39,7 +40,7 @@ export default class BackFlipState extends State
         // Handle animations
         character.anims.play(character.animList.BACK_FLIP!, true);
 
-        console.log(character.name + ' BACK FLIP STATE');
+        log(character.name + ' BACK FLIP STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

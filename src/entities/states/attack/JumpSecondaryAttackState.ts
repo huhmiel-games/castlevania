@@ -5,6 +5,7 @@ import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
 import { RangedWeapon } from '../../../types/types';
 import { Enemy } from '../../../custom/entities/Enemy';
+import { log } from '../../../utils/log';
 
 /**
  * @description
@@ -19,7 +20,7 @@ export default class JumpSecondaryAttackState extends State
     private groundYPosition: number;
     public enter(scene: GameScene, character: Entity, groundYPosition?: number)
     {
-        console.log(character.name + ' JUMP SECONDARY ATTACK STATE');
+        log(character.name + ' JUMP SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 

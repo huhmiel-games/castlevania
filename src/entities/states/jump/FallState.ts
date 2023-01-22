@@ -2,6 +2,7 @@ import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -19,7 +20,7 @@ export default class FallState extends State
     private jumpTime: number = 0;
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
-        console.log(character.name + ' FALL STATE');
+        log(character.name + ' FALL STATE');
 
         const { now } = scene.time;
 

@@ -2,6 +2,7 @@ import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -45,7 +46,7 @@ export default class GoDownstairLeftState extends State
 
         character.setFlipX(true);
 
-        console.log(character.name + ' GO DOWN STAIR LEFT STATE');
+        log(character.name + ' GO DOWN STAIR LEFT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

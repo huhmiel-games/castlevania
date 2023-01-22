@@ -5,6 +5,7 @@ import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Enemy } from "../../../custom/entities/Enemy";
 import { Entity } from "../../Entity";
+import { log } from "../../../utils/log";
 
 /**
  * @description
@@ -19,7 +20,7 @@ export default class FallSecondaryAttackState extends State
     private jumpTime: number = 0;
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
-        console.log(character.name + ' FALL SECONDARY ATTACK STATE');
+        log(character.name + ' FALL SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 

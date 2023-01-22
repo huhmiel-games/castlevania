@@ -5,6 +5,7 @@ import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Enemy } from "../../../custom/entities/Enemy";
 import { Entity } from "../../Entity";
+import { log } from "../../../utils/log";
 
 /**
  * @description
@@ -20,7 +21,7 @@ export default class JumpMomentumSecondaryAttackState extends State
 
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
-        console.log(character.name + ' MOMENTUM SECONDARY ATTACK STATE');
+        log(character.name + ' MOMENTUM SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 

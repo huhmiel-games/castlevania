@@ -1,5 +1,6 @@
 import { EPossibleState } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -24,7 +25,7 @@ export default class RecoilRightState extends State
 
         character.body.setDrag(0, 0).setAcceleration(character.physicsProperties.acceleration, 0);
 
-        console.log(character.name + ' RECOIL RIGHT STATE');
+        log(character.name + ' RECOIL RIGHT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

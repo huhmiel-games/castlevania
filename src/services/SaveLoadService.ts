@@ -26,7 +26,7 @@ export default class SaveLoadService
         }
         catch (error)
         {
-            // console.log(error);
+            // log(error);
         }
     }
 

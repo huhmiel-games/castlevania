@@ -3,6 +3,7 @@ import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
+import { log } from '../../../utils/log';
 
 /**
  * @description
@@ -16,7 +17,7 @@ export default class CrouchAttackState extends State
     public stateMachine: StateMachine;
     public enter(scene: GameScene, character: Entity)
     {
-        console.log(character.name + ' CROUCH ATTACK STATE');
+        log(character.name + ' CROUCH ATTACK STATE');
 
         const { now } = scene.time;
 

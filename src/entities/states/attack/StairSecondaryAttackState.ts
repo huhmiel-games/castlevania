@@ -4,6 +4,7 @@ import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
 import { RangedWeapon } from '../../../types/types';
+import { log } from '../../../utils/log';
 
 /**
  * @description
@@ -17,7 +18,7 @@ export default class StairSecondaryAttackState extends State
     public stateMachine: StateMachine;
     public enter(scene: GameScene, character: Entity, direction?: string)
     {
-        console.log(character.name + ' STAIR SECONDARY ATTACK STATE');
+        log(character.name + ' STAIR SECONDARY ATTACK STATE');
 
         const { now } = scene.time;
 

@@ -1,4 +1,5 @@
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -38,7 +39,7 @@ export default class StunState extends State
 
         character.anims.pause();
 
-        console.log(character.name + ' STUN STATE');
+        log(character.name + ' STUN STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

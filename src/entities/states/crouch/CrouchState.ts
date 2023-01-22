@@ -3,6 +3,7 @@ import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
 import { EPossibleState } from '../../../constant/character';
+import { log } from '../../../utils/log';
 
 /**
  * @description
@@ -25,7 +26,7 @@ export default class CrouchState extends State
         character.body.setAcceleration(0)
             .setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff, 0);
 
-        console.log(character.name + ' CROUCH STATE');
+        log(character.name + ' CROUCH STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

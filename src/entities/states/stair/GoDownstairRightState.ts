@@ -2,6 +2,7 @@ import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -44,7 +45,7 @@ export default class GoDownstairRightState extends State
 
         character.body.setDrag(character.physicsProperties.acceleration * character.physicsProperties.dragCoeff).setAcceleration(0);
 
-        console.log(character.name + ' GO DOWN STAIR RIGHT STATE');
+        log(character.name + ' GO DOWN STAIR RIGHT STATE');
     }
 
     public execute(scene: GameScene, character: Entity)

@@ -1,5 +1,6 @@
 import { EPossibleState } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -17,7 +18,7 @@ export default class FallAttackState extends State
     private jumpTime: number = 0;
     public enter(scene: GameScene, character: Entity, jumpTime?: number)
     {
-        console.log(character.name + ' FALL ATTACK STATE');
+        log(character.name + ' FALL ATTACK STATE');
 
         const { now } = scene.time;
 

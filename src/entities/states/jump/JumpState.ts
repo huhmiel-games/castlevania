@@ -1,6 +1,7 @@
 import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -19,7 +20,7 @@ export default class JumpState extends State
 
     public enter(scene: GameScene, character: Entity)
     {
-        console.log(character.name + ' JUMP STATE');
+        log(character.name + ' JUMP STATE');
 
         const { now } = scene.time;
 

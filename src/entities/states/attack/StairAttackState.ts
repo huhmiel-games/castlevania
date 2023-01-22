@@ -2,6 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
+import { log } from '../../../utils/log';
 
 /**
  * @description
@@ -15,7 +16,7 @@ export default class StairAttackState extends State
     public stateMachine: StateMachine;
     public enter(scene: GameScene, character: Entity, direction?: string)
     {
-        console.log(character.name + ' STAIR ATTACK STATE');
+        log(character.name + ' STAIR ATTACK STATE');
 
         const { now } = scene.time;
 

@@ -231,7 +231,6 @@ export default class Player extends Entity
         {
             this.anims.stop();
             this.setFrame('richter-dead');
-            console.log('anims after death anims', this.anims.getName());
         }
 
         if (!this.physicsProperties.isDead

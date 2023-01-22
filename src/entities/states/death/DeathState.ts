@@ -1,4 +1,5 @@
 import GameScene from "../../../scenes/GameScene";
+import { log } from "../../../utils/log";
 import State from "../../../utils/State";
 import StateMachine from "../../../utils/StateMachine";
 import { Entity } from "../../Entity";
@@ -27,7 +28,7 @@ export default class DeathState extends State
 
         character.anims.play(character.animList.DEAD!);
 
-        console.log(character.name + ' DEATH STATE')
+        log(character.name + ' DEATH STATE')
     }
 
     public execute (scene: GameScene, character: Entity)
