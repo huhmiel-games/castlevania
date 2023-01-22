@@ -4,7 +4,7 @@
 			"image": "items",
 			"format": "RGBA8888",
 			"size": {
-				"w": 128,
+				"w": 256,
 				"h": 128
 			},
 			"scale": 1,
@@ -31,24 +31,108 @@
 					}
 				},
 				{
-					"filename": "movingPlatform",
+					"filename": "smoke_5",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 6,
+						"w": 24,
+						"h": 22
+					},
+					"frame": {
+						"x": 1,
+						"y": 25,
+						"w": 24,
+						"h": 22
+					}
+				},
+				{
+					"filename": "smoke_4",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 7,
+						"w": 23,
+						"h": 20
+					},
+					"frame": {
+						"x": 1,
+						"y": 49,
+						"w": 23,
+						"h": 20
+					}
+				},
+				{
+					"filename": "smoke_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 7,
+						"w": 23,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 71,
+						"w": 23,
+						"h": 19
+					}
+				},
+				{
+					"filename": "puff_8",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
 						"w": 32,
-						"h": 8
+						"h": 16
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
 						"w": 32,
-						"h": 8
+						"h": 16
 					},
 					"frame": {
-						"x": 35,
-						"y": 1,
+						"x": 1,
+						"y": 92,
 						"w": 32,
-						"h": 8
+						"h": 16
+					}
+				},
+				{
+					"filename": "smoke_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 8,
+						"w": 18,
+						"h": 16
+					},
+					"frame": {
+						"x": 1,
+						"y": 110,
+						"w": 18,
+						"h": 16
 					}
 				},
 				{
@@ -66,8 +150,8 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 69,
-						"y": 1,
+						"x": 21,
+						"y": 110,
 						"w": 16,
 						"h": 16
 					}
@@ -87,30 +171,9 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 35,
-						"y": 11,
+						"x": 26,
+						"y": 49,
 						"w": 16,
-						"h": 16
-					}
-				},
-				{
-					"filename": "magic-crystal_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 0,
-						"w": 14,
-						"h": 16
-					},
-					"frame": {
-						"x": 53,
-						"y": 11,
-						"w": 14,
 						"h": 16
 					}
 				},
@@ -129,14 +192,14 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 1,
+						"x": 27,
 						"y": 25,
 						"w": 16,
 						"h": 16
 					}
 				},
 				{
-					"filename": "purple-bag",
+					"filename": "rain-ground_1",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -144,16 +207,37 @@
 						"h": 16
 					},
 					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 15
+						"x": 8,
+						"y": 12,
+						"w": 5,
+						"h": 4
 					},
 					"frame": {
-						"x": 19,
-						"y": 25,
-						"w": 14,
-						"h": 15
+						"x": 27,
+						"y": 43,
+						"w": 5,
+						"h": 4
+					}
+				},
+				{
+					"filename": "rain-ground_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 14,
+						"w": 3,
+						"h": 2
+					},
+					"frame": {
+						"x": 34,
+						"y": 43,
+						"w": 3,
+						"h": 2
 					}
 				},
 				{
@@ -171,7 +255,7 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 87,
+						"x": 35,
 						"y": 1,
 						"w": 16,
 						"h": 16
@@ -192,535 +276,52 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 105,
-						"y": 1,
-						"w": 16,
-						"h": 16
-					}
-				},
-				{
-					"filename": "health_0",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 3,
-						"h": 7
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 3,
-						"h": 7
-					},
-					"frame": {
-						"x": 123,
-						"y": 1,
-						"w": 3,
-						"h": 7
-					}
-				},
-				{
-					"filename": "health_1",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 3,
-						"h": 7
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 3,
-						"h": 7
-					},
-					"frame": {
-						"x": 123,
-						"y": 10,
-						"w": 3,
-						"h": 7
-					}
-				},
-				{
-					"filename": "pork",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 2,
-						"w": 16,
-						"h": 13
-					},
-					"frame": {
-						"x": 69,
-						"y": 19,
-						"w": 16,
-						"h": 13
-					}
-				},
-				{
-					"filename": "weapon-holywater_4",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 3,
-						"w": 16,
-						"h": 13
-					},
-					"frame": {
-						"x": 35,
-						"y": 29,
-						"w": 16,
-						"h": 13
-					}
-				},
-				{
-					"filename": "red-bag",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 15
-					},
-					"frame": {
-						"x": 19,
-						"y": 42,
-						"w": 14,
-						"h": 15
-					}
-				},
-				{
-					"filename": "one-up",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 3,
-						"w": 16,
-						"h": 11
-					},
-					"frame": {
-						"x": 1,
-						"y": 43,
-						"w": 16,
-						"h": 11
-					}
-				},
-				{
-					"filename": "dagger",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 3,
-						"w": 16,
-						"h": 9
-					},
-					"frame": {
-						"x": 1,
-						"y": 56,
-						"w": 16,
-						"h": 9
-					}
-				},
-				{
-					"filename": "weapon-holywater_3",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 15
-					},
-					"frame": {
-						"x": 53,
-						"y": 29,
-						"w": 14,
-						"h": 15
-					}
-				},
-				{
-					"filename": "keyboard",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 7,
-						"w": 16,
-						"h": 9
-					},
-					"frame": {
-						"x": 35,
-						"y": 44,
-						"w": 16,
-						"h": 9
-					}
-				},
-				{
-					"filename": "gamepad",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 8,
-						"w": 16,
-						"h": 8
-					},
-					"frame": {
-						"x": 87,
-						"y": 19,
-						"w": 16,
-						"h": 8
-					}
-				},
-				{
-					"filename": "axe",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 2,
-						"w": 15,
-						"h": 14
-					},
-					"frame": {
-						"x": 105,
-						"y": 19,
-						"w": 15,
-						"h": 14
-					}
-				},
-				{
-					"filename": "rain-ground_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 8,
-						"y": 12,
-						"w": 5,
-						"h": 4
-					},
-					"frame": {
-						"x": 122,
-						"y": 19,
-						"w": 5,
-						"h": 4
-					}
-				},
-				{
-					"filename": "white-bag",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 15
-					},
-					"frame": {
-						"x": 87,
-						"y": 29,
-						"w": 14,
-						"h": 15
-					}
-				},
-				{
-					"filename": "cross",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 69,
-						"y": 34,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross-back_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 53,
-						"y": 46,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross-back_2",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 35,
-						"y": 55,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross-back_3",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 19,
-						"y": 62,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross-back_4",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 1,
+						"x": 26,
 						"y": 67,
-						"w": 14,
-						"h": 14
+						"w": 16,
+						"h": 16
 					}
 				},
 				{
-					"filename": "health_2",
+					"filename": "puff_7",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 3,
-						"h": 7
+						"w": 32,
+						"h": 16
 					},
 					"spriteSourceSize": {
-						"x": 0,
+						"x": 6,
+						"y": 9,
+						"w": 21,
+						"h": 5
+					},
+					"frame": {
+						"x": 26,
+						"y": 85,
+						"w": 21,
+						"h": 5
+					}
+				},
+				{
+					"filename": "magic-crystal_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
 						"y": 0,
-						"w": 3,
-						"h": 7
-					},
-					"frame": {
-						"x": 122,
-						"y": 25,
-						"w": 3,
-						"h": 7
-					}
-				},
-				{
-					"filename": "rain-ground_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
+						"w": 14,
 						"h": 16
 					},
-					"spriteSourceSize": {
-						"x": 9,
-						"y": 14,
-						"w": 3,
-						"h": 2
-					},
 					"frame": {
-						"x": 122,
-						"y": 34,
-						"w": 3,
-						"h": 2
-					}
-				},
-				{
-					"filename": "weapon-cross_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
+						"x": 35,
+						"y": 92,
+						"w": 14,
 						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 103,
-						"y": 35,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-holywater_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 4,
-						"y": 1,
-						"w": 8,
-						"h": 15
-					},
-					"frame": {
-						"x": 119,
-						"y": 38,
-						"w": 8,
-						"h": 15
-					}
-				},
-				{
-					"filename": "weapon-cross_2",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 85,
-						"y": 46,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross_3",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 69,
-						"y": 50,
-						"w": 14,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-cross_4",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 14,
-						"h": 14
-					},
-					"frame": {
-						"x": 51,
-						"y": 62,
-						"w": 14,
-						"h": 14
 					}
 				},
 				{
@@ -738,10 +339,31 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 35,
-						"y": 71,
+						"x": 49,
+						"y": 110,
 						"w": 13,
 						"h": 16
+					}
+				},
+				{
+					"filename": "weapon-holywater_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 1,
+						"w": 8,
+						"h": 15
+					},
+					"frame": {
+						"x": 39,
+						"y": 110,
+						"w": 8,
+						"h": 15
 					}
 				},
 				{
@@ -759,157 +381,10 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 17,
-						"y": 78,
+						"x": 44,
+						"y": 43,
 						"w": 13,
 						"h": 16
-					}
-				},
-				{
-					"filename": "double-shot",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 3,
-						"w": 13,
-						"h": 13
-					},
-					"frame": {
-						"x": 1,
-						"y": 83,
-						"w": 13,
-						"h": 13
-					}
-				},
-				{
-					"filename": "triple-shot",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 3,
-						"w": 13,
-						"h": 13
-					},
-					"frame": {
-						"x": 101,
-						"y": 51,
-						"w": 13,
-						"h": 13
-					}
-				},
-				{
-					"filename": "big-heart",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 13,
-						"h": 11
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 13,
-						"h": 11
-					},
-					"frame": {
-						"x": 85,
-						"y": 62,
-						"w": 13,
-						"h": 11
-					}
-				},
-				{
-					"filename": "heart",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 8,
-						"h": 8
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 8,
-						"h": 8
-					},
-					"frame": {
-						"x": 116,
-						"y": 55,
-						"w": 8,
-						"h": 8
-					}
-				},
-				{
-					"filename": "little-heart",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 8,
-						"h": 8
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 8,
-						"h": 8
-					},
-					"frame": {
-						"x": 116,
-						"y": 65,
-						"w": 8,
-						"h": 8
-					}
-				},
-				{
-					"filename": "magic-crystal_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 16
-					},
-					"spriteSourceSize": {
-						"x": 2,
-						"y": 1,
-						"w": 12,
-						"h": 14
-					},
-					"frame": {
-						"x": 100,
-						"y": 66,
-						"w": 12,
-						"h": 14
-					}
-				},
-				{
-					"filename": "weapon-holywater",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 16,
-						"h": 15
-					},
-					"spriteSourceSize": {
-						"x": 4,
-						"y": 4,
-						"w": 8,
-						"h": 8
-					},
-					"frame": {
-						"x": 114,
-						"y": 75,
-						"w": 8,
-						"h": 8
 					}
 				},
 				{
@@ -927,8 +402,8 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 67,
-						"y": 66,
+						"x": 51,
+						"y": 19,
 						"w": 6,
 						"h": 16
 					}
@@ -948,10 +423,94 @@
 						"h": 16
 					},
 					"frame": {
-						"x": 75,
-						"y": 66,
+						"x": 53,
+						"y": 1,
 						"w": 6,
 						"h": 16
+					}
+				},
+				{
+					"filename": "health_0",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 3,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 3,
+						"h": 7
+					},
+					"frame": {
+						"x": 45,
+						"y": 19,
+						"w": 3,
+						"h": 7
+					}
+				},
+				{
+					"filename": "health_1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 3,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 3,
+						"h": 7
+					},
+					"frame": {
+						"x": 45,
+						"y": 28,
+						"w": 3,
+						"h": 7
+					}
+				},
+				{
+					"filename": "purple-bag",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 15
+					},
+					"frame": {
+						"x": 44,
+						"y": 61,
+						"w": 14,
+						"h": 15
+					}
+				},
+				{
+					"filename": "smoke_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 10,
+						"y": 9,
+						"w": 12,
+						"h": 12
+					},
+					"frame": {
+						"x": 49,
+						"y": 78,
+						"w": 12,
+						"h": 12
 					}
 				},
 				{
@@ -969,10 +528,724 @@
 						"h": 12
 					},
 					"frame": {
-						"x": 50,
-						"y": 82,
+						"x": 63,
+						"y": 78,
 						"w": 6,
 						"h": 12
+					}
+				},
+				{
+					"filename": "red-bag",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 15
+					},
+					"frame": {
+						"x": 51,
+						"y": 92,
+						"w": 14,
+						"h": 15
+					}
+				},
+				{
+					"filename": "weapon-holywater_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 15
+					},
+					"frame": {
+						"x": 64,
+						"y": 109,
+						"w": 14,
+						"h": 15
+					}
+				},
+				{
+					"filename": "white-bag",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 15
+					},
+					"frame": {
+						"x": 67,
+						"y": 92,
+						"w": 14,
+						"h": 15
+					}
+				},
+				{
+					"filename": "axe",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 2,
+						"w": 15,
+						"h": 14
+					},
+					"frame": {
+						"x": 80,
+						"y": 109,
+						"w": 15,
+						"h": 14
+					}
+				},
+				{
+					"filename": "cross",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 97,
+						"y": 109,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "weapon-cross-back_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 59,
+						"y": 19,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "weapon-cross-back_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 71,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "heart",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 8,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 8,
+						"h": 8
+					},
+					"frame": {
+						"x": 61,
+						"y": 1,
+						"w": 8,
+						"h": 8
+					}
+				},
+				{
+					"filename": "weapon-cross-back_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 59,
+						"y": 35,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "movingPlatform",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 32,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 32,
+						"h": 8
+					},
+					"frame": {
+						"x": 59,
+						"y": 51,
+						"w": 32,
+						"h": 8
+					}
+				},
+				{
+					"filename": "gamepad",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 8,
+						"w": 16,
+						"h": 8
+					},
+					"frame": {
+						"x": 93,
+						"y": 51,
+						"w": 16,
+						"h": 8
+					}
+				},
+				{
+					"filename": "weapon-cross-back_4",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 60,
+						"y": 61,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "pork",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 2,
+						"w": 16,
+						"h": 13
+					},
+					"frame": {
+						"x": 71,
+						"y": 77,
+						"w": 16,
+						"h": 13
+					}
+				},
+				{
+					"filename": "weapon-holywater_4",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 3,
+						"w": 16,
+						"h": 13
+					},
+					"frame": {
+						"x": 89,
+						"y": 77,
+						"w": 16,
+						"h": 13
+					}
+				},
+				{
+					"filename": "weapon-cross_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 76,
+						"y": 61,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "weapon-cross_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 92,
+						"y": 61,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "weapon-cross_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 83,
+						"y": 92,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "weapon-cross_4",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 1,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 99,
+						"y": 92,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "double-shot",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 3,
+						"w": 13,
+						"h": 13
+					},
+					"frame": {
+						"x": 107,
+						"y": 77,
+						"w": 13,
+						"h": 13
+					}
+				},
+				{
+					"filename": "triple-shot",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 3,
+						"w": 13,
+						"h": 13
+					},
+					"frame": {
+						"x": 122,
+						"y": 77,
+						"w": 13,
+						"h": 13
+					}
+				},
+				{
+					"filename": "magic-crystal_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 1,
+						"w": 12,
+						"h": 14
+					},
+					"frame": {
+						"x": 108,
+						"y": 61,
+						"w": 12,
+						"h": 14
+					}
+				},
+				{
+					"filename": "one-up",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 3,
+						"w": 16,
+						"h": 11
+					},
+					"frame": {
+						"x": 113,
+						"y": 108,
+						"w": 16,
+						"h": 11
+					}
+				},
+				{
+					"filename": "puff_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 10,
+						"w": 16,
+						"h": 6
+					},
+					"frame": {
+						"x": 115,
+						"y": 121,
+						"w": 16,
+						"h": 6
+					}
+				},
+				{
+					"filename": "puff_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 10,
+						"y": 10,
+						"w": 14,
+						"h": 6
+					},
+					"frame": {
+						"x": 133,
+						"y": 121,
+						"w": 14,
+						"h": 6
+					}
+				},
+				{
+					"filename": "big-heart",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 13,
+						"h": 11
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 13,
+						"h": 11
+					},
+					"frame": {
+						"x": 115,
+						"y": 92,
+						"w": 13,
+						"h": 11
+					}
+				},
+				{
+					"filename": "puff_5",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 6,
+						"w": 21,
+						"h": 10
+					},
+					"frame": {
+						"x": 130,
+						"y": 92,
+						"w": 21,
+						"h": 10
+					}
+				},
+				{
+					"filename": "puff_4",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 6,
+						"w": 19,
+						"h": 10
+					},
+					"frame": {
+						"x": 131,
+						"y": 104,
+						"w": 19,
+						"h": 10
+					}
+				},
+				{
+					"filename": "puff_6",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 6,
+						"w": 21,
+						"h": 9
+					},
+					"frame": {
+						"x": 149,
+						"y": 116,
+						"w": 21,
+						"h": 9
+					}
+				},
+				{
+					"filename": "puff_3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 32,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 7,
+						"w": 17,
+						"h": 9
+					},
+					"frame": {
+						"x": 152,
+						"y": 104,
+						"w": 17,
+						"h": 9
+					}
+				},
+				{
+					"filename": "dagger",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 3,
+						"w": 16,
+						"h": 9
+					},
+					"frame": {
+						"x": 171,
+						"y": 104,
+						"w": 16,
+						"h": 9
+					}
+				},
+				{
+					"filename": "keyboard",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 16
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 7,
+						"w": 16,
+						"h": 9
+					},
+					"frame": {
+						"x": 189,
+						"y": 104,
+						"w": 16,
+						"h": 9
+					}
+				},
+				{
+					"filename": "little-heart",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 8,
+						"h": 8
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 8,
+						"h": 8
+					},
+					"frame": {
+						"x": 172,
+						"y": 115,
+						"w": 8,
+						"h": 8
+					}
+				},
+				{
+					"filename": "weapon-holywater",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 4,
+						"w": 8,
+						"h": 8
+					},
+					"frame": {
+						"x": 182,
+						"y": 115,
+						"w": 8,
+						"h": 8
+					}
+				},
+				{
+					"filename": "health_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 3,
+						"h": 7
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 3,
+						"h": 7
+					},
+					"frame": {
+						"x": 192,
+						"y": 115,
+						"w": 3,
+						"h": 7
 					}
 				}
 			]
