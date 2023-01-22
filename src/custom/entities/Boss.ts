@@ -1,6 +1,6 @@
 import { ENEMY_NAMES } from "../../constant/character";
 import { PALETTE_DB32 } from "../../constant/colors";
-import { ATLAS_NAMES, HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
+import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
 import GameScene from "../../scenes/GameScene";
 import SaveLoadService from "../../services/SaveLoadService";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
