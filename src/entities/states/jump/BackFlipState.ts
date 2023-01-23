@@ -1,5 +1,6 @@
 import { EPossibleState } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
+import { DEPTH } from "../../../constant/depth";
 import GameScene from "../../../scenes/GameScene";
 import { log } from "../../../utils/log";
 import State from "../../../utils/State";
@@ -83,17 +84,27 @@ export default class BackFlipState extends State
 
             this.startBackFlip = 1;
         }
-        
-        if(this.startBackFlip === 0)
+
+        if (this.startBackFlip === 0)
         {
             character.body.setAccelerationY(-character.physicsProperties.acceleration * 15);
         }
-        
-        if(this.startBackFlip === 1 && blocked.down)
+
+        if (this.startBackFlip === 1 && blocked.down)
         {
             this.startBackFlip = 2;
 
             character.anims.play(character.animList.CROUCH!, true);
+
+            const { x, y } = character.body.center;
+
+            const puff = scene.puffGroup?.get(x, y);
+
+            if (puff)
+            {
+                puff.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => puff.setActive(false).setVisible(false));
+                puff.setDepth(DEPTH.FRONT_LAYER).setActive(true).setVisible(true).play('puff');
+            }
 
             scene.time.addEvent({
                 delay: 200,
