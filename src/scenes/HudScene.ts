@@ -212,8 +212,10 @@ export default class HudScene extends Phaser.Scene
         {
             weaponImage.setAlpha(0);
         }
-
-        weaponImage.setFrame(frame).setAlpha(1);
+        else
+        {
+            weaponImage.setFrame(frame).setAlpha(1);
+        }
     }
 
     private setLife(life: number)
