@@ -3,7 +3,7 @@ import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-p
 import PhaserSceneWatcherPlugin from './plugins/phaser-plugin-scene-watcher.esm.js';
 
 // import rexNinePatchPlugin from './plugins/rexninepatchplugin.min.js';
-import { WIDTH, HEIGHT } from './constant/config';
+import { WIDTH, HEIGHT, isDev } from './constant/config';
 import BootScene from './scenes/BootScene';
 import LoadScene from './scenes/LoadScene';
 import GameScene from './scenes/GameScene';
@@ -51,7 +51,7 @@ const config: Phaser.Types.Core.GameConfig = {
         arcade: {
             tileBias: 20,
             gravity: { x: 0, y: 1000 },
-            debug: false,
+            debug: isDev,
             debugShowBody: true,
             debugShowStaticBody: true,
         },
