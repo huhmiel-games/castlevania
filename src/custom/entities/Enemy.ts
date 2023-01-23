@@ -531,7 +531,7 @@ export class Enemy extends Entity
                     x: this.body.x,
                     y: this.body.y,
                     texture: ATLAS_NAMES.ITEMS,
-                    frame: 'weapon-axe',
+                    frame: 'weapon-axe_3',
                     anims: 'axe',
                     sound: 10,
                     group: 'enemyWeaponGroup'
