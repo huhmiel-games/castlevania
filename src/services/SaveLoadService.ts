@@ -88,6 +88,7 @@ export default class SaveLoadService
         localStorage.removeItem(`${GAMENAME}_playerDeathCount`);
         localStorage.removeItem(`${GAMENAME}_enemiesDeathCount`);
         localStorage.removeItem(`${GAMENAME}_bossDeath`);
+        localStorage.removeItem(`${GAMENAME}_stageCountdown`);
     }
     // #endregion
 
