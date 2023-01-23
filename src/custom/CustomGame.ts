@@ -1,4 +1,5 @@
 import { BOSS_NAMES, ENEMY_NAMES, EPossibleState } from "../constant/character";
+import { PALETTE_DB32 } from "../constant/colors";
 import { TILE_SIZE, PLAYER_A_NAME, HEIGHT, ATLAS_NAMES } from "../constant/config";
 import { DEPTH } from "../constant/depth";
 import { TILE_ITEMS } from "../constant/tiles";
@@ -122,6 +123,8 @@ export class CustomeGame implements ICustomGame
 
         // background image
         this.scene.add.image(0, 0, 'back-moon').setOrigin(0, 0).setScrollFactor(0, 0).setName('back-moon');
+
+        const moonLight = this.scene.add.pointlight(108, 42, PALETTE_DB32.TURQUOISE_BLUE, 96, 0.35, 0.05).setScrollFactor(0, 0);        
 
         this.scene.add.tileSprite(0, 0, this.scene.map.widthInPixels, 176, 'back-mountain')
             .setOrigin(0, 0)
