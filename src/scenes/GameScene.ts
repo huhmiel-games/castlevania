@@ -4,7 +4,7 @@ import
 {
     ATLAS_NAMES,
     COUNTDOWN_EVENT, FONTS, FONTS_SIZES,
-    HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME,
+    HEIGHT, HUD_EVENTS_NAMES, isDev, PLAYER_A_NAME,
     SCENES_NAMES, STAGE_BACKTRACK, STAGE_COUNTDOWN,
     STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH
 } from '../constant/config';
@@ -57,6 +57,7 @@ export default class GameScene extends Phaser.Scene
     debugGraphics: Phaser.GameObjects.Graphics;
     smokeGroup: Phaser.GameObjects.Group;
     puffGroup: Phaser.GameObjects.Group;
+    impactGroup: Phaser.GameObjects.Group;
 
     constructor()
     {
@@ -165,36 +166,38 @@ export default class GameScene extends Phaser.Scene
             if (effect.isActive) effect.update();
         });
 
-        if (this.inputController.playerAButtons.x.isDown)
+        if (isDev)
         {
-            if (this.debugGraphics && this.debugGraphics.commandBuffer.length)
+            if (this.inputController.playerAButtons.x.isDown)
             {
-                this.debugGraphics.destroy();
+                if (this.debugGraphics && this.debugGraphics.commandBuffer.length)
+                {
+                    this.debugGraphics.destroy();
 
-                return;
+                    return;
+                }
+
+                this.debugGraphics = this.add.graphics().setDepth(2000);
+
+                this.colliderLayer.renderDebug(this.debugGraphics, {
+                    tileColor: null, // Non-colliding tiles
+                    collidingTileColor: null, // new Phaser.Display.Color(243, 134, 48, 50), // Colliding tiles
+                    faceColor: new Phaser.Display.Color(227, 6, 6, 255) // Colliding face edges
+                });
             }
 
-            this.debugGraphics = this.add.graphics().setDepth(2000);
+            if (this.inputController.playerAButtons.y.isDown)
+            {
+                localStorage.removeItem(`Castlevania_data`);
+            }
 
-            this.colliderLayer.renderDebug(this.debugGraphics, {
-                tileColor: null, // Non-colliding tiles
-                collidingTileColor: null, // new Phaser.Display.Color(243, 134, 48, 50), // Colliding tiles
-                faceColor: new Phaser.Display.Color(227, 6, 6, 255) // Colliding face edges
-            });
-        }
-
-        if (this.inputController.playerAButtons.y.isDown)
-        {
-            localStorage.removeItem(`Castlevania_data`);
-        }
-
-        if (this.inputController.playerAButtons.l1.isDown)
-        {
-            const status = { ...this.characters[0].status.toJson() };
-            status.position.x = this.characters[0].x;
-            status.position.y = this.characters[0].y;
-            SaveLoadService.saveGameData(status);
-
+            if (this.inputController.playerAButtons.l1.isDown)
+            {
+                const status = { ...this.characters[0].status.toJson() };
+                status.position.x = this.characters[0].x;
+                status.position.y = this.characters[0].y;
+                SaveLoadService.saveGameData(status);
+            }
         }
     }
 
@@ -313,6 +316,13 @@ export default class GameScene extends Phaser.Scene
             classType: Phaser.GameObjects.Sprite,
             key: ATLAS_NAMES.ITEMS,
             frame: 'puff_1',
+            maxSize: 6,
+        });
+
+        this.impactGroup = this.add.group({
+            classType: Phaser.GameObjects.Sprite,
+            key: ATLAS_NAMES.ITEMS,
+            frame: 'impact_1',
             maxSize: 6,
         });
     }
