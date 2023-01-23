@@ -39,6 +39,14 @@ export enum EPossibleState
     FLY_IDLE = 'flyIdle',
 }
 
+export const PLAYER_ATTACK_FRAMES = [
+    'richter-attack_2',
+    'richter-crouch-attack_2',
+    'richter-jump-attack_2',
+    'richter-stair-up-attack_2',
+    'richter-stair-down-attack_2'
+];
+
 export const possibleDirection = [
     EPossibleState.DOWN_LEFT, 
     EPossibleState.DOWN, 

@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EPossibleState, PLAYER_ATTACK_FRAMES } from "../../constant/character";
 import { ATLAS_NAMES, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import { Entity } from "../../entities/Entity";
@@ -121,15 +121,7 @@ export default class Player extends Entity
         {
             const currenFrame = this.anims.getFrameName();
 
-            const attackFrames = [
-                'richter-attack_2',
-                'richter-crouch-attack_2',
-                'richter-jump-attack_2',
-                'richter-stair-up-attack_2',
-                'richter-stair-down-attack_2'
-            ];
-
-            if (attackFrames.includes(currenFrame))
+            if (PLAYER_ATTACK_FRAMES.includes(currenFrame))
             {
                 this.meleeWeapon?.body.setEnable(true);
 
@@ -154,7 +146,6 @@ export default class Player extends Entity
         if (!this.scene)
         {
             throw new Error("NO SCENE ON PLAYER");
-
         }
 
         this.scene?.events.on('enemy-score', (score: number) => this.status.setScore(this.status.score + score));
@@ -590,7 +581,7 @@ export default class Player extends Entity
                 y: this.body.y,
                 texture: ATLAS_NAMES.ITEMS,
                 frame: 'dagger',
-                anims: 'dagger',
+                anims: undefined,
                 sound: 9,
                 group: 'weaponGroup'
             });
