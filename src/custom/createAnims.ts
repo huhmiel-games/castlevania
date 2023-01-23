@@ -1040,4 +1040,15 @@ export default function createAnims(scene: Phaser.Scene)
         repeat: 0,
     });
 
+    scene.anims.create({
+        key: 'impact',
+        frames: [
+            { key: ATLAS_NAMES.ITEMS, frame: 'impact_1' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'impact_2' },
+            { key: ATLAS_NAMES.ITEMS, frame: 'impact_3' }
+        ],
+        frameRate: 22,
+        repeat: 0,
+    });
+
 }
