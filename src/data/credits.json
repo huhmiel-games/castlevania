@@ -17,12 +17,17 @@
             "Bagzie",
             "Brullov",
             "Glionox",
-            "Jetrel"
+            "Jetrel",
+            "Nyknck"
         ],
         "Musics_and_Sounds_by": [
             "Konami"
         ],
-        "Thanks_to_konami": ["kilian", "Joh", "PhotonStorm"],
+        "Thanks_to_konami": [
+            "kilian", 
+            "Joh", 
+            "PhotonStorm"
+        ],
         "Thank_you_for_playing": [],
         "Your_score": []
     }
