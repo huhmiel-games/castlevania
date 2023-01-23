@@ -1,15 +1,17 @@
 import { ATLAS_NAMES, FONTS, FONTS_SIZES, HEIGHT, SCENES_NAMES, WIDTH } from "../constant/config";
 import { InputController } from "../inputs/InputController";
+import SaveLoadService from "../services/SaveLoadService";
 
 export default class MenuScene extends Phaser.Scene
 {
     private inputController: InputController;
     private icon: Phaser.GameObjects.Sprite;
-    private choice: 0 | 1 = 0;
+    private choice: number = 0;
     private iconPosition: number[];
     private actions: (() => void)[];
     private song: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
     private throttleTime: number = 0;
+    private isDeleteData: boolean = false;
 
     constructor()
     {
@@ -19,11 +21,11 @@ export default class MenuScene extends Phaser.Scene
             visible: false
         });
 
-        // this.inputController = InputController.getInstance(this);
-        // this.inputController.isActive = false;
-
         this.startGameScene = this.startGameScene.bind(this);
         this.startOptionScene = this.startOptionScene.bind(this);
+        this.resetGameData = this.resetGameData.bind(this);
+        this.deleteGameData = this.deleteGameData.bind(this);
+        this.cancelDeleteGameData = this.cancelDeleteGameData.bind(this);
     }
 
     create()
@@ -32,19 +34,13 @@ export default class MenuScene extends Phaser.Scene
 
         this.inputController = InputController.getInstance(this);
         this.inputController.isActive = false;
-        // ---------------
-        // DEV ONLY
-        // this.inputController.isActive = true;
-        // this.startGameScene();
-        // return;
-        // ---------------
 
         this.add.image(0, 0, 'background')
             .setOrigin(0, 0)
 
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 
-        this.actions = [this.startGameScene, this.startOptionScene];
+        this.actions = [this.startGameScene, this.startOptionScene, this.resetGameData];
 
         const play1PButton = this.add.bitmapText(112, 148, FONTS.GALAXY, 'play', FONTS_SIZES.GALAXY, 1)
             .setOrigin(0.5, 0.5)
@@ -58,9 +54,15 @@ export default class MenuScene extends Phaser.Scene
             .setLetterSpacing(2)
             .setAlpha(0);
 
-        Phaser.Actions.AlignTo([play1PButton, optionButton], Phaser.Display.Align.BOTTOM_LEFT);
+        const resetButton = this.add.bitmapText(WIDTH / 2, HEIGHT / 5 * 4, FONTS.GALAXY, 'erase data', FONTS_SIZES.GALAXY, 1)
+            .setOrigin(0.5, 0.5)
+            .setName('resetButton')
+            .setLetterSpacing(2)
+            .setAlpha(0);
 
-        this.iconPosition = [play1PButton.y, optionButton.y];
+        Phaser.Actions.AlignTo([play1PButton, optionButton, resetButton], Phaser.Display.Align.BOTTOM_LEFT);
+
+        this.iconPosition = [play1PButton.y, optionButton.y, resetButton.y];
 
         this.anims.create({
             key: 'holy',
@@ -93,6 +95,8 @@ export default class MenuScene extends Phaser.Scene
 
                 optionButton.setAlpha(1);
 
+                resetButton.setAlpha(1);
+
                 this.icon.setAlpha(1);
             }
         });
@@ -102,26 +106,49 @@ export default class MenuScene extends Phaser.Scene
     {
         const { up, down, a, b, start } = this.inputController.playerAButtons;
 
-        if (this.throttleTime < time 
-            && ((down.isDown && down.getDuration(time) < 12)
-            || (up.isDown && up.getDuration(time) < 12))
+        if (!this.isDeleteData && this.throttleTime < time && (down.isDown && down.getDuration(time) < 12))
+        {
+            this.throttleTime = time + 128;
+
+            this.choice = Phaser.Math.Wrap(this.choice + 1, 0, 3);
+
+            this.icon.setPosition(this.icon.x, this.iconPosition[this.choice]);
+        }
+
+        if (!this.isDeleteData && this.throttleTime < time && (up.isDown && up.getDuration(time) < 12))
+        {
+            this.throttleTime = time + 128;
+
+            this.choice = Phaser.Math.Wrap(this.choice - 1, 0, 3);
+
+            this.icon.setPosition(this.icon.x, this.iconPosition[this.choice]);
+        }
+
+        if (!this.isDeleteData && ((start.isDown && start.getDuration(time) < 12)
+            || (a.isDown && a.getDuration(time) < 12)
+            || (b.isDown && b.getDuration(time) < 12))
         )
         {
             this.throttleTime = time + 128;
 
-            const choice = 1 - this.choice;
-
-            if (choice === 0 || choice === 1) this.choice = choice;
-
-            this.icon.setPosition(this.icon.x, this.iconPosition[choice]);
+            this.actions[this.choice]();
         }
 
-        if ((start.isDown && start.getDuration(time) < 12)
-            || (a.isDown && a.getDuration(time) < 12)
-            || (b.isDown && b.getDuration(time) < 12)
+        if (this.isDeleteData && this.throttleTime < time && a.isDown && a.getDuration(time) < 12)
+        {
+            this.throttleTime = time + 128;
+
+            this.deleteGameData();
+        }
+
+        if (this.isDeleteData 
+            && this.throttleTime < time
+            && ((start.isDown && start.getDuration(time) < 12) || (b.isDown && b.getDuration(time) < 12))
         )
         {
-            this.actions[this.choice]();
+            this.throttleTime = time + 128;
+
+            this.cancelDeleteGameData();
         }
     }
 
@@ -138,5 +165,40 @@ export default class MenuScene extends Phaser.Scene
     startOptionScene()
     {
         this.scene.start(SCENES_NAMES.OPTIONS)
+    }
+
+    resetGameData()
+    {
+        this.isDeleteData = true;
+
+        const resetButton = this.children.getByName('resetButton') as Phaser.GameObjects.BitmapText;
+
+        resetButton.setText('a to confirm')
+    }
+
+    cancelDeleteGameData()
+    {
+        this.isDeleteData = false;
+
+        const resetButton = this.children.getByName('resetButton') as Phaser.GameObjects.BitmapText;
+
+        resetButton.setText('erase data');
+    }
+
+    deleteGameData()
+    {
+        this.isDeleteData = false;
+
+        SaveLoadService.deleteGameData();
+
+        this.sound.play('SFX1');
+
+        const resetButton = this.children.getByName('resetButton') as Phaser.GameObjects.BitmapText;
+
+        resetButton.setText('erase data');
+
+        this.choice = 0;
+
+        this.icon.setPosition(this.icon.x, this.iconPosition[this.choice]);
     }
 }
