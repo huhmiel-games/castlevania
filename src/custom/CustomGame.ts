@@ -475,11 +475,6 @@ export class CustomeGame implements ICustomGame
             {
                 const enemyName: string = LayerService.convertTiledObjectProperties(enemyObj.properties)?.name;
 
-                // if (enemyName === ENEMY_NAMES.EAGLE)
-                // {
-                //     return;
-                // }
-
                 const enemyJSONConfig: TEntityConfig = JSON.parse(JSON.stringify(enemyJSON[enemyName]));
                 enemyJSONConfig.status.position.x = enemyObj.x!;
                 enemyJSONConfig.status.position.y = enemyObj.y!;
@@ -565,6 +560,11 @@ export class CustomeGame implements ICustomGame
                     {
                         enemy.killAndRespawn();
                     }
+                }
+
+                if(enemyName === ENEMY_NAMES.EAGLE && this.scene.isInsideCameraByPixels(enemy.body,16))
+                {
+                    enemy.killAndRespawn();
                 }
             }
         });
