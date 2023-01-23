@@ -148,7 +148,7 @@ export type TWeaponConfig = {
     y: number,
     texture: string,
     frame: string,
-    anims: string,
+    anims?: string,
     sound: number,
     group: string
 }
