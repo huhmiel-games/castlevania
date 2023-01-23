@@ -127,46 +127,46 @@ export class Enemy extends Entity
 
         const health = this.status.health - damage;
 
-        if (health > 0)
+        if (health <= 0)
         {
-            this.status.setHealth(health);
+            this.status.setHealth(0);
 
-            this.setTint(PALETTE_DB32.ROMAN)
+            this.setDead(true);
 
-            this.scene?.time.addEvent({
-                delay: 100,
-                repeat: 4,
-                callback: () =>
-                {
-                    if (!this.isTinted)
-                    {
-                        this.setTint(PALETTE_DB32.WELL_READ)
-                    }
-                    else
-                    {
-                        this.clearTint()
-                    }
-                }
-            });
-
-            this.scene?.time.addEvent({
-                delay: 500,
-                callback: () =>
-                {
-                    if (!this.active) return;
-
-                    this.physicsProperties.isHurt = false;
-                }
-            })
+            this.die();
 
             return this;
         }
 
-        this.status.setHealth(0);
+        this.status.setHealth(health);
 
-        this.setDead(true);
+        this.setTint(PALETTE_DB32.ROMAN);
 
-        this.die();
+        this.scene?.time.addEvent({
+            delay: 100,
+            repeat: 4,
+            callback: () =>
+            {
+                if (!this.isTinted)
+                {
+                    this.setTint(PALETTE_DB32.WELL_READ)
+                }
+                else
+                {
+                    this.clearTint()
+                }
+            }
+        });
+
+        this.scene?.time.addEvent({
+            delay: 500,
+            callback: () =>
+            {
+                if (!this.active) return;
+
+                this.physicsProperties.isHurt = false;
+            }
+        })
 
         return this;
     }
