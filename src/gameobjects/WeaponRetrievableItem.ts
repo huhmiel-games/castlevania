@@ -12,7 +12,7 @@ export default class WeaponRetrievableItem extends BaseRetrievableItem
 
         this.scene.physics.world.enable(this);
 
-        this.body.setAllowGravity(true).setImmovable(true);
+        this.body.setAllowGravity(true).setImmovable(true).setCircle(6).setOffset(2, 2);
     }
 
     preUpdate(time: number, delta: number): void
