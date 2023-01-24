@@ -70,9 +70,9 @@ export default class BackFlipState extends State
             return;
         }
 
-        if (character.canUse(EPossibleState.JUMP_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EPossibleState.JUMP_MOMENTUM_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.JUMP_ATTACK, this.stateMachine.state, this.groundYPosition);
+            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_ATTACK, this.stateMachine.state, this.groundYPosition);
 
             return;
         }
