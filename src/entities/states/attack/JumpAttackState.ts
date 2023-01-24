@@ -28,7 +28,7 @@ export default class JumpAttackState extends State
 
         this.groundYPosition = groundYPosition || character.body.bottom;
 
-        character.body.setDrag(0).setMaxVelocityY(character.physicsProperties.speed * 4);//.setVelocityY(-300);
+        character.body.setDrag(0).setMaxVelocityY(character.physicsProperties.speed * 4);
 
         character.anims.play(character.animList.JUMP_ATTACK!, true);
 
