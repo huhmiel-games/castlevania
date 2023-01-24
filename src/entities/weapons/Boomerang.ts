@@ -18,7 +18,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
     public canStun: boolean = false;
     public speed: number = 100;
     public isBack: boolean = false;
-    private weaponAnim: string;
+    private weaponAnim: string | undefined;
     private sfx: number;
     public returnTimeDelay: number = 1000;
     private isBackDistance: number;
@@ -81,7 +81,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
         }
     }
 
-    private isOutsideScreenByPixels(pixels: number = 128): boolean
+    private isOutsideScreenByPixels(pixels: number = 64): boolean
     {
         const cam = this.scene.cameras.main;
 
@@ -120,7 +120,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
         this.body.setVelocityX(this.speed);
 
-        this.anims.play(this.weaponAnim);
+        if(this.weaponAnim) this.anims.play(this.weaponAnim);
 
         this.scene.playSound(this.sfx);
 
@@ -132,7 +132,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
                 this.isBack = true;
 
-                this.anims.playReverse(this.weaponAnim);
+                if(this.weaponAnim) this.anims.playReverse(this.weaponAnim);
 
                 this.body.setVelocityX(-this.speed);
             }
