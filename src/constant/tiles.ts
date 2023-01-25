@@ -1,3 +1,8 @@
+export const TILESET_NAMES = [
+    'main',
+    'rob-candles'
+];
+
 export enum TILES
 {
     DOOR = 'doorBlock',

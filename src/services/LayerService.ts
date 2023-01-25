@@ -1,15 +1,11 @@
 import { ATLAS_NAMES, LIGHT_ATTENUATION, LIGHT_ATTENUATION_END, LIGHT_ATTENUATION_START, LIGHT_COLOR, LIGHT_INTENSITY, LIGHT_RADIUS, TILE_SIZE } from '../constant/config';
 import { DEPTH } from '../constant/depth';
-import { DOORS_TILE_INDEX } from '../constant/tiles';
+import { DOORS_TILE_INDEX, TILESET_NAMES } from '../constant/tiles';
 import Conveyor from '../gameobjects/Conveyor';
 import MovingPlatform from '../gameobjects/MovingPlatform';
 import GameScene from '../scenes/GameScene';
 
-const tilesetsNames = [
-    'main',
-    'rob-candles',
-    'dark-background',
-];
+
 
 /**
  * @description
@@ -19,8 +15,6 @@ const tilesetsNames = [
  */
 export default class LayerService
 {
-
-
     /**
      * Add the layers
      */
@@ -111,7 +105,7 @@ export default class LayerService
         const backgroundLayers = scene.map.layers.filter(layer => layer.name.startsWith('background/'));
         backgroundLayers.forEach(layer =>
         {
-            const layerElement = scene.map.createLayer(layer.name, tilesetsNames, 0, 0)?.setDepth(DEPTH.BACKGROUND_LAYER);
+            const layerElement = scene.map.createLayer(layer.name, TILESET_NAMES, 0, 0)?.setDepth(DEPTH.BACKGROUND_LAYER);
             // get the name of the layer
             const layerName = layer.name.split('/')[1];
 
@@ -134,7 +128,7 @@ export default class LayerService
         const groundLayers = scene.map.layers.filter(layer => layer.name.startsWith('ground/'));
         groundLayers.forEach(layer =>
         {
-            const layerElement = scene.map.createLayer(layer.name, tilesetsNames, 0, 0)?.setDepth(DEPTH.GROUND_LAYER);
+            const layerElement = scene.map.createLayer(layer.name, TILESET_NAMES, 0, 0)?.setDepth(DEPTH.GROUND_LAYER);
             layerElement?.setName(layer.name);
 
             // if (this.getLayerName(layer) === 'candles')
@@ -149,7 +143,7 @@ export default class LayerService
         const foregroundLayers = scene.map.layers.filter(layer => layer.name.startsWith('foreground/'));
         foregroundLayers.forEach(layer =>
         {
-            const layerElement = scene.map.createLayer(layer.name, tilesetsNames, 0, 0)?.setDepth(DEPTH.FRONT_LAYER);
+            const layerElement = scene.map.createLayer(layer.name, TILESET_NAMES, 0, 0)?.setDepth(DEPTH.FRONT_LAYER);
             layerElement?.setName(layer.name);
         });
     }
