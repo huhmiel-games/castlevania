@@ -427,7 +427,7 @@ export class CustomeGame implements ICustomGame
         // destroy enemies related colliders
         this.destroyEnemyColliders();
 
-        // destroy old zone enemies
+        // destroy old stage enemies
         for (let i = 0; i < this.scene.enemies.length; i += 1)
         {
             const enemy = this.scene.enemies[i];

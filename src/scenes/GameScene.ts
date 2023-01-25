@@ -333,13 +333,13 @@ export default class GameScene extends Phaser.Scene
             delay: 32,
             callback: () =>
             {
-                const currentZone = this.getPlayerCurrentStage();
+                const currentStage = this.getPlayerCurrentStage();
 
                 const cameraBounds = this.cameras.main.getBounds();
 
-                if (!currentZone) return;
+                if (!currentStage) return;
 
-                const { x, y, width, height } = currentZone;
+                const { x, y, width, height } = currentStage;
 
                 if (x !== cameraBounds.x
                     || y !== cameraBounds.y
@@ -349,21 +349,21 @@ export default class GameScene extends Phaser.Scene
                 {
                     this.cameras.main.setBounds(x!, y!, width!, height!);
 
-                    const zoneData = LayerService.convertTiledObjectProperties(currentZone.properties);
+                    const stageData = LayerService.convertTiledObjectProperties(currentStage.properties);
 
                     this.customGame.addCustomEffects();
 
-                    this.customGame.checkCustomStageEffect(zoneData?.stage);
+                    this.customGame.checkCustomStageEffect(stageData?.stage);
 
-                    this.changeMajorStage(zoneData?.stage);
+                    this.changeMajorStage(stageData?.stage);
 
-                    this.playSong(zoneData?.musicIndex);
+                    this.playSong(stageData?.musicIndex);
 
                     LayerService.addCandlesPointLight(this);
                     LayerService.addMovingPlatforms(this);
                     LayerService.addConveyors(this);
 
-                    if (zoneData?.stage === 71)
+                    if (stageData?.stage === 71)
                     {
                         const backCastle = this.children.getByName('back-castle') as Phaser.GameObjects.Image;
                         backCastle.setAlpha(0);
@@ -379,19 +379,19 @@ export default class GameScene extends Phaser.Scene
 
     private getPlayerCurrentStage()
     {
-        const zones = LayerService.getObjectLayerByName(this, 'zone');
+        const stages = LayerService.getObjectLayerByName(this, 'stage');
 
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
-        if (!zones) throw new Error(`no layer named zone found`);
+        if (!stages) throw new Error(`no layer named stage found`);
 
         const { x, y } = player.body.center;
 
-        return zones.objects.find(zone =>
+        return stages.objects.find(stage =>
         {
-            const isX = x > zone.x! && x < zone.x! + zone.width!;
+            const isX = x > stage.x! && x < stage.x! + stage.width!;
 
-            const isY = y > zone.y! && y < zone.y! + zone.height!;
+            const isY = y > stage.y! && y < stage.y! + stage.height!;
 
             return (isX && isY);
         });
@@ -416,7 +416,7 @@ export default class GameScene extends Phaser.Scene
     {
         const { pixelX, pixelY } = tile;
 
-        const stages = LayerService.getObjectLayerByName(this, 'zone');
+        const stages = LayerService.getObjectLayerByName(this, 'stage');
 
         if (stages)
         {
@@ -435,33 +435,33 @@ export default class GameScene extends Phaser.Scene
 
     private canEnterStage(door: TDoor): boolean
     {
-        const zones = LayerService.getObjectLayerByName(this, 'zone');
+        const stages = LayerService.getObjectLayerByName(this, 'stage');
 
-        if (!zones) throw new Error(`no layer named zone found`);
+        if (!stages) throw new Error(`no layer named stage found`);
 
-        const nextZone = zones.objects.find(zone =>
+        const nextStage = stages.objects.find(stage =>
         {
-            const isX = door.x >= zone.x! && door.x <= zone.x! + zone.width!;
+            const isX = door.x >= stage.x! && door.x <= stage.x! + stage.width!;
 
-            const isY = door.y >= zone.y! && door.y <= zone.y! + zone.height!;
+            const isY = door.y >= stage.y! && door.y <= stage.y! + stage.height!;
 
             return (isX && isY);
         });
 
-        if (!nextZone) return false;
+        if (!nextStage) return false;
 
-        const nextZoneProperties = LayerService.convertTiledObjectProperties(nextZone.properties);
+        const nextStageProperties = LayerService.convertTiledObjectProperties(nextStage.properties);
 
         const currentStage = LayerService.convertTiledObjectProperties(this.getPlayerCurrentStage()?.properties)?.stage;
 
         // check authorized backtraking
-        if (STAGE_BACKTRACK.includes(nextZoneProperties?.stage) && nextZoneProperties?.stage + 1 === currentStage)
+        if (STAGE_BACKTRACK.includes(nextStageProperties?.stage) && nextStageProperties?.stage + 1 === currentStage)
         {
             return true;
         }
 
         // check unauthorized backtracking
-        if (nextZoneProperties?.stage < currentStage)
+        if (nextStageProperties?.stage < currentStage)
         {
             return false;
         }
@@ -469,25 +469,25 @@ export default class GameScene extends Phaser.Scene
         return true;
     }
 
-    private changeMajorStage(zone: number)
+    private changeMajorStage(stage: number)
     {
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
-        player.status.stage = zone;
+        player.status.stage = stage;
 
-        this.events.emit(HUD_EVENTS_NAMES.STAGE, zone);
+        this.events.emit(HUD_EVENTS_NAMES.STAGE, stage);
     }
 
     public changeStage(nextDoor: TDoor)
     {
         if (this.canEnterStage(nextDoor) === false)
         {
-            warn('zone already visited'.toUpperCase());
+            warn('stage already visited'.toUpperCase());
 
             return;
         }
 
-        warn('changing zone'.toUpperCase());
+        warn('changing stage'.toUpperCase());
         const player = this.getPlayerByName(PLAYER_A_NAME);
 
         if (!player) throw new Error("No player found");

@@ -27,7 +27,7 @@ export default class DoorService
         // create an empty current door
         let currentDoor = { x: tile.pixelX, y: tile.pixelY };
 
-        // search the next zone
+        // search the next stage
         doors.forEach(door =>
         {
             // check lateral doors
@@ -53,7 +53,7 @@ export default class DoorService
             }
         });
 
-        if (!nextZone.side) return warn('no zone found...');
+        if (!nextZone.side) return warn('no stage found...');
 
         const doorFound = LayerService.openDoorTiles(scene, tile);
 
