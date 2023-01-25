@@ -61,6 +61,8 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
 
     public attack()
     {
+        if (!this || !this.body) return;
+
         const offsetY = this.parent.config.secondaryAttackOffsetY;
         this.body.reset(this.parent.body.x, this.parent.body.y + (offsetY || -8));
         this.body.setEnable(true);

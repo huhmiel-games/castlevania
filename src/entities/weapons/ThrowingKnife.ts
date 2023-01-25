@@ -64,6 +64,8 @@ export default class ThrowingKnife extends Phaser.GameObjects.Sprite implements 
 
     public attack()
     {
+        if (!this || !this.body) return;
+
         this.body.reset(this.parent.body.x, this.parent.body.y - 8);
         this.body.setEnable(true);
 

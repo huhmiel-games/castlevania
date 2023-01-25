@@ -102,6 +102,8 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
     public attack(offset: number = 8)
     {
+        if (!this || !this.body) return;
+
         this.isBack = false;
 
         this.body.reset(this.parent.body.x, this.parent.body.y - offset);
@@ -120,7 +122,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
         this.body.setVelocityX(this.speed);
 
-        if(this.weaponAnim) this.anims.play(this.weaponAnim);
+        if (this.weaponAnim) this.anims.play(this.weaponAnim);
 
         this.scene.playSound(this.sfx);
 
@@ -132,7 +134,7 @@ export default class Boomerang extends Phaser.GameObjects.Sprite implements Weap
 
                 this.isBack = true;
 
-                if(this.weaponAnim) this.anims.playReverse(this.weaponAnim);
+                if (this.weaponAnim) this.anims.playReverse(this.weaponAnim);
 
                 this.body.setVelocityX(-this.speed);
             }

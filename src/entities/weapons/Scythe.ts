@@ -62,6 +62,8 @@ export class Scythe extends Phaser.GameObjects.Sprite implements Weapon
 
     public attack()
     {
+        if (!this || !this.body) return;
+
         const randomX = Phaser.Math.RND.between(480 * 16, 496 * 16);
         const randomY = Phaser.Math.RND.between(26 * 16, 34 * 16);
 

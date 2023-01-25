@@ -74,6 +74,8 @@ export default class ThrowingAxe extends Phaser.GameObjects.Sprite implements We
 
     public attack()
     {
+        if (!this || !this.body) return;
+
         this.anims.play(this.weaponAnim!);
 
         this.body.reset(this.parent.body.x, this.parent.body.y - 8);
