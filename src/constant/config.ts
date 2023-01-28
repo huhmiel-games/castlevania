@@ -1,11 +1,27 @@
 // GENERAL
-export const isDev = false;
+export const isDev = false; // true for state logs, body debugs, l to save everywhere, y to delete gamedata
 export const GAMENAME = 'Castlevania';
-export const WIDTH = 256; // 320; // 256; // 384; // 512;
-export const HEIGHT = 208; // 176;  // 144;  // 240; // 288;
+export const WIDTH = 256;
+export const HEIGHT = 208;
 export const MOBILE_OS = ['android', 'cordova', 'iOS', 'iPad', 'iPhone', 'kindle', 'windowsPhone'];
 export const GAMEPAD_AXIS_THRESHOLD = 0.6;
 export const BUTTONS_NAMES = ['left', 'right', 'up', 'down', 'a', 'b', 'start'];
+export enum BTN_EVENTS {
+    A_DOWN = 'a_DownEvent',
+    B_DOWN = 'b_DownEvent',
+    START_DOWN = 'start_DownEvent',
+    UP_DOWN = 'Up_DownEvent',
+    DOWN_DOWN = 'Down_DownEvent',
+    LEFT_DOWN = 'Left_DownEvent',
+    RIGHT_DOWN = 'Right_DownEvent',
+    A_UP = 'a_UpEvent',
+    B_UP = 'b_UpEvent',
+    START_UP = 'start_UpEvent',
+    UP_UP = 'Up_UpEvent',
+    DOWN_UP = 'Down_UpEvent',
+    LEFT_UP = 'Left_UpEvent',
+    RIGHT_UP = 'Right_UpEvent',
+}
 
 // MAP
 export const TILE_SIZE = 16;
@@ -49,11 +65,9 @@ export const enum SCENES_NAMES
 {
     BOOT = 'bootScene',
     LOAD = 'loadScene',
-    INTRO = 'introScene',
     MENU = 'menuScene',
     GAME = 'gameScene',
     GAMEOVER = 'gameOverScene',
-    ENDGAME = 'endGameScene',
     OPTIONS = 'optionsScene',
     HUD = 'hudScene'
 }
