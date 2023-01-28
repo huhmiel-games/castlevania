@@ -56,7 +56,7 @@ export default class BackFlipState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.JUMP_SECONDARY_ATTACK)
+        if (character.canUse(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK)
             && up.isDown
             && a.isDown
             && a.getDuration(now) < 128
@@ -65,7 +65,7 @@ export default class BackFlipState extends State
             && character.status.ammo > 0
         )
         {
-            this.stateMachine.transition(EPossibleState.JUMP_SECONDARY_ATTACK, this.stateMachine.state, this.groundYPosition);
+            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state, this.groundYPosition);
 
             return;
         }
