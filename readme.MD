@@ -1,4 +1,4 @@
-# Template Esbuild Jsdoc
+# Castlevania fangame
 
 Ce template front utilise le bundler esbuild.
 
