@@ -110,7 +110,7 @@ export default class HudScene extends Phaser.Scene
         const status = this.getPlayerStatus();
 
         this.setPlayerHealth(status.health).setLife(status.life ?? 0)
-            .setHeart(status.ammo)
+            .setHeart(status.ammo || 5)
             .setScore(status.score)
             .setLife(status.life)
             .setStage(status.stage)
