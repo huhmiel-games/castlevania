@@ -1,15 +1,15 @@
 export class Key
 {
+    scene: Phaser.Scene | undefined;
     name: string;
-    alias: string;
     isDown: boolean = false;
     timeDown: number = 0;
     timeUp: number = 0;
 
-    constructor(name: string, alias?: string)
+    constructor(name: string, scene?: Phaser.Scene)
     {
         this.name = name;
-        this.alias = alias || name + 'Btn';
+        this.scene = scene;
     }
 
     get isUp(): boolean
@@ -23,6 +23,7 @@ export class Key
 
         this.isDown = true;
         this.timeDown = timestamp;
+        this.scene?.events.emit(this.name+'_DownEvent')
     }
 
     setUp(timestamp: number): void
@@ -31,6 +32,7 @@ export class Key
 
         this.isDown = false;
         this.timeUp = timestamp;
+        this.scene?.events.emit(this.name+'_UpEvent')
     }
 
     /**
