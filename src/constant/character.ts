@@ -59,7 +59,7 @@ export const possibleDirection = [
     EPossibleState.UP_RIGHT
 ]
 
-export const JUMP_MOMENTUM_DELAY = 250;
+export const JUMP_MOMENTUM_DELAY = 350;
 
 export enum ENEMY_NAMES {
     ZOMBIE = 'zombie',
