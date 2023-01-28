@@ -172,32 +172,32 @@ export class InputController
 
     public addVirtualGamepad(scene: BootScene)
     {
-        this.virtualGamepad = new VirtualGamepad(scene);
+        // this.virtualGamepad = new VirtualGamepad(scene);
     }
     // #endregion
 
     public addPlayerAButtons()
     {
-        this.playerAButtons = this.getNewButtons();
+        this.playerAButtons = this.getNewButtons(this.scene);
     }
 
-    public getNewButtons(): TButtons
+    public getNewButtons(scene?: Phaser.Scene): TButtons
     {
         return {
-            left: new Key('Left'),
-            right: new Key('Right'),
-            up: new Key('Up'),
-            down: new Key('Down'),
-            x: new Key('x'),
-            y: new Key('y'),
-            a: new Key('a'),
-            b: new Key('b'),
-            l1: new Key('l1'),
-            r1: new Key('r1'),
-            l2: new Key('l2'),
-            r2: new Key('r2'),
-            start: new Key('start'),
-            select: new Key('select')
+            left: new Key('Left', scene),
+            right: new Key('Right', scene),
+            up: new Key('Up', scene),
+            down: new Key('Down', scene),
+            x: new Key('x', scene),
+            y: new Key('y', scene),
+            a: new Key('a', scene),
+            b: new Key('b', scene),
+            l1: new Key('l1', scene),
+            r1: new Key('r1', scene),
+            l2: new Key('l2', scene),
+            r2: new Key('r2', scene),
+            start: new Key('start', scene),
+            select: new Key('select', scene)
         }
     }
 
