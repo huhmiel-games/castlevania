@@ -148,12 +148,16 @@ export default class FallState extends State
         {
             body.setAcceleration(-acceleration * 5, acceleration * 5);
 
+            character.setFlipX(true);
+
             return;
         }
 
         if (right.isDown && left.isUp)
         {
             body.setAcceleration(acceleration * 5, acceleration * 5);
+
+            character.setFlipX(false);
 
             return;
         }

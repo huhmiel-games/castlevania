@@ -85,12 +85,16 @@ export default class JumpMomentumState extends State
         {
             character.body.setAcceleration(-character.physicsProperties.acceleration * 5, 0);
 
+            character.setFlipX(true);
+
             return;
         }
 
         if (right.isDown && left.isUp)
         {
             character.body.setAcceleration(character.physicsProperties.acceleration * 5, 0);
+
+            character.setFlipX(false);
 
             return;
         }
