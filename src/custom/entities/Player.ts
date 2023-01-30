@@ -232,11 +232,6 @@ export default class Player extends Entity
         {
             this.die();
         }
-
-        if (start.isDown && start.getDuration(time) < 16)
-        {
-            this.scene.setPause();
-        }
     }
 
     public getItem(_item: Phaser.Types.Physics.Arcade.GameObjectWithBody)

@@ -3,6 +3,7 @@ import animatedTilesPlugin from '../plugins/AnimatedTiles.js';
 import
 {
     ATLAS_NAMES,
+    BTN_EVENTS,
     COUNTDOWN_EVENT, FONTS, FONTS_SIZES,
     HEIGHT, HUD_EVENTS_NAMES, isDev, PLAYER_A_NAME,
     SCENES_NAMES, STAGE_BACKTRACK, STAGE_COUNTDOWN,
@@ -155,6 +156,8 @@ export default class GameScene extends Phaser.Scene
 
         this.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
 
+        this.scene.get(SCENES_NAMES.BOOT).events.on(BTN_EVENTS.START_UP, this.setPause, this);
+
         this.cameraFollowPlayer();
     }
 
@@ -170,6 +173,11 @@ export default class GameScene extends Phaser.Scene
         {
             if (this.inputController.playerAButtons.x.isDown)
             {
+                console.log({updateTime: time, 
+                    sceneTime: this.time.now, 
+                    sysGameTime: this.sys.game.getTime(),
+                    [this.scene.manager.scenes[0].scene.key]: this.scene.manager.scenes[0].time.now
+                })
                 if (this.debugGraphics && this.debugGraphics.commandBuffer.length)
                 {
                     this.debugGraphics.destroy();
@@ -237,7 +245,7 @@ export default class GameScene extends Phaser.Scene
 
     public shutdown()
     {
-
+        this.scene.get(SCENES_NAMES.BOOT).events.off(BTN_EVENTS.START_UP, this.setPause, this);
     }
 
     public playSound(sfxIndex: number, volume: number = 0.5, ignoreIfPlaying: boolean = false)
