@@ -1,9 +1,48 @@
-body {
+html, body {
     font-family: "Roboto", "Raleway", sans-serif;
     color: #222;
     margin: 0;
     padding: 0;
     background-color: #222;
     overflow: hidden;
-    /* border-radius: 16px; */
+    width: 100vw;
+    height: 100vh;
+}
+
+#btn-ab{
+    background-color: none !important;
+}
+
+#bg-ab{
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    user-select: none;
+    width: 0px;
+    height: auto;
+    border: none;
+    background-color: none !important;
+    background-image: url("./assets/graphics/gamepad/btn-ab.png");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+}
+
+#bg-start{
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    user-select: none;
+    width: 0px;
+    height: auto;
+    border: none;
+    background-color: none !important;
+    background-image: url("./assets/graphics/gamepad/btn-start.png");
+    background-repeat: no-repeat;
+    background-size: cover !important;
+}
+
+:not(:root):fullscreen::backdrop {
+    background-color: transparent !important;
 }

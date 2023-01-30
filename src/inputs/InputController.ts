@@ -3,7 +3,7 @@ import SaveLoadService from "../services/SaveLoadService";
 import { TButtons, TKeyMapping } from "../types/types";
 import { CustomGamepad } from "./Gamepad";
 import { Key } from "./Key";
-import { VirtualGamepad } from "./VirtualGamepad";
+import { VirtualCanvasGamepad } from "./VirtualCanvasGamepad";
 
 /**
  * Singleton class that handle the global keys/buttons event
@@ -22,7 +22,7 @@ export class InputController
     private gamepads: CustomGamepad[] = [];
     public savedKeyMapping: TKeyMapping;
     private savedGamepadMapping: TKeyMapping
-    private virtualGamepad: VirtualGamepad;
+    private virtualGamepad: VirtualCanvasGamepad;
 
     private constructor(scene?: Phaser.Scene)
     {

@@ -1,6 +1,7 @@
 import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 import { WIDTH, HEIGHT, FONTS, SCENES_NAMES, MOBILE_OS } from '../constant/config';
 import { InputController } from '../inputs/InputController';
+import { isMobileOs } from '../utils/isMobileOs';
 
 /**
  * @author © Philippe Pereira 2021
@@ -10,14 +11,14 @@ import { InputController } from '../inputs/InputController';
  */
 export default class BootScene extends Phaser.Scene
 {
-    private inputController: InputController;
+    public inputController: InputController;
 
-    constructor ()
+    constructor()
     {
         super(SCENES_NAMES.BOOT);
     }
 
-    public init ()
+    public init()
     {
         document.onfullscreenchange = () =>
         {
@@ -28,7 +29,7 @@ export default class BootScene extends Phaser.Scene
         };
     }
 
-    public preload ()
+    public preload()
     {
         this.load.plugin('rexVirtualJoystickPlugin', VirtualJoystickPlugin, true);
 
@@ -49,7 +50,7 @@ export default class BootScene extends Phaser.Scene
         this.input.setGlobalTopOnly(true);
     }
 
-    public create ()
+    public create()
     {
         this.scale.setParentSize(window.innerWidth, window.innerHeight);
 
@@ -83,12 +84,12 @@ export default class BootScene extends Phaser.Scene
         });
     }
 
-    public update (time: number, delta: number)
+    public update(time: number, delta: number)
     {
         this.inputController?.gamepadAxisUpdate(time);
     }
 
-    private startInputListener (): void
+    private startInputListener(): void
     {
         // wait for keyboard event
         this.listenKeyboardConnect();
@@ -100,7 +101,7 @@ export default class BootScene extends Phaser.Scene
         this.listenMobileEvent();
     }
 
-    private listenKeyboardConnect ()
+    private listenKeyboardConnect()
     {
         // starts Keyboard listeners if on desktop
         if (this.sys.game.device.os.desktop === true)
@@ -117,12 +118,23 @@ export default class BootScene extends Phaser.Scene
         }
     }
 
-    private listenGamepadConnect ()
+    private listenGamepadConnect()
     {
         this.input.gamepad?.on(Phaser.Input.Gamepad.Events.CONNECTED, () =>
         {
-            // this.add.bitmapText(WIDTH / 2, 16, FONTS.GALAXY, 'gamepad connected', FONTS_SIZES.GALAXY, 1);
+            const gamepadIcon = this.add.image(WIDTH / 2, 16, 'items', 'gamepad');
+
+            this.tweens.add({
+                duration: 250,
+                targets: gamepadIcon,
+                alpha: 0,
+                yoyo: true,
+                repeat: 5,
+                onComplete: () => gamepadIcon.destroy()
+            });
+
             this.scene.bringToTop();
+
             this.inputController.addGamepad(this.input.gamepad!);
         });
 
@@ -133,29 +145,20 @@ export default class BootScene extends Phaser.Scene
         // })
     }
 
-    private listenMobileEvent ()
+    private listenMobileEvent()
     {
-        let currentOs = '';
-
-        for (let key in this.sys.game.device.os)
+        if (isMobileOs(this))
         {
-            if (this.sys.game.device.os[key] === true)
-            {
-                currentOs = key;
-            }
-        }
-
-        if (MOBILE_OS.includes(currentOs))
-        {
-            // this.input.once(Phaser.Input.Events.POINTER_UP, () => this.scale.startFullscreen());
-
             this.input.addPointer(1);
 
             this.inputController.addPlayerAButtons();
 
-            this.inputController.addVirtualGamepad(this);
+            // this.inputController.addVirtualGamepad(this);
 
-            this.scene.bringToTop();
+            //this.scene.bringToTop();
+
+            // this.input.once(Phaser.Input.Events.POINTER_UP, () => this.scale.startFullscreen());
+
         }
     }
 }

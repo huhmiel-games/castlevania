@@ -276,6 +276,35 @@ export type TMeleeWeaponConfig = {
     name: string
 }
 
+export type TVirtualGamepadOption = {
+    value?: number;
+    id: string| number;
+    type?: 'button' | 'joystick';
+    parent?: string;
+    spring?: boolean;
+    text?: string;
+    radius?: number;
+    axis?: 'all' | 'x' | 'y';
+    fixed?: boolean;
+    el_handle?: any;
+    angle_norm?: number;
+    x_start?: number;
+    y_start?: number;
+    x_diff?: number;
+    y_diff?: number;
+    position?: { left?: string; top?: string; right?: string, bottom?: string};
+    style?: { 
+        position?: string; 
+        color?: string; 
+        border?: string; 
+        backgroundColor?: string;
+        background?: string;
+        borderRadius?: string;
+        transform?: string;
+    };
+    onInput?: () => void;
+    onEnd?: () => void;
+}
 
 
 //// Interfaces ////
