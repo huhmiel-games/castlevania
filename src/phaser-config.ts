@@ -6,6 +6,9 @@ import HudScene from "./scenes/HudScene";
 import LoadScene from "./scenes/LoadScene";
 import MenuScene from "./scenes/MenuScene";
 import OptionsScene from "./scenes/OptionsScene";
+// import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
+// import PhaserSceneWatcherPlugin from './plugins/phaser-plugin-scene-watcher.esm.js';
+// import rexNinePatchPlugin from './plugins/rexninepatchplugin.min.js';
 
 export const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -13,6 +16,8 @@ export const config: Phaser.Types.Core.GameConfig = {
     height: HEIGHT,
     pixelArt: true,
     autoRound: true,
+    parent: 'game',
+	fullscreenTarget: 'game',
     expandParent: true,
     input: {
         gamepad: true,
