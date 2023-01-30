@@ -1,6 +1,8 @@
-import { ATLAS_NAMES, FONTS, FONTS_SIZES, HEIGHT, SCENES_NAMES, WIDTH } from "../constant/config";
+import { PALETTE_DB32 } from "../constant/colors";
+import { ATLAS_NAMES, BTN_EVENTS, FONTS, FONTS_SIZES, HEIGHT, SCENES_NAMES, WIDTH } from "../constant/config";
 import { InputController } from "../inputs/InputController";
 import SaveLoadService from "../services/SaveLoadService";
+import { isMobileOs } from "../utils/isMobileOs";
 
 export default class MenuScene extends Phaser.Scene
 {
@@ -10,7 +12,6 @@ export default class MenuScene extends Phaser.Scene
     private iconPosition: number[];
     private actions: (() => void)[];
     private song: Phaser.Sound.NoAudioSound | Phaser.Sound.HTML5AudioSound | Phaser.Sound.WebAudioSound;
-    private throttleTime: number = 0;
     private isDeleteData: boolean = false;
 
     constructor()
@@ -26,6 +27,12 @@ export default class MenuScene extends Phaser.Scene
         this.resetGameData = this.resetGameData.bind(this);
         this.deleteGameData = this.deleteGameData.bind(this);
         this.cancelDeleteGameData = this.cancelDeleteGameData.bind(this);
+
+        this.upPress = this.upPress.bind(this);
+        this.downPress = this.downPress.bind(this);
+        this.aPress = this.aPress.bind(this);
+        this.bPress = this.bPress.bind(this);
+        this.startPress = this.startPress.bind(this);
     }
 
     create()
@@ -53,6 +60,11 @@ export default class MenuScene extends Phaser.Scene
             .setName('optionButton')
             .setLetterSpacing(2)
             .setAlpha(0);
+
+        if(isMobileOs(this))
+        {
+            optionButton.setTintFill(PALETTE_DB32.WELL_READ);
+        }
 
         const resetButton = this.add.bitmapText(WIDTH / 2, HEIGHT / 5 * 4, FONTS.GALAXY, 'erase data', FONTS_SIZES.GALAXY, 1)
             .setOrigin(0.5, 0.5)
@@ -100,54 +112,76 @@ export default class MenuScene extends Phaser.Scene
                 this.icon.setAlpha(1);
             }
         });
+
+        this.listenUpEvent();
     }
 
-    update(time: number, delta: number): void
+    listenUpEvent()
     {
-        const { up, down, a, b, start } = this.inputController.playerAButtons;
+        const bootScene = this.scene.get(SCENES_NAMES.BOOT);
 
-        if (!this.isDeleteData && this.throttleTime < time && (down.isDown && down.getDuration(time) < 12))
+        bootScene.events.on(BTN_EVENTS.UP_UP, this.upPress);
+        bootScene.events.on(BTN_EVENTS.DOWN_UP, this.downPress);
+        bootScene.events.on(BTN_EVENTS.A_UP, this.aPress);
+        bootScene.events.on(BTN_EVENTS.B_UP, this.bPress);
+        bootScene.events.on(BTN_EVENTS.START_UP, this.startPress);
+    }
+
+    private downPress()
+    {
+        if (!this.isDeleteData)
         {
-            this.throttleTime = time + 128;
-
             this.choice = Phaser.Math.Wrap(this.choice + 1, 0, 3);
 
             this.icon.setPosition(this.icon.x, this.iconPosition[this.choice]);
         }
+    }
 
-        if (!this.isDeleteData && this.throttleTime < time && (up.isDown && up.getDuration(time) < 12))
+    private upPress()
+    {
+        if (!this.isDeleteData )
         {
-            this.throttleTime = time + 128;
-
             this.choice = Phaser.Math.Wrap(this.choice - 1, 0, 3);
 
             this.icon.setPosition(this.icon.x, this.iconPosition[this.choice]);
         }
+    }
 
-        if (!this.isDeleteData && ((start.isDown && start.getDuration(time) < 12)
-            || (a.isDown && a.getDuration(time) < 12)
-            || (b.isDown && b.getDuration(time) < 12))
-        )
+    private aPress()
+    {
+        if (!this.isDeleteData)
         {
-            this.throttleTime = time + 128;
-
             this.actions[this.choice]();
         }
 
-        if (this.isDeleteData && this.throttleTime < time && a.isDown && a.getDuration(time) < 12)
+        if (this.isDeleteData)
         {
-            this.throttleTime = time + 128;
-
             this.deleteGameData();
         }
+    }
 
-        if (this.isDeleteData 
-            && this.throttleTime < time
-            && ((start.isDown && start.getDuration(time) < 12) || (b.isDown && b.getDuration(time) < 12))
-        )
+    private bPress()
+    {
+        if (!this.isDeleteData)
         {
-            this.throttleTime = time + 128;
+            this.actions[this.choice]();
+        }
+        
+        if (this.isDeleteData)
+        {
+            this.cancelDeleteGameData();
+        }
+    }
 
+    private startPress()
+    {
+        if (!this.isDeleteData)
+        {
+            this.actions[this.choice]();
+        }
+        
+        if (this.isDeleteData)
+        {
             this.cancelDeleteGameData();
         }
     }
@@ -155,6 +189,14 @@ export default class MenuScene extends Phaser.Scene
     public shutdown(): void
     {
         this.song.stop();
+
+        const bootScene = this.scene.get(SCENES_NAMES.BOOT);
+
+        bootScene.events.off(BTN_EVENTS.UP_UP, this.upPress);
+        bootScene.events.off(BTN_EVENTS.DOWN_UP, this.downPress);
+        bootScene.events.off(BTN_EVENTS.A_UP, this.aPress);
+        bootScene.events.off(BTN_EVENTS.B_UP, this.bPress);
+        bootScene.events.off(BTN_EVENTS.START_UP, this.startPress);
     }
 
     startGameScene()
@@ -164,16 +206,24 @@ export default class MenuScene extends Phaser.Scene
 
     startOptionScene()
     {
-        this.scene.start(SCENES_NAMES.OPTIONS)
+        if(!isMobileOs(this))
+        {
+            this.scene.start(SCENES_NAMES.OPTIONS)
+        }
     }
 
     resetGameData()
     {
-        this.isDeleteData = true;
+        this.time.addEvent({
+            delay: 250,
+            callback: () => {
+                this.isDeleteData = true;
 
-        const resetButton = this.children.getByName('resetButton') as Phaser.GameObjects.BitmapText;
-
-        resetButton.setText('a to confirm')
+                const resetButton = this.children.getByName('resetButton') as Phaser.GameObjects.BitmapText;
+        
+                resetButton.setText('a to confirm');
+            }
+        })
     }
 
     cancelDeleteGameData()
