@@ -45,18 +45,18 @@ export enum PLAYERS_NAMES
 // export const PLAYER_D_NAME = 'playerD';
 
 // Lights
-export const LIGHT_RADIUS = 24;
-export const LIGHT_INTENSITY = 0.05;
-export const LIGHT_ATTENUATION = 0.125;
-export const LIGHT_ATTENUATION_START = 0.120;
-export const LIGHT_ATTENUATION_END = 0.125;
-export const LIGHT_COLOR = 0xd9a066;
+export const LIGHT_RADIUS: number = 24;
+export const LIGHT_INTENSITY: number = 0.05;
+export const LIGHT_ATTENUATION: number = 0.125;
+export const LIGHT_ATTENUATION_START: number = 0.120;
+export const LIGHT_ATTENUATION_END: number = 0.125;
+export const LIGHT_COLOR: number = 0xd9a066;
 
 // VIRTUAL GAMEPAD
 export const JOYSTICK_DIRECTION = ['up', 'down', 'left', 'right'];
-export const NOTIF_BASE_ALPHA = 0.2;
-export const NOTIF_BASE_ALPHA_ACTIVE = 0.5;
-export const NOTIF_BASE_SCALE = 1.3;
+export const NOTIF_BASE_ALPHA: number = 0.2;
+export const NOTIF_BASE_ALPHA_ACTIVE: number = 0.5;
+export const NOTIF_BASE_SCALE: number = 1.3;
 
 // FONTS
 export const enum FONTS
@@ -109,9 +109,9 @@ export const STAGE_START_POSITION = {
     '51': { x: 527 * TILE_SIZE, y: 67 * TILE_SIZE },
     '61': { x: 478 * TILE_SIZE, y: 34 * TILE_SIZE },
     '71': { x: 334 * TILE_SIZE, y: 19 * TILE_SIZE },
-}
+} as const;
 
-export const STAGE_COUNTDOWN_DEFAULT = 300;
+export const STAGE_COUNTDOWN_DEFAULT: number = 300;
 export const STAGE_COUNTDOWN = {
     '11': 300,
     '21': 400,
@@ -119,7 +119,7 @@ export const STAGE_COUNTDOWN = {
     '41': 400,
     '51': 500,
     '61': 700,
-}
+} as const;
 
 
 export const COUNTDOWN_EVENT = 'countdown-event';
