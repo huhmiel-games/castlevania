@@ -31,29 +31,6 @@ export default class SaveLoadService
     }
 
     /**
-     * Save the world
-     * @param world 
-     */
-    public static saveWorld(world: TWorld)
-    {
-        try
-        {
-            localStorage.setItem(`${GAMENAME}_world`, JSON.stringify(world));
-        }
-        catch (error)
-        {
-            throw new Error(error as string);
-        }
-    }
-
-    public static getWorld(): TWorld
-    {
-        const worldJson = localStorage.getItem(`${GAMENAME}_world`);
-
-        return JSON.parse(worldJson || '{}');
-    }
-
-    /**
      * Save the game data on localstorage
      */
     public static saveGameData(status: TStatus): void
@@ -89,6 +66,29 @@ export default class SaveLoadService
         localStorage.removeItem(`${GAMENAME}_enemiesDeathCount`);
         localStorage.removeItem(`${GAMENAME}_bossDeath`);
         localStorage.removeItem(`${GAMENAME}_stageCountdown`);
+    }
+
+    /**
+     * Save the world
+     * @param world 
+     */
+    public static saveWorld(world: TWorld)
+    {
+        try
+        {
+            localStorage.setItem(`${GAMENAME}_world`, JSON.stringify(world));
+        }
+        catch (error)
+        {
+            throw new Error(error as string);
+        }
+    }
+
+    public static getWorld(): TWorld
+    {
+        const worldJson = localStorage.getItem(`${GAMENAME}_world`);
+
+        return JSON.parse(worldJson || '{}');
     }
     // #endregion
 
