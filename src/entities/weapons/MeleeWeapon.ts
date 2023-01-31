@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { DEPTH } from "../../constant/depth";
 import GameScene from "../../scenes/GameScene";
 import { Entity } from "../Entity";
@@ -64,16 +64,16 @@ export class MeleeWeapon extends Phaser.GameObjects.Image implements Weapon
         }
     }
 
-    private changePositionY(body: Phaser.Physics.Arcade.Body | undefined, currentState: EPossibleState)
+    private changePositionY(body: Phaser.Physics.Arcade.Body | undefined, currentState: EStates)
     {
         if (body === undefined) return;
 
         const stateConditionnal = [
-            EPossibleState.ATTACK,
-            EPossibleState.JUMP_ATTACK,
-            EPossibleState.JUMP_MOMENTUM_ATTACK,
-            EPossibleState.FALL_ATTACK,
-            EPossibleState.STAIR_ATTACK
+            EStates.ATTACK,
+            EStates.JUMP_ATTACK,
+            EStates.JUMP_MOMENTUM_ATTACK,
+            EStates.FALL_ATTACK,
+            EStates.STAIR_ATTACK
         ];
 
         if (this.y !== body.y - body.halfHeight && stateConditionnal.includes(currentState))
@@ -83,7 +83,7 @@ export class MeleeWeapon extends Phaser.GameObjects.Image implements Weapon
             return;
         }
 
-        if (this.y !== body.y && currentState === EPossibleState.CROUCH_ATTACK)
+        if (this.y !== body.y && currentState === EStates.CROUCH_ATTACK)
         {
             this.y = body.y;
         }

@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 import { TILE_SIZE } from '../../../constant/config';
 import { log } from '../../../utils/log';
 
@@ -43,16 +43,16 @@ export default class FlyLeftState extends State
 
         character.body.setVelocity(-speed, speedY);
 
-        if (character.canUse(EPossibleState.FLY_IDLE) && left.isUp)
+        if (character.canUse(EStates.FLY_IDLE) && left.isUp)
         {
-            this.stateMachine.transition(EPossibleState.FLY_IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FLY_IDLE, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.IDLE) && left.isUp)
+        if (character.canUse(EStates.IDLE) && left.isUp)
         {
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
             return;
         }

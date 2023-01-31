@@ -1,4 +1,4 @@
-import { EPossibleState, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
+import { EStates, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
 import { RangedWeapon } from "../../../types/types";
 import State from "../../../utils/State";
@@ -29,7 +29,7 @@ export default class JumpMomentumSecondaryAttackState extends State
 
         character.stateTimestamp.setNameAndTime(this.stateMachine.state, now);
 
-        if (this.stateMachine.prevState === EPossibleState.JUMP_MOMENTUM)
+        if (this.stateMachine.prevState === EStates.JUMP_MOMENTUM)
         {
             character.secondaryAttack();
         }
@@ -59,14 +59,14 @@ export default class JumpMomentumSecondaryAttackState extends State
 
             if (!isAttacking)
             {
-                this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+                this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
                 return;
             }
 
             if (isAttacking)
             {
-                this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
+                this.stateMachine.transition(EStates.FALL_SECONDARY_ATTACK, this.stateMachine.state);
 
                 return;
             }
@@ -75,7 +75,7 @@ export default class JumpMomentumSecondaryAttackState extends State
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL_SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }

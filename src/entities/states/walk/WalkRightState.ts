@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
@@ -40,49 +40,49 @@ export default class WalkRightState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.ATTACK) && a.isDown && up.isUp && a.getDuration(now) < 128)
+        if (character.canUse(EStates.ATTACK) && a.isDown && up.isUp && a.getDuration(now) < 128)
         {
-            this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EStates.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.IDLE) && right.isUp)
+        if (character.canUse(EStates.IDLE) && right.isUp)
         {
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.JUMP) && b.isDown && b.getDuration(now) < 150)
+        if (character.canUse(EStates.JUMP) && b.isDown && b.getDuration(now) < 150)
         {
-            this.stateMachine.transition(EPossibleState.JUMP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.FALL) && !blocked.down)
+        if (character.canUse(EStates.FALL) && !blocked.down)
         {
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.RECOIL_RIGHT) && right.isDown && y.isDown && left.isUp && !isAttacking)
+        if (character.canUse(EStates.RECOIL_RIGHT) && right.isDown && y.isDown && left.isUp && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.RECOIL_RIGHT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.RECOIL_RIGHT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.UPSTAIR_RIGHT) && up.isDown)
+        if (character.canUse(EStates.UPSTAIR_RIGHT) && up.isDown)
         {
             const { right, bottom } = character.body;
 
@@ -93,13 +93,13 @@ export default class WalkRightState extends State
                 character.body.reset(tile.pixelX, tile.pixelY);
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.UPSTAIR_RIGHT, this.stateMachine.state);
+                this.stateMachine.transition(EStates.UPSTAIR_RIGHT, this.stateMachine.state);
 
                 return;
             }
         }
 
-        if (character.canUse(EPossibleState.DOWNSTAIR_RIGHT) && down.isDown)
+        if (character.canUse(EStates.DOWNSTAIR_RIGHT) && down.isDown)
         {
             const { center, bottom } = character.body;
 
@@ -111,7 +111,7 @@ export default class WalkRightState extends State
 
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.DOWNSTAIR_RIGHT, this.stateMachine.state)
+                this.stateMachine.transition(EStates.DOWNSTAIR_RIGHT, this.stateMachine.state)
 
                 return;
             }

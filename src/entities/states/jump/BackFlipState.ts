@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { DEPTH } from "../../../constant/depth";
 import GameScene from "../../../scenes/GameScene";
@@ -56,7 +56,7 @@ export default class BackFlipState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK)
+        if (character.canUse(EStates.JUMP_MOMENTUM_SECONDARY_ATTACK)
             && up.isDown
             && a.isDown
             && a.getDuration(now) < 128
@@ -65,14 +65,14 @@ export default class BackFlipState extends State
             && character.status.ammo > 0
         )
         {
-            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state, this.groundYPosition);
+            this.stateMachine.transition(EStates.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state, this.groundYPosition);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.JUMP_MOMENTUM_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EStates.JUMP_MOMENTUM_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_ATTACK, this.stateMachine.state, this.groundYPosition);
+            this.stateMachine.transition(EStates.JUMP_MOMENTUM_ATTACK, this.stateMachine.state, this.groundYPosition);
 
             return;
         }
@@ -108,14 +108,14 @@ export default class BackFlipState extends State
 
             scene.time.addEvent({
                 delay: 200,
-                callback: () => this.stateMachine.transition(EPossibleState.CROUCH, this.stateMachine.state)
+                callback: () => this.stateMachine.transition(EStates.CROUCH, this.stateMachine.state)
             });
         }
 
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
             return;
         }

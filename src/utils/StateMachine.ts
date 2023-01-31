@@ -1,4 +1,4 @@
-import { EPossibleState } from "../constant/character";
+import { EStates } from "../constant/character";
 import { Entity } from "../entities/Entity";
 import GameScene from "../scenes/GameScene";
 import State from "./State";
@@ -6,13 +6,13 @@ import State from "./State";
 type TStateArgs = [GameScene, Entity];
 export default class StateMachine
 {
-    public initialState: EPossibleState;
+    public initialState: EStates;
     public possibleStates: {[key: string]: State};
     public stateArgs: TStateArgs;
-    public state: EPossibleState;
-    public prevState: EPossibleState;
+    public state: EStates;
+    public prevState: EStates;
 
-    constructor (initialState: EPossibleState, possibleStates: {[key: string]: State}, stateArgs: TStateArgs)
+    constructor (initialState: EStates, possibleStates: {[key: string]: State}, stateArgs: TStateArgs)
     {
         this.initialState = initialState;
 
@@ -41,7 +41,7 @@ export default class StateMachine
         this.possibleStates[this.state].execute(...this.stateArgs);
     }
 
-    public transition (newState: EPossibleState, prevState: EPossibleState, ...enterArgs: unknown[])
+    public transition (newState: EStates, prevState: EStates, ...enterArgs: unknown[])
     {
         this.state = newState;
 

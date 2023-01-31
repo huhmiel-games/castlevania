@@ -1,4 +1,4 @@
-import { EPossibleState, PLAYER_ATTACK_FRAMES } from "../../constant/character";
+import { EStates, PLAYER_ATTACK_FRAMES } from "../../constant/character";
 import { ATLAS_NAMES, HUD_EVENTS_NAMES, PLAYERS_NAMES, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import { Entity } from "../../entities/Entity";
@@ -179,7 +179,7 @@ export default class Player extends Entity
 
         this.damageBody.changeBodySize(8, 28);
 
-        this.stateMachine = new StateMachine(EPossibleState.IDLE, {
+        this.stateMachine = new StateMachine(EStates.IDLE, {
             idle: new IdleState() as IdleState,
             attack: new AttackState() as AttackState,
             secondaryAttack: new SecondaryAttackState() as SecondaryAttackState,

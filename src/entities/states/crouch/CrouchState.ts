@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 import { log } from '../../../utils/log';
 
 /**
@@ -37,7 +37,7 @@ export default class CrouchState extends State
 
         if (a.isDown && a.getDuration(now) < 128 && !character.physicsProperties.isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.CROUCH_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.CROUCH_ATTACK, this.stateMachine.state);
 
             return;
         }
@@ -52,25 +52,25 @@ export default class CrouchState extends State
             character.setFlipX(false);
         }
 
-        if (character.canUse(EPossibleState.BACK_FLIP)
+        if (character.canUse(EStates.BACK_FLIP)
             && b.isDown
             && character.stateTimestamp.getTimestamp() + 200 > now 
             && b.getDuration(now) < 50
         )
         {
-            this.stateMachine.transition(EPossibleState.BACK_FLIP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.BACK_FLIP, this.stateMachine.state);
 
             return;
         }
 
         if (b.isDown && b.getDuration(now) < 150)
         {
-            this.stateMachine.transition(EPossibleState.JUMP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP, this.stateMachine.state);
         }
 
         if (down.isUp && !character.physicsProperties.isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
         }
     }
 }

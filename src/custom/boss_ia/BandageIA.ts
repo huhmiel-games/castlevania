@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
@@ -44,7 +44,7 @@ export class BandageIA implements IEnemyAI
         {
             const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
-            if (this.parent.canUse(EPossibleState.FLY_LEFT) && player.damageBody.x < this.parent.body.x)
+            if (this.parent.canUse(EStates.FLY_LEFT) && player.damageBody.x < this.parent.body.x)
             {
                 this.parent.resetAllButtons();
 
@@ -53,7 +53,7 @@ export class BandageIA implements IEnemyAI
                 return;
             }
 
-            if (this.parent.canUse(EPossibleState.FLY_RIGHT) && player.damageBody.x > this.parent.body.x)
+            if (this.parent.canUse(EStates.FLY_RIGHT) && player.damageBody.x > this.parent.body.x)
             {
                 this.parent.resetAllButtons();
 

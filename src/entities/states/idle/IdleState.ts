@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { DEPTH } from "../../../constant/depth";
 import { TILES } from "../../../constant/tiles";
@@ -56,7 +56,7 @@ export default class IdleState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.SECONDARY_ATTACK)
+        if (character.canUse(EStates.SECONDARY_ATTACK)
             && a.isDown
             && up.isDown
             && a.getDuration(now) < 128 && !isAttacking
@@ -64,59 +64,59 @@ export default class IdleState extends State
             && character.status.ammo > 0
         )
         {
-            this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EStates.ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.LEFT) && left.isDown && right.isUp && !isAttacking)
+        if (character.canUse(EStates.LEFT) && left.isDown && right.isUp && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.LEFT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.LEFT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.RIGHT) && right.isDown && left.isUp && !isAttacking)
+        if (character.canUse(EStates.RIGHT) && right.isDown && left.isUp && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.RIGHT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.RIGHT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.RECOIL_LEFT) && left.isDown && y.isDown && right.isUp && !isAttacking)
+        if (character.canUse(EStates.RECOIL_LEFT) && left.isDown && y.isDown && right.isUp && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.RECOIL_LEFT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.RECOIL_LEFT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.RECOIL_RIGHT) && right.isDown && y.isDown && left.isUp && !isAttacking)
+        if (character.canUse(EStates.RECOIL_RIGHT) && right.isDown && y.isDown && left.isUp && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.RECOIL_RIGHT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.RECOIL_RIGHT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.JUMP)
+        if (character.canUse(EStates.JUMP)
             && b.isDown
             && now - b.timeUp > 250
             && b.getDuration(now) > 75
             && b.getDuration(now) < 150
         )
         {
-            this.stateMachine.transition(EPossibleState.JUMP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.UPSTAIR_RIGHT) && up.isDown)
+        if (character.canUse(EStates.UPSTAIR_RIGHT) && up.isDown)
         {
             const { right, bottom } = character.body;
 
@@ -127,13 +127,13 @@ export default class IdleState extends State
                 character.body.reset(tile.pixelX, tile.pixelY);
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.UPSTAIR_RIGHT, this.stateMachine.state);
+                this.stateMachine.transition(EStates.UPSTAIR_RIGHT, this.stateMachine.state);
 
                 return;
             }
         }
 
-        if (character.canUse(EPossibleState.DOWNSTAIR_RIGHT) && down.isDown)
+        if (character.canUse(EStates.DOWNSTAIR_RIGHT) && down.isDown)
         {
             const { right, bottom } = character.body;
 
@@ -145,13 +145,13 @@ export default class IdleState extends State
 
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.DOWNSTAIR_RIGHT, this.stateMachine.state)
+                this.stateMachine.transition(EStates.DOWNSTAIR_RIGHT, this.stateMachine.state)
 
                 return;
             }
         }
 
-        if (character.canUse(EPossibleState.UPSTAIR_LEFT) && up.isDown)
+        if (character.canUse(EStates.UPSTAIR_LEFT) && up.isDown)
         {
             const { left, bottom } = character.body;
 
@@ -163,13 +163,13 @@ export default class IdleState extends State
 
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.UPSTAIR_LEFT, this.stateMachine.state);
+                this.stateMachine.transition(EStates.UPSTAIR_LEFT, this.stateMachine.state);
 
                 return;
             }
         }
 
-        if (character.canUse(EPossibleState.DOWNSTAIR_LEFT) && down.isDown)
+        if (character.canUse(EStates.DOWNSTAIR_LEFT) && down.isDown)
         {
             const { left, bottom } = character.body;
 
@@ -181,50 +181,50 @@ export default class IdleState extends State
 
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.DOWNSTAIR_LEFT, this.stateMachine.state)
+                this.stateMachine.transition(EStates.DOWNSTAIR_LEFT, this.stateMachine.state)
 
                 return;
             }
         }
 
-        if (character.canUse(EPossibleState.CROUCH) && down.isDown && !isAttacking)
+        if (character.canUse(EStates.CROUCH) && down.isDown && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.CROUCH, this.stateMachine.state);
+            this.stateMachine.transition(EStates.CROUCH, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.FALL) && !blocked.down)
+        if (character.canUse(EStates.FALL) && !blocked.down)
         {
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.FLY_LEFT) && left.isDown)
+        if (character.canUse(EStates.FLY_LEFT) && left.isDown)
         {
-            this.stateMachine.transition(EPossibleState.FLY_LEFT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FLY_LEFT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.FLY_RIGHT) && right.isDown)
+        if (character.canUse(EStates.FLY_RIGHT) && right.isDown)
         {
-            this.stateMachine.transition(EPossibleState.FLY_RIGHT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FLY_RIGHT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.UP) && up.isDown)
+        if (character.canUse(EStates.UP) && up.isDown)
         {
-            this.stateMachine.transition(EPossibleState.UP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.UP, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.DOWN) && down.isDown)
+        if (character.canUse(EStates.DOWN) && down.isDown)
         {
-            this.stateMachine.transition(EPossibleState.DOWN, this.stateMachine.state);
+            this.stateMachine.transition(EStates.DOWN, this.stateMachine.state);
 
             return;
         }

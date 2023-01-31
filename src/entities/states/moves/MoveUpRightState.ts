@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 
 /**
  * @description
@@ -35,7 +35,7 @@ export default class MoveUpRightState extends State
 
         const nextState = character.getDirection();
 
-        if (nextState !== EPossibleState.UP_RIGHT)
+        if (nextState !== EStates.UP_RIGHT)
         {
             this.stateMachine.transition(nextState, this.stateMachine.state);
         }

@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 import { RangedWeapon } from '../../../types/types';
 import { Enemy } from '../../../custom/entities/Enemy';
 import { log } from '../../../utils/log';
@@ -45,7 +45,7 @@ export default class JumpSecondaryAttackState extends State
         // End of jump
         if (this.groundYPosition - 32 > bottom || b.isUp)
         {
-            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
@@ -53,7 +53,7 @@ export default class JumpSecondaryAttackState extends State
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL_SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }

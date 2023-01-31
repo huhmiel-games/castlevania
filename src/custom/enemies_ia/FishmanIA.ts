@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
@@ -46,7 +46,7 @@ export class FishmanIA implements IEnemyAI
         if (this.phase === 0
             && this.randomJumpTime !== 0
             && this.randomJumpTime < now
-            && state === EPossibleState.IDLE
+            && state === EStates.IDLE
             && !this.isJumping
             && this.scene.colliderLayer.getTileAtWorldXY(center.x, center.y - 8)?.properties?.waterBlock === true
         )
@@ -74,8 +74,8 @@ export class FishmanIA implements IEnemyAI
 
         // start walking
         if (this.phase === 1
-            && state === EPossibleState.IDLE
-            && prevState === EPossibleState.FALL
+            && state === EStates.IDLE
+            && prevState === EStates.FALL
             && blocked.down
             && this.isJumping
         )

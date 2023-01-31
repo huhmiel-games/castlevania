@@ -1,4 +1,4 @@
-import { EPossibleState, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
+import { EStates, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
 import { log } from "../../../utils/log";
 import State from "../../../utils/State";
@@ -44,7 +44,7 @@ export default class JumpMomentumState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK)
+        if (character.canUse(EStates.JUMP_MOMENTUM_SECONDARY_ATTACK)
             && up.isDown
             && a.isDown
             && a.getDuration(now) < 128 && !isAttacking
@@ -52,14 +52,14 @@ export default class JumpMomentumState extends State
             && character.status.ammo > 0
         )
         {
-            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state, this.momentTime);
+            this.stateMachine.transition(EStates.JUMP_MOMENTUM_SECONDARY_ATTACK, this.stateMachine.state, this.momentTime);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.JUMP_MOMENTUM_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EStates.JUMP_MOMENTUM_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM_ATTACK, this.stateMachine.state, this.momentTime);
+            this.stateMachine.transition(EStates.JUMP_MOMENTUM_ATTACK, this.stateMachine.state, this.momentTime);
 
             return;
         }
@@ -68,7 +68,7 @@ export default class JumpMomentumState extends State
         {
             character.body.setGravityY(character.physicsProperties.gravity);
 
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
             return;
         }
@@ -76,7 +76,7 @@ export default class JumpMomentumState extends State
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
             return;
         }

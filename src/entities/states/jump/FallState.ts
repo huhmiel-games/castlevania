@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
@@ -45,7 +45,7 @@ export default class FallState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.FALL_SECONDARY_ATTACK)
+        if (character.canUse(EStates.FALL_SECONDARY_ATTACK)
             && up.isDown
             && a.isDown
             && a.getDuration(now) < 128 && !isAttacking
@@ -53,14 +53,14 @@ export default class FallState extends State
             && character.status.ammo > 0
         )
         {
-            this.stateMachine.transition(EPossibleState.FALL_SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL_SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.FALL_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EStates.FALL_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.FALL_ATTACK, this.stateMachine.state, this.jumpTime);
+            this.stateMachine.transition(EStates.FALL_ATTACK, this.stateMachine.state, this.jumpTime);
 
             return;
         }
@@ -72,25 +72,25 @@ export default class FallState extends State
 
             body.setMaxVelocityY(speed * 2);
 
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
             return;
         }
 
         // ghost jumping
-        if ((this.stateMachine.prevState === EPossibleState.LEFT || this.stateMachine.prevState === EPossibleState.RIGHT)
+        if ((this.stateMachine.prevState === EStates.LEFT || this.stateMachine.prevState === EStates.RIGHT)
             && this.jumpTime + 75 > now
             && b.isDown
         )
         {
             character.body.setMaxVelocityY(speed * 4);
 
-            this.stateMachine.transition(EPossibleState.JUMP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP, this.stateMachine.state);
 
             return;
         }
 
-        if (flipX && character.canUse(EPossibleState.UPSTAIR_LEFT) && up.isDown)
+        if (flipX && character.canUse(EStates.UPSTAIR_LEFT) && up.isDown)
         {
             const { left, bottom } = body;
 
@@ -101,7 +101,7 @@ export default class FallState extends State
                 body.reset(tile.pixelX, tile.pixelY);
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.DOWNSTAIR_LEFT, this.stateMachine.state);
+                this.stateMachine.transition(EStates.DOWNSTAIR_LEFT, this.stateMachine.state);
 
                 return;
             }
@@ -111,13 +111,13 @@ export default class FallState extends State
                 body.reset(tile.pixelX + TILE_SIZE, tile.pixelY);
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.UPSTAIR_LEFT, this.stateMachine.state);
+                this.stateMachine.transition(EStates.UPSTAIR_LEFT, this.stateMachine.state);
 
                 return;
             }
         }
 
-        if (!character.flipX && character.canUse(EPossibleState.UPSTAIR_RIGHT) && up.isDown)
+        if (!character.flipX && character.canUse(EStates.UPSTAIR_RIGHT) && up.isDown)
         {
             const { right, bottom } = body;
 
@@ -128,7 +128,7 @@ export default class FallState extends State
                 body.reset(tile.pixelX + TILE_SIZE / 2, tile.pixelY - 8);
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.DOWNSTAIR_RIGHT, this.stateMachine.state);
+                this.stateMachine.transition(EStates.DOWNSTAIR_RIGHT, this.stateMachine.state);
 
                 return;
             }
@@ -138,7 +138,7 @@ export default class FallState extends State
                 body.reset(tile.pixelX, tile.pixelY);
                 character.anims.pause();
 
-                this.stateMachine.transition(EPossibleState.UPSTAIR_RIGHT, this.stateMachine.state);
+                this.stateMachine.transition(EStates.UPSTAIR_RIGHT, this.stateMachine.state);
 
                 return;
             }

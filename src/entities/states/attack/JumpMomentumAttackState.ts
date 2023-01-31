@@ -1,4 +1,4 @@
-import { EPossibleState, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
+import { EStates, JUMP_MOMENTUM_DELAY } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
 import { log } from "../../../utils/log";
 import State from "../../../utils/State";
@@ -52,14 +52,14 @@ export default class JumpMomentumAttackState extends State
 
             if (!isAttacking)
             {
-                this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+                this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
                 return;
             }
 
             if (isAttacking)
             {
-                this.stateMachine.transition(EPossibleState.FALL_ATTACK, this.stateMachine.state);
+                this.stateMachine.transition(EStates.FALL_ATTACK, this.stateMachine.state);
 
                 return;
             }
@@ -68,7 +68,7 @@ export default class JumpMomentumAttackState extends State
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL_ATTACK, this.stateMachine.state);
 
             return;
         }

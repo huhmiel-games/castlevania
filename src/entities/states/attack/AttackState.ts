@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 import { log } from '../../../utils/log';
 
 /**
@@ -31,7 +31,7 @@ export default class AttackState extends State
 
             if(character.physicsProperties.isHurt)
             {
-                this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+                this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
                 return;
             }

@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import GameScene from "../../../scenes/GameScene";
 import { log } from "../../../utils/log";
@@ -46,7 +46,7 @@ export default class JumpState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.JUMP_SECONDARY_ATTACK)
+        if (character.canUse(EStates.JUMP_SECONDARY_ATTACK)
             && up.isDown
             && a.isDown
             && a.getDuration(now) < 128
@@ -55,14 +55,14 @@ export default class JumpState extends State
             && character.status.ammo > 0
         )
         {
-            this.stateMachine.transition(EPossibleState.JUMP_SECONDARY_ATTACK, this.stateMachine.state, this.groundYPosition);
+            this.stateMachine.transition(EStates.JUMP_SECONDARY_ATTACK, this.stateMachine.state, this.groundYPosition);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.JUMP_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
+        if (character.canUse(EStates.JUMP_ATTACK) && a.isDown && a.getDuration(now) < 128 && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.JUMP_ATTACK, this.stateMachine.state, this.groundYPosition);
+            this.stateMachine.transition(EStates.JUMP_ATTACK, this.stateMachine.state, this.groundYPosition);
 
             return;
         }
@@ -70,7 +70,7 @@ export default class JumpState extends State
         // End of jump
         if (this.groundYPosition - (jumpHeight ? TILE_SIZE * jumpHeight : 32) > bottom || b.isUp)
         {
-            this.stateMachine.transition(EPossibleState.JUMP_MOMENTUM, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP_MOMENTUM, this.stateMachine.state);
 
             return;
         }
@@ -78,7 +78,7 @@ export default class JumpState extends State
         // If touching the ceiling
         if (blocked.up)
         {
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
             return;
         }

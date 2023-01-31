@@ -2,7 +2,7 @@ import { HEIGHT, HUD_EVENTS_NAMES, PLAYERS_NAMES, WIDTH } from "../../constant/c
 import { Boss } from "../entities/Boss";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI, RangedWeapon } from "../../types/types";
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { DEPTH } from "../../constant/depth";
 import Weapon from "../../entities/weapons/Weapon";
 import FireBall from "../../entities/weapons/FireBall";
@@ -161,7 +161,7 @@ export class Dracula2IA implements IEnemyAI
             }
         }
 
-        if (blocked.down && this.isJumping && stateMachine.state === EPossibleState.IDLE && stateMachine.prevState === EPossibleState.FALL)
+        if (blocked.down && this.isJumping && stateMachine.state === EStates.IDLE && stateMachine.prevState === EStates.FALL)
         {
             this.isJumping = false;
 

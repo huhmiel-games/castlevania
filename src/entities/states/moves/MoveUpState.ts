@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 
 /**
  * @description
@@ -32,21 +32,21 @@ export default class MoveUpState extends State
 
         const { now } = scene.time;
 
-        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128)
+        if (character.canUse(EStates.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128)
         {
-            this.stateMachine.transition(EPossibleState.SECONDARY_ATTACK, this.stateMachine.state);
+            this.stateMachine.transition(EStates.SECONDARY_ATTACK, this.stateMachine.state);
 
             return;
         }
 
-        if (up.isUp && down.isUp && character.canUse(EPossibleState.IDLE))
+        if (up.isUp && down.isUp && character.canUse(EStates.IDLE))
         {
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
         }
 
-        if(up.isUp && down.isDown && character.canUse(EPossibleState.DOWN))
+        if(up.isUp && down.isDown && character.canUse(EStates.DOWN))
         {
-            this.stateMachine.transition(EPossibleState.DOWN, this.stateMachine.state);
+            this.stateMachine.transition(EStates.DOWN, this.stateMachine.state);
         }
     }
 }

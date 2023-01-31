@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
@@ -79,7 +79,7 @@ export class AxeKnightIA implements IEnemyAI
             if (chanceToReactToPlayer > 25)
             {
                 if (player.body.center.x < center.x
-                    && (player.buttons.left.isDown || player.stateMachine.prevState === EPossibleState.LEFT)
+                    && (player.buttons.left.isDown || player.stateMachine.prevState === EStates.LEFT)
                     && this.scene.colliderLayer.getTileAtWorldXY(body.left, body.bottom + TILE_SIZE / 8)?.canCollide
                 )
                 {
@@ -88,7 +88,7 @@ export class AxeKnightIA implements IEnemyAI
                 }
 
                 if (player.body.center.x < center.x
-                    && (player.buttons.right.isDown || player.stateMachine.prevState === EPossibleState.RIGHT)
+                    && (player.buttons.right.isDown || player.stateMachine.prevState === EStates.RIGHT)
                     && this.scene.colliderLayer.getTileAtWorldXY(body.right, body.bottom + TILE_SIZE / 8)?.canCollide
                 )
                 {
@@ -97,7 +97,7 @@ export class AxeKnightIA implements IEnemyAI
                 }
 
                 if (player.body.center.x > center.x
-                    && (player.buttons.left.isDown || player.stateMachine.prevState === EPossibleState.LEFT)
+                    && (player.buttons.left.isDown || player.stateMachine.prevState === EStates.LEFT)
                     && this.scene.colliderLayer.getTileAtWorldXY(body.left, body.bottom + TILE_SIZE / 8)?.canCollide
                 )
                 {
@@ -106,7 +106,7 @@ export class AxeKnightIA implements IEnemyAI
                 }
 
                 if (player.body.center.x > center.x
-                    && (player.buttons.right.isDown || player.stateMachine.prevState === EPossibleState.RIGHT)
+                    && (player.buttons.right.isDown || player.stateMachine.prevState === EStates.RIGHT)
                     && this.scene.colliderLayer.getTileAtWorldXY(body.right, body.bottom + TILE_SIZE / 8)?.canCollide
                 )
                 {

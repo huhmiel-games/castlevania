@@ -1,4 +1,4 @@
-import { ENEMY_NAMES, EPossibleState } from '../constant/character';
+import { ENEMY_NAMES, EStates } from '../constant/character';
 import { PLAYERS_NAMES } from '../constant/config';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
@@ -158,7 +158,7 @@ export default class ColliderService
 
                 const player = _player as Entity;
 
-                if (tile.properties.passCrouchBlock && player.stateMachine.state.startsWith(EPossibleState.CROUCH))
+                if (tile.properties.passCrouchBlock && player.stateMachine.state.startsWith(EStates.CROUCH))
                 {
                     return false;
                 }

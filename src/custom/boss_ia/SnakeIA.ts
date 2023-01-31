@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
@@ -48,7 +48,7 @@ export class SnakeIA implements IEnemyAI
         {
             const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
-            if (this.parent.canUse(EPossibleState.LEFT) && player.damageBody.x < this.parent.body.x)
+            if (this.parent.canUse(EStates.LEFT) && player.damageBody.x < this.parent.body.x)
             {
                 this.parent.resetAllButtons();
 
@@ -57,7 +57,7 @@ export class SnakeIA implements IEnemyAI
                 return;
             }
 
-            if (this.parent.canUse(EPossibleState.RIGHT) && player.damageBody.x > this.parent.body.x)
+            if (this.parent.canUse(EStates.RIGHT) && player.damageBody.x > this.parent.body.x)
             {
                 this.parent.resetAllButtons();
 

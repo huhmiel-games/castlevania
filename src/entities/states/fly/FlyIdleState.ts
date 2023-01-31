@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 import { log } from '../../../utils/log';
 
 /**
@@ -37,16 +37,16 @@ export default class FlyIdleState extends State
     {
         const { left, right } = character.buttons;
 
-        if (character.canUse(EPossibleState.FLY_LEFT) && left.isDown)
+        if (character.canUse(EStates.FLY_LEFT) && left.isDown)
         {
-            this.stateMachine.transition(EPossibleState.FLY_LEFT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FLY_LEFT, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.FLY_RIGHT) && right.isDown)
+        if (character.canUse(EStates.FLY_RIGHT) && right.isDown)
         {
-            this.stateMachine.transition(EPossibleState.FLY_RIGHT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FLY_RIGHT, this.stateMachine.state);
 
             return;
         }

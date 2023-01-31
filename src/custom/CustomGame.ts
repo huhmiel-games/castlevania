@@ -1,4 +1,4 @@
-import { BOSS_NAMES, ENEMY_NAMES, EPossibleState } from "../constant/character";
+import { BOSS_NAMES, ENEMY_NAMES, EStates } from "../constant/character";
 import { PALETTE_DB32 } from "../constant/colors";
 import { TILE_SIZE, PLAYERS_NAMES, HEIGHT, ATLAS_NAMES } from "../constant/config";
 import { DEPTH } from "../constant/depth";
@@ -726,7 +726,7 @@ export class CustomeGame implements ICustomGame
                 damage = 16;
             }
 
-            playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
+            playerDamageBody.parent.stateMachine.transition(EStates.HURT, playerDamageBody.parent.stateMachine.state);
 
             playerDamageBody.parent.setDamage(damage);
         }, (_player, _enemy) =>
@@ -735,7 +735,7 @@ export class CustomeGame implements ICustomGame
 
             const enemy = _enemy as DamageBody;
 
-            if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
+            if (playerDamageBody.parent.stateMachine.state === EStates.HURT
                 || playerDamageBody.parent.physicsProperties.isHurt
                 || !enemy.parent.active
                 || enemy.parent.visible === false
@@ -759,14 +759,14 @@ export class CustomeGame implements ICustomGame
 
             const damage = Number(playerDamageBody.parent.status.stage.toString()[0].padStart(2, '0'));
 
-            playerDamageBody.parent.stateMachine.transition(EPossibleState.HURT, playerDamageBody.parent.stateMachine.state);
+            playerDamageBody.parent.stateMachine.transition(EStates.HURT, playerDamageBody.parent.stateMachine.state);
 
             playerDamageBody.parent.setDamage(damage);
         }, (_player, _weapon) =>
         {
             const playerDamageBody = _player as DamageBody;
 
-            if (playerDamageBody.parent.stateMachine.state === EPossibleState.HURT
+            if (playerDamageBody.parent.stateMachine.state === EStates.HURT
                 || playerDamageBody.parent.physicsProperties.isHurt
             )
             {
@@ -821,10 +821,10 @@ export class CustomeGame implements ICustomGame
 
             if ((weapon.canStun || damageBody.parent.config.stunWith?.includes(weapon.name))
                 && damageBody.parent.status.health > 0
-                && damageBody.parent.canUse(EPossibleState.STUN)
+                && damageBody.parent.canUse(EStates.STUN)
             )
             {
-                damageBody.parent.stateMachine.transition(EPossibleState.STUN, damageBody.parent.stateMachine.state);
+                damageBody.parent.stateMachine.transition(EStates.STUN, damageBody.parent.stateMachine.state);
             }
 
             if (weapon instanceof ThrowingKnife)

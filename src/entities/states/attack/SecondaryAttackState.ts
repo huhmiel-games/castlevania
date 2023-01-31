@@ -2,7 +2,7 @@ import State from '../../../utils/State'
 import GameScene from '../../../scenes/GameScene';
 import { Entity } from '../../Entity';
 import StateMachine from '../../../utils/StateMachine';
-import { EPossibleState } from '../../../constant/character';
+import { EStates } from '../../../constant/character';
 import { RangedWeapon } from '../../../types/types';
 import { Enemy } from '../../../custom/entities/Enemy';
 import { log } from '../../../utils/log';
@@ -38,7 +38,7 @@ export default class SecondaryAttackState extends State
 
         if (!isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
             return;
         }

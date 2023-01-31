@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
 import { RangedWeapon } from "../../../types/types";
 import State from "../../../utils/State";
@@ -30,7 +30,7 @@ export default class FallSecondaryAttackState extends State
 
         character.secondaryAttack();
 
-        if (this.stateMachine.prevState === EPossibleState.FALL)
+        if (this.stateMachine.prevState === EStates.FALL)
         {
             character.secondaryAttack();
         }
@@ -55,7 +55,7 @@ export default class FallSecondaryAttackState extends State
         const { isAttacking, acceleration, speed } = character.physicsProperties;
 
         // Transition to Idle if touching ground
-        if (character.canUse(EPossibleState.IDLE) && body.blocked.down)
+        if (character.canUse(EStates.IDLE) && body.blocked.down)
         {
             character.physicsProperties.isAttacking = false;
 
@@ -63,27 +63,27 @@ export default class FallSecondaryAttackState extends State
 
             character.body.setMaxVelocityY(speed * 2);
 
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
             return;
         }
 
         if (!body.blocked.down && !isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state, this.jumpTime);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state, this.jumpTime);
 
             return;
         }
 
         // ghost jumping
-        if ((this.stateMachine.prevState === EPossibleState.LEFT || this.stateMachine.prevState === EPossibleState.RIGHT)
+        if ((this.stateMachine.prevState === EStates.LEFT || this.stateMachine.prevState === EStates.RIGHT)
             && this.jumpTime + 75 > now
             && b.isDown
         )
         {
             character.body.setMaxVelocityY(speed * 2);
 
-            this.stateMachine.transition(EPossibleState.JUMP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP, this.stateMachine.state);
 
             return;
         }

@@ -1,4 +1,4 @@
-export enum EPossibleState
+export enum EStates
 {
     UP = 'up',
     UP_LEFT = 'upleft',
@@ -48,15 +48,15 @@ export const PLAYER_ATTACK_FRAMES = [
 ];
 
 export const possibleDirection = [
-    EPossibleState.DOWN_LEFT, 
-    EPossibleState.DOWN, 
-    EPossibleState.DOWN_RIGHT, 
-    EPossibleState.LEFT, 
-    EPossibleState.IDLE, 
-    EPossibleState.RIGHT, 
-    EPossibleState.UP_LEFT,
-    EPossibleState.UP,
-    EPossibleState.UP_RIGHT
+    EStates.DOWN_LEFT, 
+    EStates.DOWN, 
+    EStates.DOWN_RIGHT, 
+    EStates.LEFT, 
+    EStates.IDLE, 
+    EStates.RIGHT, 
+    EStates.UP_LEFT,
+    EStates.UP,
+    EStates.UP_RIGHT
 ]
 
 export const JUMP_MOMENTUM_DELAY = 350;

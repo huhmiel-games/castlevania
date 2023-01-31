@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
@@ -61,7 +61,7 @@ export class FleamanIA implements IEnemyAI
         if (this.jumpTime < now
             && b.isUp
             && cam.worldView.contains(center.x, center.y)
-            && this.parent.stateMachine.state === EPossibleState.IDLE)
+            && this.parent.stateMachine.state === EStates.IDLE)
         {
             const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 

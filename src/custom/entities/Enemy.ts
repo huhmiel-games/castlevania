@@ -4,7 +4,7 @@ import StateTimestamp from "../../utils/StateTimestamp";
 import { PALETTE_DB32 } from "../../constant/colors";
 import { DEPTH } from "../../constant/depth";
 import { Entity } from "../../entities/Entity";
-import { ENEMY_NAMES, EPossibleState } from "../../constant/character";
+import { ENEMY_NAMES, EStates } from "../../constant/character";
 import StateMachine from "../../utils/StateMachine";
 import AttackState from "../../entities/states/attack/AttackState";
 import DeathState from "../../entities/states/death/DeathState";
@@ -90,9 +90,9 @@ export class Enemy extends Entity
 
         const possibleStates = this.generatePossibleStates(enemyJSON.state);
 
-        const initialState = Object.keys(EPossibleState).find(key => EPossibleState[key] === Object.keys(possibleStates)[0]) as string;
+        const initialState = Object.keys(EStates).find(key => EStates[key] === Object.keys(possibleStates)[0]) as string;
 
-        this.stateMachine = new StateMachine(EPossibleState[initialState], possibleStates, [this.scene, this]);
+        this.stateMachine = new StateMachine(EStates[initialState], possibleStates, [this.scene, this]);
 
         this.canUseState = new Set(Object.keys(this.stateMachine.possibleStates));
 
@@ -358,104 +358,104 @@ export class Enemy extends Entity
         {
             switch (state)
             {
-                case EPossibleState.IDLE:
-                    possibleStates[EPossibleState.IDLE] = new IdleState() as IdleState;
+                case EStates.IDLE:
+                    possibleStates[EStates.IDLE] = new IdleState() as IdleState;
                     break;
-                case EPossibleState.ATTACK:
-                    possibleStates[EPossibleState.ATTACK] = new AttackState() as AttackState;
+                case EStates.ATTACK:
+                    possibleStates[EStates.ATTACK] = new AttackState() as AttackState;
                     break;
-                case EPossibleState.SECONDARY_ATTACK:
-                    possibleStates[EPossibleState.SECONDARY_ATTACK] = new SecondaryAttackState() as SecondaryAttackState;
+                case EStates.SECONDARY_ATTACK:
+                    possibleStates[EStates.SECONDARY_ATTACK] = new SecondaryAttackState() as SecondaryAttackState;
                     break;
-                case EPossibleState.LEFT:
-                    possibleStates[EPossibleState.LEFT] = new WalkLeftState() as WalkLeftState;
+                case EStates.LEFT:
+                    possibleStates[EStates.LEFT] = new WalkLeftState() as WalkLeftState;
                     break;
-                case EPossibleState.RIGHT:
-                    possibleStates[EPossibleState.RIGHT] = new WalkRightState() as WalkRightState;
+                case EStates.RIGHT:
+                    possibleStates[EStates.RIGHT] = new WalkRightState() as WalkRightState;
                     break;
-                case EPossibleState.RECOIL_LEFT:
-                    possibleStates[EPossibleState.RECOIL_LEFT] = new RecoilLeftState() as RecoilLeftState;
+                case EStates.RECOIL_LEFT:
+                    possibleStates[EStates.RECOIL_LEFT] = new RecoilLeftState() as RecoilLeftState;
                     break;
-                case EPossibleState.RECOIL_RIGHT:
-                    possibleStates[EPossibleState.RECOIL_RIGHT] = new RecoilRightState() as RecoilRightState;
+                case EStates.RECOIL_RIGHT:
+                    possibleStates[EStates.RECOIL_RIGHT] = new RecoilRightState() as RecoilRightState;
                     break;
-                case EPossibleState.JUMP:
-                    possibleStates[EPossibleState.JUMP] = new JumpState() as JumpState;
+                case EStates.JUMP:
+                    possibleStates[EStates.JUMP] = new JumpState() as JumpState;
                     break;
-                case EPossibleState.JUMP_ATTACK:
-                    possibleStates[EPossibleState.JUMP_ATTACK] = new JumpAttackState() as JumpAttackState;
+                case EStates.JUMP_ATTACK:
+                    possibleStates[EStates.JUMP_ATTACK] = new JumpAttackState() as JumpAttackState;
                     break;
-                case EPossibleState.JUMP_MOMENTUM:
-                    possibleStates[EPossibleState.JUMP_MOMENTUM] = new JumpMomentumState() as JumpMomentumState;
+                case EStates.JUMP_MOMENTUM:
+                    possibleStates[EStates.JUMP_MOMENTUM] = new JumpMomentumState() as JumpMomentumState;
                     break;
-                case EPossibleState.JUMP_MOMENTUM_ATTACK:
-                    possibleStates[EPossibleState.JUMP_MOMENTUM_ATTACK] = new JumpMomentumAttackState() as JumpMomentumAttackState;
+                case EStates.JUMP_MOMENTUM_ATTACK:
+                    possibleStates[EStates.JUMP_MOMENTUM_ATTACK] = new JumpMomentumAttackState() as JumpMomentumAttackState;
                     break;
-                case EPossibleState.JUMP_SECONDARY_ATTACK:
-                    possibleStates[EPossibleState.JUMP_SECONDARY_ATTACK] = new JumpSecondaryAttackState() as JumpSecondaryAttackState;
+                case EStates.JUMP_SECONDARY_ATTACK:
+                    possibleStates[EStates.JUMP_SECONDARY_ATTACK] = new JumpSecondaryAttackState() as JumpSecondaryAttackState;
                     break;
-                case EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK:
-                    possibleStates[EPossibleState.JUMP_MOMENTUM_SECONDARY_ATTACK] = new JumpMomentumSecondaryAttackState() as JumpMomentumSecondaryAttackState;
+                case EStates.JUMP_MOMENTUM_SECONDARY_ATTACK:
+                    possibleStates[EStates.JUMP_MOMENTUM_SECONDARY_ATTACK] = new JumpMomentumSecondaryAttackState() as JumpMomentumSecondaryAttackState;
                     break;
-                case EPossibleState.FALL_SECONDARY_ATTACK:
-                    possibleStates[EPossibleState.FALL_SECONDARY_ATTACK] = new FallSecondaryAttackState() as FallSecondaryAttackState;
+                case EStates.FALL_SECONDARY_ATTACK:
+                    possibleStates[EStates.FALL_SECONDARY_ATTACK] = new FallSecondaryAttackState() as FallSecondaryAttackState;
                     break;
-                case EPossibleState.FALL:
-                    possibleStates[EPossibleState.FALL] = new FallState() as FallState;
+                case EStates.FALL:
+                    possibleStates[EStates.FALL] = new FallState() as FallState;
                     break;
-                case EPossibleState.BACK_FLIP:
-                    possibleStates[EPossibleState.BACK_FLIP] = new BackFlipState() as BackFlipState;
+                case EStates.BACK_FLIP:
+                    possibleStates[EStates.BACK_FLIP] = new BackFlipState() as BackFlipState;
                     break;
-                case EPossibleState.FALL_ATTACK:
-                    possibleStates[EPossibleState.FALL_ATTACK] = new FallAttackState() as FallAttackState;
+                case EStates.FALL_ATTACK:
+                    possibleStates[EStates.FALL_ATTACK] = new FallAttackState() as FallAttackState;
                     break;
-                case EPossibleState.CROUCH:
-                    possibleStates[EPossibleState.CROUCH] = new CrouchState() as CrouchState;
+                case EStates.CROUCH:
+                    possibleStates[EStates.CROUCH] = new CrouchState() as CrouchState;
                     break;
-                case EPossibleState.CROUCH_ATTACK:
-                    possibleStates[EPossibleState.CROUCH_ATTACK] = new CrouchAttackState() as CrouchAttackState;
+                case EStates.CROUCH_ATTACK:
+                    possibleStates[EStates.CROUCH_ATTACK] = new CrouchAttackState() as CrouchAttackState;
                     break;
-                case EPossibleState.HURT:
-                    possibleStates[EPossibleState.HURT] = new HurtState() as HurtState;
+                case EStates.HURT:
+                    possibleStates[EStates.HURT] = new HurtState() as HurtState;
                     break;
-                case EPossibleState.STUN:
-                    possibleStates[EPossibleState.STUN] = new StunState() as StunState;
+                case EStates.STUN:
+                    possibleStates[EStates.STUN] = new StunState() as StunState;
                     break;
-                case EPossibleState.UPSTAIR_RIGHT:
-                    possibleStates[EPossibleState.UPSTAIR_RIGHT] = new GoUpstairRightState() as GoUpstairRightState;
+                case EStates.UPSTAIR_RIGHT:
+                    possibleStates[EStates.UPSTAIR_RIGHT] = new GoUpstairRightState() as GoUpstairRightState;
                     break;
-                case EPossibleState.UPSTAIR_LEFT:
-                    possibleStates[EPossibleState.UPSTAIR_LEFT] = new GoUpstairLeftState() as GoUpstairLeftState;
+                case EStates.UPSTAIR_LEFT:
+                    possibleStates[EStates.UPSTAIR_LEFT] = new GoUpstairLeftState() as GoUpstairLeftState;
                     break;
-                case EPossibleState.DOWNSTAIR_RIGHT:
-                    possibleStates[EPossibleState.DOWNSTAIR_RIGHT] = new GoDownstairRightState() as GoDownstairRightState;
+                case EStates.DOWNSTAIR_RIGHT:
+                    possibleStates[EStates.DOWNSTAIR_RIGHT] = new GoDownstairRightState() as GoDownstairRightState;
                     break;
-                case EPossibleState.DOWNSTAIR_LEFT:
-                    possibleStates[EPossibleState.DOWNSTAIR_LEFT] = new GoDownstairLeftState() as GoDownstairLeftState;
+                case EStates.DOWNSTAIR_LEFT:
+                    possibleStates[EStates.DOWNSTAIR_LEFT] = new GoDownstairLeftState() as GoDownstairLeftState;
                     break;
-                case EPossibleState.STAIR_ATTACK:
-                    possibleStates[EPossibleState.STAIR_ATTACK] = new StairAttackState() as StairAttackState;
+                case EStates.STAIR_ATTACK:
+                    possibleStates[EStates.STAIR_ATTACK] = new StairAttackState() as StairAttackState;
                     break;
-                case EPossibleState.STAIR_SECONDARY_ATTACK:
-                    possibleStates[EPossibleState.STAIR_SECONDARY_ATTACK] = new StairSecondaryAttackState as StairSecondaryAttackState;
+                case EStates.STAIR_SECONDARY_ATTACK:
+                    possibleStates[EStates.STAIR_SECONDARY_ATTACK] = new StairSecondaryAttackState as StairSecondaryAttackState;
                     break;
-                case EPossibleState.DEATH:
-                    possibleStates[EPossibleState.DEATH] = new DeathState() as DeathState;
+                case EStates.DEATH:
+                    possibleStates[EStates.DEATH] = new DeathState() as DeathState;
                     break;
-                case EPossibleState.FLY_LEFT:
-                    possibleStates[EPossibleState.FLY_LEFT] = new FlyLeftState() as FlyLeftState;
+                case EStates.FLY_LEFT:
+                    possibleStates[EStates.FLY_LEFT] = new FlyLeftState() as FlyLeftState;
                     break;
-                case EPossibleState.FLY_RIGHT:
-                    possibleStates[EPossibleState.FLY_RIGHT] = new FlyRightState() as FlyRightState;
+                case EStates.FLY_RIGHT:
+                    possibleStates[EStates.FLY_RIGHT] = new FlyRightState() as FlyRightState;
                     break;
-                case EPossibleState.FLY_IDLE:
-                    possibleStates[EPossibleState.FLY_IDLE] = new FlyIdleState() as FlyIdleState;
+                case EStates.FLY_IDLE:
+                    possibleStates[EStates.FLY_IDLE] = new FlyIdleState() as FlyIdleState;
                     break;
-                case EPossibleState.UP:
-                    possibleStates[EPossibleState.UP] = new MoveUpState() as MoveUpState;
+                case EStates.UP:
+                    possibleStates[EStates.UP] = new MoveUpState() as MoveUpState;
                     break;
-                case EPossibleState.DOWN:
-                    possibleStates[EPossibleState.DOWN] = new MoveDownState() as MoveDownState;
+                case EStates.DOWN:
+                    possibleStates[EStates.DOWN] = new MoveDownState() as MoveDownState;
                     break;
                 default:
                     break;

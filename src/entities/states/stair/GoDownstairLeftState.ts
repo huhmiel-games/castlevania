@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import { TILE_SIZE } from "../../../constant/config";
 import { TILES } from "../../../constant/tiles";
 import GameScene from "../../../scenes/GameScene";
@@ -28,14 +28,14 @@ export default class GoDownstairLeftState extends State
 
         this.stairTime = now;
 
-        if (this.stateMachine.prevState === EPossibleState.LEFT || this.stateMachine.prevState === EPossibleState.IDLE || this.stateMachine.prevState === EPossibleState.FALL)
+        if (this.stateMachine.prevState === EStates.LEFT || this.stateMachine.prevState === EStates.IDLE || this.stateMachine.prevState === EStates.FALL)
         {
             this.isMidStair = true;
 
             character.setFrame(this.updateFrameName(character));
         }
 
-        if (this.stateMachine.prevState === EPossibleState.UPSTAIR_RIGHT)
+        if (this.stateMachine.prevState === EStates.UPSTAIR_RIGHT)
         {
             character.setFrame(this.updateFrameName(character));
         }
@@ -57,39 +57,39 @@ export default class GoDownstairLeftState extends State
 
         if ((right.isDown || up.isDown) && left.isUp && this.isMidStair)
         {
-            this.stateMachine.transition(EPossibleState.UPSTAIR_RIGHT, this.stateMachine.state, this.isMidStair);
+            this.stateMachine.transition(EStates.UPSTAIR_RIGHT, this.stateMachine.state, this.isMidStair);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.ATTACK)
+        if (character.canUse(EStates.ATTACK)
             && a.isDown
             && up.isUp
             && a.getDuration(now) < 128 && !character.physicsProperties.isAttacking
         )
         {
-            this.stateMachine.transition(EPossibleState.STAIR_ATTACK, this.stateMachine.state, 'down');
+            this.stateMachine.transition(EStates.STAIR_ATTACK, this.stateMachine.state, 'down');
 
             return;
         }
 
-        if (character.canUse(EPossibleState.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !character.physicsProperties.isAttacking)
+        if (character.canUse(EStates.SECONDARY_ATTACK) && a.isDown && up.isDown && a.getDuration(now) < 128 && !character.physicsProperties.isAttacking)
         {
-            this.stateMachine.transition(EPossibleState.STAIR_SECONDARY_ATTACK, this.stateMachine.state, 'down');
+            this.stateMachine.transition(EStates.STAIR_SECONDARY_ATTACK, this.stateMachine.state, 'down');
 
             return;
         }
 
-        if (character.canUse(EPossibleState.JUMP) && down.isUp && b.isDown && b.getDuration(now) < 150)
+        if (character.canUse(EStates.JUMP) && down.isUp && b.isDown && b.getDuration(now) < 150)
         {
-            this.stateMachine.transition(EPossibleState.JUMP, this.stateMachine.state);
+            this.stateMachine.transition(EStates.JUMP, this.stateMachine.state);
 
             return;
         }
 
-        if (character.canUse(EPossibleState.FALL) && down.isDown && b.isDown && b.getDuration(now) < 150)
+        if (character.canUse(EStates.FALL) && down.isDown && b.isDown && b.getDuration(now) < 150)
         {
-            this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+            this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
 
             return;
         }
@@ -121,7 +121,7 @@ export default class GoDownstairLeftState extends State
 
             this.stairTime = now;
 
-            this.stateMachine.transition(EPossibleState.DOWNSTAIR_LEFT, this.stateMachine.state);
+            this.stateMachine.transition(EStates.DOWNSTAIR_LEFT, this.stateMachine.state);
 
             return;
         }
@@ -131,7 +131,7 @@ export default class GoDownstairLeftState extends State
         {
             this.isMidStair = true;
 
-            this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+            this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
             return;
         }

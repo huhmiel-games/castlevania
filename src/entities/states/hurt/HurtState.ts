@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../../constant/character";
+import { EStates } from "../../../constant/character";
 import GameScene from "../../../scenes/GameScene";
 import { log } from "../../../utils/log";
 import State from "../../../utils/State";
@@ -58,11 +58,11 @@ export default class HurtState extends State
 
             if (blocked.down)
             {
-                this.stateMachine.transition(EPossibleState.IDLE, this.stateMachine.state);
+                this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
             }
             else
             {
-                this.stateMachine.transition(EPossibleState.FALL, this.stateMachine.state);
+                this.stateMachine.transition(EStates.FALL, this.stateMachine.state);
             }
         }
     }

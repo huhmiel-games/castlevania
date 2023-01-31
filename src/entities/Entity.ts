@@ -1,4 +1,4 @@
-import { EPossibleState, possibleDirection } from "../constant/character";
+import { EStates, possibleDirection } from "../constant/character";
 import GameScene from "../scenes/GameScene";
 import
 {
@@ -78,7 +78,7 @@ export class Entity extends Phaser.GameObjects.Sprite
      * @param stateName 
      * @returns 
      */
-    public canUse(stateName: EPossibleState): boolean
+    public canUse(stateName: EStates): boolean
     {
         return this.canUseState.has(stateName);
     }

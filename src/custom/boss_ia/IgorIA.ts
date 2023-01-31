@@ -1,4 +1,4 @@
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
@@ -88,7 +88,7 @@ export class IgorIA implements IEnemyAI
             this.jumpTime = now + 1200;
         }
 
-        if (a.isUp && this.parent.stateMachine.state === EPossibleState.JUMP_MOMENTUM)
+        if (a.isUp && this.parent.stateMachine.state === EStates.JUMP_MOMENTUM)
         {
             up.setDown(now);
 

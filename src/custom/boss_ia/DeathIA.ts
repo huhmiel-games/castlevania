@@ -2,7 +2,7 @@ import { PLAYERS_NAMES } from "../../constant/config";
 import { Boss } from "../entities/Boss";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
-import { EPossibleState } from "../../constant/character";
+import { EStates } from "../../constant/character";
 
 
 export class DeathIA implements IEnemyAI
@@ -92,7 +92,7 @@ export class DeathIA implements IEnemyAI
         }
 
         // handle jump
-        if (stateMachine.state === EPossibleState.IDLE && b.isUp && this.scene.isBossBattle)
+        if (stateMachine.state === EStates.IDLE && b.isUp && this.scene.isBossBattle)
         {
             b.setDown(now);
 
@@ -108,7 +108,7 @@ export class DeathIA implements IEnemyAI
         // handle attack
         if (this.phase === 1
             && this.attackTime < now
-            && (stateMachine.state === EPossibleState.JUMP_MOMENTUM || stateMachine.state === EPossibleState.FALL)
+            && (stateMachine.state === EStates.JUMP_MOMENTUM || stateMachine.state === EStates.FALL)
         )
         {
             if (up.isUp)
