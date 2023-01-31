@@ -1,6 +1,6 @@
 import { ENEMY_NAMES } from "../../constant/character";
 import { PALETTE_DB32 } from "../../constant/colors";
-import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
+import { HEIGHT, HUD_EVENTS_NAMES, PLAYERS_NAMES, WIDTH } from "../../constant/config";
 import GameScene from "../../scenes/GameScene";
 import SaveLoadService from "../../services/SaveLoadService";
 import { RangedWeapon, TCharacterConfig, TEntityConfig } from "../../types/types";
@@ -26,7 +26,7 @@ export class Boss extends Enemy
 
         this.scene.physics.world.setBounds(cam.scrollX, cam.scrollY, WIDTH, HEIGHT);
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         player.body.setCollideWorldBounds();
 

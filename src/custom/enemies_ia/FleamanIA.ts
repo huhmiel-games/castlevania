@@ -1,5 +1,5 @@
 import { EPossibleState } from "../../constant/character";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -15,7 +15,7 @@ export class FleamanIA implements IEnemyAI
         this.parent = parent;
         this.scene = parent.scene;
 
-        if (this.parent.body.center.x > this.scene.getPlayerByName(PLAYER_A_NAME).body.center.x)
+        if (this.parent.body.center.x > this.scene.getPlayerByName(PLAYERS_NAMES.A).body.center.x)
         {
             this.parent.setFlipX(true);
         }
@@ -39,7 +39,7 @@ export class FleamanIA implements IEnemyAI
 
         if (!this.isChasing && cam.worldView.contains(center.x, center.y))
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             const distance = Math.abs(center.x - player.body.center.x);
 
@@ -63,7 +63,7 @@ export class FleamanIA implements IEnemyAI
             && cam.worldView.contains(center.x, center.y)
             && this.parent.stateMachine.state === EPossibleState.IDLE)
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             const chanceToAttack = Phaser.Math.RND.between(0, 100);
 

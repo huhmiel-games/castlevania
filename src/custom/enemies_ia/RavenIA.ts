@@ -1,4 +1,4 @@
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -17,7 +17,7 @@ export class RavenIA implements IEnemyAI
 
         this.parent.body.setAllowGravity(false);
 
-        if (this.parent.body.center.x < this.scene.getPlayerByName(PLAYER_A_NAME).body.center.x)
+        if (this.parent.body.center.x < this.scene.getPlayerByName(PLAYERS_NAMES.A).body.center.x)
         {
             this.parent.setFlipX(false);
         }
@@ -46,7 +46,7 @@ export class RavenIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         const distance = Phaser.Math.Distance.BetweenPoints(center, player.body.center);
 

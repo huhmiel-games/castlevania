@@ -1,6 +1,6 @@
 import { InputController } from "../../inputs/InputController";
 import enemyJSON from '../../data/enemy.json';
-import { ATLAS_NAMES, PLAYER_A_NAME } from "../../constant/config";
+import { ATLAS_NAMES, PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { FleamanIA } from "./FleamanIA";
@@ -57,7 +57,7 @@ export class EagleIA implements IEnemyAI
 
             this.parent.resetAllButtons();
 
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             const distance = Math.abs(player.body.center.x - this.parent.body.center.x);
 
@@ -122,7 +122,7 @@ export class EagleIA implements IEnemyAI
 
             this.isFlying = true;
 
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if (player.body.center.x < center.x)
             {

@@ -1,6 +1,6 @@
 import { BOSS_NAMES, ENEMY_NAMES, EPossibleState } from "../constant/character";
 import { PALETTE_DB32 } from "../constant/colors";
-import { TILE_SIZE, PLAYER_A_NAME, HEIGHT, ATLAS_NAMES } from "../constant/config";
+import { TILE_SIZE, PLAYERS_NAMES, HEIGHT, ATLAS_NAMES } from "../constant/config";
 import { DEPTH } from "../constant/depth";
 import { TILE_ITEMS } from "../constant/tiles";
 import { WEAPON_NAMES } from "../constant/weapons";
@@ -192,7 +192,7 @@ export class CustomeGame implements ICustomGame
                 }
                 else
                 {
-                    const player = this.scene.getPlayerByName(PLAYER_A_NAME) as Player;
+                    const player = this.scene.getPlayerByName(PLAYERS_NAMES.A) as Player;
 
                     if (player.multipleShots === 1)
                     {
@@ -555,7 +555,7 @@ export class CustomeGame implements ICustomGame
 
                 if (enemyJSONConfig.resurrect > 0 && !resurectEnemiesException.includes(enemyName))
                 {
-                    const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+                    const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
                     const distance = Phaser.Math.Distance.BetweenPoints(enemy, player);
 
@@ -673,7 +673,7 @@ export class CustomeGame implements ICustomGame
             delay: 4000,
             callback: () =>
             {
-                const childrenToExclude = [ENEMY_NAMES.DRACULA_2, 'back-moon', PLAYER_A_NAME, WEAPON_NAMES.DAGGER, WEAPON_NAMES.AXE, WEAPON_NAMES.HOLY_WATER, WEAPON_NAMES.CROSS];
+                const childrenToExclude = [ENEMY_NAMES.DRACULA_2, 'back-moon', PLAYERS_NAMES, WEAPON_NAMES.DAGGER, WEAPON_NAMES.AXE, WEAPON_NAMES.HOLY_WATER, WEAPON_NAMES.CROSS];
                 const world = this.scene.children.getAll().filter(elm => elm.name !== 'collideLayer'
                     && !elm.name.startsWith('ground')
                     && !childrenToExclude.includes(elm.name));
@@ -705,7 +705,7 @@ export class CustomeGame implements ICustomGame
     {
         this.enemiesDamageBody = this.scene.enemies.map(enemy => enemy.damageBody);
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         // enemies make damage to player
         this.enemiesVsPlayerCollider = this.scene.physics.add.overlap(player.damageBody, this.enemiesDamageBody, (_player, _enemy) =>
@@ -840,7 +840,7 @@ export class CustomeGame implements ICustomGame
             const enemyWeapon = _enemyWeapon as unknown as Weapon;
             enemyWeapon.setDisable();
 
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             player.status.setScore(player.status.score + 100);
 
@@ -924,7 +924,7 @@ export class CustomeGame implements ICustomGame
                 }
                 else
                 {
-                    const player = this.scene.getPlayerByName(PLAYER_A_NAME) as Player;
+                    const player = this.scene.getPlayerByName(PLAYERS_NAMES.A) as Player;
 
                     if (player.multipleShots === 1)
                     {
@@ -947,7 +947,7 @@ export class CustomeGame implements ICustomGame
 
     public addCustomEffects()
     {
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         if (player.status.stage === 11 && this.customEffects.get('rainEffect') === undefined)
         {

@@ -1,5 +1,5 @@
 import { EPossibleState } from "../../constant/character";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -33,7 +33,7 @@ export class CatIA implements IEnemyAI
 
         if (!this.isReady && !this.isAttacking && !cam.worldView.contains(center.x, center.y))
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if (center.x > player.body.center.x)
             {
@@ -47,7 +47,7 @@ export class CatIA implements IEnemyAI
 
         if (!this.isAttacking && cam.worldView.contains(center.x, center.y))
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             const distance = Math.abs(center.x - player.body.center.x)
 
@@ -61,7 +61,7 @@ export class CatIA implements IEnemyAI
 
         if (this.isAttacking && cam.worldView.contains(center.x, center.y) && this.parent.stateMachine.state === EPossibleState.IDLE)
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if (center.x > player.body.center.x)
             {
@@ -75,7 +75,7 @@ export class CatIA implements IEnemyAI
 
         if (this.isAttacking && this.parent.stateMachine.prevState === EPossibleState.FALL)
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             this.parent.resetAllButtons();
 

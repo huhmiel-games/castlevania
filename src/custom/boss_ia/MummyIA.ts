@@ -1,4 +1,4 @@
-import { ATLAS_NAMES, PLAYER_A_NAME } from "../../constant/config";
+import { ATLAS_NAMES, PLAYERS_NAMES } from "../../constant/config";
 import enemyJSON from '../../data/enemy.json';
 import { Boss } from "../entities/Boss";
 import { Enemy } from "../entities/Enemy";
@@ -27,7 +27,7 @@ export class MummyIA implements IEnemyAI
 
         this.parent.anims.play(this.parent.animList.IDLE!);
 
-        if (this.scene.getPlayerByName(PLAYER_A_NAME).body.center.x < this.parent.body.center.x)
+        if (this.scene.getPlayerByName(PLAYERS_NAMES.A).body.center.x < this.parent.body.center.x)
         {
             this.parent.setFlipX(true);
         }
@@ -43,7 +43,7 @@ export class MummyIA implements IEnemyAI
 
         const { left, right } = buttons;
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         if (player.body.left > 273 * 16 && !this.scene.isBossBattle)
         {

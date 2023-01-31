@@ -1,4 +1,4 @@
-import { HUD_EVENTS_NAMES, PLAYER_A_NAME } from "../constant/config";
+import { HUD_EVENTS_NAMES, PLAYERS_NAMES } from "../constant/config";
 import GameScene from "../scenes/GameScene";
 import { TCoord, TStatus } from "../types/types";
 import { Entity } from "./Entity";
@@ -55,7 +55,7 @@ export class Status
     {
         this.health = health;
 
-        if (this.entity.name === PLAYER_A_NAME)
+        if (this.entity.name === PLAYERS_NAMES.A)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.health);
         }
@@ -67,7 +67,7 @@ export class Status
     {
         this.life = life;
 
-        if (this.entity.name === PLAYER_A_NAME)
+        if (this.entity.name === PLAYERS_NAMES.A)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.LIFE, this.life);
         }
@@ -79,7 +79,7 @@ export class Status
     {
         this.ammo = value;
 
-        if (this.entity.name === PLAYER_A_NAME)
+        if (this.entity.name === PLAYERS_NAMES.A)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.HEART, this.ammo);
         }
@@ -91,7 +91,7 @@ export class Status
     {
         this.score = score;
 
-        if (this.entity.name === PLAYER_A_NAME)
+        if (this.entity.name === PLAYERS_NAMES.A)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.SCORE, this.score);
         }

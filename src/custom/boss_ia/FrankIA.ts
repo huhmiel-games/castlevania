@@ -1,4 +1,4 @@
-import { PLAYER_A_NAME } from "../../constant/config";
+import { PLAYERS_NAMES } from "../../constant/config";
 import { Boss } from "../entities/Boss";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -34,7 +34,7 @@ export class FrankIA implements IEnemyAI
 
         const { left, right } = buttons;
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         if (player.body.left > 519 * 16 && !this.scene.isBossBattle)
         {

@@ -1,4 +1,4 @@
-import { PLAYER_A_NAME } from "../../constant/config";
+import { PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import enemyJSON from '../../data/enemy.json';

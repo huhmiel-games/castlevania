@@ -1,4 +1,4 @@
-import { STAGE_COUNTDOWN_DEFAULT, COUNTDOWN_EVENT, HUD_EVENTS_NAMES, PLAYER_A_NAME } from "../constant/config";
+import { STAGE_COUNTDOWN_DEFAULT, COUNTDOWN_EVENT, HUD_EVENTS_NAMES, PLAYERS_NAMES } from "../constant/config";
 import GameScene from "../scenes/GameScene"
 import SaveLoadService from "../services/SaveLoadService";
 
@@ -80,7 +80,7 @@ export class StageCountDown
 
         if(this.countDown === 0)
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             player.setDamage(16);
         }

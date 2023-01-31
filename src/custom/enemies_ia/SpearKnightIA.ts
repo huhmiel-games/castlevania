@@ -1,5 +1,5 @@
 import { EPossibleState } from "../../constant/character";
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -86,9 +86,9 @@ export class SpearKnightIA implements IEnemyAI
             this.randomTurnBackTime = now + Phaser.Math.RND.between(1000, 3000);
         }
 
-        if(this.scene.getPlayerByName(PLAYER_A_NAME).stateMachine.prevState.startsWith('fall'))
+        if(this.scene.getPlayerByName(PLAYERS_NAMES.A).stateMachine.prevState.startsWith('fall'))
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if(body.bottom === player.body.bottom)
             {
@@ -109,7 +109,7 @@ export class SpearKnightIA implements IEnemyAI
 
         if (left.isUp && right.isUp)
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if (this.parent.canUse(EPossibleState.LEFT) && player.damageBody.x < body.x)
             {

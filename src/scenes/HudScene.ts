@@ -1,4 +1,4 @@
-import { WIDTH, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYER_A_NAME, COUNTDOWN_EVENT, ATLAS_NAMES } from '../constant/config';
+import { WIDTH, FONTS, SCENES_NAMES, TILED_WORLD_OFFSET_Y, HUD_EVENTS_NAMES, PLAYERS_NAMES, COUNTDOWN_EVENT, ATLAS_NAMES } from '../constant/config';
 import GameScene from './GameScene';
 import { TStatus } from '../types/types';
 import { PALETTE_DB32 } from '../constant/colors';
@@ -98,7 +98,7 @@ export default class HudScene extends Phaser.Scene
 
     private getPlayerStatus(): TStatus
     {
-        const { status } = this.gameScene.getPlayerByName(PLAYER_A_NAME);
+        const { status } = this.gameScene.getPlayerByName(PLAYERS_NAMES.A);
 
         this.playerStatus = status;
 

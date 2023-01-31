@@ -1,4 +1,4 @@
-import { PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI, TCoord } from "../../types/types";
@@ -46,7 +46,7 @@ export class SkeletonIA implements IEnemyAI
 
         const currentRadius = Math.abs(this.originPosition.x - center.x);
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         this.distanceToPlayer = Phaser.Math.Distance.BetweenPoints(player.body.center, center);
 

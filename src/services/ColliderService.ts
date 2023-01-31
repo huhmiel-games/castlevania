@@ -1,5 +1,5 @@
 import { ENEMY_NAMES, EPossibleState } from '../constant/character';
-import { PLAYER_A_NAME } from '../constant/config';
+import { PLAYERS_NAMES } from '../constant/config';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
 import { MeleeWeapon } from '../entities/weapons/MeleeWeapon';
@@ -106,7 +106,7 @@ export default class ColliderService
                 {
                     tile.properties.saveBlock = false;
 
-                    const player = scene.getPlayerByName(PLAYER_A_NAME);
+                    const player = scene.getPlayerByName(PLAYERS_NAMES.A);
 
                     if (!player.physicsProperties.isDead && player.status.health > 0 && (player.status.life ?? 1) > 0)
                     {
@@ -127,7 +127,7 @@ export default class ColliderService
                 {
                     const tileStage = scene.getTileStage(tile);
 
-                    const player = scene.getPlayerByName(PLAYER_A_NAME);
+                    const player = scene.getPlayerByName(PLAYERS_NAMES.A);
 
                     if (tileStage && tileStage === player.status.stage)
                     {

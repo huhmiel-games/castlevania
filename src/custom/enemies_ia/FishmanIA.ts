@@ -1,5 +1,5 @@
 import { EPossibleState } from "../../constant/character";
-import { PLAYER_A_NAME } from "../../constant/config";
+import { PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -84,7 +84,7 @@ export class FishmanIA implements IEnemyAI
 
             b.setUp(now);
 
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if (center.x > player.body.center.x)
             {
@@ -153,7 +153,7 @@ export class FishmanIA implements IEnemyAI
         {
             this.randomAttackTime = 0;
 
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if (center.x > player.body.center.x)
             {
@@ -186,7 +186,7 @@ export class FishmanIA implements IEnemyAI
 
         let rndX = Phaser.Math.RND.integerInRange(canView.left + 16, canView.right - 16);
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         while (Math.abs(player.body.center.x - rndX) < 24
             || !(this.scene.colliderLayer.getTileAtWorldXY(rndX, this.parent.body.y + 8)?.properties?.waterBlock)

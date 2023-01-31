@@ -1,4 +1,4 @@
-import { PLAYER_A_NAME } from "../../constant/config";
+import { PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -36,7 +36,7 @@ export class GiantBatBridgeIA implements IEnemyAI
 
         this.parent.anims.play(this.parent.animList.FLY!, true);
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         const distance = Phaser.Math.Distance.BetweenPoints(player.damageBody.body.center, damageBody.body.center);
 

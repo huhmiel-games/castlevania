@@ -5,7 +5,7 @@ import
     ATLAS_NAMES,
     BTN_EVENTS,
     COUNTDOWN_EVENT, FONTS, FONTS_SIZES,
-    HEIGHT, HUD_EVENTS_NAMES, isDev, PLAYER_A_NAME,
+    HEIGHT, HUD_EVENTS_NAMES, isDev, PLAYERS_NAMES,
     SCENES_NAMES, STAGE_BACKTRACK, STAGE_COUNTDOWN,
     STAGE_START_POSITION, TILED_WORLD_OFFSET_Y, TILE_SIZE, WIDTH
 } from '../constant/config';
@@ -389,7 +389,7 @@ export default class GameScene extends Phaser.Scene
     {
         const stages = LayerService.getObjectLayerByName(this, 'stage');
 
-        const player = this.getPlayerByName(PLAYER_A_NAME);
+        const player = this.getPlayerByName(PLAYERS_NAMES.A);
 
         if (!stages) throw new Error(`no layer named stage found`);
 
@@ -479,7 +479,7 @@ export default class GameScene extends Phaser.Scene
 
     private changeMajorStage(stage: number)
     {
-        const player = this.getPlayerByName(PLAYER_A_NAME);
+        const player = this.getPlayerByName(PLAYERS_NAMES.A);
 
         player.status.stage = stage;
 
@@ -496,7 +496,7 @@ export default class GameScene extends Phaser.Scene
         }
 
         warn('changing stage'.toUpperCase());
-        const player = this.getPlayerByName(PLAYER_A_NAME);
+        const player = this.getPlayerByName(PLAYERS_NAMES.A);
 
         if (!player) throw new Error("No player found");
 
@@ -538,7 +538,7 @@ export default class GameScene extends Phaser.Scene
 
         this.stageCountdown.stop();
 
-        const player = this.getPlayerByName(PLAYER_A_NAME);
+        const player = this.getPlayerByName(PLAYERS_NAMES.A);
 
         this.playSong(10, false);
 
@@ -607,7 +607,7 @@ export default class GameScene extends Phaser.Scene
 
         this.stageCountdown.stop();
 
-        const player = this.getPlayerByName(PLAYER_A_NAME);
+        const player = this.getPlayerByName(PLAYERS_NAMES.A);
 
         this.playSong(11, false);
         this.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
@@ -669,7 +669,7 @@ export default class GameScene extends Phaser.Scene
             delay: 1000,
             callback: () =>
             {
-                this.getPlayerByName(PLAYER_A_NAME).setActive(false).setVisible(false);
+                this.getPlayerByName(PLAYERS_NAMES.A).setActive(false).setVisible(false);
 
                 LayerService.getGroundLayers(this).forEach(layer => layer.setAlpha(0));
 
@@ -727,7 +727,7 @@ export default class GameScene extends Phaser.Scene
 
                     if (title === 'your score')
                     {
-                        const content = `score: ${this.getPlayerByName(PLAYER_A_NAME).status.score}\ndeath: ${SaveLoadService.getPlayerDeathCount()}\nenemies killed: ${SaveLoadService.getEnemiesDeathCount()}\ntime: ${SaveLoadService.getSavedGameTimeToString()}`;
+                        const content = `score: ${this.getPlayerByName(PLAYERS_NAMES.A).status.score}\ndeath: ${SaveLoadService.getPlayerDeathCount()}\nenemies killed: ${SaveLoadService.getEnemiesDeathCount()}\ntime: ${SaveLoadService.getSavedGameTimeToString()}`;
 
                         crediText.setText(`${title}\n${content}`).setLeftAlign();
 
@@ -747,7 +747,7 @@ export default class GameScene extends Phaser.Scene
     {
         this.isChangingStage = true;
 
-        const player = this.getPlayerByName(PLAYER_A_NAME);
+        const player = this.getPlayerByName(PLAYERS_NAMES.A);
 
         player.status.setHealth(16).setAmmo(5);
 
@@ -829,7 +829,7 @@ export default class GameScene extends Phaser.Scene
 
     public cameraFollowPlayer(): Phaser.Cameras.Scene2D.Camera
     {
-        this.cameras.main.startFollow(this.getPlayerByName(PLAYER_A_NAME), true, 0.2, 0.1, 0, 0)
+        this.cameras.main.startFollow(this.getPlayerByName(PLAYERS_NAMES.A), true, 0.2, 0.1, 0, 0)
             .setDeadzone(4, 32)
             .setRoundPixels(true)
             .setBackgroundColor(PALETTE_DB32.BLACK);

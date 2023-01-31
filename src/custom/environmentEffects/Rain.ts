@@ -1,4 +1,4 @@
-import { ATLAS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
+import { ATLAS_NAMES, PLAYERS_NAMES, WIDTH } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import GameScene from "../../scenes/GameScene";
 import { ICustomEffect } from "../../types/types";
@@ -88,7 +88,7 @@ export class RainEffect implements ICustomEffect
 
         this.rainEmitter.setPosition(worldView.left, worldView.top);
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         if (player.status.stage === 11 && player.body.center.x > 38 * 16 && this.thunder?.active)
         {

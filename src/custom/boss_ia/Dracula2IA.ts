@@ -1,4 +1,4 @@
-import { HEIGHT, HUD_EVENTS_NAMES, PLAYER_A_NAME, WIDTH } from "../../constant/config";
+import { HEIGHT, HUD_EVENTS_NAMES, PLAYERS_NAMES, WIDTH } from "../../constant/config";
 import { Boss } from "../entities/Boss";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI, RangedWeapon } from "../../types/types";
@@ -55,7 +55,7 @@ export class Dracula2IA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         // handle flipX
         if (blocked.down && this.parent.damageBody.body.right < player.body.left)

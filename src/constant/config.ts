@@ -1,12 +1,14 @@
 // GENERAL
 export const isDev = false; // true for state logs, body debugs, l to save everywhere, y to delete gamedata
-export const GAMENAME = 'Castlevania';
-export const WIDTH = 256;
-export const HEIGHT = 208;
+export const GAMENAME: string = 'Castlevania';
+export const WIDTH: number = 256;
+export const HEIGHT: number = 208;
 export const MOBILE_OS = ['android', 'cordova', 'iOS', 'iPad', 'iPhone', 'kindle', 'windowsPhone'];
-export const GAMEPAD_AXIS_THRESHOLD = 0.6;
+export const GAMEPAD_AXIS_THRESHOLD: number = 0.6;
+export const VIRTUAL_GAMEPAD_TYPE: 'dom' | 'canvas' = 'dom';
 export const BUTTONS_NAMES = ['left', 'right', 'up', 'down', 'a', 'b', 'start'];
-export enum BTN_EVENTS {
+export enum BTN_EVENTS
+{
     A_DOWN = 'a_DownEvent',
     B_DOWN = 'b_DownEvent',
     START_DOWN = 'start_DownEvent',
@@ -24,16 +26,23 @@ export enum BTN_EVENTS {
 }
 
 // MAP
-export const TILE_SIZE = 16;
-export const MOVING_PLATFORM_SPEED = 32;
-export const TILED_WORLD_OFFSET_Y = 32;
+export const TILE_SIZE: number = 16;
+export const MOVING_PLATFORM_SPEED: number = 32;
+export const TILED_WORLD_OFFSET_Y: number = 32;
 export const STAGE_BACKTRACK = [13, 62];
 
 // Players names
-export const PLAYER_A_NAME = 'playerA';
-export const PLAYER_B_NAME = 'playerB';
-export const PLAYER_C_NAME = 'playerC';
-export const PLAYER_D_NAME = 'playerD';
+export enum PLAYERS_NAMES
+{
+    A = 'playerA',
+    B = 'playerB',
+    C = 'playerC',
+    D = 'playerD'
+}
+// //export const PLAYER_A_NAME = 'playerA';
+// export const PLAYER_B_NAME = 'playerB';
+// export const PLAYER_C_NAME = 'playerC';
+// export const PLAYER_D_NAME = 'playerD';
 
 // Lights
 export const LIGHT_RADIUS = 24;
@@ -93,7 +102,7 @@ export const enum ATLAS_NAMES
 }
 
 export const STAGE_START_POSITION = {
-    '11': { x:   2 * TILE_SIZE, y: 69 * TILE_SIZE },
+    '11': { x: 2 * TILE_SIZE, y: 69 * TILE_SIZE },
     '21': { x: 225 * TILE_SIZE, y: 65 * TILE_SIZE },
     '31': { x: 110 * TILE_SIZE, y: 30 * TILE_SIZE },
     '41': { x: 277 * TILE_SIZE, y: 74 * TILE_SIZE },

@@ -1,5 +1,5 @@
 import { IEnemyAI, TCharacterConfig, TEntityConfig } from "../../types/types";
-import { ATLAS_NAMES, PLAYER_A_NAME, TILE_SIZE } from "../../constant/config";
+import { ATLAS_NAMES, PLAYERS_NAMES, TILE_SIZE } from "../../constant/config";
 import StateTimestamp from "../../utils/StateTimestamp";
 import { PALETTE_DB32 } from "../../constant/colors";
 import { DEPTH } from "../../constant/depth";
@@ -312,7 +312,7 @@ export class Enemy extends Entity
                     }
                     else
                     {
-                        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+                        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
                         this.body.reset(this.config.status.position.x, player.body.bottom - TILE_SIZE);
                     }

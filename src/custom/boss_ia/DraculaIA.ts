@@ -1,4 +1,4 @@
-import { ATLAS_NAMES, HEIGHT, PLAYER_A_NAME, WIDTH } from "../../constant/config";
+import { ATLAS_NAMES, HEIGHT, PLAYERS_NAMES, WIDTH } from "../../constant/config";
 import { Boss } from "../entities/Boss";
 import GameScene from "../../scenes/GameScene";
 import { IEnemyAI } from "../../types/types";
@@ -54,7 +54,7 @@ export class DraculaIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
         // starts the battle
         if (player.body.center.x < 295 * 16 && !this.scene.isBossBattle)

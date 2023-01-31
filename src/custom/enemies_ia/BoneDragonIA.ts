@@ -1,4 +1,4 @@
-import { ATLAS_NAMES, PLAYER_A_NAME } from "../../constant/config";
+import { ATLAS_NAMES, PLAYERS_NAMES } from "../../constant/config";
 import { Enemy } from "../entities/Enemy";
 import GameScene from "../../scenes/GameScene";
 import enemyJSON from '../../data/enemy.json';
@@ -183,7 +183,7 @@ export class BoneDragonIA implements IEnemyAI
             && cam.worldView.contains(center.x, center.y)
             && now > this.timeAttack)
         {
-            const player = this.scene.getPlayerByName(PLAYER_A_NAME);
+            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
 
             if (Phaser.Math.Distance.BetweenPoints(center, player.damageBody.body.center) < 80 && player.body.center.x < center.x)
             {

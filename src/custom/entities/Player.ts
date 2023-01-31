@@ -1,5 +1,5 @@
 import { EPossibleState, PLAYER_ATTACK_FRAMES } from "../../constant/character";
-import { ATLAS_NAMES, HUD_EVENTS_NAMES, PLAYER_A_NAME, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../../constant/config";
+import { ATLAS_NAMES, HUD_EVENTS_NAMES, PLAYERS_NAMES, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import { Entity } from "../../entities/Entity";
 import AttackState from "../../entities/states/attack/AttackState";
@@ -56,7 +56,7 @@ export default class Player extends Entity
 
         this.secondaryWeaponGroup = this.scene.playersSecondaryWeaponGroup;
 
-        this.setName(PLAYER_A_NAME)
+        this.setName(PLAYERS_NAMES.A)
             .setDepth(DEPTH.PLAYER)
             .setPhysicsProperties({
                 gravity: 800,
@@ -638,7 +638,7 @@ export default class Player extends Entity
 
         this.status.setHealth(0);
 
-        if (this.name === PLAYER_A_NAME)
+        if (this.name === PLAYERS_NAMES.A)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, 0);
         }
