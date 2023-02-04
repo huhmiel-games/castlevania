@@ -1,10 +1,10 @@
 
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>HelloCordova</name>
-    <description>Sample Apache Cordova App</description>
-    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
-        Apache Cordova Team
+<widget id="io.huhmiel-games.castlevania" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Castlevania</name>
+    <description>Fangame/remake of the first Castlevania</description>
+    <author email="https://discord.gg/cBWqU6zu" href="https://blunt76.itch.io/">
+        huhmiel-games
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
