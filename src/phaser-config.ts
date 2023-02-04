@@ -5,6 +5,7 @@ import GameScene from "./scenes/GameScene";
 import HudScene from "./scenes/HudScene";
 import LoadScene from "./scenes/LoadScene";
 import MenuScene from "./scenes/MenuScene";
+import MobileOptionsScene from "./scenes/MobileOptionsScene";
 import OptionsScene from "./scenes/OptionsScene";
 // import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 // import PhaserSceneWatcherPlugin from './plugins/phaser-plugin-scene-watcher.esm.js';
@@ -56,5 +57,5 @@ export const config: Phaser.Types.Core.GameConfig = {
             debugShowStaticBody: true,
         },
     },
-    scene: [BootScene, LoadScene, MenuScene, OptionsScene, GameScene, HudScene, GameOverScene],
+    scene: [BootScene, LoadScene, MenuScene, OptionsScene, MobileOptionsScene, GameScene, HudScene, GameOverScene],
 };
