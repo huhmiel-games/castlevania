@@ -417,7 +417,7 @@ export default class Player extends Entity
                     repeat: 4,
                     callback: () =>
                     {
-                        cam.flash(50);
+                        cam.flash(50, 203, 219, 252);
                     }
                 });
 
