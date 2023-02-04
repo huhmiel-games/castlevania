@@ -33,17 +33,17 @@ export default class BootScene extends Phaser.Scene
     {
         this.load.plugin('rexVirtualJoystickPlugin', VirtualJoystickPlugin, true);
 
-        this.load.bitmapFont('galaxy', '../assets/fonts/galaxy8.png', '../assets/fonts/galaxy8.xml');
+        this.load.bitmapFont('galaxy', './assets/fonts/galaxy8.png', './assets/fonts/galaxy8.xml');
 
-        this.load.image('background', 'assets/graphics/backgrounds/background.png');
-        this.load.image('progressBar', '/assets/graphics/progress-bar.png');
-        this.load.image('whitePixel', '/assets/graphics/whitePixel.png');
-        this.load.image('a-back', '/assets/graphics/gamepad/a-back.png');
-        this.load.image('b-back', '/assets/graphics/gamepad/b-back.png');
-        this.load.image('x-back', '/assets/graphics/gamepad/x-back.png');
-        this.load.image('y-back', '/assets/graphics/gamepad/y-back.png');
+        this.load.image('background', './assets/graphics/backgrounds/background.png');
+        this.load.image('progressBar', './assets/graphics/progress-bar.png');
+        this.load.image('whitePixel', './assets/graphics/whitePixel.png');
+        this.load.image('a-back', './assets/graphics/gamepad/a-back.png');
+        this.load.image('b-back', './assets/graphics/gamepad/b-back.png');
+        this.load.image('x-back', './assets/graphics/gamepad/x-back.png');
+        this.load.image('y-back', './assets/graphics/gamepad/y-back.png');
 
-        this.load.spritesheet('abxy', '/assets/graphics/gamepad/abxy.png', { frameWidth: 16, frameHeight: 16 })
+        this.load.spritesheet('abxy', './assets/graphics/gamepad/abxy.png', { frameWidth: 16, frameHeight: 16 })
 
         this.cameras.main.setRoundPixels(true);
 
