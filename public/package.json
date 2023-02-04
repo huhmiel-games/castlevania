@@ -1,13 +1,13 @@
 {
-    "name": "template-phaser3-ts-esbuild",
-    "version": "1.0.2",
+    "name": "castlevania",
+    "version": "1.0.0-alpha",
     "main": "index.html",
     "window": {
-        "title": "template-phaser3-ts-esbuild",
+        "title": "Castlevania",
         "toolbar": false,
         "frame": true,
-        "width": 512,
-        "height": 288,
+        "width": 256,
+        "height": 208,
         "position": "center",
         "icon": "./favicon.png"
     }
