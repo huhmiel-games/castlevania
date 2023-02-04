@@ -40,15 +40,11 @@ export default class WorldRooms
     {
         const tiledWorldWithDoorsJson = JSON.stringify(tiledWorldWithDoors);
 
-        // const world: TWorld = scene.cache.json.get('world');
         const savedWorld = SaveLoadService.getWorld();
-
-        // const worldJson = JSON.stringify(savedWorld);
 
         if (tiledWorldWithDoorsJson !== JSON.stringify(savedWorld))
         {
             SaveLoadService.saveWorld(tiledWorldWithDoors);
-            // this.createBlob(tiledWorldWithDoorsJson);
         }
     }
 
@@ -59,13 +55,4 @@ export default class WorldRooms
             map.doors.push({ x: map.x + tile.pixelX, y: map.y + tile.pixelY });
         }
     }
-
-    // open a new tab with the new world.json
-    static createBlob(str: string)
-    {
-        const blob = new Blob([str], { type: 'text/html' });
-        window.open(URL.createObjectURL(blob));
-    }
-
-
 }
