@@ -161,9 +161,6 @@ function addButtonAB(scene: BootScene, playerButtons: TButtons): VirtualDomButto
 
 function addButtonStart(scene: BootScene, playerButtons: TButtons): VirtualDomButton
 {
-    console.dir(document.getElementById('btn-ab'))
-    console.log(window.innerHeight * window.devicePixelRatio - document.getElementById('btn-ab')?.clientHeight! / 2);
-    
     return new VirtualDomButton({
         id: "btn-start",
         parent: "#app-touchArea-top-right",
