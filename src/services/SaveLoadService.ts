@@ -1,5 +1,5 @@
 import { STAGE_COUNTDOWN_DEFAULT, GAMENAME, HEIGHT, WIDTH } from "../constant/config";
-import { TJoystickPosition, TKeyMapping, TStatus, TVirtualKeyMapping, TWorld } from "../types/types";
+import { TJoystickPosition, TKeyMapping, TMobileConfig, TStatus, TVirtualKeyMapping, TWorld } from "../types/types";
 import GameScene from '../scenes/GameScene';
 
 /**
@@ -419,7 +419,7 @@ export default class SaveLoadService
     }
     // #endregion
 
-    // #region VIRTUAL GAMEPAD
+    // #region VIRTUAL CANVAS GAMEPAD
     /**
      * Get virtual gamepad mapping from localStorage.
      * If not present, return the default virtual gamepad mapping
@@ -513,6 +513,46 @@ export default class SaveLoadService
 
             return { joystickX: WIDTH / 8, joystickY: HEIGHT / 8 * 6 } as TJoystickPosition;
         }
+    }
+    // #endregion
+
+    // #region VIRTUAL DOM GAMEPAD
+    static getMobileConfig(): TMobileConfig
+    {
+        const mobileConfig = localStorage.getItem(`${GAMENAME}_MOBILE_CONFIG`);
+
+        if(!mobileConfig)
+        {
+            return this.setDefaultMobileConfig();
+        }
+
+        return JSON.parse(mobileConfig);
+    }
+
+    static setDefaultMobileConfig(): TMobileConfig
+    {
+        const mobileConfig: TMobileConfig ={
+            joystickStatic: true,
+            joystickSize: 64,
+            joystickPosition: { top: "50%", left: "15%" },
+            vibration: true
+        };
+
+        if (!localStorage.getItem(`${GAMENAME}_MOBILE_CONFIG`))
+        {
+            const mobileConfigJSON = JSON.stringify(mobileConfig);
+
+            localStorage.setItem(`${GAMENAME}_MOBILE_CONFIG`, mobileConfigJSON);
+        }
+
+        return mobileConfig;
+    }
+
+    static setMobileConfig(config: TMobileConfig)
+    {
+        const mobileConfigJSON = JSON.stringify(config);
+
+        localStorage.setItem(`${GAMENAME}_MOBILE_CONFIG`, mobileConfigJSON);
     }
     // #endregion
 }
