@@ -1,6 +1,7 @@
 import { ATLAS_NAMES, PLAYERS_NAMES, WIDTH } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import GameScene from "../../scenes/GameScene";
+import MobileService from "../../services/MobileService";
 import { ICustomEffect } from "../../types/types";
 import { Thunder } from "./Thunder";
 
@@ -93,6 +94,8 @@ export class RainEffect implements ICustomEffect
         if (player.status.stage === 11 && player.body.center.x > 38 * 16 && this.thunder?.active)
         {
             this.thunder?.showThunder();
+
+            MobileService.vibrateOut(100, 10, 5)
         }
     }
 
