@@ -78,6 +78,7 @@ export const enum SCENES_NAMES
     GAME = 'gameScene',
     GAMEOVER = 'gameOverScene',
     OPTIONS = 'optionsScene',
+    MOBILE_OPTIONS = 'mobileOptionsScene',
     HUD = 'hudScene'
 }
 
