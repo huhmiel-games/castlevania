@@ -4,6 +4,7 @@ import { WIDTH, FONTS, FONTS_SIZES, SCENES_NAMES, BUTTONS_NAMES, HEIGHT, ATLAS_N
 import { InputController } from '../inputs/InputController';
 import SaveLoadService from '../services/SaveLoadService';
 import { TKeyMapping } from '../types/types';
+import { isMobileOs } from '../utils/isMobileOs';
 
 /**
  * @author © Philippe Pereira 2023
@@ -56,6 +57,10 @@ export default class OptionsScene extends Scene
 
     public create()
     {
+        if(isMobileOs(this))
+        {
+            this.scene.start(SCENES_NAMES.MOBILE_OPTIONS)
+        }
         this.inputController.isActive = false;
         this.input.enabled = true;
         this.input.keyboard!.enabled = true;

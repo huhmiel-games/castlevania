@@ -61,11 +61,6 @@ export default class MenuScene extends Phaser.Scene
             .setLetterSpacing(2)
             .setAlpha(0);
 
-        if(isMobileOs(this))
-        {
-            optionButton.setTintFill(PALETTE_DB32.WELL_READ);
-        }
-
         const resetButton = this.add.bitmapText(WIDTH / 2, HEIGHT / 5 * 4, FONTS.GALAXY, 'erase data', FONTS_SIZES.GALAXY, 1)
             .setOrigin(0.5, 0.5)
             .setName('resetButton')
@@ -139,7 +134,7 @@ export default class MenuScene extends Phaser.Scene
 
     private upPress()
     {
-        if (!this.isDeleteData )
+        if (!this.isDeleteData)
         {
             this.choice = Phaser.Math.Wrap(this.choice - 1, 0, 3);
 
@@ -166,7 +161,7 @@ export default class MenuScene extends Phaser.Scene
         {
             this.actions[this.choice]();
         }
-        
+
         if (this.isDeleteData)
         {
             this.cancelDeleteGameData();
@@ -179,7 +174,7 @@ export default class MenuScene extends Phaser.Scene
         {
             this.actions[this.choice]();
         }
-        
+
         if (this.isDeleteData)
         {
             this.cancelDeleteGameData();
@@ -201,26 +196,24 @@ export default class MenuScene extends Phaser.Scene
 
     startGameScene()
     {
-        this.scene.start(SCENES_NAMES.GAME)
+        this.scene.start(SCENES_NAMES.GAME);
     }
 
     startOptionScene()
     {
-        if(!isMobileOs(this))
-        {
-            this.scene.start(SCENES_NAMES.OPTIONS)
-        }
+        this.scene.start(SCENES_NAMES.OPTIONS);
     }
 
     resetGameData()
     {
         this.time.addEvent({
             delay: 250,
-            callback: () => {
+            callback: () =>
+            {
                 this.isDeleteData = true;
 
                 const resetButton = this.children.getByName('resetButton') as Phaser.GameObjects.BitmapText;
-        
+
                 resetButton.setText('a to confirm');
             }
         })

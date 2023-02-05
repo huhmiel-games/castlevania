@@ -1,8 +1,9 @@
 import { SCENES_NAMES } from "../constant/config";
 import BootScene from "../scenes/BootScene";
-import { type TButtons } from "../types/types";
+import { type TMobileConfig, type TButtons } from "../types/types";
 import { isMobileOs } from "../utils/isMobileOs";
 import { DIRECTIONS_4, DIRECTIONS_8, VirtualDomButton, VirtualDomJoystick } from "../inputs/virtualDomGamepad/VirtualDomGamepad";
+import SaveLoadService from "../services/SaveLoadService";
 
 /**
  * Check if mobile, and add a virtual dom gamepad
@@ -26,7 +27,7 @@ function checkIsMobile(this: Phaser.Game)
 }
 
 function waitInputController(this: BootScene)
-{    
+{
     if (this.inputController !== undefined && this.inputController.playerAButtons !== undefined)
     {
         this.events.off(Phaser.Scenes.Events.UPDATE, waitInputController);
@@ -44,26 +45,28 @@ function addVirtualGamepad(scene: BootScene)
 {
     const playerButtons = scene.inputController.playerAButtons;
 
-    addJoystick(scene, playerButtons).init();
+    const mobileConfig = SaveLoadService.getMobileConfig();
 
-    addButtonAB(scene, playerButtons).init();
+    addJoystick(scene, playerButtons, mobileConfig).init();
 
-    addButtonStart(scene, playerButtons).init();
+    addButtonAB(scene, playerButtons, mobileConfig).init();
+
+    addButtonStart(scene, playerButtons, mobileConfig).init();
 
     addAbButtonBackground();
 
     addStartButtonBackground();
 }
 
-function addJoystick(scene: BootScene, playerButtons: TButtons): VirtualDomJoystick
+function addJoystick(scene: BootScene, playerButtons: TButtons, mobileConfig: TMobileConfig): VirtualDomJoystick
 {
     return new VirtualDomJoystick({
         id: "joystick",
         axis: "all",
-        fixed: true,
+        fixed: mobileConfig.joystickStatic,
         parent: "#app-touchArea-left",
-        radius: 64,
-        position: { top: "50%", left: "15%" },
+        radius: mobileConfig.joystickSize,
+        position: mobileConfig.joystickPosition,
         spring: true, // Don't reset (center) joystick on touch-end
         onEnd()
         {
@@ -99,13 +102,18 @@ function addJoystick(scene: BootScene, playerButtons: TButtons): VirtualDomJoyst
                 if (DIRECTIONS_8[index].includes(key) && playerButtons[key].isUp && this.value! > 0.4)
                 {
                     playerButtons[key].setDown(now);
+
+                    if (mobileConfig.vibration)
+                    {
+                        window.navigator.vibrate(20);
+                    }
                 }
             });
         }
     });
 }
 
-function addButtonAB(scene: BootScene, playerButtons: TButtons): VirtualDomButton
+function addButtonAB(scene: BootScene, playerButtons: TButtons, mobileConfig: TMobileConfig): VirtualDomButton
 {
     return new VirtualDomButton({
         id: "btn-ab",
@@ -122,7 +130,7 @@ function addButtonAB(scene: BootScene, playerButtons: TButtons): VirtualDomButto
             color: "#fff",
             border: 'none',
             borderRadius: 'none',
-            backgroundColor: "none",
+            backgroundColor: "none"
         },
         onInput()
         {
@@ -138,6 +146,11 @@ function addButtonAB(scene: BootScene, playerButtons: TButtons): VirtualDomButto
             if (angle > 45 && playerButtons['b'].isUp)
             {
                 playerButtons['b'].setDown(now);
+            }
+
+            if (mobileConfig.vibration)
+            {
+                window.navigator.vibrate(20);
             }
         },
         onEnd()
@@ -159,14 +172,14 @@ function addButtonAB(scene: BootScene, playerButtons: TButtons): VirtualDomButto
     });
 }
 
-function addButtonStart(scene: BootScene, playerButtons: TButtons): VirtualDomButton
+function addButtonStart(scene: BootScene, playerButtons: TButtons, mobileConfig: TMobileConfig): VirtualDomButton
 {
     return new VirtualDomButton({
         id: "btn-start",
         parent: "#app-touchArea-top-right",
         spring: false, // Act as a checkbox
         text: "",
-        radius: window.innerHeight * window.devicePixelRatio - document.getElementById('btn-ab')?.clientHeight! / 2,
+        radius: Phaser.Math.Clamp(window.innerHeight * window.devicePixelRatio - document.getElementById('btn-ab')?.clientHeight! / 2, 48, window.innerWidth / 3),
         position: {
             right: "0",
             top: "0",
@@ -181,10 +194,16 @@ function addButtonStart(scene: BootScene, playerButtons: TButtons): VirtualDomBu
         onInput()
         {
             const { now } = scene.time;
-
+            console.log(this, this.radius);
+            
             if (playerButtons['start'].isUp)
             {
                 playerButtons['start'].setDown(now);
+
+                if(mobileConfig.vibration)
+                {
+                    window.navigator.vibrate(20);
+                }
             }
         },
         onEnd()
@@ -222,3 +241,4 @@ function addStartButtonBackground()
     bgStart.style.width = width + "px";
     bgStart.style.height = width + "px";
 }
+

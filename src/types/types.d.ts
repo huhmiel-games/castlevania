@@ -278,7 +278,7 @@ export type TMeleeWeaponConfig = {
 
 export type TVirtualGamepadOption = {
     value?: number;
-    id: string| number;
+    id: string | number;
     type?: 'button' | 'joystick';
     parent?: string;
     spring?: boolean;
@@ -292,11 +292,11 @@ export type TVirtualGamepadOption = {
     y_start?: number;
     x_diff?: number;
     y_diff?: number;
-    position?: { left?: string; top?: string; right?: string, bottom?: string};
-    style?: { 
-        position?: string; 
-        color?: string; 
-        border?: string; 
+    position?: { left?: string; top?: string; right?: string, bottom?: string };
+    style?: {
+        position?: string;
+        color?: string;
+        border?: string;
         backgroundColor?: string;
         background?: string;
         borderRadius?: string;
@@ -304,6 +304,13 @@ export type TVirtualGamepadOption = {
     };
     onInput?: () => void;
     onEnd?: () => void;
+}
+
+export type TMobileConfig = {
+    joystickStatic: boolean,
+    joystickSize: number,
+    joystickPosition: { top: string, left: string },
+    vibration: boolean
 }
 
 
