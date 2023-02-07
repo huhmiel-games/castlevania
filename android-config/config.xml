@@ -10,7 +10,7 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <preference name="Orientation" value="landscape" />
-    <preference name="BackgroundColor" value="0xff000000" />
+    <preference name="BackgroundColor" value="0x000000" />
     <preference name="Fullscreen" value="true" />
     <preference name="hardwareAccelerated" value="true"/>
     <preference name="isGame" value="true"/>
