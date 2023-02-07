@@ -1,5 +1,6 @@
 node_modules
 build
+dist-mobile
 tmp*
 temp*
 GDD.MD
