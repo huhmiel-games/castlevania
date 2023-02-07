@@ -14,11 +14,10 @@
         "build": "node ./esbuild/build.cjs & cp -r ./public/* ./build/ ",
         "create-dist-desktop": "grunt",
         "create-dist-mobile": "cordova create dist-mobile && cd dist-mobile && cordova platform add android",
-        "android": "npm run build && rm -rf ./dist-mobile/www/* && cp -r ./build/* ./dist-mobile/www/ && cd ./dist-mobile && cordova run android",
+        "android": "rm -rf ./dist-mobile/www/* && cp -r ./build/* ./dist-mobile/www/ && cd ./dist-mobile && cp -r ./android-config/* .dist-mobile/ && cordova run android",
         "start:browser": "npm run build && rm -rf ./dist-mobile/www/* && cp -r ./build/* ./dist-mobile/www/ && cd ./dist-mobile && cordova run browser"
     },
     "dependencies": {
-        "@rbuljan/gamepad": "^1.0.3",
         "phaser": "^3.60.0-beta.18",
         "phaser3-rex-plugins": "^1.1.68"
     },
