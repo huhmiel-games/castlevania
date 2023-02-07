@@ -1,22 +1,25 @@
 # Castlevania fangame
+This a fangame/remake of the first Castlevania on nes made for learning purposes, where you controls Richter instead of Simon
 
-Ce template front utilise le bundler esbuild.
+The graphics don't follows the nes's limits and color palette, but stay minimalist with a  32 color palette.(DB32)
+
+I tried to improve the game with some others castlevania's mechanics like stairs's jumping and backflip. 
 
 ## Utilisation
 
 Commande | Role
 --- | --- 
-`npm start` | Lance le serveur de dev
-`npm run build` | Build les fichiers ts et copie le contenu du dossier public dans le dossier build
-`npm run check` | Compile les fichiers ts et signale les erreurs
-`npm run create-dist-desktop` | Crée des executables du dossier build (win64, linux64, osx64) avec nw.js
-`npm run create-dist-mobile` | Crée un projet cordova pour android
-`npm run android` | Build le projet pour android et lance l'emulateur (ou le mobile si connecté via usb)
-`start:browser` | Build le projet pour android et lance le navigateur
+`npm start` | Launches the dev server
+`npm run build` | Build the ts files and copy the contents of the public folder to the build folder
+`npm run check` | Compiles ts files and reports errors
+`npm run create-dist-desktop` | Creates executables from the build folder (win64, linux64, osx64) with nw.js
+`npm run create-dist-mobile` | Create a cordova project for android
+`npm run android` | Build the project for android and launch the emulator (or mobile if connected via usb)
+`start:browser` | Build the project for android and launch the browser
 
 ## Debugger
 
-Ce template fonctionne avec le debugger de vscode, il faut cependant bien configurer url et webRoot
+This project works with the vscode debugger, however it is necessary to configure url and webRoot
     
 ```
     {
