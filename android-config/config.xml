@@ -1,16 +1,14 @@
 
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.huhmiel-games.castlevania" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.gmail.huhmiel.castlevania" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Castlevania</name>
     <description>Fangame/remake of the first Castlevania</description>
-    <author email="https://discord.gg/cBWqU6zu" href="https://blunt76.itch.io/">
-        huhmiel-games
-    </author>
+    <author email="huhmiel@gmail.com" href="https://blunt76.itch.io/">huhmiel-games</author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <preference name="Orientation" value="landscape" />
-    <preference name="BackgroundColor" value="0x000000" />
+    <preference name="BackgroundColor" value="0x00000000" />
     <preference name="Fullscreen" value="true" />
     <preference name="hardwareAccelerated" value="true"/>
     <preference name="isGame" value="true"/>
