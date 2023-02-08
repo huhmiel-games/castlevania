@@ -107,14 +107,9 @@ export default class BootScene extends Phaser.Scene
         if (this.sys.game.device.os.desktop === true)
         {
             this.inputController.addPlayerAButtons();
+
             this.input.keyboard?.on(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, this.inputController.keyboardDownEvent, this.inputController);
             this.input.keyboard?.on(Phaser.Input.Keyboard.Events.ANY_KEY_UP, this.inputController.keyboardUpEvent, this.inputController);
-            // this.input.keyboard?.once(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, (key: Phaser.Input.Keyboard.Key) =>
-            // {
-            //     this.inputController.addPlayerAButtons();
-            //     this.input.keyboard.on(Phaser.Input.Keyboard.Events.ANY_KEY_DOWN, this.inputController.keyboardDownEvent, this);
-            //     this.input.keyboard.on(Phaser.Input.Keyboard.Events.ANY_KEY_UP, this.inputController.keyboardUpEvent, this);
-            // });
         }
     }
 
@@ -137,12 +132,6 @@ export default class BootScene extends Phaser.Scene
 
             this.inputController.addGamepad(this.input.gamepad!);
         });
-
-        // this.input.gamepad?.once(Phaser.Input.Gamepad.Events.BUTTON_DOWN, () => {
-        //     this.add.bitmapText(WIDTH / 2, 16, FONTS.GALAXY, 'gamepad connected', FONTS_SIZES.GALAXY, 1);
-        //     this.scene.bringToTop();
-        //     this.inputController.addGamepad(this.input.gamepad!);
-        // })
     }
 
     private listenMobileEvent()
@@ -152,13 +141,6 @@ export default class BootScene extends Phaser.Scene
             this.input.addPointer(1);
 
             this.inputController.addPlayerAButtons();
-
-            // this.inputController.addVirtualGamepad(this);
-
-            //this.scene.bringToTop();
-
-            // this.input.once(Phaser.Input.Events.POINTER_UP, () => this.scale.startFullscreen());
-
         }
     }
 }
