@@ -32,12 +32,21 @@ function waitInputController(this: BootScene)
     {
         this.events.off(Phaser.Scenes.Events.UPDATE, waitInputController);
 
-        this.input.once(Phaser.Input.Events.POINTER_UP, () =>
+        if(this.sys.game.device.os.android || this.sys.game.device.os.cordova)
         {
             addVirtualGamepad(this);
 
             this.scale.startFullscreen();
-        });
+        }
+        else
+        {
+            this.input.once(Phaser.Input.Events.POINTER_UP, () =>
+            {
+                addVirtualGamepad(this);
+    
+                this.scale.startFullscreen();
+            });
+        }
     }
 }
 
