@@ -24,8 +24,8 @@ export class CustomGamepad
 
         this.isAxisEnabled = SaveLoadService.getConfigAxis();
 
-        this.gamepad.on(Phaser.Input.Gamepad.Events.GAMEPAD_BUTTON_DOWN, this.downEvent, this);
-        this.gamepad.on(Phaser.Input.Gamepad.Events.GAMEPAD_BUTTON_UP, this.upEvent, this);
+        this.gamepad?.on(Phaser.Input.Gamepad.Events.GAMEPAD_BUTTON_DOWN, this.downEvent, this);
+        this.gamepad?.on(Phaser.Input.Gamepad.Events.GAMEPAD_BUTTON_UP, this.upEvent, this);
     }
 
     /**

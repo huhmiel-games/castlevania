@@ -15,7 +15,7 @@ export class FleamanIA implements IEnemyAI
         this.parent = parent;
         this.scene = parent.scene;
 
-        if (this.parent.body.center.x > this.scene.getPlayerByName(PLAYERS_NAMES.A).body.center.x)
+        if (this.parent.body.center.x > this.scene.getClosestPlayer(this.parent.damageBody).body.center.x)
         {
             this.parent.setFlipX(true);
         }
@@ -39,7 +39,7 @@ export class FleamanIA implements IEnemyAI
 
         if (!this.isChasing && cam.worldView.contains(center.x, center.y))
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             const distance = Math.abs(center.x - player.body.center.x);
 
@@ -63,7 +63,7 @@ export class FleamanIA implements IEnemyAI
             && cam.worldView.contains(center.x, center.y)
             && this.parent.stateMachine.state === EStates.IDLE)
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             const chanceToAttack = Phaser.Math.RND.between(0, 100);
 

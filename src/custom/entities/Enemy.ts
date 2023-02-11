@@ -312,7 +312,7 @@ export class Enemy extends Entity
                     }
                     else
                     {
-                        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+                        const player = this.scene.getClosestPlayer(this.damageBody);
 
                         this.body.reset(this.config.status.position.x, player.body.bottom - TILE_SIZE);
                     }

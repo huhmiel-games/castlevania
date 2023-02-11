@@ -14,7 +14,7 @@ import LayerService from '../services/LayerService.js';
 import { Entity } from '../entities/Entity.js';
 import ColliderService from '../services/ColliderService.js';
 import WorldRooms from '../utils/WorldRooms.js';
-import { ICustomEffect, TCoord, TDoor } from '../types/types.js';
+import { TCoord, TDoor } from '../types/types.js';
 import SaveLoadService from '../services/SaveLoadService.js';
 import { PALETTE_DB32 } from '../constant/colors.js';
 import { Orb } from '../gameobjects/Orb.js';
@@ -23,6 +23,7 @@ import { DEPTH } from '../constant/depth.js';
 import { StageCountDown } from '../utils/StageCountDown.js';
 import { CustomeGame } from '../custom/CustomGame.js';
 import { warn } from '../utils/log.js';
+import DamageBody from '../entities/DamageBody.js';
 
 /**
  * @author © Philippe Pereira 2022
@@ -46,7 +47,6 @@ export default class GameScene extends Phaser.Scene
     public conveyorGroup: Phaser.GameObjects.Group;
     public itemsGroup: Phaser.GameObjects.Group;
     public playersWeaponGroup: Phaser.GameObjects.Group;
-    public playersSecondaryWeaponGroup: Phaser.GameObjects.Group;
     public currentPlayingSong: Phaser.Sound.BaseSound | null;
     public musicIndex: number = 0;
     public enemyWeaponGroup: Phaser.GameObjects.Group;
@@ -59,6 +59,7 @@ export default class GameScene extends Phaser.Scene
     smokeGroup: Phaser.GameObjects.Group;
     puffGroup: Phaser.GameObjects.Group;
     impactGroup: Phaser.GameObjects.Group;
+    isCoop: boolean;
 
     constructor()
     {
@@ -71,6 +72,12 @@ export default class GameScene extends Phaser.Scene
 
     public init(data: any)
     {
+        console.log(data);
+        if (data.coop === true)
+        {
+            this.isCoop = true;
+        }
+
         // log('death here?');
         // if (data?.retry === true)
         // {
@@ -122,6 +129,7 @@ export default class GameScene extends Phaser.Scene
         this.customGame = new CustomeGame(this);
         this.customGame.init();
 
+
         LayerService.addLayers(this);
 
         ColliderService.addColliders(this);
@@ -151,7 +159,7 @@ export default class GameScene extends Phaser.Scene
         }
         else
         {
-            this.events.emit(HUD_EVENTS_NAMES.RESET);
+            this.events.emit(HUD_EVENTS_NAMES.RESET_PLAYER_A);
         }
 
         this.events.emit(HUD_EVENTS_NAMES.BOSS_HEALTH, 16);
@@ -159,6 +167,8 @@ export default class GameScene extends Phaser.Scene
         this.scene.get(SCENES_NAMES.BOOT).events.on(BTN_EVENTS.START_UP, this.setPause, this);
 
         this.cameraFollowPlayer();
+
+        this.inputController.isActive = true;
     }
 
     public update(time: number, delta: number): void
@@ -169,12 +179,25 @@ export default class GameScene extends Phaser.Scene
             if (effect.isActive) effect.update();
         });
 
+        if (this.isCoop)
+        {
+            const cam = this.cameras.main;
+            const distance = Math.abs(this.characters[0].body.center.x - this.characters[1].body.center.x);
+
+            if (distance < 240)
+            {
+                cam.scrollX = Phaser.Math.Average([this.characters[0].x, this.characters[1].x]) - cam.width / 2;
+                cam.scrollY = Phaser.Math.Average([this.characters[0].y, this.characters[1].y]) - cam.height / 2;
+            }
+        }
+
         if (isDev)
         {
             if (this.inputController.playerAButtons.x.isDown)
             {
-                console.log({updateTime: time, 
-                    sceneTime: this.time.now, 
+                console.log({
+                    updateTime: time,
+                    sceneTime: this.time.now,
                     sysGameTime: this.sys.game.getTime(),
                     [this.scene.manager.scenes[0].scene.key]: this.scene.manager.scenes[0].time.now
                 })
@@ -296,9 +319,6 @@ export default class GameScene extends Phaser.Scene
         this.itemsGroup = this.add.group();
 
         this.playersWeaponGroup = this.add.group();
-
-        this.playersSecondaryWeaponGroup = this.add.group();
-        this.playersSecondaryWeaponGroup.maxSize = 3;
 
         this.enemyWeaponGroup = this.add.group();
         this.enemyWeaponGroup.maxSize = 10;
@@ -483,7 +503,7 @@ export default class GameScene extends Phaser.Scene
 
         player.status.stage = stage;
 
-        this.events.emit(HUD_EVENTS_NAMES.STAGE, stage);
+        this.events.emit(HUD_EVENTS_NAMES.STAGE_PLAYER_A, stage);
     }
 
     public changeStage(nextDoor: TDoor)
@@ -503,16 +523,16 @@ export default class GameScene extends Phaser.Scene
         switch (nextDoor.side)
         {
             case 'left':
-                player.body.reset(nextDoor.x - player.body.width / 2, nextDoor.y);
+                this.characters.forEach(player => player.body.reset(nextDoor.x - player.body.width / 2, nextDoor.y));
                 break;
             case 'right':
-                player.body.reset(nextDoor.x + TILE_SIZE + player.body.width / 2, nextDoor.y);
+                this.characters.forEach(player => player.body.reset(nextDoor.x + TILE_SIZE + player.body.width / 2, nextDoor.y));
                 break;
             case 'top':
-                player.body.reset(nextDoor.x + player.body.halfWidth, nextDoor.y - 48);
+                this.characters.forEach(player => player.body.reset(nextDoor.x + player.body.halfWidth, nextDoor.y - 48));
                 break;
             case 'bottom':
-                player.body.reset(nextDoor.x + player.body.halfWidth, nextDoor.y + 32);
+                this.characters.forEach(player => player.body.reset(nextDoor.x + player.body.halfWidth, nextDoor.y + 32));
                 break;
         }
 
@@ -747,9 +767,7 @@ export default class GameScene extends Phaser.Scene
     {
         this.isChangingStage = true;
 
-        const player = this.getPlayerByName(PLAYERS_NAMES.A);
-
-        player.status.setHealth(16).setAmmo(5);
+        this.characters.forEach(character => character.status.setHealth(16).setAmmo(5));
 
         this.customGame.isOrb = false;
 
@@ -759,53 +777,70 @@ export default class GameScene extends Phaser.Scene
 
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+        const player = this.characters[0];
+
         switch (player.status.stage)
         {
             case 15:
-                player.status.setPosition(STAGE_START_POSITION[21]).setStage(21);
-                player.setFlipX(false);
+                this.characters.forEach(character =>
+                {
+                    character.status.setPosition(STAGE_START_POSITION[21]).setStage(21);
+                    character.setFlipX(false);
 
-                player.body.reset(STAGE_START_POSITION[21].x, STAGE_START_POSITION[21].y);
+                    character.body.reset(STAGE_START_POSITION[21].x, STAGE_START_POSITION[21].y);
+                })
 
                 this.stageCountdown.reset(true, STAGE_COUNTDOWN[21]);
 
                 break;
 
             case 26:
-                player.status.setPosition(STAGE_START_POSITION[31]).setStage(31);
-                player.setFlipX(true);
+                this.characters.forEach(character =>
+                {
+                    character.status.setPosition(STAGE_START_POSITION[31]).setStage(31);
+                    character.setFlipX(true);
 
-                player.body.reset(STAGE_START_POSITION[31].x, STAGE_START_POSITION[31].y);
+                    character.body.reset(STAGE_START_POSITION[31].x, STAGE_START_POSITION[31].y);
+                })
 
                 this.stageCountdown.reset(true, STAGE_COUNTDOWN[31]);
 
                 break;
 
             case 35:
-                player.status.setPosition(STAGE_START_POSITION[41]).setStage(41);
-                player.setFlipX(false);
+                this.characters.forEach(character =>
+                {
+                    character.status.setPosition(STAGE_START_POSITION[41]).setStage(41);
+                    character.setFlipX(false);
 
-                player.body.reset(STAGE_START_POSITION[41].x, STAGE_START_POSITION[41].y);
+                    character.body.reset(STAGE_START_POSITION[41].x, STAGE_START_POSITION[41].y);
+                });
 
                 this.stageCountdown.reset(true, STAGE_COUNTDOWN[41]);
 
                 break;
 
             case 44:
-                player.status.setPosition(STAGE_START_POSITION[51]).setStage(51)
-                player.setFlipX(false);
+                this.characters.forEach(character =>
+                {
+                    character.status.setPosition(STAGE_START_POSITION[51]).setStage(51)
+                    character.setFlipX(false);
 
-                player.body.reset(STAGE_START_POSITION[51].x, STAGE_START_POSITION[51].y);
+                    character.body.reset(STAGE_START_POSITION[51].x, STAGE_START_POSITION[51].y);
+                });
 
                 this.stageCountdown.reset(true, STAGE_COUNTDOWN[51]);
 
                 break;
 
             case 56:
-                player.status.setPosition(STAGE_START_POSITION[61]).setStage(61)
-                player.setFlipX(true);
+                this.characters.forEach(character =>
+                {
+                    character.status.setPosition(STAGE_START_POSITION[61]).setStage(61)
+                    character.setFlipX(true);
 
-                player.body.reset(STAGE_START_POSITION[61].x, STAGE_START_POSITION[61].y);
+                    character.body.reset(STAGE_START_POSITION[61].x, STAGE_START_POSITION[61].y);
+                });
 
                 this.stageCountdown.reset(true, STAGE_COUNTDOWN[61]);
 
@@ -829,10 +864,13 @@ export default class GameScene extends Phaser.Scene
 
     public cameraFollowPlayer(): Phaser.Cameras.Scene2D.Camera
     {
-        this.cameras.main.startFollow(this.getPlayerByName(PLAYERS_NAMES.A), true, 0.2, 0.1, 0, 0)
-            .setDeadzone(4, 32)
-            .setRoundPixels(true)
-            .setBackgroundColor(PALETTE_DB32.BLACK);
+        if (this.characters.length === 1)
+        {
+            this.cameras.main.startFollow(this.getPlayerByName(PLAYERS_NAMES.A), true, 0.2, 0.1, 0, 0)
+                .setDeadzone(4, 32)
+                .setRoundPixels(true)
+                .setBackgroundColor(PALETTE_DB32.BLACK);
+        }
 
         return this.cameras.main;
     }
@@ -844,6 +882,19 @@ export default class GameScene extends Phaser.Scene
         if (player === null) throw new Error(`no player named ${playerName} found`);
 
         return player as Entity;
+    }
+
+    public getClosestPlayer(enemyBody: DamageBody): Entity
+    {
+        if (this.isCoop === false) return this.characters[0];
+
+        const distanceA = Phaser.Math.Distance.BetweenPoints(enemyBody, this.characters[0].damageBody);
+
+        const distanceB = Phaser.Math.Distance.BetweenPoints(enemyBody, this.characters[1]?.damageBody || { x: Infinity, y: Infinity });
+
+        if (distanceA > distanceB) return this.characters[1];
+
+        return this.characters[0];
     }
 
     public isInsideCameraByPixels(body: Phaser.Physics.Arcade.Body, offset: number = 128): boolean

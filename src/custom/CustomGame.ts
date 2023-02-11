@@ -50,6 +50,7 @@ import { Boss } from "./entities/Boss";
 import { Enemy } from "./entities/Enemy";
 import Player from "./entities/Player";
 import { RainEffect } from "./environmentEffects/Rain";
+import FakeWall from "./FakeWall";
 
 export class CustomeGame implements ICustomGame
 {
@@ -104,7 +105,8 @@ export class CustomeGame implements ICustomGame
             try
             {
                 this.scene.sound.add(i.toString())
-            } catch (error)
+            }
+            catch (error)
             {
 
             }
@@ -114,17 +116,24 @@ export class CustomeGame implements ICustomGame
             scene: this.scene,
             x: data.position.x,
             y: data.position.y,
-            texture: ATLAS_NAMES.PLAYER,
+            texture: PLAYERS_NAMES.A,
             frame: '',
             buttons: this.scene.inputController.playerAButtons
         });
 
         this.scene.characters.push(playerA);
 
+        if (this.scene.isCoop)
+        {
+            this.addPlayerB();
+
+            this.addCameraBounds();
+        }
+
         // background image
         this.scene.add.image(0, 0, 'back-moon').setOrigin(0, 0).setScrollFactor(0, 0).setName('back-moon');
 
-        this.scene.add.pointlight(108, 42, PALETTE_DB32.TURQUOISE_BLUE, 96, 0.35, 0.05).setScrollFactor(0, 0);        
+        this.scene.add.pointlight(108, 42, PALETTE_DB32.TURQUOISE_BLUE, 96, 0.35, 0.05).setScrollFactor(0, 0);
 
         this.scene.add.tileSprite(0, 0, this.scene.map.widthInPixels, 176, 'back-mountain')
             .setOrigin(0, 0)
@@ -141,6 +150,41 @@ export class CustomeGame implements ICustomGame
         this.scene.add.image(330 * 16, 0, 'back-clock').setOrigin(0, 0).setDepth(DEPTH.GROUND_LAYER);
 
         this.scene.sound.add('SFX30'); // door sound
+    }
+
+    private addPlayerB()
+    {
+        const playerA = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+
+        const playerB = new Player({
+            scene: this.scene,
+            x: playerA.x + 16,
+            y: playerA.y,
+            texture: PLAYERS_NAMES.B,
+            frame: '',
+            buttons: this.scene.inputController.playerBButtons
+        });
+
+        playerB.setName(PLAYERS_NAMES.B);
+
+        this.scene.characters.push(playerB);
+    }
+
+    private addCameraBounds()
+    {
+        new FakeWall({scene: this.scene,
+            x: 0,
+            y: 0,
+            texture: 'whitePixel',
+            frame: 0
+        }, 'left');
+
+        new FakeWall({scene: this.scene,
+            x: 0,
+            y: 0,
+            texture: 'whitePixel',
+            frame: 0
+        }, 'right');
     }
 
     public destroyTileItem(_whip: unknown, _tileItem: unknown)
@@ -186,15 +230,19 @@ export class CustomeGame implements ICustomGame
         switch (itemProperties.item)
         {
             case TILE_ITEMS.DOUBLE_SHOT:
-                if (this.scene.playersSecondaryWeaponGroup.getLength() === 0)
+                const playersSecondaryWeaponsGroupLength = this.scene.characters
+                    .map(player => player.secondaryWeaponGroup.getLength())
+                    .reduce((a, b) => a + b, 0);
+
+                if (playersSecondaryWeaponsGroupLength === 0)
                 {
                     itemProperties.item = TILE_ITEMS.BIG_HEART;
                 }
                 else
                 {
-                    const player = this.scene.getPlayerByName(PLAYERS_NAMES.A) as Player;
+                    const multipleShotsTotal = this.getTotalMultipleShots();
 
-                    if (player.multipleShots === 1)
+                    if (multipleShotsTotal === 1 * this.scene.characters.length)
                     {
                         const doubleShot = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: TILE_ITEMS.DOUBLE_SHOT, quantity: 1, name: TILE_ITEMS.DOUBLE_SHOT })
                         this.scene.itemsGroup.add(doubleShot);
@@ -202,7 +250,7 @@ export class CustomeGame implements ICustomGame
                         break;
                     }
 
-                    if (player.multipleShots === 2)
+                    if (multipleShotsTotal === 2 * this.scene.characters.length)
                     {
                         const tripleShot = new BaseRetrievableItem({ scene: this.scene, x: tileItem.pixelX, y: tileItem.pixelY, texture: ATLAS_NAMES.ITEMS, frame: 'triple-shot', quantity: 1, name: 'triple-shot' })
                         this.scene.itemsGroup.add(tripleShot);
@@ -280,6 +328,13 @@ export class CustomeGame implements ICustomGame
             default:
                 break;
         }
+    }
+
+    public getTotalMultipleShots()
+    {
+        return this.scene.characters
+            .map(player => player.secondaryWeaponGroup.getLength())
+            .reduce((a, b) => a + b, 0);
     }
 
     public setItemTimer(item: BaseRetrievableItem)
@@ -565,7 +620,7 @@ export class CustomeGame implements ICustomGame
                     }
                 }
 
-                if(enemyName === ENEMY_NAMES.EAGLE && this.scene.isInsideCameraByPixels(enemy.body,16))
+                if (enemyName === ENEMY_NAMES.EAGLE && this.scene.isInsideCameraByPixels(enemy.body, 16))
                 {
                     enemy.killAndRespawn();
                 }
@@ -705,10 +760,10 @@ export class CustomeGame implements ICustomGame
     {
         this.enemiesDamageBody = this.scene.enemies.map(enemy => enemy.damageBody);
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const players = this.scene.characters.map(player => player.damageBody);
 
         // enemies make damage to player
-        this.enemiesVsPlayerCollider = this.scene.physics.add.overlap(player.damageBody, this.enemiesDamageBody, (_player, _enemy) =>
+        this.enemiesVsPlayerCollider = this.scene.physics.add.overlap(players, this.enemiesDamageBody, (_player, _enemy) =>
         {
             const playerDamageBody = _player as DamageBody;
 
@@ -749,7 +804,7 @@ export class CustomeGame implements ICustomGame
 
         this.enemiesSecondaryWeapons = this.scene.enemies.filter(enemy => enemy.active).map(enemy => enemy.secondaryWeaponGroup?.getChildren()).flat();
         // enemies weapons make damage to player
-        this.enemiesWeaponsVsPlayerCollider = this.scene.physics.add.overlap(player.damageBody, this.enemiesSecondaryWeapons, (_player, _weapon) =>
+        this.enemiesWeaponsVsPlayerCollider = this.scene.physics.add.overlap(players, this.enemiesSecondaryWeapons, (_player, _weapon) =>
         {
             const playerDamageBody = _player as DamageBody;
 
@@ -916,7 +971,7 @@ export class CustomeGame implements ICustomGame
                 return;
             case (chance > 0):
                 // give double-shot
-                if (this.scene.playersSecondaryWeaponGroup.getLength() === 0)
+                if (this.getTotalMultipleShots() === 0)
                 {
                     const bigheart = new BigAmmoRetrievableItem({ scene: this.scene, x: center.x, y: center.y, texture: ATLAS_NAMES.ITEMS, frame: 'big-heart', quantity: 5 });
                     this.scene.itemsGroup.add(bigheart);

@@ -1,4 +1,6 @@
+import { SCENES_NAMES } from "../constant/config";
 import BootScene from "../scenes/BootScene";
+import GameScene from "../scenes/GameScene";
 import SaveLoadService from "../services/SaveLoadService";
 import { TButtons, TKeyMapping } from "../types/types";
 import { CustomGamepad } from "./Gamepad";
@@ -217,5 +219,10 @@ export class InputController
         this.savedGamepadMapping = SaveLoadService.getGamepadMapping();
 
         this.gamepads.forEach(gamepad => gamepad.setIsAxisEnabled());
+    }
+
+    get gamepadCount()
+    {
+        return this.gamepads.length
     }
 }

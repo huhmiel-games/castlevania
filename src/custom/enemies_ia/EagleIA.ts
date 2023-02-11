@@ -57,7 +57,7 @@ export class EagleIA implements IEnemyAI
 
             this.parent.resetAllButtons();
 
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             const distance = Math.abs(player.body.center.x - this.parent.body.center.x);
 
@@ -122,7 +122,7 @@ export class EagleIA implements IEnemyAI
 
             this.isFlying = true;
 
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             if (player.body.center.x < center.x)
             {

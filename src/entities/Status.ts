@@ -57,7 +57,7 @@ export class Status
 
         if (this.entity.name === PLAYERS_NAMES.A)
         {
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.health);
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH_PLAYER_A, this.health);
         }
 
         return this;
@@ -69,7 +69,7 @@ export class Status
 
         if (this.entity.name === PLAYERS_NAMES.A)
         {
-            this.scene.events.emit(HUD_EVENTS_NAMES.LIFE, this.life);
+            this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_A, this.life);
         }
 
         return this;
@@ -81,7 +81,7 @@ export class Status
 
         if (this.entity.name === PLAYERS_NAMES.A)
         {
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEART, this.ammo);
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEART_PLAYER_A, this.ammo);
         }
 
         return this;
@@ -93,7 +93,7 @@ export class Status
 
         if (this.entity.name === PLAYERS_NAMES.A)
         {
-            this.scene.events.emit(HUD_EVENTS_NAMES.SCORE, this.score);
+            this.scene.events.emit(HUD_EVENTS_NAMES.SCORE_PLAYER_A, this.score);
         }
 
         return this;

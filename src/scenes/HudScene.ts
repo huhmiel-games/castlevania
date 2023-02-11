@@ -13,6 +13,7 @@ export default class HudScene extends Phaser.Scene
 {
     private gameScene: GameScene;
     private playerStatus: TStatus;
+    private enemyLifeBlocks: Phaser.GameObjects.Image[] = [];
 
     constructor()
     {
@@ -35,14 +36,14 @@ export default class HudScene extends Phaser.Scene
 
         this.gameScene = this.scene.get(SCENES_NAMES.GAME) as GameScene;
 
-        this.gameScene.events.on(HUD_EVENTS_NAMES.HEALTH, this.setPlayerHealth, this);
-        this.gameScene.events.on(HUD_EVENTS_NAMES.LIFE, this.setLife, this);
-        this.gameScene.events.on(HUD_EVENTS_NAMES.HEART, this.setHeart, this);
-        this.gameScene.events.on(HUD_EVENTS_NAMES.STAGE, this.setStage, this);
-        this.gameScene.events.on(HUD_EVENTS_NAMES.SCORE, this.setScore, this);
-        this.gameScene.events.on(HUD_EVENTS_NAMES.WEAPON, this.setWeaponImage, this);
-        this.gameScene.events.on(HUD_EVENTS_NAMES.RESET, this.resetData, this);
-        this.gameScene.events.on(HUD_EVENTS_NAMES.SHOTS, this.setShots, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.HEALTH_PLAYER_A, this.setPlayerHealth, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.LIFE_PLAYER_A, this.setLife, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.HEART_PLAYER_A, this.setHeart, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.STAGE_PLAYER_A, this.setStage, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.SCORE_PLAYER_A, this.setScore, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.WEAPON_PLAYER_A, this.setWeaponImage, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.RESET_PLAYER_A, this.resetData, this);
+        this.gameScene.events.on(HUD_EVENTS_NAMES.SHOTS_PLAYER_A, this.setShots, this);
         this.gameScene.events.on(HUD_EVENTS_NAMES.BOSS_HEALTH, this.setBossHealth, this);
         this.gameScene.events.on(COUNTDOWN_EVENT, this.setCountDownText, this)
 
@@ -53,24 +54,24 @@ export default class HudScene extends Phaser.Scene
             .setName('scoreText')
             .setText(`score-${this.playerStatus.score?.toString().padStart(6, '0')}`);
 
-        this.add.bitmapText(2, 12, FONTS.GALAXY, 'player', 8, 1)
+        const player = this.add.bitmapText(2, 12, FONTS.GALAXY, 'player', 8, 1)
             .setOrigin(0, 0)
-            .setName('helperText');
+            .setName('playerAText');
 
-        this.add.bitmapText(2, 22, FONTS.GALAXY, 'enemy', 8, 1)
+        const enemyText = this.add.bitmapText(2, 22, FONTS.GALAXY, 'enemy', 8, 1)
             .setOrigin(0, 0)
-            .setName('helperText');
+            .setName('enemyText');
 
         this.add.bitmapText(112, 2, FONTS.GALAXY, 'time 0000', 8, 1)
             .setOrigin(0, 0)
             .setName('countDown');
 
-        this.add.bitmapText(192, 2, FONTS.GALAXY, 'stage 01', 8, 1)
+        const stage = this.add.bitmapText(192, 2, FONTS.GALAXY, 'stage 01', 8, 1)
             .setOrigin(0, 0)
             .setName('stage')
-            .setText(`stage ${this.playerStatus.stage?.toString().padStart(2, '0')}`)
+            .setText(`stage ${this.playerStatus.stage?.toString().padStart(2, '0')}`);
 
-        this.add.image(128, 20, ATLAS_NAMES.ITEMS, 'weapon-frame').setOrigin(0, 0.5);
+        this.add.image(128, 20, ATLAS_NAMES.ITEMS, 'weapon-frame').setOrigin(0, 0.5).setScale(this.gameScene.isCoop ? 0.5 : 1);
         this.add.image(144, 20, ATLAS_NAMES.ITEMS, '').setOrigin(0.5, 0.5).setName('weaponImage').setAlpha(0);
         this.add.image(168, 12, ATLAS_NAMES.ITEMS, 'heart').setOrigin(0, 0);
         this.add.image(208, 12, ATLAS_NAMES.ITEMS, 'double-shot').setOrigin(0, 0).setName('shotImage').setAlpha(0);
@@ -85,15 +86,40 @@ export default class HudScene extends Phaser.Scene
 
         for (let i = 0; i < 16; i += 1)
         {
-            this.add.image(56 + i * 4, 11, ATLAS_NAMES.ITEMS, 'health_0').setOrigin(0, 0).setName(`player-health_${i + 1}`);
+            this.add.image(56 + i * 4, 11, ATLAS_NAMES.ITEMS, 'health_0').setOrigin(0, 0).setName(`player-a-health_${i + 1}`);
         }
 
         for (let i = 0; i < 16; i += 1)
         {
-            this.add.image(56 + i * 4, 21, ATLAS_NAMES.ITEMS, 'health_1').setOrigin(0, 0).setName(`boss-health_${i + 1}`);
+            const offsetY = this.gameScene.isCoop ? 33 : 21;
+            const life = this.add.image(56 + i * 4, offsetY, ATLAS_NAMES.ITEMS, 'health_1').setOrigin(0, 0).setName(`boss-health_${i + 1}`);
+
+            this.enemyLifeBlocks.push(life);
         }
 
         this.resetData();
+
+        if (this.gameScene.isCoop)
+        {
+            this.cameras.main.setSize(WIDTH, TILED_WORLD_OFFSET_Y + 16);
+
+            stage.setAlpha(0);
+
+            player.setText(PLAYERS_NAMES.A);
+
+            this.add.bitmapText(2, 22, FONTS.GALAXY, PLAYERS_NAMES.B, 8, 1)
+            .setOrigin(0, 0)
+            .setName('playerBText');
+
+            for (let i = 0; i < 16; i += 1)
+            {
+                this.add.image(56 + i * 4, 21, ATLAS_NAMES.ITEMS, 'health_0').setOrigin(0, 0).setName(`player-b-health_${i + 1}`);
+            }
+            enemyText.y += 12;
+            enemyText.setAlpha(0);
+
+            this.enemyLifeBlocks.forEach(elm => elm.setAlpha(0));
+        }
     }
 
     private getPlayerStatus(): TStatus
@@ -126,12 +152,12 @@ export default class HudScene extends Phaser.Scene
             shotImage?.setAlpha(0);
         }
 
-        if(value === 2)
+        if (value === 2)
         {
             shotImage?.setFrame('double-shot').setAlpha(1);
         }
 
-        if(value === 3)
+        if (value === 3)
         {
             shotImage?.setFrame('triple-shot').setAlpha(1);
         }
@@ -139,7 +165,7 @@ export default class HudScene extends Phaser.Scene
 
     private setPlayerHealth(health: number)
     {
-        const children = this.children.getAll().filter(obj => obj.name.startsWith('player-health_')) as Phaser.GameObjects.Image[];
+        const children = this.children.getAll().filter(obj => obj.name.startsWith('player-a-health_')) as Phaser.GameObjects.Image[];
         children.forEach(child =>
         {
             const id = Number(child.name.match(/\d+/g));
@@ -214,7 +240,8 @@ export default class HudScene extends Phaser.Scene
         }
         else
         {
-            weaponImage.setFrame(frame).setAlpha(1);
+            const frameName = this.gameScene.isCoop ? frame + '-mini' : frame;
+            weaponImage.setFrame(frameName).setAlpha(1);
         }
     }
 

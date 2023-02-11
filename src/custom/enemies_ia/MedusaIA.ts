@@ -29,7 +29,7 @@ export class MedusaIA implements IEnemyAI
         {
             this.parent.resetAllButtons();
 
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             if (player.damageBody.x < center.x)
             {

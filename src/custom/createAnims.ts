@@ -1,11 +1,217 @@
-import { ATLAS_NAMES } from "../constant/config";
+import { ATLAS_NAMES, PLAYERS_NAMES } from "../constant/config";
 
 export default function createAnims(scene: Phaser.Scene)
 {
+    // simon
+    scene.anims.create({
+        key: 'simon-idle',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-walk_0' },
+        ],
+        frameRate: 3,
+        repeat: -1,
+    });
+    
+    scene.anims.create({
+        key: 'simon-walk',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-walk_0' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-walk_1' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-walk_2' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-walk_1' }
+        ],
+        frameRate: 6,
+        repeat: -1,
+    });
+    
+    scene.anims.create({
+        key: 'simon-jump',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump' },
+        ],
+        frameRate: 4,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-fall',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump' }
+        ],
+        frameRate: 4,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-back-flip',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_0' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_1' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_2' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_3' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-crouch' }
+        ],
+        frameRate: 6,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-crouch',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-crouch' }
+        ],
+        frameRate: 4,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-stair-down',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down_0' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down_1' }
+        ],
+        frameRate: Infinity,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-stair-up',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up_0' },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up_1' }
+        ],
+        frameRate: Infinity,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-attack_0', duration: 16 * 3 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-attack_1', duration: 16 * 3 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-attack_2', duration: 16 * 6 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-attack2',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-attack2_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-crouch-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-crouch-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-crouch-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-crouch-attack_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-jump-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump-attack_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-jump-secondary-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-jump-attack2_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-stair-up-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up-attack_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-stair-down-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down-attack_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-stair-up-secondary-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-up-attack2_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-stair-down-secondary-attack',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-stair-down-attack2_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    
+    scene.anims.create({
+        key: 'simon-hurt',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-hurt_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-hurt_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-hurt_2', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+    
+    scene.anims.create({
+        key: 'simon-dead',
+        frames: [
+            { key: PLAYERS_NAMES.A, frame: 'simon-hurt_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-hurt_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-hurt_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.A, frame: 'simon-dead', duration: 16 * 4 },
+        ],
+        frameRate: 16,
+        repeat: 0,
+    });
+
+    // richter
     scene.anims.create({
         key: 'richter-idle',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-walk_0' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-walk_0' },
         ],
         frameRate: 3,
         repeat: -1,
@@ -14,10 +220,10 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-walk',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-walk_0' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-walk_1' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-walk_2' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-walk_1' }
+            { key: PLAYERS_NAMES.B, frame: 'richter-walk_0' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-walk_1' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-walk_2' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-walk_1' }
         ],
         frameRate: 6,
         repeat: -1,
@@ -26,7 +232,7 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-jump',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump' },
         ],
         frameRate: 4,
         repeat: 0,
@@ -35,7 +241,7 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-fall',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump' }
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump' }
         ],
         frameRate: 4,
         repeat: 0,
@@ -44,11 +250,11 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-back-flip',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-back-flip_0' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-back-flip_1' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-back-flip_2' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-back-flip_3' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-crouch' }
+            { key: PLAYERS_NAMES.B, frame: 'richter-back-flip_0' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-back-flip_1' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-back-flip_2' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-back-flip_3' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-crouch' }
         ],
         frameRate: 6,
         repeat: 0,
@@ -57,7 +263,7 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-crouch',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-crouch' }
+            { key: PLAYERS_NAMES.B, frame: 'richter-crouch' }
         ],
         frameRate: 4,
         repeat: 0,
@@ -66,8 +272,8 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-stair-down',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down_0' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down_1' }
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down_0' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down_1' }
         ],
         frameRate: Infinity,
         repeat: 0,
@@ -76,8 +282,8 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-stair-up',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up_0' },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up_1' }
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up_0' },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up_1' }
         ],
         frameRate: Infinity,
         repeat: 0,
@@ -86,9 +292,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-attack_0', duration: 16 * 3 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-attack_1', duration: 16 * 3 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-attack_2', duration: 16 * 6 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-attack_0', duration: 16 * 3 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-attack_1', duration: 16 * 3 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-attack_2', duration: 16 * 6 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -97,9 +303,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-attack2',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-attack2_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-attack2_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-attack2_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-attack2_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -108,9 +314,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-crouch-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-crouch-attack_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-crouch-attack_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-crouch-attack_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-crouch-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-crouch-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-crouch-attack_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -119,9 +325,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-jump-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump-attack_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump-attack_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump-attack_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump-attack_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -130,9 +336,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-jump-secondary-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump-attack2_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump-attack2_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-jump-attack2_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-jump-attack2_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -141,9 +347,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-stair-up-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up-attack_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up-attack_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up-attack_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up-attack_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -152,9 +358,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-stair-down-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down-attack_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down-attack_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down-attack_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down-attack_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down-attack_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down-attack_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -163,9 +369,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-stair-up-secondary-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up-attack2_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up-attack2_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-up-attack2_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-up-attack2_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -174,9 +380,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-stair-down-secondary-attack',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down-attack2_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down-attack2_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-stair-down-attack2_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down-attack2_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down-attack2_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-stair-down-attack2_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -186,9 +392,9 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-hurt',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-hurt_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-hurt_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-hurt_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-hurt_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-hurt_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-hurt_2', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,
@@ -197,10 +403,10 @@ export default function createAnims(scene: Phaser.Scene)
     scene.anims.create({
         key: 'richter-dead',
         frames: [
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-hurt_0', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-hurt_1', duration: 16 * 2 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-hurt_2', duration: 16 * 4 },
-            { key: ATLAS_NAMES.PLAYER, frame: 'richter-dead', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-hurt_0', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-hurt_1', duration: 16 * 2 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-hurt_2', duration: 16 * 4 },
+            { key: PLAYERS_NAMES.B, frame: 'richter-dead', duration: 16 * 4 },
         ],
         frameRate: 16,
         repeat: 0,

@@ -80,9 +80,7 @@ export class StageCountDown
 
         if(this.countDown === 0)
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
-
-            player.setDamage(16);
+            this.scene.characters.forEach(character => character.setDamage(16));
         }
 
         this.scene.events.emit(COUNTDOWN_EVENT, this.countDown);

@@ -1,4 +1,4 @@
-import { EStates, PLAYER_ATTACK_FRAMES } from "../../constant/character";
+import { EStates } from "../../constant/character";
 import { ATLAS_NAMES, HUD_EVENTS_NAMES, PLAYERS_NAMES, SCENES_NAMES, STAGE_COUNTDOWN, TILE_SIZE } from "../../constant/config";
 import { DEPTH } from "../../constant/depth";
 import { Entity } from "../../entities/Entity";
@@ -48,16 +48,29 @@ import { WEAPON_NAMES } from "../../constant/weapons";
 export default class Player extends Entity
 {
     public multipleShots: number;
+    private attackFrames: string[];
+    private player: 'A' | 'B' = 'A';
     constructor(config: TCharacterConfig)
     {
         super(config);
 
         this.scene = config.scene;
 
-        this.secondaryWeaponGroup = this.scene.playersSecondaryWeaponGroup;
+        this.secondaryWeaponGroup = this.scene.add.group();
+        this.secondaryWeaponGroup.maxSize = 3;
 
-        this.setName(PLAYERS_NAMES.A)
-            .setDepth(DEPTH.PLAYER)
+        if (this.scene.characters.length === 0)
+        {
+            this.setName(PLAYERS_NAMES.A);
+        }
+        else
+        {
+            this.setName(PLAYERS_NAMES.B);
+
+            this.player = 'B';
+        }
+
+        this.setDepth(DEPTH.PLAYER)
             .setPhysicsProperties({
                 gravity: 800,
                 speed: 65,
@@ -102,9 +115,9 @@ export default class Player extends Entity
         }
 
         this.frameList = {
-            stairUp: 'richter-stair-up_',
-            stairDown: 'richter-stair-down_',
-            stairMiddle: 'richter-walk_1'
+            stairUp: `${this.name}-stair-up_`,
+            stairDown: `${this.name}-stair-down_`,
+            stairMiddle: `${this.name}-walk_1`
         }
 
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
@@ -121,7 +134,7 @@ export default class Player extends Entity
         {
             const currenFrame = this.anims.getFrameName();
 
-            if (PLAYER_ATTACK_FRAMES.includes(currenFrame))
+            if (this.attackFrames.includes(currenFrame))
             {
                 this.meleeWeapon?.body.setEnable(true);
 
@@ -151,27 +164,35 @@ export default class Player extends Entity
         this.scene?.events.on('enemy-score', (score: number) => this.status.setScore(this.status.score + score));
 
         this.animList = {
-            IDLE: 'richter-idle',
-            JUMP: 'richter-jump',
-            JUMP_ATTACK: 'richter-jump-attack',
-            JUMP_SECONDARY_ATTACK: 'richter-jump-secondary-attack',
-            CROUCH: 'richter-crouch',
-            CROUCH_ATTACK: 'richter-crouch-attack',
-            LEFT: 'richter-walk',
-            RIGHT: 'richter-walk',
-            HURT: 'richter-hurt',
-            FALL: 'richter-fall',
-            BACK_FLIP: 'richter-back-flip',
-            UPSTAIR: 'richter-stair-up',
-            UPSTAIR_ATTACK: 'richter-stair-up-attack',
-            UPSTAIR_SECONDARY_ATTACK: 'richter-stair-up-secondary-attack',
-            DOWNSTAIR: 'richter-stair-down',
-            DOWNSTAIR_ATTACK: 'richter-stair-down-attack',
-            DOWNSTAIR_SECONDARY_ATTACK: 'richter-stair-down-secondary-attack',
-            ATTACK: 'richter-attack',
-            SECONDARY_ATTACK: 'richter-attack2',
-            DEAD: 'richter-dead'
+            IDLE: `${this.name}-idle`,
+            JUMP: `${this.name}-jump`,
+            JUMP_ATTACK: `${this.name}-jump-attack`,
+            JUMP_SECONDARY_ATTACK: `${this.name}-jump-secondary-attack`,
+            CROUCH: `${this.name}-crouch`,
+            CROUCH_ATTACK: `${this.name}-crouch-attack`,
+            LEFT: `${this.name}-walk`,
+            RIGHT: `${this.name}-walk`,
+            HURT: `${this.name}-hurt`,
+            FALL: `${this.name}-fall`,
+            BACK_FLIP: `${this.name}-back-flip`,
+            UPSTAIR: `${this.name}-stair-up`,
+            UPSTAIR_ATTACK: `${this.name}-stair-up-attack`,
+            UPSTAIR_SECONDARY_ATTACK: `${this.name}-stair-up-secondary-attack`,
+            DOWNSTAIR: `${this.name}-stair-down`,
+            DOWNSTAIR_ATTACK: `${this.name}-stair-down-attack`,
+            DOWNSTAIR_SECONDARY_ATTACK: `${this.name}-stair-down-secondary-attack`,
+            ATTACK: `${this.name}-attack`,
+            SECONDARY_ATTACK: `${this.name}-attack2`,
+            DEAD: `${this.name}-dead`
         };
+
+        this.attackFrames = [
+            `${this.name}-attack_2`,
+            `${this.name}-crouch-attack_2`,
+            `${this.name}-jump-attack_2`,
+            `${this.name}-stair-up-attack_2`,
+            `${this.name}-stair-down-attack_2`
+        ];
 
         this.body.setMaxVelocity(this.physicsProperties.speed, this.physicsProperties.speed * 4)
             .setSize(16, 16)
@@ -221,7 +242,7 @@ export default class Player extends Entity
         if (this.physicsProperties.isDead && this.anims.getName() !== this.animList.DEAD)
         {
             this.anims.stop();
-            this.setFrame('richter-dead');
+            this.setFrame(`${this.name}-dead`);
         }
 
         if (!this.physicsProperties.isDead
@@ -337,9 +358,9 @@ export default class Player extends Entity
 
     private dropSecondaryWeapon()
     {
-        if (this.scene.playersSecondaryWeaponGroup.getLength() === 0) return;
+        if (this.secondaryWeaponGroup.getLength() === 0) return;
 
-        const secondaryWeaponName = this.scene.playersSecondaryWeaponGroup.getChildren()[0].name;
+        const secondaryWeaponName = this.secondaryWeaponGroup.getChildren()[0].name;
 
         const weapon = new WeaponRetrievableItem({ scene: this.scene, x: this.x, y: this.y, texture: ATLAS_NAMES.ITEMS, frame: secondaryWeaponName, quantity: 1, name: secondaryWeaponName })
 
@@ -371,11 +392,11 @@ export default class Player extends Entity
         {
             case TILE_ITEMS.DOUBLE_SHOT:
                 {
-                    if (this.scene.playersSecondaryWeaponGroup.getLength() === 0) return;
+                    if (this.secondaryWeaponGroup.getLength() === 0) return;
 
                     this.setMultipleShots(2);
 
-                    const secondaryWeaponName = this.scene.playersSecondaryWeaponGroup.getChildren()[0].name;
+                    const secondaryWeaponName = this.secondaryWeaponGroup.getChildren()[0].name;
 
                     this.addSecondaryWeapon(secondaryWeaponName as WEAPON_NAMES);
 
@@ -384,11 +405,11 @@ export default class Player extends Entity
 
             case TILE_ITEMS.TRIPLE_SHOT:
                 {
-                    if (this.scene.playersSecondaryWeaponGroup.getLength() === 0) return;
+                    if (this.secondaryWeaponGroup.getLength() === 0) return;
 
                     this.setMultipleShots(3);
 
-                    const secondaryWeaponName = this.scene.playersSecondaryWeaponGroup.getChildren()[0].name;
+                    const secondaryWeaponName = this.secondaryWeaponGroup.getChildren()[0].name;
 
                     this.addSecondaryWeapon(secondaryWeaponName as WEAPON_NAMES);
 
@@ -432,12 +453,19 @@ export default class Player extends Entity
     {
         this.multipleShots = value;
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.SHOTS, value);
+        if (this.player === 'A')
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.SHOTS_PLAYER_A, value);
+        }
+        else
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.SHOTS_PLAYER_B, value);
+        }
     }
 
     public addSecondaryWeapon(weaponType: WEAPON_NAMES)
     {
-        let secondaryWeaponName: string | null = this.scene.playersSecondaryWeaponGroup.getChildren()[0]?.name;
+        let secondaryWeaponName: string | null = this.secondaryWeaponGroup.getChildren()[0]?.name;
 
         if (secondaryWeaponName !== weaponType && this.multipleShots > 1)
         {
@@ -471,14 +499,22 @@ export default class Player extends Entity
             default:
                 this.clearSecondaryWeapons();
 
-                this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'no weapon');
+                if (this.player === 'A')
+                {
+                    this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_A, 'no weapon');
+                }
+                else
+                {
+                    this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_B, 'no weapon');
+                }
+
                 break;
         }
     }
 
     private clearSecondaryWeapons()
     {
-        this.scene.playersSecondaryWeaponGroup.clear(true, true);
+        this.secondaryWeaponGroup.clear(true, true);
     }
 
     private addCross()
@@ -505,7 +541,14 @@ export default class Player extends Entity
             this.secondaryWeaponGroup.add(weapon);
         }
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, WEAPON_NAMES.CROSS);
+        if (this.player === 'A')
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_A, WEAPON_NAMES.CROSS);
+        }
+        else
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_B, WEAPON_NAMES.CROSS);
+        }
     }
 
     private addHolyWater()
@@ -532,7 +575,14 @@ export default class Player extends Entity
             this.secondaryWeaponGroup.add(weapon);
         }
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, 'holy-water');
+        if (this.player === 'A')
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_A, 'holy-water');
+        }
+        else
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_B, 'holy-water');
+        }
     }
 
     private addAxe()
@@ -559,7 +609,14 @@ export default class Player extends Entity
             this.secondaryWeaponGroup.add(weapon);
         }
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, WEAPON_NAMES.AXE);
+        if (this.player === 'A')
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_A, WEAPON_NAMES.AXE);
+        }
+        else
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_B, WEAPON_NAMES.AXE);
+        }
     }
 
     private addDagger()
@@ -586,7 +643,14 @@ export default class Player extends Entity
             this.secondaryWeaponGroup.add(weapon);
         }
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON, WEAPON_NAMES.DAGGER);
+        if (this.player === 'A')
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_A, WEAPON_NAMES.DAGGER);
+        }
+        else
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_B, WEAPON_NAMES.DAGGER);
+        }
     }
 
     public setDamage(damage: number): Entity
@@ -603,7 +667,14 @@ export default class Player extends Entity
 
             SaveLoadService.setSavedGameTime(this.scene);
 
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, this.status.health);
+            if (this.player === 'A')
+            {
+                this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH_PLAYER_A, this.status.health);
+            }
+            else
+            {
+                this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH_PLAYER_B, this.status.health);
+            }
 
             this.setTint(PALETTE_DB32.AFFAIR);
 
@@ -640,10 +711,13 @@ export default class Player extends Entity
 
         if (this.name === PLAYERS_NAMES.A)
         {
-            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH, 0);
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH_PLAYER_A, 0);
         }
 
-        this.setDead(true);
+        if (this.name === PLAYERS_NAMES.B)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH_PLAYER_B, 0);
+        }
 
         this.die();
 
@@ -652,7 +726,7 @@ export default class Player extends Entity
 
     public die(): void
     {
-        this.physicsProperties.isDead = true;
+        this.setDead(true);
 
         this.body.stop();
 
@@ -662,8 +736,6 @@ export default class Player extends Entity
 
         this.multipleShots = 1;
 
-        this.scene.stageCountdown.stop();
-
         SaveLoadService.setPlayerDeathCount();
 
         SaveLoadService.setSavedGameTime(this.scene);
@@ -671,6 +743,15 @@ export default class Player extends Entity
         this.clearSecondaryWeapons();
 
         this.scene.playSong(12, false);
+
+        if (this.scene.isCoop)
+        {
+            this.coopDie();
+
+            return;
+        }
+
+        this.scene.stageCountdown.stop();
 
         if (this.scene.isBossBattle)
         {
@@ -685,12 +766,20 @@ export default class Player extends Entity
             return;
         }
 
-        const currentSavedScore = JSON.parse(SaveLoadService.loadGameData() as string).score
+        const currentSavedScore = JSON.parse(SaveLoadService.loadGameData() as string).score;
+
         this.status.setHealth(16).setAmmo(5).setScore(currentSavedScore);
 
         SaveLoadService.saveGameData(this.status.toJson());
 
-        this.scene.events.emit(HUD_EVENTS_NAMES.LIFE, this.status.life);
+        if (this.player === 'A')
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_A, this.status.life);
+        }
+        else
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_B, this.status.life);
+        }
 
         this.scene.cameras.main.fade(1000);
 
@@ -703,8 +792,84 @@ export default class Player extends Entity
         });
     }
 
+    private coopDie()
+    {
+        const totalLife = this.scene.characters.map(elm => elm.status.life).reduce((a, b) => a + b, 0);
+
+        if (this.scene.isBossBattle && totalLife < 0)
+        {
+            Boss.endBossBattle(this.scene);
+        }
+
+        // GAME OVER
+        if (totalLife < 0)
+        {
+            this.scene.stageCountdown.stop();
+
+            this.gameOver();
+
+            return;
+        }
+
+        const currentSavedScore = JSON.parse(SaveLoadService.loadGameData() as string).score;
+
+        this.status.setHealth(16).setAmmo(5).setScore(currentSavedScore);
+
+        SaveLoadService.saveGameData(this.status.toJson());
+
+        if (this.player === 'A')
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_A, this.status.life);
+        }
+        else
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_B, this.status.life);
+        }
+
+        this.scene.time.addEvent({
+            delay: 2000,
+            callback: () =>
+            {
+                const { characters } = this.scene;
+
+                if (this === characters[0] && !characters[1].physicsProperties.isDead)
+                {
+                    this.body.reset(characters[1].body.center.x, characters[1].body.center.y - 16);
+                }
+                else if (this === characters[0] && characters[1].physicsProperties.isDead)
+                {
+                    const cam = this.scene.cameras.main;
+
+                    this.body.reset(cam.worldView.centerX, cam.worldView.centerY);
+                }
+
+                if (this === characters[1] && !characters[0].physicsProperties.isDead)
+                {
+                    this.body.reset(characters[0].body.center.x, characters[0].body.center.y - 16);
+                }
+                else if (this === characters[1] && characters[0].physicsProperties.isDead)
+                {
+                    const cam = this.scene.cameras.main;
+
+                    this.body.reset(cam.worldView.centerX, cam.worldView.centerY);
+                }
+
+                this.physicsProperties.isDead = false;
+                this.physicsProperties.isHurt = false;
+                this.physicsProperties.isAttacking = false;
+            }
+        });
+    }
+
     private gameOver()
     {
+        if (this.scene.isCoop)
+        {
+            this.coopGameOver();
+
+            return;
+        }
+
         const position = {
             x: 0,
             y: 0
@@ -784,6 +949,91 @@ export default class Player extends Entity
         this.scene.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
         {
             this.scene.scene.start(SCENES_NAMES.GAMEOVER, { retry: false })
+        });
+    }
+
+    private coopGameOver()
+    {
+        const position = {
+            x: 0,
+            y: 0
+        }
+
+        switch (Number(this.status.stage.toString()[0]))
+        {
+            case 1:
+                {
+                    position.x = 2 * TILE_SIZE;
+                    position.y = 69 * TILE_SIZE;
+                    break;
+                }
+            case 2:
+                {
+                    position.x = 226 * TILE_SIZE;
+                    position.y = 65 * TILE_SIZE;
+
+                    break;
+                }
+            case 3:
+                {
+                    position.x = 110 * TILE_SIZE;
+                    position.y = 30 * TILE_SIZE;
+
+                    break;
+                }
+            case 4:
+                {
+                    position.x = 276 * TILE_SIZE;
+                    position.y = 74 * TILE_SIZE;
+
+                    break;
+                }
+            case 5:
+                {
+                    position.x = 527 * TILE_SIZE;
+                    position.y = 67 * TILE_SIZE;
+
+                    break;
+                }
+            case 6:
+                {
+                    position.x = 478 * TILE_SIZE;
+                    position.y = 34 * TILE_SIZE;
+
+                    break;
+                }
+            case 7:
+                {
+                    position.x = 334 * TILE_SIZE;
+                    position.y = 19 * TILE_SIZE;
+
+                    break;
+                }
+            default:
+                break;
+        }
+
+        const currentSavedScore = JSON.parse(SaveLoadService.loadGameData() as string).score
+
+        this.scene.characters.forEach(character => character.setStatus({
+            health: 16,
+            life: 3,
+            score: currentSavedScore,
+            stage: this.status.stage,
+            ammo: 5,
+            canTakeStairs: false,
+            position: position
+        }));
+
+        SaveLoadService.saveGameData(this.status.toJson());
+
+        const stage = this.status.stage.toString().substring(0, 1) + 1;
+
+        this.scene.stageCountdown.reset(false, STAGE_COUNTDOWN[stage]);
+
+        this.scene.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
+        {
+            this.scene.scene.start(SCENES_NAMES.GAMEOVER)
         });
     }
 }

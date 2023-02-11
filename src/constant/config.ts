@@ -1,5 +1,5 @@
 // GENERAL
-export const isDev = false; // true for state logs, body debugs, l to save everywhere, y to delete gamedata
+export const isDev = true; // true for state logs, body debugs, l to save everywhere, y to delete gamedata
 export const GAMENAME: string = 'Castlevania';
 export const WIDTH: number = 256;
 export const HEIGHT: number = 208;
@@ -34,8 +34,8 @@ export const STAGE_BACKTRACK = [13, 62];
 // Players names
 export enum PLAYERS_NAMES
 {
-    A = 'playerA',
-    B = 'playerB',
+    A = 'simon',
+    B = 'richter',
     C = 'playerC',
     D = 'playerD'
 }
@@ -84,20 +84,27 @@ export const enum SCENES_NAMES
 
 export const enum HUD_EVENTS_NAMES
 {
-    HEALTH = 'hud-health',
-    HEART = 'hud-heart',
-    SCORE = 'hud-score',
-    LIFE = 'hud-life',
-    STAGE = 'hud-stage',
-    WEAPON = 'hud-weapon',
-    RESET = 'hud-reset',
-    SHOTS = 'hud-shots',
+    HEALTH_PLAYER_A = 'hud-health-player-a',
+    HEART_PLAYER_A = 'hud-heart-player-a',
+    SCORE_PLAYER_A = 'hud-score-player-a',
+    LIFE_PLAYER_A = 'hud-life-player-a',
+    STAGE_PLAYER_A = 'hud-stage-player-a',
+    WEAPON_PLAYER_A = 'hud-weapon-player-a',
+    RESET_PLAYER_A = 'hud-reset-player-a',
+    SHOTS_PLAYER_A = 'hud-shots-player-a',
+    HEALTH_PLAYER_B = 'hud-health-player-b',
+    HEART_PLAYER_B = 'hud-heart-player-b',
+    SCORE_PLAYER_B = 'hud-score-player-b',
+    LIFE_PLAYER_B = 'hud-life-player-b',
+    STAGE_PLAYER_B = 'hud-stage-player-b',
+    WEAPON_PLAYER_B = 'hud-weapon-player-b',
+    RESET_PLAYER_B = 'hud-reset-player-b',
+    SHOTS_PLAYER_B = 'hud-shots-player-b',
     BOSS_HEALTH = 'hud-boss-health'
 }
 
 export const enum ATLAS_NAMES
 {
-    PLAYER = 'atlas',
     ENEMIES = 'enemies',
     ITEMS = 'items'
 }

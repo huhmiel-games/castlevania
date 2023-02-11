@@ -183,7 +183,7 @@ export class BoneDragonIA implements IEnemyAI
             && cam.worldView.contains(center.x, center.y)
             && now > this.timeAttack)
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             if (Phaser.Math.Distance.BetweenPoints(center, player.damageBody.body.center) < 80 && player.body.center.x < center.x)
             {

@@ -1,5 +1,6 @@
 import { ENEMY_NAMES, EStates } from '../constant/character';
 import { PLAYERS_NAMES } from '../constant/config';
+import FakeWall from '../custom/FakeWall';
 import DamageBody from '../entities/DamageBody';
 import { Entity } from '../entities/Entity';
 import { MeleeWeapon } from '../entities/weapons/MeleeWeapon';
@@ -235,5 +236,13 @@ export default class ColliderService
 
             return true;
         }, scene).setName('enemiesVScolliderLayer');
+
+        // coop collisions
+        if(scene.isCoop)
+        {
+            const wallLeft = scene.children.getByName('fakeWallleft') as FakeWall;
+            const wallRight = scene.children.getByName('fakeWallright') as FakeWall;
+            scene.physics.add.collider(scene.characters, [wallLeft, wallRight], undefined, undefined, scene)
+        }
     }
 }

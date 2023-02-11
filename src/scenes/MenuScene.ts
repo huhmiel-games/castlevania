@@ -23,6 +23,7 @@ export default class MenuScene extends Phaser.Scene
         });
 
         this.startGameScene = this.startGameScene.bind(this);
+        this.startCoopGame = this.startCoopGame.bind(this);
         this.startOptionScene = this.startOptionScene.bind(this);
         this.resetGameData = this.resetGameData.bind(this);
         this.deleteGameData = this.deleteGameData.bind(this);
@@ -47,11 +48,17 @@ export default class MenuScene extends Phaser.Scene
 
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
 
-        this.actions = [this.startGameScene, this.startOptionScene, this.resetGameData];
+        this.actions = [this.startGameScene, this.startCoopGame, this.startOptionScene, this.resetGameData];
 
         const play1PButton = this.add.bitmapText(112, 148, FONTS.GALAXY, 'play', FONTS_SIZES.GALAXY, 1)
             .setOrigin(0.5, 0.5)
             .setName('play1PButton')
+            .setLetterSpacing(2)
+            .setAlpha(0);
+
+        const play2PButton = this.add.bitmapText(112, 148, FONTS.GALAXY, 'coop', FONTS_SIZES.GALAXY, 1)
+            .setOrigin(0.5, 0.5)
+            .setName('play2PButton')
             .setLetterSpacing(2)
             .setAlpha(0);
 
@@ -67,9 +74,9 @@ export default class MenuScene extends Phaser.Scene
             .setLetterSpacing(2)
             .setAlpha(0);
 
-        Phaser.Actions.AlignTo([play1PButton, optionButton, resetButton], Phaser.Display.Align.BOTTOM_LEFT);
+        Phaser.Actions.AlignTo([play1PButton, play2PButton, optionButton, resetButton], Phaser.Display.Align.BOTTOM_LEFT);
 
-        this.iconPosition = [play1PButton.y, optionButton.y, resetButton.y];
+        this.iconPosition = [play1PButton.y, play2PButton.y, optionButton.y, resetButton.y];
 
         this.anims.create({
             key: 'holy',
@@ -98,13 +105,7 @@ export default class MenuScene extends Phaser.Scene
             {
                 this.inputController.isActive = true;
 
-                play1PButton.setAlpha(1);
-
-                optionButton.setAlpha(1);
-
-                resetButton.setAlpha(1);
-
-                this.icon.setAlpha(1);
+                [play1PButton, play2PButton, optionButton, resetButton, this.icon].forEach(elm => elm.setAlpha(1));
             }
         });
 
@@ -126,7 +127,7 @@ export default class MenuScene extends Phaser.Scene
     {
         if (!this.isDeleteData)
         {
-            this.choice = Phaser.Math.Wrap(this.choice + 1, 0, 3);
+            this.choice = Phaser.Math.Wrap(this.choice + 1, 0, 4);
 
             this.icon.setPosition(this.icon.x, this.iconPosition[this.choice]);
         }
@@ -136,7 +137,7 @@ export default class MenuScene extends Phaser.Scene
     {
         if (!this.isDeleteData)
         {
-            this.choice = Phaser.Math.Wrap(this.choice - 1, 0, 3);
+            this.choice = Phaser.Math.Wrap(this.choice - 1, 0, 4);
 
             this.icon.setPosition(this.icon.x, this.iconPosition[this.choice]);
         }
@@ -197,6 +198,14 @@ export default class MenuScene extends Phaser.Scene
     startGameScene()
     {
         this.scene.start(SCENES_NAMES.GAME);
+    }
+
+    startCoopGame()
+    {
+        if(this.inputController.gamepadCount === 2)
+        {
+            this.scene.start(SCENES_NAMES.GAME, {coop: true})
+        }
     }
 
     startOptionScene()

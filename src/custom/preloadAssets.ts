@@ -1,8 +1,9 @@
-import { ATLAS_NAMES } from "../constant/config";
+import { ATLAS_NAMES, PLAYERS_NAMES } from "../constant/config";
 
 export default function preloadAssets(scene: Phaser.Scene)
 {
-    scene.load.atlas(ATLAS_NAMES.PLAYER, './assets/graphics/atlas/richter.png', './assets/graphics/atlas/richter.json');
+    scene.load.atlas(PLAYERS_NAMES.A, './assets/graphics/atlas/simon.png', './assets/graphics/atlas/simon.json');
+    scene.load.atlas(PLAYERS_NAMES.B, './assets/graphics/atlas/richter.png', './assets/graphics/atlas/richter.json');
     scene.load.atlas(ATLAS_NAMES.ITEMS, './assets/graphics/atlas/items.png', './assets/graphics/atlas/items.json');
     scene.load.atlas(ATLAS_NAMES.ENEMIES, './assets/graphics/atlas/enemies.png', './assets/graphics/atlas/enemies.json'); 
 

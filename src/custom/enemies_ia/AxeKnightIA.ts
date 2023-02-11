@@ -19,7 +19,7 @@ export class AxeKnightIA implements IEnemyAI
         this.scene = parent.scene;
         this.randomAttackTime = this.scene.time.now + 3000;
 
-        if (this.parent.body.center.x > this.scene.getPlayerByName(PLAYERS_NAMES.A).body.center.x)
+        if (this.parent.body.center.x > this.scene.getClosestPlayer(this.parent.damageBody).body.center.x)
         {
             this.parent.setFlipX(true);
         }
@@ -46,7 +46,7 @@ export class AxeKnightIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
         this.distanceToPlayer = Phaser.Math.Distance.BetweenPoints(player.body.center, center);
 

@@ -36,7 +36,7 @@ export class GiantBatBridgeIA implements IEnemyAI
 
         this.parent.anims.play(this.parent.animList.FLY!, true);
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
         const distance = Phaser.Math.Distance.BetweenPoints(player.damageBody.body.center, damageBody.body.center);
 

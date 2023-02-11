@@ -49,7 +49,7 @@ export class IgorIA implements IEnemyAI
 
         if (!this.isChasing) return;
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
         if (this.jumpTime < now
             && b.isUp

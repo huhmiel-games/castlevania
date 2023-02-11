@@ -11,7 +11,7 @@ import { InputController } from '../inputs/InputController';
 export default class GameOverScene extends Phaser.Scene
 {
     private inputController: InputController;
-    constructor(retry: boolean)
+    constructor()
     {
         super(SCENES_NAMES.GAMEOVER);
     }

@@ -42,7 +42,7 @@ export class BandageIA implements IEnemyAI
 
         if (left.isUp && right.isUp)
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             if (this.parent.canUse(EStates.FLY_LEFT) && player.damageBody.x < this.parent.body.x)
             {

@@ -55,7 +55,7 @@ export class Dracula2IA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
         // handle flipX
         if (blocked.down && this.parent.damageBody.body.right < player.body.left)

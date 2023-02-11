@@ -52,7 +52,7 @@ export class DragonHeadIA implements IEnemyAI
 
         if (!this.isAttacking && cam.worldView.contains(center.x, center.y))
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             const distance = Math.abs(center.x - player.body.center.x)
 
@@ -72,7 +72,7 @@ export class DragonHeadIA implements IEnemyAI
             && cam.worldView.contains(center.x, center.y)
             && now > this.timeAttack)
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             if ((center.x > player.body.center.x && this.parent.flipX) || (center.x < player.body.center.x && !this.parent.flipX))
             {

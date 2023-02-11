@@ -46,7 +46,7 @@ export class ZombieIA implements IEnemyAI
 
         if (left.isUp && right.isUp)
         {
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
             if (this.parent.canUse(EStates.LEFT) && player.damageBody.x < this.parent.body.x)
             {
