@@ -105,7 +105,7 @@ export default class GoDownstairRightState extends State
             {
                 character.body.reset(character.body.x + TILE_SIZE , character.body.y + TILE_SIZE / 2);
 
-                character.setFrame(character.frameList?.stairMiddle!);
+                character.setFrame(character.frameList?.stairMiddleUp!);
             }
             else
             {

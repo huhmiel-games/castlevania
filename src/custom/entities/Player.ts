@@ -117,7 +117,8 @@ export default class Player extends Entity
         this.frameList = {
             stairUp: `${this.name}-stair-up_`,
             stairDown: `${this.name}-stair-down_`,
-            stairMiddle: `${this.name}-walk_1`
+            stairMiddleDown: `${this.name}-stair-middle-left`,
+            stairMiddleUp: `${this.name}-stair-middle-right`,
         }
 
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
