@@ -41,20 +41,7 @@ export default function createAnims(scene: Phaser.Scene)
         frameRate: 4,
         repeat: 0,
     });
-    
-    scene.anims.create({
-        key: 'simon-back-flip',
-        frames: [
-            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_0' },
-            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_1' },
-            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_2' },
-            { key: PLAYERS_NAMES.A, frame: 'simon-back-flip_3' },
-            { key: PLAYERS_NAMES.A, frame: 'simon-crouch' }
-        ],
-        frameRate: 6,
-        repeat: 0,
-    });
-    
+
     scene.anims.create({
         key: 'simon-crouch',
         frames: [
