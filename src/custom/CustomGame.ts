@@ -7,6 +7,7 @@ import { WEAPON_NAMES } from "../constant/weapons";
 import enemyJSON from '../data/enemy.json';
 import DamageBody from "../entities/DamageBody";
 import { Entity } from "../entities/Entity";
+import BackFlipState from "../entities/states/jump/BackFlipState";
 import ThrowingKnife from "../entities/weapons/ThrowingKnife";
 import Weapon from "../entities/weapons/Weapon";
 import AmmoRetrievableItem from "../gameobjects/AmmoRetrievableItem";
@@ -120,6 +121,8 @@ export class CustomeGame implements ICustomGame
             frame: '',
             buttons: this.scene.inputController.playerAButtons
         });
+
+        playerA.canUseState.delete('backFlip');
 
         this.scene.characters.push(playerA);
 
