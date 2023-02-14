@@ -808,6 +808,48 @@
 					}
 				},
 				{
+					"filename": "richter-stair-middle-left",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 66,
+						"y": 17,
+						"w": 14,
+						"h": 31
+					},
+					"frame": {
+						"x": 58,
+						"y": 215,
+						"w": 14,
+						"h": 31
+					}
+				},
+				{
+					"filename": "richter-stair-middle-right",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 54,
+						"y": 17,
+						"w": 14,
+						"h": 31
+					},
+					"frame": {
+						"x": 76,
+						"y": 215,
+						"w": 14,
+						"h": 31
+					}
+				},
+				{
 					"filename": "richter-walk_1",
 					"rotated": false,
 					"trimmed": true,
@@ -822,7 +864,7 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 58,
+						"x": 94,
 						"y": 215,
 						"w": 14,
 						"h": 31
@@ -843,7 +885,7 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 76,
+						"x": 112,
 						"y": 215,
 						"w": 14,
 						"h": 31
@@ -864,8 +906,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 94,
-						"y": 215,
+						"x": 22,
+						"y": 192,
 						"w": 16,
 						"h": 30
 					}
@@ -885,92 +927,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 114,
-						"y": 215,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "richter-stair-up_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 57,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 134,
-						"y": 215,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "richter-stair-up_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 57,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 148,
-						"y": 179,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "richter-walk_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 56,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 154,
-						"y": 213,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "richter-walk_2",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 56,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 168,
-						"y": 179,
+						"x": 2,
+						"y": 206,
 						"w": 16,
 						"h": 30
 					}
@@ -991,9 +949,93 @@
 					},
 					"frame": {
 						"x": 22,
-						"y": 192,
+						"y": 226,
 						"w": 16,
 						"h": 24
+					}
+				},
+				{
+					"filename": "richter-stair-up_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 57,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 215,
+						"y": 144,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "richter-stair-up_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 57,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 235,
+						"y": 144,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "richter-walk_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 235,
+						"y": 178,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "richter-walk_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 130,
+						"y": 212,
+						"w": 16,
+						"h": 30
 					}
 				},
 				{
@@ -1011,8 +1053,8 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 2,
-						"y": 206,
+						"x": 148,
+						"y": 179,
 						"w": 16,
 						"h": 24
 					}
@@ -1032,8 +1074,8 @@
 						"h": 23
 					},
 					"frame": {
-						"x": 22,
-						"y": 220,
+						"x": 168,
+						"y": 179,
 						"w": 16,
 						"h": 23
 					}
