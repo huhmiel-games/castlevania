@@ -26,9 +26,7 @@ export class Boss extends Enemy
 
         this.scene.physics.world.setBounds(cam.scrollX, cam.scrollY, WIDTH, HEIGHT);
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
-
-        player.body.setCollideWorldBounds();
+        this.scene.characters.forEach(character => character.body.setCollideWorldBounds());
 
         this.scene.playSong(8);
     }
