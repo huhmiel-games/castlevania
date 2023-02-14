@@ -689,7 +689,7 @@ export default class GameScene extends Phaser.Scene
             delay: 1000,
             callback: () =>
             {
-                this.getPlayerByName(PLAYERS_NAMES.A).setActive(false).setVisible(false);
+                this.characters.forEach(character => character.setActive(false).setVisible(false));
 
                 LayerService.getGroundLayers(this).forEach(layer => layer.setAlpha(0));
 
