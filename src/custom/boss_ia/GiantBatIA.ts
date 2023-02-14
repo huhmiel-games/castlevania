@@ -33,7 +33,7 @@ export class GiantBatIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
         if (player.body.center.x > 3472 && !this.scene.isBossBattle)
         {

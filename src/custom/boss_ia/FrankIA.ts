@@ -34,7 +34,7 @@ export class FrankIA implements IEnemyAI
 
         const { left, right } = buttons;
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
         if (player.body.left > 519 * 16 && !this.scene.isBossBattle)
         {

@@ -67,7 +67,7 @@ export default class FireBall extends Phaser.GameObjects.Sprite implements Weapo
         this.body.reset(this.parent.body.x, this.parent.body.y + (offsetY || -8));
         this.body.setEnable(true);
 
-        const target: Entity | null = this.parent.config.withTarget ? this.scene.getPlayerByName(this.parent.config.withTarget) : null;
+        const target: Entity | null = this.parent.config.withTarget ? this.scene.getClosestPlayer(this.parent.damageBody) : null;
 
         if (this.parent instanceof Player)
         {

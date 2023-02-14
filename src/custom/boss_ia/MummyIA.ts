@@ -27,7 +27,7 @@ export class MummyIA implements IEnemyAI
 
         this.parent.anims.play(this.parent.animList.IDLE!);
 
-        if (this.scene.getPlayerByName(PLAYERS_NAMES.A).body.center.x < this.parent.body.center.x)
+        if (this.scene.getClosestPlayer(this.parent.damageBody).body.center.x < this.parent.body.center.x)
         {
             this.parent.setFlipX(true);
         }
@@ -43,7 +43,7 @@ export class MummyIA implements IEnemyAI
 
         const { left, right } = buttons;
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getClosestPlayer(this.parent.damageBody);
 
         if (player.body.left > 273 * 16 && !this.scene.isBossBattle)
         {
