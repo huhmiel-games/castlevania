@@ -1,5 +1,5 @@
 // GENERAL
-export const isDev = true; // true for state logs, body debugs, l to save everywhere, y to delete gamedata
+export const isDev = false; // true for state logs, body debugs, l to save everywhere, y to delete gamedata
 export const GAMENAME: string = 'Castlevania';
 export const WIDTH: number = 256;
 export const HEIGHT: number = 208;
@@ -35,14 +35,8 @@ export const STAGE_BACKTRACK = [13, 62];
 export enum PLAYERS_NAMES
 {
     A = 'simon',
-    B = 'richter',
-    C = 'playerC',
-    D = 'playerD'
+    B = 'richter'
 }
-// //export const PLAYER_A_NAME = 'playerA';
-// export const PLAYER_B_NAME = 'playerB';
-// export const PLAYER_C_NAME = 'playerC';
-// export const PLAYER_D_NAME = 'playerD';
 
 // Lights
 export const LIGHT_RADIUS: number = 24;
