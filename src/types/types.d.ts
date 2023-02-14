@@ -190,7 +190,7 @@ export type TEntityConfig = {
     collideWithWorld: boolean,
     secondaryAttackOffsetY?: number,
     alignToPlayer?: boolean,
-    withTarget?: string,
+    withTarget?: boolean,
     stunWith?: string[],
     resurrect: number
 }
@@ -267,7 +267,8 @@ export type TFrameList =
     {
         stairDown: string,
         stairUp: string,
-        stairMiddle: string
+        stairMiddleDown: string,
+        stairMiddleUp: string
     }
 
 export type TMeleeWeaponConfig = {

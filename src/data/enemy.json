@@ -914,7 +914,7 @@
         ],
         "collideWithWorld": true,
         "secondaryAttackOffsetY": 10,
-        "withTarget": "playerA",
+        "withTarget": true,
         "resurrect": 0
     },
     "bone-dragon-body": {
@@ -1473,7 +1473,7 @@
         ],
         "resurrect": 0,
         "collideWithWorld": true,
-        "withTarget": "playerA",
+        "withTarget": true,
         "secondaryAttackOffsetY": 8
     },
     "death": {
@@ -1539,7 +1539,7 @@
         ],
         "collideWithWorld": true,
         "resurrect": 0,
-        "withTarget": "playerA"
+        "withTarget": true
     },
     "dracula": {
         "config": {
