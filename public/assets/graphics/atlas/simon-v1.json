@@ -39,7 +39,7 @@
 						"h": 64
 					},
 					"spriteSourceSize": {
-						"x": 56,
+						"x": 58,
 						"y": 18,
 						"w": 64,
 						"h": 30
@@ -73,7 +73,7 @@
 					}
 				},
 				{
-					"filename": "simon-crouch-attack_0",
+					"filename": "simon-attack_0",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -81,8 +81,8 @@
 						"h": 64
 					},
 					"spriteSourceSize": {
-						"x": 40,
-						"y": 25,
+						"x": 42,
+						"y": 18,
 						"w": 32,
 						"h": 31
 					},
@@ -157,7 +157,7 @@
 					}
 				},
 				{
-					"filename": "simon-jump-attack_0",
+					"filename": "simon-crouch-attack_0",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -165,8 +165,8 @@
 						"h": 64
 					},
 					"spriteSourceSize": {
-						"x": 41,
-						"y": 17,
+						"x": 40,
+						"y": 25,
 						"w": 32,
 						"h": 31
 					},
@@ -199,7 +199,7 @@
 					}
 				},
 				{
-					"filename": "simon-jump-attack_1",
+					"filename": "simon-jump-attack_0",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -220,27 +220,6 @@
 					}
 				},
 				{
-					"filename": "simon-attack2_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 49,
-						"y": 18,
-						"w": 24,
-						"h": 30
-					},
-					"frame": {
-						"x": 174,
-						"y": 36,
-						"w": 24,
-						"h": 30
-					}
-				},
-				{
 					"filename": "simon-stair-down-attack2_0",
 					"rotated": false,
 					"trimmed": true,
@@ -250,19 +229,19 @@
 					},
 					"spriteSourceSize": {
 						"x": 50,
-						"y": 18,
+						"y": 17,
 						"w": 24,
-						"h": 30
+						"h": 31
 					},
 					"frame": {
 						"x": 174,
-						"y": 70,
+						"y": 36,
 						"w": 24,
-						"h": 30
+						"h": 31
 					}
 				},
 				{
-					"filename": "simon-stair-up-attack2_0",
+					"filename": "simon-jump-attack_1",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -270,29 +249,8 @@
 						"h": 64
 					},
 					"spriteSourceSize": {
-						"x": 49,
-						"y": 18,
-						"w": 24,
-						"h": 30
-					},
-					"frame": {
-						"x": 174,
-						"y": 104,
-						"w": 24,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-stair-down-attack_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 42,
-						"y": 18,
+						"x": 41,
+						"y": 17,
 						"w": 32,
 						"h": 31
 					},
@@ -346,6 +304,27 @@
 					}
 				},
 				{
+					"filename": "simon-stair-down-attack_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 42,
+						"y": 18,
+						"w": 32,
+						"h": 31
+					},
+					"frame": {
+						"x": 66,
+						"y": 70,
+						"w": 32,
+						"h": 31
+					}
+				},
+				{
 					"filename": "simon-stair-up-attack_0",
 					"rotated": false,
 					"trimmed": true,
@@ -360,52 +339,10 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 202,
-						"y": 72,
+						"x": 102,
+						"y": 70,
 						"w": 32,
 						"h": 31
-					}
-				},
-				{
-					"filename": "simon-attack_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 40,
-						"y": 18,
-						"w": 32,
-						"h": 30
-					},
-					"frame": {
-						"x": 202,
-						"y": 107,
-						"w": 32,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-attack2_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 57,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 238,
-						"y": 107,
-						"w": 16,
-						"h": 30
 					}
 				},
 				{
@@ -417,16 +354,37 @@
 						"h": 64
 					},
 					"spriteSourceSize": {
-						"x": 40,
+						"x": 42,
 						"y": 18,
 						"w": 32,
 						"h": 30
 					},
 					"frame": {
-						"x": 66,
-						"y": 70,
+						"x": 2,
+						"y": 99,
 						"w": 32,
 						"h": 30
+					}
+				},
+				{
+					"filename": "simon-stair-up-attack2_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 49,
+						"y": 17,
+						"w": 24,
+						"h": 31
+					},
+					"frame": {
+						"x": 38,
+						"y": 99,
+						"w": 24,
+						"h": 31
 					}
 				},
 				{
@@ -444,8 +402,8 @@
 						"h": 23
 					},
 					"frame": {
-						"x": 102,
-						"y": 70,
+						"x": 2,
+						"y": 133,
 						"w": 32,
 						"h": 23
 					}
@@ -472,6 +430,48 @@
 					}
 				},
 				{
+					"filename": "simon-attack2_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 50,
+						"y": 18,
+						"w": 24,
+						"h": 30
+					},
+					"frame": {
+						"x": 174,
+						"y": 71,
+						"w": 24,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-stair-up-attack_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 41,
+						"y": 17,
+						"w": 31,
+						"h": 31
+					},
+					"frame": {
+						"x": 138,
+						"y": 86,
+						"w": 31,
+						"h": 31
+					}
+				},
+				{
 					"filename": "simon-stair-down-attack_1",
 					"rotated": false,
 					"trimmed": true,
@@ -486,29 +486,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 138,
-						"y": 86,
-						"w": 31,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-stair-up-attack_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 42,
-						"y": 18,
-						"w": 31,
-						"h": 30
-					},
-					"frame": {
-						"x": 102,
-						"y": 97,
+						"x": 202,
+						"y": 72,
 						"w": 31,
 						"h": 30
 					}
@@ -528,8 +507,8 @@
 						"h": 23
 					},
 					"frame": {
-						"x": 137,
-						"y": 120,
+						"x": 173,
+						"y": 105,
 						"w": 24,
 						"h": 23
 					}
@@ -549,8 +528,8 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 165,
-						"y": 138,
+						"x": 201,
+						"y": 106,
 						"w": 22,
 						"h": 31
 					}
@@ -564,14 +543,14 @@
 						"h": 64
 					},
 					"spriteSourceSize": {
-						"x": 57,
+						"x": 58,
 						"y": 18,
 						"w": 22,
 						"h": 30
 					},
 					"frame": {
-						"x": 165,
-						"y": 173,
+						"x": 173,
+						"y": 132,
 						"w": 22,
 						"h": 30
 					}
@@ -591,8 +570,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 165,
-						"y": 207,
+						"x": 227,
+						"y": 107,
 						"w": 22,
 						"h": 30
 					}
@@ -612,8 +591,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 2,
-						"y": 99,
+						"x": 227,
+						"y": 141,
 						"w": 22,
 						"h": 30
 					}
@@ -633,14 +612,14 @@
 						"h": 23
 					},
 					"frame": {
-						"x": 28,
-						"y": 99,
+						"x": 199,
+						"y": 141,
 						"w": 22,
 						"h": 23
 					}
 				},
 				{
-					"filename": "simon-walk_2",
+					"filename": "simon-attack2_1",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -648,15 +627,15 @@
 						"h": 64
 					},
 					"spriteSourceSize": {
-						"x": 55,
+						"x": 58,
 						"y": 18,
-						"w": 17,
+						"w": 16,
 						"h": 30
 					},
 					"frame": {
-						"x": 54,
-						"y": 104,
-						"w": 17,
+						"x": 199,
+						"y": 168,
+						"w": 16,
 						"h": 30
 					}
 				},
@@ -675,56 +654,14 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 28,
-						"y": 131,
+						"x": 219,
+						"y": 175,
 						"w": 16,
 						"h": 30
 					}
 				},
 				{
-					"filename": "simon-hurt_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 56,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 2,
-						"y": 133,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-idle",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 56,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 75,
-						"y": 104,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-stair-down_0",
+					"filename": "simon-stair-down-attack2_1",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -734,140 +671,14 @@
 					"spriteSourceSize": {
 						"x": 58,
 						"y": 18,
-						"w": 16,
+						"w": 15,
 						"h": 30
 					},
 					"frame": {
-						"x": 95,
-						"y": 131,
-						"w": 16,
+						"x": 239,
+						"y": 175,
+						"w": 15,
 						"h": 30
-					}
-				},
-				{
-					"filename": "simon-stair-down_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 58,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 115,
-						"y": 131,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-stair-up-attack2_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 57,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 135,
-						"y": 147,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-stair-up_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 57,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 48,
-						"y": 138,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-stair-up_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 57,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 22,
-						"y": 165,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-walk_0",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 56,
-						"y": 18,
-						"w": 16,
-						"h": 30
-					},
-					"frame": {
-						"x": 2,
-						"y": 167,
-						"w": 16,
-						"h": 30
-					}
-				},
-				{
-					"filename": "simon-crouch-attack2_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 56,
-						"y": 25,
-						"w": 16,
-						"h": 23
-					},
-					"frame": {
-						"x": 68,
-						"y": 138,
-						"w": 16,
-						"h": 23
 					}
 				},
 				{
@@ -885,8 +696,8 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 2,
-						"y": 201,
+						"x": 239,
+						"y": 209,
 						"w": 11,
 						"h": 31
 					}
@@ -906,8 +717,8 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 17,
-						"y": 201,
+						"x": 2,
+						"y": 209,
 						"w": 11,
 						"h": 31
 					}
@@ -927,10 +738,136 @@
 						"h": 31
 					},
 					"frame": {
-						"x": 32,
-						"y": 199,
+						"x": 2,
+						"y": 166,
 						"w": 11,
 						"h": 31
+					}
+				},
+				{
+					"filename": "simon-hurt_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 17,
+						"y": 209,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-idle",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 17,
+						"y": 166,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-stair-down_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 58,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 37,
+						"y": 209,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-stair-down_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 58,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 37,
+						"y": 166,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-crouch-attack2_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 25,
+						"w": 16,
+						"h": 23
+					},
+					"frame": {
+						"x": 38,
+						"y": 134,
+						"w": 16,
+						"h": 23
+					}
+				},
+				{
+					"filename": "simon-stair-up-attack2_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 57,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 57,
+						"y": 161,
+						"w": 16,
+						"h": 30
 					}
 				},
 				{
@@ -948,31 +885,10 @@
 						"h": 23
 					},
 					"frame": {
-						"x": 42,
-						"y": 172,
+						"x": 58,
+						"y": 134,
 						"w": 16,
 						"h": 23
-					}
-				},
-				{
-					"filename": "simon-stair-down-attack2_1",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 128,
-						"h": 64
-					},
-					"spriteSourceSize": {
-						"x": 58,
-						"y": 18,
-						"w": 15,
-						"h": 30
-					},
-					"frame": {
-						"x": 47,
-						"y": 199,
-						"w": 15,
-						"h": 30
 					}
 				},
 				{
@@ -990,10 +906,94 @@
 						"h": 23
 					},
 					"frame": {
-						"x": 62,
-						"y": 172,
+						"x": 77,
+						"y": 105,
 						"w": 16,
 						"h": 23
+					}
+				},
+				{
+					"filename": "simon-stair-up_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 57,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 57,
+						"y": 209,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-stair-up_1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 57,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 77,
+						"y": 209,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-walk_0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 77,
+						"y": 166,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "simon-walk_2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 56,
+						"y": 18,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 78,
+						"y": 132,
+						"w": 16,
+						"h": 30
 					}
 				}
 			]

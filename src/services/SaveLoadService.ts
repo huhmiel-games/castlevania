@@ -90,6 +90,47 @@ export default class SaveLoadService
 
         return JSON.parse(worldJson || '{}');
     }
+
+    public static getUuid(): string
+    {
+        const uuid = localStorage.getItem(`${GAMENAME}_uuid`);
+
+        if(!uuid)
+        {
+            return this.setUuid();
+        }
+
+        return uuid;
+    }
+
+    public static setUuid(): string
+    {
+        const uuid = Phaser.Math.RND.uuid();
+
+        localStorage.setItem(`${GAMENAME}_uuid`, uuid);
+
+        return uuid;
+    }
+
+    public static getGameDifficulty(): number
+    {
+        const mode = localStorage.getItem(`${GAMENAME}_gameMode`);
+
+        if(!mode)
+        {
+            return this.setGameDifficulty();
+        }
+
+        return +mode;
+    }
+
+    public static setGameDifficulty(nbr: number = 1): number
+    {
+        localStorage.setItem(`${GAMENAME}_gameMode`, nbr.toString());
+
+        return nbr;
+    }
+    
     // #endregion
 
     // #region TIME

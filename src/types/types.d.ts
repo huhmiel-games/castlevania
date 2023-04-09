@@ -233,7 +233,8 @@ export type TPhysicsProperties =
         isAttacking: boolean,
         isPaused: boolean,
         sinHeight?: number,
-        jumpHeight?: number
+        jumpHeight?: number,
+        isGameOver?: boolean
     }
 
 export type TAnimationList =
@@ -267,8 +268,8 @@ export type TFrameList =
     {
         stairDown: string,
         stairUp: string,
-        stairMiddleDown: string,
-        stairMiddleUp: string
+        stairMiddleLeft: string,
+        stairMiddleRight: string
     }
 
 export type TMeleeWeaponConfig = {

@@ -36,7 +36,7 @@ export class BatBlueIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getClosestPlayer(this.parent.damageBody);
+        const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
         const distance = Phaser.Math.Distance.BetweenPoints(center, player.body.center);
 

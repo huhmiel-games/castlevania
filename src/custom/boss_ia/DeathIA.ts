@@ -42,7 +42,7 @@ export class DeathIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getClosestPlayer(this.parent.damageBody);
+        const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
         // starts the battle
         if (player.body.center.x < 487 * 16 && !this.scene.isBossBattle)

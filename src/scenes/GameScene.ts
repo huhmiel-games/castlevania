@@ -54,7 +54,6 @@ export default class GameScene extends Phaser.Scene
     public isChangingStage: boolean = false;
     public stageCountdown = new StageCountDown(this);
     public isPaused: boolean = false;
-
     debugGraphics: Phaser.GameObjects.Graphics;
     smokeGroup: Phaser.GameObjects.Group;
     puffGroup: Phaser.GameObjects.Group;
@@ -119,6 +118,7 @@ export default class GameScene extends Phaser.Scene
             .setBoundsCollision(true, true, true, true);
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
         // create groups
         this.createGroups();
 
@@ -181,6 +181,24 @@ export default class GameScene extends Phaser.Scene
 
         if (this.isCoop)
         {
+            if (this.characters[0].physicsProperties.isGameOver === true)
+            {
+                this.children.getByName('fakeWallleft')?.destroy();
+                this.children.getByName('fakeWallright')?.destroy();
+
+                this.cameraFollowPlayer(this.characters[1]);
+                return;
+            }
+
+            if (this.characters[1].physicsProperties.isGameOver === true)
+            {
+                this.children.getByName('fakeWallleft')?.destroy();
+                this.children.getByName('fakeWallright')?.destroy();
+
+                this.cameraFollowPlayer(this.characters[0]);
+                return;
+            }
+
             const cam = this.cameras.main;
             const distance = Math.abs(this.characters[0].body.center.x - this.characters[1].body.center.x);
 
@@ -409,7 +427,7 @@ export default class GameScene extends Phaser.Scene
     {
         const stages = LayerService.getObjectLayerByName(this, 'stage');
 
-        const player = this.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.getPlayerA();
 
         if (!stages) throw new Error(`no layer named stage found`);
 
@@ -499,7 +517,7 @@ export default class GameScene extends Phaser.Scene
 
     private changeMajorStage(stage: number)
     {
-        const player = this.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.getPlayerA();
 
         player.status.stage = stage;
 
@@ -516,7 +534,7 @@ export default class GameScene extends Phaser.Scene
         }
 
         warn('changing stage'.toUpperCase());
-        const player = this.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.getPlayerA();
 
         if (!player) throw new Error("No player found");
 
@@ -540,11 +558,14 @@ export default class GameScene extends Phaser.Scene
 
         if (!player.physicsProperties.isDead && player.status.health > 0 && (player.status.life ?? 1) > 0)
         {
-            player.status.setPosition({ x: player.x, y: player.y });
+            if(player.status.stage !== 73)
+            {
+                player.status.setPosition({ x: player.x, y: player.y });
 
-            SaveLoadService.saveGameData(player.status.toJson());
+                SaveLoadService.saveGameData(player.status.toJson());
 
-            this.stageCountdown.save();
+                this.stageCountdown.save();
+            }
         }
     }
 
@@ -558,14 +579,13 @@ export default class GameScene extends Phaser.Scene
 
         this.stageCountdown.stop();
 
-        const player = this.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.getPlayerA();
 
         this.playSong(10, false);
 
         this.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
         {
             orb?.destroy();
-
 
             const timerTime = this.time.addEvent({
                 delay: 50,
@@ -627,7 +647,7 @@ export default class GameScene extends Phaser.Scene
 
         this.stageCountdown.stop();
 
-        const player = this.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.getPlayerA();
 
         this.playSong(11, false);
         this.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
@@ -747,7 +767,7 @@ export default class GameScene extends Phaser.Scene
 
                     if (title === 'your score')
                     {
-                        const content = `score: ${this.getPlayerByName(PLAYERS_NAMES.A).status.score}\ndeath: ${SaveLoadService.getPlayerDeathCount()}\nenemies killed: ${SaveLoadService.getEnemiesDeathCount()}\ntime: ${SaveLoadService.getSavedGameTimeToString()}`;
+                        const content = `score: ${this.getPlayerA().status.score}\ndeath: ${SaveLoadService.getPlayerDeathCount()}\nenemies killed: ${SaveLoadService.getEnemiesDeathCount()}\ntime: ${SaveLoadService.getSavedGameTimeToString()}`;
 
                         crediText.setText(`${title}\n${content}`).setLeftAlign();
 
@@ -862,31 +882,44 @@ export default class GameScene extends Phaser.Scene
         })
     }
 
-    public cameraFollowPlayer(): Phaser.Cameras.Scene2D.Camera
+    public cameraFollowPlayer(player: Entity = this.characters[0]): Phaser.Cameras.Scene2D.Camera
     {
-        if (this.characters.length === 1)
-        {
-            this.cameras.main.startFollow(this.getPlayerByName(PLAYERS_NAMES.A), true, 0.2, 0.1, 0, 0)
-                .setDeadzone(4, 32)
-                .setRoundPixels(true)
-                .setBackgroundColor(PALETTE_DB32.BLACK);
-        }
+        this.cameras.main.startFollow(player, true, 0.2, 0.1, 0, 0)
+            .setDeadzone(4, 32)
+            .setRoundPixels(true)
+            .setBackgroundColor(PALETTE_DB32.BLACK);
 
         return this.cameras.main;
     }
 
-    public getPlayerByName(playerName: string): Entity
+    public getPlayerA(): Entity
     {
-        const player = this.children.getByName(playerName);
+        const player = this.characters.find(character => character.physicsProperties.isDead === false);
 
-        if (player === null) throw new Error(`no player named ${playerName} found`);
-
-        return player as Entity;
+        if(player) return player;
+        
+        return this.characters[0];
     }
 
-    public getClosestPlayer(enemyBody: DamageBody): Entity
+    public getClosestAlivePlayer(enemyBody: DamageBody): Entity
     {
         if (this.isCoop === false) return this.characters[0];
+
+        if (this.characters[0]?.physicsProperties.isGameOver === true
+            && this.characters[1]?.physicsProperties.isGameOver === false
+        ) return this.characters[1];
+
+        if (this.characters[1]?.physicsProperties.isGameOver === true
+            && this.characters[0]?.physicsProperties.isGameOver === false
+        ) return this.characters[0];
+
+        if (
+            this.characters[0]?.physicsProperties.isGameOver &&
+            this.characters[1]?.physicsProperties.isGameOver
+        )
+        {
+            return this.characters[0];
+        }
 
         const distanceA = Phaser.Math.Distance.BetweenPoints(enemyBody, this.characters[0].damageBody);
 

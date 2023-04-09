@@ -107,7 +107,7 @@ export default class ColliderService
                 {
                     tile.properties.saveBlock = false;
 
-                    const player = scene.getPlayerByName(PLAYERS_NAMES.A);
+                    const player = scene.characters[0];
 
                     if (!player.physicsProperties.isDead && player.status.health > 0 && (player.status.life ?? 1) > 0)
                     {
@@ -128,7 +128,7 @@ export default class ColliderService
                 {
                     const tileStage = scene.getTileStage(tile);
 
-                    const player = scene.getPlayerByName(PLAYERS_NAMES.A);
+                    const player = scene.characters[0];
 
                     if (tileStage && tileStage === player.status.stage)
                     {

@@ -32,7 +32,7 @@ import AmmoRetrievableItem from "../../gameobjects/AmmoRetrievableItem";
 import ScoreRetrievableItem from "../../gameobjects/ScoreRetrievableItem";
 import WeaponRetrievableItem from "../../gameobjects/WeaponRetrievableItem";
 import SaveLoadService from "../../services/SaveLoadService";
-import { TCharacterConfig, TStatus } from "../../types/types";
+import { TCharacterConfig, TCoord, TStatus } from "../../types/types";
 import StateMachine from "../../utils/StateMachine";
 import StairAttackState from "../../entities/states/attack/StairAttackState";
 import StairSecondaryAttackState from "../../entities/states/attack/StairSecondaryAttackState";
@@ -44,6 +44,7 @@ import { Orb } from "../../gameobjects/Orb";
 import { Boss } from "./Boss";
 import { TILE_ITEMS } from "../../constant/tiles";
 import { WEAPON_NAMES } from "../../constant/weapons";
+import sendDeathStat from "../../utils/sendStat";
 
 export default class Player extends Entity
 {
@@ -80,7 +81,8 @@ export default class Player extends Entity
                 isHurt: false,
                 isDead: false,
                 isAttacking: false,
-                isPaused: false
+                isPaused: false,
+                isGameOver: false
             });
 
         this.setMultipleShots(1);
@@ -114,11 +116,11 @@ export default class Player extends Entity
             SaveLoadService.saveGameData(this.status.toJson());
         }
 
-        this.frameList = {
+        this.frameStairList = {
             stairUp: `${this.name}-stair-up_`,
             stairDown: `${this.name}-stair-down_`,
-            stairMiddleDown: `${this.name}-stair-middle-left`,
-            stairMiddleUp: `${this.name}-stair-middle-right`,
+            stairMiddleLeft: `${this.name}-stair-middle-left`,
+            stairMiddleRight: `${this.name}-stair-middle-right`,
         }
 
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () =>
@@ -164,28 +166,7 @@ export default class Player extends Entity
 
         this.scene?.events.on('enemy-score', (score: number) => this.status.setScore(this.status.score + score));
 
-        this.animList = {
-            IDLE: `${this.name}-idle`,
-            JUMP: `${this.name}-jump`,
-            JUMP_ATTACK: `${this.name}-jump-attack`,
-            JUMP_SECONDARY_ATTACK: `${this.name}-jump-secondary-attack`,
-            CROUCH: `${this.name}-crouch`,
-            CROUCH_ATTACK: `${this.name}-crouch-attack`,
-            LEFT: `${this.name}-walk`,
-            RIGHT: `${this.name}-walk`,
-            HURT: `${this.name}-hurt`,
-            FALL: `${this.name}-fall`,
-            BACK_FLIP: `${this.name}-back-flip`,
-            UPSTAIR: `${this.name}-stair-up`,
-            UPSTAIR_ATTACK: `${this.name}-stair-up-attack`,
-            UPSTAIR_SECONDARY_ATTACK: `${this.name}-stair-up-secondary-attack`,
-            DOWNSTAIR: `${this.name}-stair-down`,
-            DOWNSTAIR_ATTACK: `${this.name}-stair-down-attack`,
-            DOWNSTAIR_SECONDARY_ATTACK: `${this.name}-stair-down-secondary-attack`,
-            ATTACK: `${this.name}-attack`,
-            SECONDARY_ATTACK: `${this.name}-attack2`,
-            DEAD: `${this.name}-dead`
-        };
+        this.setAnimList();
 
         this.attackFrames = [
             `${this.name}-attack_2`,
@@ -254,6 +235,37 @@ export default class Player extends Entity
         {
             this.die();
         }
+    }
+
+    public setAnimList()
+    {
+        this.animList = {
+            IDLE: `${this.name}-idle`,
+            JUMP: `${this.name}-jump`,
+            JUMP_ATTACK: `${this.name}-jump-attack`,
+            JUMP_SECONDARY_ATTACK: `${this.name}-jump-secondary-attack`,
+            CROUCH: `${this.name}-crouch`,
+            CROUCH_ATTACK: `${this.name}-crouch-attack`,
+            LEFT: `${this.name}-walk`,
+            RIGHT: `${this.name}-walk`,
+            HURT: `${this.name}-hurt`,
+            FALL: `${this.name}-fall`,
+            BACK_FLIP: `${this.name}-back-flip`,
+            UPSTAIR: `${this.name}-stair-up`,
+            UPSTAIR_ATTACK: `${this.name}-stair-up-attack`,
+            UPSTAIR_SECONDARY_ATTACK: `${this.name}-stair-up-secondary-attack`,
+            DOWNSTAIR: `${this.name}-stair-down`,
+            DOWNSTAIR_ATTACK: `${this.name}-stair-down-attack`,
+            DOWNSTAIR_SECONDARY_ATTACK: `${this.name}-stair-down-secondary-attack`,
+            ATTACK: `${this.name}-attack`,
+            SECONDARY_ATTACK: `${this.name}-attack2`,
+            DEAD: `${this.name}-dead`
+        };
+    }
+
+    public setAttackFrames(...frames: string[])
+    {
+        this.attackFrames = frames;
     }
 
     public getItem(_item: Phaser.Types.Physics.Arcade.GameObjectWithBody)
@@ -743,7 +755,9 @@ export default class Player extends Entity
 
         this.clearSecondaryWeapons();
 
-        this.scene.playSong(12, false);
+        const { x, y } = this.damageBody.body.center;
+
+        sendDeathStat(x, y);
 
         if (this.scene.isCoop)
         {
@@ -751,6 +765,8 @@ export default class Player extends Entity
 
             return;
         }
+
+        this.scene.playSong(12, false);
 
         this.scene.stageCountdown.stop();
 
@@ -788,7 +804,7 @@ export default class Player extends Entity
             delay: 2000,
             callback: () =>
             {
-                this.scene.scene.restart();
+                this.scene.scene.restart({ isCoop: false });
             }
         });
     }
@@ -797,13 +813,13 @@ export default class Player extends Entity
     {
         const totalLife = this.scene.characters.map(elm => elm.status.life).reduce((a, b) => a + b, 0);
 
-        if (this.scene.isBossBattle && totalLife < 0)
+        if (this.scene.isBossBattle && totalLife === -2)
         {
             Boss.endBossBattle(this.scene);
         }
 
         // GAME OVER
-        if (totalLife < 0)
+        if (totalLife === -2)
         {
             this.scene.stageCountdown.stop();
 
@@ -811,6 +827,18 @@ export default class Player extends Entity
 
             return;
         }
+
+        if (this.status.life < 0)
+        {
+            this.anims.stop();
+            this.physicsProperties.isGameOver = true;
+            this.damageBody.destroy();
+            this.body.setEnable(false);
+            this.meleeWeapon?.body.setEnable(false)
+            this.setActive(false).setVisible(false);
+
+            return;
+        };
 
         const currentSavedScore = JSON.parse(SaveLoadService.loadGameData() as string).score;
 
@@ -821,43 +849,19 @@ export default class Player extends Entity
         if (this.player === 'A')
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_A, this.status.life);
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_A, 'no weapon');
         }
         else
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_B, this.status.life);
+            this.scene.events.emit(HUD_EVENTS_NAMES.WEAPON_PLAYER_B, 'no weapon');
         }
 
         this.scene.time.addEvent({
             delay: 2000,
             callback: () =>
             {
-                const { characters } = this.scene;
-
-                if (this === characters[0] && !characters[1].physicsProperties.isDead)
-                {
-                    this.body.reset(characters[1].body.center.x, characters[1].body.center.y - 16);
-                }
-                else if (this === characters[0] && characters[1].physicsProperties.isDead)
-                {
-                    const cam = this.scene.cameras.main;
-
-                    this.body.reset(cam.worldView.centerX, cam.worldView.centerY);
-                }
-
-                if (this === characters[1] && !characters[0].physicsProperties.isDead)
-                {
-                    this.body.reset(characters[0].body.center.x, characters[0].body.center.y - 16);
-                }
-                else if (this === characters[1] && characters[0].physicsProperties.isDead)
-                {
-                    const cam = this.scene.cameras.main;
-
-                    this.body.reset(cam.worldView.centerX, cam.worldView.centerY);
-                }
-
-                this.physicsProperties.isDead = false;
-                this.physicsProperties.isHurt = false;
-                this.physicsProperties.isAttacking = false;
+                this.reintroducePlayer();
             }
         });
     }
@@ -1032,9 +1036,85 @@ export default class Player extends Entity
 
         this.scene.stageCountdown.reset(false, STAGE_COUNTDOWN[stage]);
 
+        this.scene.playSong(12, false);
+
         this.scene.currentPlayingSong?.once(Phaser.Sound.Events.COMPLETE, () =>
         {
             this.scene.scene.start(SCENES_NAMES.GAMEOVER)
         });
+    }
+
+    private reintroducePlayer()
+    {
+        const { characters } = this.scene;
+
+        const cam = this.scene.cameras.main;
+
+        if (this === characters[0] && !characters[1].physicsProperties.isDead && characters[1].body.blocked.down)
+        {
+            this.body.reset(characters[1].body.center.x, characters[1].body.center.y - 16);
+        }
+        else if (this === characters[0] && characters[1].physicsProperties.isDead)
+        {
+            this.searchBlockTile();
+        }
+
+        if (this === characters[1] && !characters[0].physicsProperties.isDead && characters[0].body.blocked.down)
+        {
+            this.body.reset(characters[0].body.center.x, characters[0].body.center.y - 16);
+        }
+        else if (this === characters[1] && characters[0].physicsProperties.isDead)
+        {
+            this.searchBlockTile();
+        }
+
+        this.physicsProperties.isDead = false;
+        this.physicsProperties.isHurt = false;
+        this.physicsProperties.isAttacking = false;
+    }
+
+    private searchBlockTile()
+    {
+        const cam = this.scene.cameras.main;
+
+        const { colliderLayer } = this.scene;
+
+        const { centerX, left, right, bottom } = cam.worldView;
+
+        if (this.body.center.x < centerX)
+        {
+            for (let i = 8; i < 256; i += TILE_SIZE)
+            {
+                for (let j = 8; j < 208; j += TILE_SIZE)
+                {
+                    const tile = colliderLayer.getTileAtWorldXY(left + i, bottom - j, true)
+
+                    if (tile.index >= 0 && (tile.properties.leftTopRightBlock || tile.properties.topBlock || tile.properties.collides))
+                    {
+                        this.body.reset(left + i + 8, bottom - j - 48);
+                        return;
+                    }
+                }
+            }
+        }
+
+        if (this.body.center.x >= centerX)
+        {
+            for (let i = 8; i < 256; i += TILE_SIZE)
+            {
+                for (let j = 8; j < 208; j += TILE_SIZE)
+                {
+                    const tile = colliderLayer.getTileAtWorldXY(right - i, bottom - j, true)
+
+                    if (tile.index >= 0 && (tile.properties.leftTopRightBlock || tile.properties.topBlock || tile.properties.collides))
+                    {
+                        this.body.reset(right - i - 16, bottom - j - 48);
+                        return;
+                    }
+                }
+            }
+        }
+
+        throw new Error("No collide tile found");
     }
 }

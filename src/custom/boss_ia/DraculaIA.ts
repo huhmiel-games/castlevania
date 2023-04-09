@@ -54,7 +54,7 @@ export class DraculaIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getClosestPlayer(this.parent.damageBody);
+        const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
         // starts the battle
         if (player.body.center.x < 295 * 16 && !this.scene.isBossBattle)

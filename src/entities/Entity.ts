@@ -10,7 +10,8 @@ import
     TPhysicsProperties,
     TAnimationList,
     TFrameList,
-    TMeleeWeaponConfig
+    TMeleeWeaponConfig,
+    TCoord
 } from "../types/types";
 import StateMachine from "../utils/StateMachine";
 import StateTimestamp from "../utils/StateTimestamp";
@@ -38,7 +39,7 @@ export class Entity extends Phaser.GameObjects.Sprite
     public status: Status;
     public physicsProperties: TPhysicsProperties;
     public animList: TAnimationList;
-    public frameList?: TFrameList;
+    public frameStairList?: TFrameList;
     public stateMachine: StateMachine;
     public secondaryWeaponGroup: Phaser.GameObjects.Group;
     public config: TEntityConfig;

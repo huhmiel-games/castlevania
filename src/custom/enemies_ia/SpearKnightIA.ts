@@ -86,9 +86,9 @@ export class SpearKnightIA implements IEnemyAI
             this.randomTurnBackTime = now + Phaser.Math.RND.between(1000, 3000);
         }
 
-        if(this.scene.getClosestPlayer(this.parent.damageBody).stateMachine.prevState.startsWith('fall'))
+        if(this.scene.getClosestAlivePlayer(this.parent.damageBody).stateMachine.prevState.startsWith('fall'))
         {
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             if(body.bottom === player.body.bottom)
             {
@@ -109,7 +109,7 @@ export class SpearKnightIA implements IEnemyAI
 
         if (left.isUp && right.isUp)
         {
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             if (this.parent.canUse(EStates.LEFT) && player.damageBody.x < body.x)
             {

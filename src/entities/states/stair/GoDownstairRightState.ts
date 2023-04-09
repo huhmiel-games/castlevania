@@ -103,12 +103,12 @@ export default class GoDownstairRightState extends State
         {
             if (this.isMidStair)
             {
-                character.body.reset(character.body.x + TILE_SIZE , character.body.y + TILE_SIZE / 2);
-
-                character.setFrame(character.frameList?.stairMiddleUp!);
+                character.setFrame(character.frameStairList?.stairMiddleLeft!);
             }
             else
             {
+                character.body.reset(character.body.x + TILE_SIZE, character.body.y + TILE_SIZE / 2);
+
                 character.setFrame(this.updateFrameName(character));
             }
 
@@ -132,10 +132,10 @@ export default class GoDownstairRightState extends State
         }
     }
 
-    private updateFrameName(character): string
+    private updateFrameName(character: Entity): string
     {
         this.animFrameNumber = 1 - this.animFrameNumber;
 
-        return `${character.frameList.stairDown}${this.animFrameNumber}`;
+        return `${character.frameStairList?.stairDown}${this.animFrameNumber}`;
     }
 }

@@ -108,9 +108,7 @@ export default class GoDownstairLeftState extends State
         {
             if (this.isMidStair)
             {
-                
-
-                character.setFrame(character.frameList?.stairMiddleDown!);
+                character.setFrame(character.frameStairList?.stairMiddleLeft!);
             }
             else
             {
@@ -139,10 +137,10 @@ export default class GoDownstairLeftState extends State
         }
     }
 
-    private updateFrameName(character): string
+    private updateFrameName(character: Entity): string
     {
         this.animFrameNumber = 1 - this.animFrameNumber;
 
-        return `${character.frameList.stairDown}${this.animFrameNumber}`;
+        return `${character.frameStairList?.stairDown}${this.animFrameNumber}`;
     }
 }

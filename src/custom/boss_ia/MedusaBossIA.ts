@@ -47,7 +47,7 @@ export class MedusaBossIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getClosestPlayer(this.parent.damageBody);
+        const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
         if (player.body.center.x < 1862 && !this.scene.isBossBattle)
         {

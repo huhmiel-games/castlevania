@@ -1243,5 +1243,4 @@ export default function createAnims(scene: Phaser.Scene)
         frameRate: 22,
         repeat: 0,
     });
-
 }

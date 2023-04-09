@@ -46,7 +46,7 @@ export class SnakeIA implements IEnemyAI
 
         if (left.isUp && right.isUp)
         {
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             if (this.parent.canUse(EStates.LEFT) && player.damageBody.x < this.parent.body.x)
             {

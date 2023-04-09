@@ -46,7 +46,7 @@ export class SkeletonIA implements IEnemyAI
 
         const currentRadius = Math.abs(this.originPosition.x - center.x);
 
-        const player = this.scene.getClosestPlayer(this.parent.damageBody);
+        const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
         this.distanceToPlayer = Phaser.Math.Distance.BetweenPoints(player.body.center, center);
 

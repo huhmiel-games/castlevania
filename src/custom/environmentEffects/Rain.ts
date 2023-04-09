@@ -89,7 +89,7 @@ export class RainEffect implements ICustomEffect
 
         this.rainEmitter.setPosition(worldView.left, worldView.top);
 
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getPlayerA();
 
         if (player.status.stage === 11 && player.body.center.x > 38 * 16 && this.thunder?.active)
         {

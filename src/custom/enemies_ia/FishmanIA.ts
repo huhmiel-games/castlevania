@@ -84,7 +84,7 @@ export class FishmanIA implements IEnemyAI
 
             b.setUp(now);
 
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             if (center.x > player.body.center.x)
             {
@@ -153,7 +153,7 @@ export class FishmanIA implements IEnemyAI
         {
             this.randomAttackTime = 0;
 
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             if (center.x > player.body.center.x)
             {
@@ -186,7 +186,7 @@ export class FishmanIA implements IEnemyAI
 
         let rndX = Phaser.Math.RND.integerInRange(canView.left + 16, canView.right - 16);
 
-        const player = this.scene.getClosestPlayer(this.parent.damageBody);
+        const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
         while (Math.abs(player.body.center.x - rndX) < 24
             || !(this.scene.colliderLayer.getTileAtWorldXY(rndX, this.parent.body.y + 8)?.properties?.waterBlock)

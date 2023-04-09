@@ -157,7 +157,7 @@ export class CustomeGame implements ICustomGame
 
     private addPlayerB()
     {
-        const playerA = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const playerA = this.scene.getPlayerA();
 
         const playerB = new Player({
             scene: this.scene,
@@ -336,7 +336,7 @@ export class CustomeGame implements ICustomGame
     public getTotalMultipleShots()
     {
         return this.scene.characters
-            .map(player => player.secondaryWeaponGroup.getLength())
+            .map((player) => (player as Player).multipleShots)
             .reduce((a, b) => a + b, 0);
     }
 
@@ -613,7 +613,7 @@ export class CustomeGame implements ICustomGame
 
                 if (enemyJSONConfig.resurrect > 0 && !resurectEnemiesException.includes(enemyName))
                 {
-                    const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+                    const player = this.scene.getPlayerA();
 
                     const distance = Phaser.Math.Distance.BetweenPoints(enemy, player);
 
@@ -731,7 +731,7 @@ export class CustomeGame implements ICustomGame
             delay: 4000,
             callback: () =>
             {
-                const childrenToExclude = [ENEMY_NAMES.DRACULA_2, 'back-moon', PLAYERS_NAMES, WEAPON_NAMES.DAGGER, WEAPON_NAMES.AXE, WEAPON_NAMES.HOLY_WATER, WEAPON_NAMES.CROSS];
+                const childrenToExclude = [ENEMY_NAMES.DRACULA_2, 'back-moon', 'richter', 'simon', WEAPON_NAMES.DAGGER, WEAPON_NAMES.AXE, WEAPON_NAMES.HOLY_WATER, WEAPON_NAMES.CROSS];
                 const world = this.scene.children.getAll().filter(elm => elm.name !== 'collideLayer'
                     && !elm.name.startsWith('ground')
                     && !childrenToExclude.includes(elm.name));
@@ -898,7 +898,7 @@ export class CustomeGame implements ICustomGame
             const enemyWeapon = _enemyWeapon as unknown as Weapon;
             enemyWeapon.setDisable();
 
-            const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+            const player = this.scene.getPlayerA();
 
             player.status.setScore(player.status.score + 100);
 
@@ -982,7 +982,7 @@ export class CustomeGame implements ICustomGame
                 }
                 else
                 {
-                    const player = this.scene.getPlayerByName(PLAYERS_NAMES.A) as Player;
+                    const player = this.scene.getPlayerA() as Player;
 
                     if (player.multipleShots === 1)
                     {
@@ -1005,7 +1005,7 @@ export class CustomeGame implements ICustomGame
 
     public addCustomEffects()
     {
-        const player = this.scene.getPlayerByName(PLAYERS_NAMES.A);
+        const player = this.scene.getPlayerA();
 
         if (player.status.stage === 11 && this.customEffects.get('rainEffect') === undefined)
         {

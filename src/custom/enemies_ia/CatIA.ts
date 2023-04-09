@@ -33,7 +33,7 @@ export class CatIA implements IEnemyAI
 
         if (!this.isReady && !this.isAttacking && !cam.worldView.contains(center.x, center.y))
         {
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             if (center.x > player.body.center.x)
             {
@@ -47,7 +47,7 @@ export class CatIA implements IEnemyAI
 
         if (!this.isAttacking && cam.worldView.contains(center.x, center.y))
         {
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             const distance = Math.abs(center.x - player.body.center.x)
 
@@ -61,7 +61,7 @@ export class CatIA implements IEnemyAI
 
         if (this.isAttacking && cam.worldView.contains(center.x, center.y) && this.parent.stateMachine.state === EStates.IDLE)
         {
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             if (center.x > player.body.center.x)
             {
@@ -75,7 +75,7 @@ export class CatIA implements IEnemyAI
 
         if (this.isAttacking && this.parent.stateMachine.prevState === EStates.FALL)
         {
-            const player = this.scene.getClosestPlayer(this.parent.damageBody);
+            const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
             this.parent.resetAllButtons();
 

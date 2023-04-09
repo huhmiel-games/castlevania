@@ -55,9 +55,14 @@ export class Status
     {
         this.health = health;
 
-        if (this.entity.name === PLAYERS_NAMES.A)
+        if (this.scene.characters[0] === this.entity)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH_PLAYER_A, this.health);
+        }
+
+        if (this.scene.characters[1] === this.entity)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEALTH_PLAYER_B, this.health);
         }
 
         return this;
@@ -67,9 +72,14 @@ export class Status
     {
         this.life = life;
 
-        if (this.entity.name === PLAYERS_NAMES.A)
+        if (this.scene.characters[0] === this.entity)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_A, this.life);
+        }
+
+        if (this.scene.characters[1] === this.entity)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.LIFE_PLAYER_B, this.life);
         }
 
         return this;
@@ -79,9 +89,14 @@ export class Status
     {
         this.ammo = value;
 
-        if (this.entity.name === PLAYERS_NAMES.A)
+        if (this.scene.characters[0] === this.entity)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.HEART_PLAYER_A, this.ammo);
+        }
+
+        if (this.scene.characters[1] === this.entity)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.HEART_PLAYER_B, this.ammo);
         }
 
         return this;
@@ -91,9 +106,14 @@ export class Status
     {
         this.score = score;
 
-        if (this.entity.name === PLAYERS_NAMES.A)
+        if (this.scene.characters[0] === this.entity)
         {
             this.scene.events.emit(HUD_EVENTS_NAMES.SCORE_PLAYER_A, this.score);
+        }
+
+        if (this.scene.characters[1] === this.entity)
+        {
+            this.scene.events.emit(HUD_EVENTS_NAMES.SCORE_PLAYER_B, this.score);
         }
 
         return this;

@@ -111,7 +111,7 @@ export default class GoUpstairLeftState extends State
             {
                 body.reset(body.x, body.y - TILE_SIZE / 2);
 
-                character.setFrame(character.frameList?.stairMiddleUp!);
+                character.setFrame(character.frameStairList?.stairMiddleRight!);
             }
 
             this.isMidStair = !this.isMidStair;
@@ -139,7 +139,7 @@ export default class GoUpstairLeftState extends State
 
             body.reset(body.x - 4, body.y);
 
-            character.setFrame(character.frameList?.stairMiddleDown!);
+            character.setFrame(character.frameStairList?.stairMiddleLeft!);
 
             this.stateMachine.transition(EStates.IDLE, this.stateMachine.state);
 
@@ -151,6 +151,6 @@ export default class GoUpstairLeftState extends State
     {
         this.animFrameNumber = 1 - this.animFrameNumber;
 
-        return `${character.frameList?.stairUp}${this.animFrameNumber}`;
+        return `${character.frameStairList?.stairUp}${this.animFrameNumber}`;
     }
 }

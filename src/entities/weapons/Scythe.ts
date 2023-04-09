@@ -97,7 +97,7 @@ export class Scythe extends Phaser.GameObjects.Sprite implements Weapon
             callback: () => {
                 this.body.setEnable(true);
 
-                const target: Entity | null = this.parent.config.withTarget ? this.scene.getClosestPlayer(this.parent.damageBody) : null;
+                const target = this.parent.config.withTarget ? this.scene.getClosestAlivePlayer(this.parent.damageBody) : null;
 
                 if(target)
                 {

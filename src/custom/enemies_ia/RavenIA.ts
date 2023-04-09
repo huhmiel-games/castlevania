@@ -17,7 +17,7 @@ export class RavenIA implements IEnemyAI
 
         this.parent.body.setAllowGravity(false);
 
-        if (this.parent.body.center.x < this.scene.getClosestPlayer(this.parent.damageBody).body.center.x)
+        if (this.parent.body.center.x < this.scene.getClosestAlivePlayer(this.parent.damageBody).body.center.x)
         {
             this.parent.setFlipX(false);
         }
@@ -46,7 +46,7 @@ export class RavenIA implements IEnemyAI
             return;
         }
 
-        const player = this.scene.getClosestPlayer(this.parent.damageBody);
+        const player = this.scene.getClosestAlivePlayer(this.parent.damageBody);
 
         const distance = Phaser.Math.Distance.BetweenPoints(center, player.body.center);
 
