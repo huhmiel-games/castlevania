@@ -206,6 +206,21 @@ export default class MenuScene extends Phaser.Scene
         {
             this.scene.start(SCENES_NAMES.GAME, {coop: true})
         }
+        else
+        {
+            const warn = this.add.bitmapText(WIDTH / 2, HEIGHT / 3 * 2, FONTS.GALAXY, 'coop need 2 gamepads', FONTS_SIZES.GALAXY, 1)
+            .setOrigin(0.35, 0.5)
+            .setTintFill(PALETTE_DB32.WELL_READ)
+            .setLetterSpacing(2);
+
+            this.time.addEvent({
+                delay: 2000,
+                callback: () =>
+                {
+                    warn?.destroy();
+                }
+            })
+        }
     }
 
     startOptionScene()
