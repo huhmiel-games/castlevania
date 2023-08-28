@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-chrome",
+            "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:8000", /** adapt to your port number */
             "webRoot": "${workspaceFolder}/castlevania", /** <-- insert folder name  */
-            "runtimeExecutable": "/usr/bin/chromium-browser"
+            "runtimeExecutable": "/usr/lib/chromium-browser/chromium-browser"
         }
     ]
 }
