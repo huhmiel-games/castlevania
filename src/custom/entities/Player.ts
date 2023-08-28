@@ -73,7 +73,7 @@ export default class Player extends Entity
 
         this.setDepth(DEPTH.PLAYER)
             .setPhysicsProperties({
-                gravity: 800,
+                gravity: 600,
                 speed: 65,
                 acceleration: 600,
                 stairSpeed: 160,
