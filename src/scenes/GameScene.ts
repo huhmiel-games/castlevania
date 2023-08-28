@@ -201,10 +201,11 @@ export default class GameScene extends Phaser.Scene
 
             const cam = this.cameras.main;
             const distance = Math.abs(this.characters[0].body.center.x - this.characters[1].body.center.x);
-
+            cam.stopFollow();
+            
             if (distance < 240)
             {
-                cam.scrollX = Phaser.Math.Average([this.characters[0].x, this.characters[1].x]) - cam.width / 2;
+                cam.scrollX = Phaser.Math.RoundTo(Phaser.Math.Average([this.characters[0].x, this.characters[1].x]) - cam.width / 2, -1);
                 cam.scrollY = Phaser.Math.Average([this.characters[0].y, this.characters[1].y]) - cam.height / 2;
             }
         }
